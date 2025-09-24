@@ -1,0 +1,203 @@
+summary: 'This paper introduces FastPose, a real-time pose estimation and tracking
+  framework.  It leverages a **Multi-Task Network (MTN)** that simultaneously performs
+  **human detection**, **pose estimation**, and **person Re-ID (re-identification)**.  A
+  key contribution is the **Scale-normalized Image and Feature Pyramid (SIFP)** paradigm,
+  designed to address the **scale variation problem**, a performance bottleneck in
+  unified pose estimation.  SIFP utilizes **Feature Pyramid Networks (FPN)** to enhance
+  scale invariance.  The framework employs an **occlusion-aware strategy** for pose
+  tracking, utilizing pose information to infer occlusion states and improve Re-ID.  The
+  MTN architecture is built upon **Region Proposal Networks (RPN)** and RoIAlign,
+  similar to **Mask R-CNN**.  The paper evaluates FastPose using various **backbone
+  networks** (ResNet, MobileNet-v2) and datasets (PoseTrack, COCO, SSM, PRW), comparing
+  performance against state-of-the-art methods using metrics like mAP and MOTA.  Key
+  concepts include **keypoint detection**, **pose tracking**, and the use of Re-ID
+  features to improve tracking accuracy.
+
+  '
+text_units:
+  0:
+    summary: null
+    text_unit: 'An end - to - end multi - task network ( MTN ) is designed to perform
+      human detection , pose estimation , and person re - identification ( Re - ID
+      ) tasks simultaneously .To alleviate the performance bottleneck caused by scale
+      variation problem , a paradigm which exploits scale - normalized image and feature
+      pyramids ( SIFP ) is proposed to boost both performance and speed .Given the
+      results of MTN , we adopt an occlusion - aware Re - ID feature strategy in the
+      pose tracking module , where pose information is utilized to infer the occlusion
+      state to make better use of Re - ID feature .In experiments , we demonstrate
+      that the pose estimation and tracking performance improves steadily utilizing
+      SIFP through different backbones .Using ResNet - 1 8 and ResNet - 5 0 as backbones
+      , the overall pose tracking framework achieves competitive performance with
+      2 9 . 4 FPS and 1 2 . 2 FPS , respectively .Methods involved are PoseTrack [
+      2 8 ] , JointFlow [ 1 6 ] , PoseFlow [ 5 3 ] , Detect - and - Track [ 2 1 ]
+      , FlowTrack [ 5 0 ] , and our FastPose framework with various backbones .Previous
+      pose estimation systems address single prelocated person , which exploit pictorial
+      structures model [ 4 , 1 8 ] and following deep convolutional neural networks
+      ( DC - NNs ) approaches [ 4 7 , 4 6 , 4 8 , 3 6 , 5 6 ] .Motivated by practical
+      applications in video surveillance , human - computer interaction and action
+      recognition , researchers now focus on the multi - person pose estimation in
+      unconstrained environment .Generally , two - stages methods achieve the state
+      - of - theart results both on pose estimation and pose tracking tasks , beyond
+      the performance of unified approach .Based on the detection result of the first
+      stage , the second stage only focuses on the task of keypoint detection on a
+      fixed scale .Despite the leading performance , these methods ca n''t perform
+      real - time inference as their complex procedures , including human detection
+      , cropping and scaling images , and pose estimation .Although many methods [
+      3 3 , 2 3 ] have been proposed to alleviate scale variation problem in face
+      detection or object detection area , there are few researches focusing on dealing
+      with the scale variation in unified multi - person pose estimation .Different
+      from multiple object tracking that focuses on instance identification assignment
+      , pose tracking aims to address a more complex problem of articulated multi
+      - person pose tracking in videos .Based on the top - down pose estimation methods
+      , [ 5 0 ] exploits flow - based pose similarity as metric and solves the matching
+      problem in a greedy fashion . [ 2 1 ] proposes a 3D extension of Mask R - CNN
+      , which predicts the location of person tubes and corresponding poses simultaneously
+      .Based on the above analyses , this paper develops FastPose , a pose tracking
+      framework which can perform pose estimation and tracking towards real - time
+      speed .Specifically , we first build a multi - task network ( MTN ) which jointly
+      optimizes three tasks simultaneously , including human detection , pose estimation
+      , and person Re - ID .The main contributions of this paper can be described
+      as follows : ( 1 ) Taking the person Re - ID features into account , we design
+      an end - to - end multi - task network which performs human detection , pose
+      estimation , and person Re - ID simultaneously .The network ''s outputs provide
+      the necessary informations for the following pose tracking strategy . ( 2 )
+      We propose a paradigm named scale - normalized image and feature pyramid ( SIFP
+      ) for alleviating scale variation problem which is the performance bottleneck
+      of unified top - down pose estimation methods .Combining feature pyramid networks
+      ( FPN ) with the scale distribution can help the network to avoid multi - scale
+      testing . ( 3 ) Utilizing the outputs of our multi - task network , an occlusion
+      - aware strategy is exploited to perform articulated multi - person pose tracking
+      in videos .Specifically , the pose information is utilized to infer occlusion
+      state and achieve the occlusion - aware Re - ID strategy which dramatically
+      reduce the identification ( ID ) switches during tracking .'
+  1:
+    summary: null
+    text_unit: Pose estimation has underwent a long way as a basic research topic
+      of computer vision .CPN[ 1 2 ] is the leading method on COCO 2 0 1 7 keypoint
+      challenge .It involves skip layer feature concatenation and an online hard keypoint
+      mining step . [ 5 0 ] adopts FPN - DCN as the human detector and adds a few
+      deconvolutional layers on single - person pose estimation network to improve
+      the performance .Based on the multi - person pose estimation approaches described
+      above , it is natural to extend them to multiperson pose tracking in video .In
+      [ 2 8 , 2 6 ] , authors firstly estimate human pose with a bottom - up method
+      , and then transform the problem into solving an energy minimizing function
+      over a spatiotemporal graph constructed on the detected joints . [ 1 6 ] proposes
+      a model to predict Temporal Flow Fields ( TTF ) to formulate a similarity measure
+      of detected joints .Based on the top - down pose estimation methods , [ 2 1
+      ] proposes an extended Mask R - CNN and solves the bipartite graph matching
+      problem based on IoU. [ 5 0 ] exploits flow - based pose similarity as metric
+      and solves the matching problem in a greedy fashion .Based on the obtained pose
+      of single person , [ 5 3 ] proposes to construct pose flow and perform pose
+      flow non maximum suppression ( NMS ) to eliminate issues like ID switches .Multi
+      - task learning [ 9 , 6 0 , 2 0 , 3 2 ] has been used successfully in applications
+      of natural language processing [ 1 3 , 4 2 ] , speech recognition [ 1 5 ] ,
+      computer vision [ 2 2 , 6 1 , 5 2 ] .Especially in many computer vision tasks
+      , the effectiveness of multi - task learning has been proved .Fast R - CNN [
+      2 2 ] and Faster R - CNN [ 4 0 ] jointly predict the class and the coordinates
+      of objects in an image .Mask R - CNN [ 2 4 ] can efficiently detect objects
+      in an image while simultaneously generating a high - quality segmentation mask
+      for each instance .Large scale variation is one of major factors to influence
+      the performance of many computer vision tasks like face detection , object detection
+      and pose estimation .To address the problem that large strides of deep CNNs
+      make small object detection very difficult , object detector [ 1 0 , 1 4 ] use
+      dilated/atrous convolutions to increase the resolution of the feature map .SDP
+      [ 5 4 ] , SSH [ 3 5 ] and MS - CNN [ 7 ] make predictions of small objects on
+      the lower layer and big objects on the higher layers respectively .Furthermore
+      , methods like FPN [ 3 3 ] and Mask - RCNN [ 2 4 ] propose a pyramidal representation
+      and fuse adjacent scale feature maps to combine features which have semantic
+      and detail informations .Besides , some methods , like SNIP [ 4 4 ] and SNIPER
+      [ 4 5 ] , propose advanced and efficient data argumentation methods to illustrate
+      the scale variation problem .Given an original image as input , the multi -
+      task network ( MTN ) can predict the bounding boxes , keypoint coordinates and
+      Re - ID features in the scene .A scale - normalized image pyramid and feature
+      pyramid ( SIFP ) paradigm is exploited to alleviate the scale variation problem
+      of MTN .The MTN adopts the similar unified procedure as Mask R - CNN .A fully
+      convolutional network , called a Region Proposal Network ( RPN ) , is built
+      upon these feature maps to propose candidate human bounding boxes .Based on
+      the candidate boxes and their corresponding features extracted from the sharing
+      feature maps , Mask R - CNN has two branches , one branch performs classification
+      and bounding - box regression .Network
+  2:
+    summary: null
+    text_unit: "Architecture : Similar with Mask R - CNN , our proposed network can\
+      \ be instantiated with multiple architectures : ( i ) the backbone network used\
+      \ for feature extraction over an entire image , and ( ii ) the head networks\
+      \ for human detection ( bounding - box classification and regression ) , pose\
+      \ estimation and person Re - ID that are applied separately to each RoI. For\
+      \ the backbone network , deeper architecture gains the effectiveness of extracted\
+      \ features , but brings longer training and inference time.To provide a trade\
+      \ - off between accuracy and speed when MTN is adopted in practical applications\
+      \ , we evaluate MobileNet - v 2 [ 4 3 ] and ResNet [ 2 5 ] with FPN [ 3 3 ]\
+      \ of depth 1 8 , 5 0 and 1 0 1 layers .For the pose estimation head network\
+      \ , Mask R - CNN adopts a straightforward structure , which limits the precision\
+      \ of keypoints localization .In Mask R - CNN , 1 4 \xD7 1 4 feature maps of\
+      \ 5 1 2 channels are extracted by RoIAlign for each proposal .In MTN , we utilize\
+      \ a padding operation to maintaining the ratio of the person in the 2 2 \xD7\
+      \ 1 6 feature maps extracted by RoIAlign .As this head network is based upon\
+      \ the backbone and RPN , so it need the training data composed by images within\
+      \ multi - person and corresponding ID annotation , like some person search datasets\
+      \ [ 5 1 , 6 2 ] .The MTN can provide necessary informations to the occlusion\
+      \ - aware strategy introduced in Sec. 3. 3 to perform pose tracking .As described\
+      \ above , MTN performs human detection , pose estimation and person Re - ID\
+      \ simultaneously .However , MTN , a unified network , builds all the head networks\
+      \ upon the RoIs generated by RPN .So inspired by [ 4 4 ] , we develop a scalenormalized\
+      \ paradigm exploiting both image pyramid and feature pyramid ( SIFP ) to achieve\
+      \ enhanced scale invariance capability of MTN .To maxmize the inference speed\
+      \ without reducing performance , SIFP exploits FPN to tackle this dilemma .Due\
+      \ to FPN , MTN enhances scale invariance capability to alleviate the domain\
+      \ - shift brought by single scale testing .In conclusion , SIFP is a modified\
+      \ version of SNIP .Combining with FPN helps SNIP to avoid slower inference speed\
+      \ brought by multi - scale testing .Based on the detection box , keypoints and\
+      \ Re - ID feature provided by MTN , pose tracking is performed by an occlusion\
+      \ - aware strategy .As described in Sec. 3. 1 , using a deeper backbone network\
+      \ ( ResNet - 5 0 or ResNet - 1 0 1 ) , the numbers of convolutional layers in\
+      \ pose estimation head and Re - ID head are 8 and 4 respectively .When using\
+      \ a smaller backbone ( ResNet - 1 8 or MobileNet - v 2 ) , they are changed\
+      \ to 4 and 2 .MPII [ 3 ] and PoseTrack [ 2 ] datasets are utilized for training\
+      \ pose estimation task .Person search datasets including SSM [ 5 1 ] and PRW\
+      \ [ 6 2 ] datasets are for training person Re - ID task .Utilizing non - maximum\
+      \ suppression , the highest scoring 1 0 0 detection boxes are fed into pose\
+      \ estimation and person Re - ID branches to obtain the heat maps of K keypoints\
+      \ and 1 2 8 - d Re - ID feature for each human boxes .In this section , we perform\
+      \ thorough ablation experiments for both pose estimation and pose tracking tasks\
+      \ , and compare our FastPose framework with the state - of - theart methods\
+      \ on PoseTrack [ 2 ] dataset .Pose estimation task is evaluated on 5k validation\
+      \ images ( minival ) of COCO [ 3 4 ] dataset and PoseTrack [ 2 ] dataset .Backbone\
+      \ Architecture and SIFP for FastPose : As shown in Table 1 ( b ) , our proposed\
+      \ FastPose also shows steady improvement by using deeper backbone models . mAP\
+      \ and MOTA are two main metrics on PoseTrack dataset .Using MobileNet - v 2\
+      \ or ResNet 1 8 as the backbone , FastPose can achieve real - time pose tracking\
+      \ .Although FastPose - MobileNet - v 2 has lower metric ( 6 2 . 1 on mAP and\
+      \ 5 5 . 6 on MOTA )"
+  3:
+    summary: null
+    text_unit: 'than FastPose - 1 8 ( 6 3 . 1 and 5 6 .8) , its properties make it
+      particularly suitable for mobile applications .It proves SIFP can stably improve
+      the performance of pose estimation and tracking on PoseTrack dataset .Pose estimation
+      performance of FastPose on COCO dataset is reported in the supplementary material
+      due to the page limit .Besides , we evaluate MTN on the person Re - ID dataset
+      SSM and the mAP on SSM test is 8 9 . 3 8 , which suggests that it is feasible
+      to extract Re - ID features in MTN .More complex designs have the potential
+      to improve performance but are not the focus of this work . we compare our FastPose
+      framework with the state - ofthe - art methods on PoseTrack Dataset [ 2 ] ,
+      including PoseTrack [ 2 ] , JointFlow [ 1 6 ] , PoseFlow [ 5 3 ] , Detect -
+      and - Track [ 2 1 ] and FlowTrack [ 5 0 ] . top - down or bottom - up approach
+      , are all have lower mAP and slower speed than FastPose - 5 0 or FastPose -
+      1 0 1 .On PoseTrack val , Only FlowTrack - 1 5 2 with Flow has 6 5 . 4 MOTA
+      higher than 6 3 . 2 of our FastPose - 1 0 1 .But its slower detector FPN - DCN
+      and the optical flow estimation take much inference time , which causes the
+      speed of FlowTrack - 1 5 2 is only 0. 2 FPS .Although using Flow and adopting
+      FPN - DCN as human detector , FlowTrack - 5 0 achieves MOTA of 6 2 . 9 which
+      is still caught up by our FastPose - 5 0 with MOTA of 6 2 . 8 .On PoseTrack
+      test , FastPose - 5 0 and FastPose - 1 0 1 achieve MOTA of 5 6 . 6 and 5 7 .
+      4 , which are close to the state - of - the - art performance .The inference
+      time of FastPose comes from two aspects : MTN and tracking strategy .In this
+      paper , we present FastPose , a fast and unified pose estimation and tracking
+      framework , which utilizes a multi - task network ( MTN ) to integrates three
+      tasks together .An occlusion - aware strategy following MTN performs pose tracking
+      .Besides , a paradigm named Scale - normalized Image and Feature Pyramid ( SIFP
+      ) is designed to deal with severe scale variation widely existed in unified
+      pose approaches .In ablation studies , we prove the stable improvements brought
+      by MTN , SIFP and occlusion - aware strategy .Moreover , with different configurations
+      , FastPose can achieve real - time inference or competitive performance , which
+      is helpful to adopt pose tracking in actual scenarios .'

@@ -1,0 +1,272 @@
+summary: 'This paper introduces TinyBERT, a method for knowledge distillation (KD)
+  of Transformer-based language models, specifically BERT. The core concept is transferring
+  knowledge from a large teacher BERT model to a smaller student model, TinyBERT,
+  to accelerate inference and reduce model size while maintaining performance. The
+  proposed approach uses a novel Transformer distillation method, focusing on distilling
+  knowledge from BERT layers, including embedding, hidden states, attention matrices,
+  and prediction layer outputs. A two-stage learning framework is employed: general
+  distillation (pre-training stage) and task-specific distillation (fine-tuning stage).
+  The general distillation uses a large corpus (e.g., Wikipedia) to initialize TinyBERT,
+  while task-specific distillation uses augmented data for downstream tasks. The paper
+  evaluates TinyBERT on the GLUE benchmark and question answering tasks, comparing
+  it with BERTBASE, BERT SMALL, and other KD baselines (BERT-PKD, DistilBERT). Key
+  entities include: BERT (teacher model), TinyBERT (student model), Transformer distillation,
+  Knowledge Distillation (KD), GLUE benchmark, and the two-stage learning framework
+  (General Distillation, Task-specific Distillation). Relationships to capture include:
+  "is a teacher of," "is a student of," "uses method," "achieves performance on,"
+  and "is evaluated on."
+
+  '
+text_units:
+  0:
+    summary: null
+    text_unit: Language model pre - training , such as BERT , has significantly improved
+      the performances of many natural language processing tasks .To accelerate inference
+      and reduce model size while maintaining accuracy , we first propose a novel
+      Transformer distillation method that is specially designed for knowledge distillation
+      ( KD ) of the Transformer - based models .By leveraging this new KD method ,
+      the plenty of knowledge encoded in a large teacher BERT can be effectively transferred
+      to a small student Tiny - BERT .Then , we introduce a new two - stage learning
+      framework for TinyBERT , which performs Transformer distillation at both the
+      pretraining and task - specific learning stages .This framework ensures that
+      TinyBERT can capture he general - domain as well as the task - specific knowledge
+      in BERT .TinyBERT with 4 layers is empirically effective and achieves more than
+      9 6 . 8 % the performance of its teacher BERTBASE on GLUE benchmark , while
+      being 7. 5 x smaller and 9. 4 x faster on inference .TinyBERT with 4 layers
+      is also significantly better than 4 - layer state - of - the - art baselines
+      on BERT distillation , with only about 2 8 % parameters and about 3 1 % inference
+      time of them .Moreover , TinyBERT with 6 layers performs on - par with its teacher
+      BERTBASE .Pre - training language models then fine - tuning on downstream tasks
+      has become a new paradigm for natural language processing ( NLP ) .Pre - trained
+      language models ( PLMs ) , such as BERT ( Devlin et al. , 2 0 1 8) , XLNet (
+      Yang et al. , 2 0 1 9 ) , RoBERTa and SpanBERT , have achieved great success
+      in many NLP tasks ( e.g. , the GLUE benchmark ( Wang et al. , 2 0 1 8) and the
+      challenging multi - hop reasoning task ( Ding et al. , 2 0 1 9 ) ) .The most
+      commonly used techniques include quantization ( Gong et al. , 2 0 1 4 ) , weights
+      pruning ( Han et al. , 2 0 1 5 b ) , and knowledge distillation ( KD ) ( Romero
+      et al. , 2 0 1 4 )
+  1:
+    summary: null
+    text_unit: '.Based on the framework , we propose a novel distillation method specifically
+      for Transformer - based models ( Vaswani et al. , 2 0 1 7 ) , and use BERT as
+      an example to investigate the KD methods for large scale PLMs .Under review
+      KD has been extensively studied in NLP ( Kim & Rush , 2 0 1 6 ; Hu et al. ,
+      2 0 1 8) , while designing KD methods for BERT has been less explored .The pre
+      - training - then - fine - tuning paradigm firstly pre - trains BERT on a large
+      scale unsupervised text corpus , then fine - tunes it on task - specific dataset
+      , which greatly increases the difficulty of BERT distillation .To build a competitive
+      TinyBERT , we firstly propose a new Transformer distillation method to distill
+      the knowledge embedded in teacher BERT .Specifically , we design several loss
+      functions to fit different representations from BERT layers : 1 ) the output
+      of the embedding layer ; 2 ) the hidden states and attention matrices derived
+      from the Transformer layer ; 3 ) the logits output by the prediction layer .The
+      attention based fitting is inspired by the recent findings ( Clark et al. ,
+      2 0 1 9 ) that the attention weights learned by BERT can capture substantial
+      linguistic knowledge , which encourages that the linguistic knowledge can be
+      well transferred from teacher BERT to student TinyBERT .However , it is ignored
+      in existing KD methods of BERT , such as Distilled BiLSTM SOFT , BERT - PKD
+      ( Sun et al. , 2 0 1 9 ) and DistilBERT 2 .The student TinyBERT learns to mimic
+      the teacher ''s behavior by executing the proposed Transformer distillation
+      on the large scale corpus from general domain .Atthe task - specific distillation
+      stage , we perform the data augmentation to provide more task - related materials
+      for teacherstudent learning , and then re - execute the Transformer distillation
+      on the augmented data .TinyBERT ( our method ) The main contributions of this
+      work are as follows : 1 ) We propose a new Transformer distillation method to
+      encourage that the linguistic knowledge encoded in teacher BERT can be well
+      transferred to TinyBERT . 2 ) We propose a novel two - stage learning framework
+      with performing the proposed Transformer distillation at both the pre - training
+      and fine - tuning stages , which ensures that Tiny - BERT can capture both the
+      general - domain and task - specific knowledge of the teacher BERT . 3 )'
+  2:
+    summary: null
+    text_unit: "We show experimentally that our TinyBERT can achieve comparable results\
+      \ with teacher BERT on GLUE tasks , while having much fewer parameters ( \u223C\
+      \ 1 3 . 3 % ) and less inference time ( \u223C 1 0 . 6 % ) , and significantly\
+      \ outperforms other state - of - the - art baselines on BERT distillation .We\
+      \ firstly describe the formulation of Transformer ( Vaswani et al. , 2 0 1 7\
+      \ ) and Knowledge Distillation ( Hinton et al. , 2 0 1 5 ) .Our proposed Transformer\
+      \ distillation is a specially designed KD method for Transformer - based models\
+      \ .Most of recent pre - trained language models ( e.g. , BERT , XLNet and RoBERTa\
+      \ ) are built with Transformer layers , which can capture long - term dependencies\
+      \ between input tokens by self - attention mechanism.Specifically , a standard\
+      \ Transformer layer includes two main sub - layers : multi - head attention\
+      \ ( MHA ) and fully connected feed - forward network ( FFN ) .Multi - Head Attention\
+      \ ( MHA ) .The final function output is calculated as a weighted sum of values\
+      \ V , and the weight is computed by applying softmax ( ) operation on the matrix\
+      \ A. The attention matrices A of BERT can capture substantial linguistic knowledge\
+      \ and plays an essential role in our proposed distillation method .Position\
+      \ - wise Feed - Forward Network ( FFN ) .Transformer layer also contains a fully\
+      \ connected feed - forward network , which is formulated as follows : We can\
+      \ see that the FFN contains two linear transformations and one ReLU activation\
+      \ .In the context of Transformer distillation , the output of MHA layer or FFN\
+      \ layer , or some intermediate representations ( e.g. the attention matrix A\
+      \ ) can be used as behavior function .Different from previous KD methods , we\
+      \ also need to consider how to perform KD at the pre - training stage of BERT\
+      \ , which further increases the difficulty of KD for BERT .In this section ,\
+      \ we propose a novel distillation method for Transformer - based models , then\
+      \ present a two - stage learning framework of TinyBERT .The proposed Transformer\
+      \ distillation is a specially designed KD method for Transformer networks .Assuming\
+      \ that the student model has M Transformer layers and teacher model has N Transformer\
+      \ layers , we choose M layers from the teacher model for the Transformerlayer\
+      \ distillation .The embedding - layer distillation and the prediction - layer\
+      \ distillation are also considered .Thus we propose the attention based distillation\
+      \ to ensure that the linguistic knowledge is transferred from teacher BERT to\
+      \ student TinyBERT .In this work , the attention matrix"
+  3:
+    summary: null
+    text_unit: "A i is used as the fitting target instead of its softmax output softmax(A\
+      \ i ) , since our experiments show that this setting has faster convergence\
+      \ and better performances .Using the above distillation objectives ( i.e. Equations\
+      \ 7 , 8 , 9 and 1 0 ) , we can unify the loss of model layer :In our experiments\
+      \ , we firstly perform intermediate layer distillation ( M \u2265 m \u2265 0\
+      \ ) , then perform the prediction - layer distillation ( m = M + 1 ) .General\
+      \ distillation helps student TinyBERT learn the rich knowledge embedded in teacher\
+      \ BERT , which plays an important role in improving the generalization capability\
+      \ of TinyBERT .By performing the Transformer distillation 5 on the text from\
+      \ general domain , we obtain a general TinyBERT that can be fine - tuned for\
+      \ downstream tasks .However , due to the big reductions in the hidden/embedding\
+      \ size and the layer number , general TinyBERT performs relatively worse than\
+      \ the original BERT .To this end , we propose to derive competitive fine - tuned\
+      \ TinyBERTs through the task - specific distillation .In the task - specific\
+      \ distillation , we re - perform the proposed Transformer distillation on augmented\
+      \ task - specific dataset ( as shown in Figure 2 ) .Specifically , the fine\
+      \ - tuned big BERT is used as the teacher and a new data augmentation method\
+      \ is proposed to extend the task - specific training set .In this work , we\
+      \ combine a pre - trained language model BERT and GloVe ( Pennington et al.\
+      \ , 2 0 1 4 ) word embeddings to do word - level replacement for data augmentation\
+      \ .More details of data augmentation procedure are discussed in Appendix A.\
+      \ The above two learning stages are complementary to each other : the general\
+      \ distillation provides a good initialization for the task - specific distillation\
+      \ , while the task - specific distillation further improves TinyBERT by focusing\
+      \ on learning the task - specific knowledge .Although there is a big gap between\
+      \ BERT and TinyBERT in model size , by performing the proposed two - stage distillation\
+      \ , the TinyBERT can achieve comparable performances as large BERT in various\
+      \ NLP tasks .We use g(m ) = 3 \xD7 m as the layer mapping function , so TinyBERT\
+      \ learns from every 3 layers of BERT BASE .We evaluate TinyBERT on the General\
+      \ Language Understanding Evaluation ( GLUE ) ( Wang et al. , 2 0 1 8) benchmark\
+      \ , which is a collection of diverse natural language understanding tasks .The\
+      \ experiment results demonstrate that : 1 ) There is a large performance gap\
+      \ between BERT SMALL and BERT BASE due to the big reduction in model size .\
+      \ 2 )"
+  4:
+    summary: null
+    text_unit: "TinyBERT is consistently better than BERT SMALL in all the GLUE tasks\
+      \ and achieves a large improvement of 6. 3 % on average .This indicates that\
+      \ the proposed KD learning framework can effectively improve the performances\
+      \ of small models regardless of downstream tasks .3 ) TinyBERT significantly\
+      \ outperforms the state - ofthe - art KD baselines ( i.e. , BERT - PKD and DistillBERT\
+      \ ) by a margin of at least 3. 9 % , even with only \u223C 2 8 % parameters\
+      \ and \u223C 3 1 % inference time of baselines ( see Table 3 ) . 4 ) Compared\
+      \ with the teacher BERT BASE , TinyBERT is 7. 5 x smaller and 9. 4 x faster\
+      \ in the model efficiency , while maintaining comparable performances . 5 )\
+      \ TinyBERT has a comparable model efficiency ( slightly larger in size but faster\
+      \ in inference ) with Distilled BiLSTM SOFT and obtains substantially better\
+      \ performances in all tasks reported by the BiLSTM baseline . 6 ) For the challenging\
+      \ CoLA dataset ( the task of predicting linguistic acceptability judgments )\
+      \ , all the distilled small models have a relatively bigger performance gap\
+      \ with teacher model .Moreover , BERT - PKD and DistillBERT initialize their\
+      \ student models with some layers of well pre - trained teacher BERT ( see Table\
+      \ 1 ) , which makes the student models have to keep the same size settings of\
+      \ Transformer layer ( or embedding layer ) as their teacher BERT .We evaluate\
+      \ how much improvement can be achieved when increasing the model size of TinyBERT\
+      \ on several typical GLUE tasks , where MNLI and MRPC are used in the ablation\
+      \ studies of Devlin et al. ( 2 0 1 8) , and CoLA is the most difficult task\
+      \ in GLUE .We can observe that : 1 ) All the three TinyBERT variants can consistently\
+      \ outperform the original smallest TinyBERT , which indicates that the proposed\
+      \ KD method works for the student models of various model sizes . 2 ) For the\
+      \ CoLA task , the improvement is slight when only increasing the number of layers\
+      \ ( from 4 9 . 7 to 5 0 . 6 ) or hidden size ( from 4 9 . 7 to 5 0 . 5 ) .To\
+      \ achieve more dramatic improve - ments , the student model should become deeper\
+      \ and wider ( from 4 9 . 7 to 5 4 . 0 ) . 3 ) Another interesting observation\
+      \ is that the smallest 4 - layer TinyBERT can even outperform the 6 - layers\
+      \ baselines , which further confirms the effectiveness of the proposed KD method\
+      \ .The proposed two - stage TinyBERT learning framework ( see Figure 2 ) consists\
+      \ of three key procedures : TD ( Task - specific Distillation ) , GD ( General\
+      \ Distillation ) and DA ( Data Augmentation ) .The"
+  5:
+    summary: null
+    text_unit: TD and DA has comparable effects in all the four tasks .We can also
+      find the task - specific procedures ( TD and DA ) are more helpful than the
+      pre - training procedure ( GD ) in all the four tasks .Another interesting observation
+      is that GD has more effect on CoLA than on MNLI and MRPC .We conjecture that
+      the ability of linguistic generalization ( Warstadt et al. , 2 0 1 8) learned
+      by GD plays a more important role in the downstream CoLA task ( linguistic acceptability
+      judgments ).Several baselines are proposed including the TinyBERT learning without
+      the Transformer - layer distillation ( No Trm ) , embedding - layer distillation
+      ( No Emb ) and predictionlayer distillation ( No Pred ) 6 respectively .The
+      performance drops significantly from 7 5 . 3 to 5 6 . 3 under the setting (
+      No Trm ) , which indicates Transformer - layer distillation is the key for TinyBERT
+      learning .Meanwhile , these two kinds of knowledge distillation are complementary
+      to each other , which makes TinyBERT obtain the competitive results .We find
+      that the top - strategy performs better than the bottom - strategy in MNLI ,
+      while being worse in MRPC and CoLA tasks , which confirms the observations that
+      different tasks depend on the different kinds of knowledge from BERT layers
+      .We also evaluate TinyBERT on the question answering tasks , and study whether
+      we can use BERT SMALL as the initialization of the general TinyBERT .The experiments
+      are detailed in Appendix C and D. In this paper , we firstly introduce a new
+      KD method for Transformer - based distillation , then we further propose a two
+      - stage framework for TinyBERT learning .Extensive experiments show that the
+      TinyBERT achieves competitive performances meanwhile significantly reducing
+      the model size and shortening the inference time of original BERT BASE , which
+      provides an effective way to deploy BERT - based NLP applications on the edge
+      devices .In future work , we would study how to effectively transfer the knowledge
+      from wider and deeper teachers ( e.g. , BERT LARGE and XLNet LARGE ) to student
+      TinyBERT .The joint learning of distillation and quantization/pruning would
+      be another promising direction to further compress the pre - trained language
+      models . In this section , we explain the proposed data augmentation method
+      .TinyBERT learning includes the general distillation and the task - specific
+      distillation .For
+  6:
+    summary: null
+    text_unit: "the general distillation , we use English Wikipedia ( 2, 5 0 0 M words\
+      \ ) as the text corpus and perform the intermediate layer distillation for 3\
+      \ epochs with the supervision from a pre - trained BERT BASE teacher and keep\
+      \ other hyper - parameters same as BERT pre - training ( Devlin et al. , 2 0\
+      \ 1 8) .For task - specific distillation , we firstly perform intermediate layer\
+      \ distillation on the augmented dataset for 1 0 epochs with batch size 3 2 and\
+      \ learning rate 5e - 5 under the supervision of a fine - tuned BERT teacher\
+      \ , and then perform prediction layer distillation for 3 epochs with batch size\
+      \ 3 2 and learning rate 3e - 5 .For tasks like MNLI , QQP and QNLI which have\
+      \ \u2265 1 0 0 K training examples , we distill intermediate layer knowledge\
+      \ for 5 epochs with batch size 2 5 6 on the augmented dataset .Besides , for\
+      \ CoLA task , we perform 5 0 epochs of intermediate layer distillation .We use\
+      \ BERT - PKD and DistilBERT as our baselines .For a fair comparison , we firstly\
+      \ re - implemented the results of BERT - PKD and DistilBERT reported in their\
+      \ papers to ensure our implementation procedure is correct .Thenfollowing the\
+      \ verified implementation procedure , we trained a 4 - layer BERT - PKD and\
+      \ a 4 - layer DistilBERT as the baselines .The BERT SMALL learning strictly\
+      \ follows the same learning strategy as described in the original BERT work\
+      \ ( Devlin et al. , 2 0 1 8) .The GLUE datasets are described as follows : MNLI\
+      \ .The Stanford Sentiment Treebank is a binary single - sentence classification\
+      \ task , where the goal is to predict the sentiment of movie reviews ( Socher\
+      \ et al. , 2 0 1 3 ) .C SQUAD 1. 1 AND 2. 0 We also demonstrate the effectiveness\
+      \ of TinyBERT on the question answering ( QA ) tasks : SQuAD v 1 . 1 ( Rajpurkar\
+      \ et al. , 2 0 1 6 ) and v 2 . 0 ( Rajpurkar et al. , 2 0 1 8) .We follow the\
+      \ settings of task - specific distillation in GLUE tasks , except with 3 running\
+      \ epochs and a learning rate of 5e - 5 for the prediction - layer distillation\
+      \ on the original training dataset .Compared with sequence - level GLUE tasks\
+      \ , the question answering tasks depends on more subtle knowledge to infer the\
+      \ correct answer , which increases the difficulty of knowledge distillation\
+      \ .Initializing general TinyBERT with BERT SMALL is a straightforward idea .However\
+      \ , BERT SMALL would derive mismatched distributions in intermediate representations\
+      \ ( e.g. , attention matrices and hidden states ) with the teacher BERT BASE\
+      \ model , if without imitating the teacher 's behaviors at the pre - training\
+      \ stage .Further"
+  7:
+    summary: null
+    text_unit: task - specific distillation under the supervision of BERT BASE will
+      disturb the learned distribution/knowledge of BERT SMALL , finally leading to
+      poor performances in some less - data tasks .The results in Table 9 , show that
+      the BERT SMALL ( MLM&NSP+TD ) performs worse than the BERT SMALL in MRPC and
+      CoLA tasks , which validates our hypothesis .For the intensive - data task (
+      e.g. MNLI ) , TD learning has enough learning materials to make BERT SMALL acquire
+      the task - specific knowledge very well , although the pre - trained distributions
+      have already been disturbed.To make TinyBERT effectively work for all tasks
+      , we propose General Distillation ( GD ) for initialization , where the TinyBERT
+      learns the knowledge from intermediate layers of teacher BERT at the pre - training
+      stage .From the results of Table 9 , we find that GD can effectively transfer
+      the knowledge from the teacher BERT to the student TinyBERT and achieve comparable
+      results with BERT SMALL ( 6 1 . 1 vs 6 3 . 9 ) , even without performing the
+      MLM and NSP tasks .Furthermore , the task - specific distillation boosts the
+      performances of TinyBERT by continuing on learning the taskspecific knowledge
+      of fine - tuned teacher BERT BASE .

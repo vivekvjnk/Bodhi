@@ -1,0 +1,209 @@
+chunk_indices:
+- 0
+entities:
+- description: The size of the hidden layers and embedding layers in the model.
+  name: Hidden/Embedding Size
+  source_chunk_index: 0
+  type: GENERIC
+- description: The number of layers in the model.
+  name: Layer Number
+  source_chunk_index: 0
+  type: GENERIC
+- description: The student model, a smaller and faster version of BERT, designed to
+    learn from the teacher model through knowledge distillation.
+  name: TinyBERT
+  source_chunk_index: 0
+  type: method
+- description: The teacher model, a pre-trained language model used to guide the training
+    of TinyBERT through knowledge distillation.
+  name: BERT
+  source_chunk_index: 0
+  type: method
+- description: The core technique used to train TinyBERT, where the student model
+    learns from the teacher model's knowledge.
+  name: Knowledge Distillation (KD)
+  source_chunk_index: 0
+  type: method
+- description: A stage in the two-stage learning framework where TinyBERT learns from
+    BERT on a general domain dataset to improve its generalization capability.
+  name: General Distillation (GD)
+  source_chunk_index: 0
+  type: method
+- description: A stage in the two-stage learning framework where TinyBERT is fine-tuned
+    on augmented task-specific datasets.
+  name: Task-specific Distillation (TD)
+  source_chunk_index: 0
+  type: method
+- description: The architecture used in both BERT and TinyBERT models.
+  name: Transformer
+  source_chunk_index: 0
+  type: generic
+- description: A method used to extend the task-specific training set during task-specific
+    distillation.
+  name: Data Augmentation (DA)
+  source_chunk_index: 0
+  type: method
+- description: The target used in the distillation process, replacing the softmax
+    output of the teacher model. This setting is claimed to improve convergence speed
+    and performance.
+  name: Fitting Target (A i)
+  source_chunk_index: 0
+  type: method
+- description: The core method used to transfer knowledge from the teacher BERT model
+    to the student TinyBERT model. It involves distilling knowledge from various layers
+    of the Transformer architecture.
+  name: Transformer Distillation
+  source_chunk_index: 0
+  type: method
+- description: References to specific equations that define the distillation objectives
+    used in the TinyBERT model. These equations are not explicitly described in the
+    text but are mentioned as part of the distillation process.
+  name: Equations 7, 8, 9, and 10
+  source_chunk_index: 0
+  type: generic
+relationships:
+- description: General distillation helps TinyBERT learn from BERT.
+  source_chunk_index: 0
+  source_entity: TinyBERT
+  strength: 8.0
+  target_entity: BERT
+- description: The teacher model BERT is used in the task-specific distillation.
+  source_chunk_index: 0
+  source_entity: BERT
+  strength: 7.0
+  target_entity: TinyBERT
+- description: Transformer distillation is performed to obtain a general TinyBERT.
+  source_chunk_index: 0
+  source_entity: Transformer Distillation
+  strength: 9.0
+  target_entity: TinyBERT
+- description: General distillation helps student TinyBERT learn.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: TinyBERT
+- description: Task-specific distillation is used to derive competitive fine-tuned
+    TinyBERTs.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 9.0
+  target_entity: TinyBERT
+- description: Data augmentation is used in the task-specific distillation.
+  source_chunk_index: 0
+  source_entity: Data Augmentation (DA)
+  strength: 7.0
+  target_entity: Task-specific Distillation (TD)
+- description: A i is used as the fitting target for TinyBERT.
+  source_chunk_index: 0
+  source_entity: Fitting Target (A i)
+  strength: 7.0
+  target_entity: TinyBERT
+- description: Equations 7, 8, 9, and 10 are used in the distillation objectives.
+  source_chunk_index: 0
+  source_entity: Equations 7, 8, 9, and 10
+  strength: 7.0
+  target_entity: Knowledge Distillation (KD)
+- description: TinyBERT has reductions in hidden/embedding size.
+  source_chunk_index: 0
+  source_entity: Hidden/Embedding Size
+  strength: 6.0
+  target_entity: TinyBERT
+- description: TinyBERT has reductions in layer number.
+  source_chunk_index: 0
+  source_entity: Layer Number
+  strength: 6.0
+  target_entity: TinyBERT
+- description: The distillation objectives (Equations 7, 8, 9, and 10) are used in
+    Transformer Distillation.
+  source_chunk_index: 0
+  source_entity: Transformer Distillation
+  strength: 8.0
+  target_entity: Equations 7, 8, 9, and 10
+- description: General distillation helps student TinyBERT learn the rich knowledge
+    embedded in teacher BERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: TinyBERT
+- description: In task-specific distillation, the fine-tuned big BERT is used as the
+    teacher.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: BERT
+- description: The distillation objectives, defined by Equations 7, 8, 9, and 10,
+    are used in the Knowledge Distillation process.
+  source_chunk_index: 0
+  source_entity: Knowledge Distillation (KD)
+  strength: 10.0
+  target_entity: Equations 7, 8, 9, and 10
+- description: General Distillation is a type of Transformer Distillation performed
+    on text from the general domain.
+  source_chunk_index: 0
+  source_entity: Transformer Distillation
+  strength: 9.0
+  target_entity: General Distillation (GD)
+- description: General Distillation helps TinyBERT learn from BERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: TinyBERT
+- description: Task-specific distillation is performed on augmented task-specific
+    datasets.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: Data Augmentation (DA)
+- description: A i is used as the fitting target during the distillation process,
+    specifically for training TinyBERT.
+  source_chunk_index: 0
+  source_entity: Fitting Target (A i)
+  strength: 9.0
+  target_entity: TinyBERT
+- description: Equations 7, 8, 9, and 10 are used as distillation objectives within
+    the Knowledge Distillation framework.
+  source_chunk_index: 0
+  source_entity: Knowledge Distillation (KD)
+  strength: 8.0
+  target_entity: Equations 7, 8, 9, and 10
+- description: BERT serves as the teacher model in the Knowledge Distillation process,
+    providing knowledge to TinyBERT.
+  source_chunk_index: 0
+  source_entity: BERT
+  strength: 9.0
+  target_entity: Knowledge Distillation (KD)
+- description: TinyBERT is the student model in the Knowledge Distillation process,
+    learning from BERT.
+  source_chunk_index: 0
+  source_entity: TinyBERT
+  strength: 9.0
+  target_entity: Knowledge Distillation (KD)
+- description: General Distillation helps TinyBERT learn from BERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 8.0
+  target_entity: TinyBERT
+- description: Task-specific distillation is performed to derive competitive fine-tuned
+    TinyBERTs.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: TinyBERT
+- description: Transformer distillation is performed in the general domain, which
+    is a part of General Distillation.
+  source_chunk_index: 0
+  source_entity: Transformer Distillation
+  strength: 7.0
+  target_entity: General Distillation (GD)
+- description: Transformer distillation is re-performed on augmented task-specific
+    datasets during Task-specific Distillation.
+  source_chunk_index: 0
+  source_entity: Transformer Distillation
+  strength: 7.0
+  target_entity: Task-specific Distillation (TD)
+- description: Data Augmentation is used in Task-specific Distillation to extend the
+    task-specific training set.
+  source_chunk_index: 0
+  source_entity: Data Augmentation (DA)
+  strength: 7.0
+  target_entity: Task-specific Distillation (TD)

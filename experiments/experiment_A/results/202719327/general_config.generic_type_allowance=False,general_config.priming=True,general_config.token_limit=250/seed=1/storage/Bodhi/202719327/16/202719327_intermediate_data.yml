@@ -1,0 +1,109 @@
+chunk_indices:
+- 0
+entities:
+- description: A method where a smaller "student" model learns from a larger "teacher"
+    model.
+  name: Knowledge Distillation (KD)
+  source_chunk_index: 0
+  type: Method
+- description: A stage in the two-stage learning framework where TinyBERT is fine-tuned
+    on downstream tasks.
+  name: Task-specific Distillation (TD)
+  source_chunk_index: 0
+  type: Method
+- description: A stage in the two-stage learning framework that occurs during pre-training.
+  name: General Distillation (GD)
+  source_chunk_index: 0
+  type: Method
+- description: Used in the Task-specific Distillation stage to improve performance.
+  name: Data Augmentation (DA)
+  source_chunk_index: 0
+  type: Method
+- description: A task from the GLUE benchmark, used to evaluate TinyBERT's performance.
+  name: MRPC
+  source_chunk_index: 0
+  type: task
+- description: A task from the GLUE benchmark, used to evaluate TinyBERT's performance.
+  name: CoLA
+  source_chunk_index: 0
+  type: task
+- description: A task from the GLUE benchmark, used to evaluate TinyBERT's performance.
+  name: MNLI
+  source_chunk_index: 0
+  type: task
+- description: A smaller version of BERT, used as a student model in the distillation
+    process, and compared against TinyBERT.
+  name: BERT SMALL
+  source_chunk_index: 0
+  type: method
+- description: A specific configuration of the BERT model, used as a teacher model
+    in the distillation process to train TinyBERT. It is fine-tuned on downstream
+    tasks to provide task-specific knowledge.
+  name: BERT BASE
+  source_chunk_index: 0
+  type: method
+relationships:
+- description: Task-specific distillation can negatively impact the performance of
+    BERT SMALL on some tasks.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: BERT SMALL
+- description: BERT SMALL's performance is negatively impacted by task-specific distillation
+    on the MRPC task.
+  source_chunk_index: 0
+  source_entity: MRPC
+  strength: 6.0
+  target_entity: BERT SMALL
+- description: BERT SMALL's performance is negatively impacted by task-specific distillation
+    on the CoLA task.
+  source_chunk_index: 0
+  source_entity: CoLA
+  strength: 6.0
+  target_entity: BERT SMALL
+- description: Task-specific distillation has enough learning materials to make BERT
+    SMALL acquire the task-specific knowledge very well on the MNLI task.
+  source_chunk_index: 0
+  source_entity: MNLI
+  strength: 6.0
+  target_entity: BERT SMALL
+- description: General Distillation is proposed for initialization.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 7.0
+  target_entity: BERT SMALL
+- description: Task-specific distillation is under the supervision of BERT BASE.
+  source_chunk_index: 0
+  source_entity: BERT BASE
+  strength: 8.0
+  target_entity: Task-specific Distillation (TD)
+- description: Task-specific distillation continues on learning the task-specific
+    knowledge of fine-tuned teacher BERT BASE.
+  source_chunk_index: 0
+  source_entity: BERT BASE
+  strength: 7.0
+  target_entity: BERT SMALL
+- description: General Distillation (GD) is used for initializing BERT SMALL.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: BERT SMALL
+- description: Task-specific Distillation (TD) boosts the performance of BERT SMALL.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: BERT SMALL
+- description: General Distillation (GD) is used for initialization, and the text
+    states that GD can effectively transfer knowledge from the teacher BERT to the
+    student BERT SMALL.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: BERT SMALL
+- description: Task-specific distillation boosts the performances of BERT SMALL by
+    continuing on learning the task-specific knowledge of fine-tuned teacher BERT
+    BASE.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 9.0
+  target_entity: BERT SMALL

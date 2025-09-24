@@ -1,0 +1,209 @@
+chunk_indices:
+- 0
+entities:
+- description: A technique for transferring knowledge from a larger, more complex
+    model (teacher) to a smaller, simpler model (student).
+  name: Knowledge Distillation (KD)
+  source_chunk_index: 0
+  type: method
+- description: A pre-training stage in the two-stage learning framework, using a large
+    corpus to initialize TinyBERT.
+  name: General Distillation (GD)
+  source_chunk_index: 0
+  type: method
+- description: A fine-tuning stage in the two-stage learning framework, using augmented
+    data for downstream tasks.
+  name: Task-specific Distillation (TD)
+  source_chunk_index: 0
+  type: method
+- description: The novel method used to transfer knowledge from BERT layers to TinyBERT.
+  name: Transformer distillation method
+  source_chunk_index: 0
+  type: method
+- description: The process of creating new training data from existing data, used
+    in the task-specific distillation stage.
+  name: Data Augmentation (DA)
+  source_chunk_index: 0
+  type: method
+- description: The learning approach used, consisting of general distillation (pre-training)
+    and task-specific distillation (fine-tuning).
+  name: Two-stage learning framework
+  source_chunk_index: 0
+  type: method
+- description: The objective of the method, aiming to reduce the time required for
+    model predictions.
+  name: Accelerate inference
+  source_chunk_index: 0
+  type: task
+- description: The objective of the method, aiming to create a smaller model footprint.
+  name: Reduce model size
+  source_chunk_index: 0
+  type: task
+- description: The objective of the method, ensuring that the smaller model retains
+    the accuracy of the larger model.
+  name: Maintain performance
+  source_chunk_index: 0
+  type: task
+- description: A baseline Knowledge Distillation method used for comparison.
+  name: BERT-PKD
+  source_chunk_index: 0
+  type: method
+- description: A baseline Knowledge Distillation method used for comparison.
+  name: DistilBERT
+  source_chunk_index: 0
+  type: method
+- description: A collection of natural language understanding tasks used to evaluate
+    the performance of TinyBERT.
+  name: GLUE benchmark
+  source_chunk_index: 0
+  type: dataset
+- description: A task used in the GLUE benchmark to evaluate natural language understanding
+    models, specifically for paraphrase identification.
+  name: MRPC
+  source_chunk_index: 0
+  type: task
+- description: A task used in the GLUE benchmark to evaluate natural language understanding
+    models, specifically for grammatical acceptability judgment.
+  name: CoLA
+  source_chunk_index: 0
+  type: task
+- description: A task used in the GLUE benchmark to evaluate natural language understanding
+    models, specifically for natural language inference.
+  name: MNLI
+  source_chunk_index: 0
+  type: task
+- description: A smaller version of the BERT model, used as a student model in the
+    TinyBERT approach.
+  name: BERT SMALL
+  source_chunk_index: 0
+  type: method
+- description: A standard-sized BERT model, used as a teacher model in the TinyBERT
+    approach.
+  name: BERT BASE
+  source_chunk_index: 0
+  type: method
+- description: A BERT model used as a teacher model in the task-specific distillation
+    process. It provides the knowledge that TinyBERT learns from.
+  name: BERT BASE
+  source_chunk_index: 0
+  type: method
+- description: A smaller BERT model, which is the student model in the distillation
+    process. It learns from the teacher BERT model (BERT BASE or the original BERT).
+  name: BERT SMALL
+  source_chunk_index: 0
+  type: method
+- description: A task used to evaluate the performance of TinyBERT, specifically measuring
+    its ability to perform well on tasks with limited data.
+  name: MRPC
+  source_chunk_index: 0
+  type: task
+- description: A task used to evaluate the performance of TinyBERT, specifically measuring
+    its ability to perform well on tasks with limited data.
+  name: CoLA
+  source_chunk_index: 0
+  type: task
+- description: An intensive-data task used to evaluate the performance of TinyBERT.
+  name: MNLI
+  source_chunk_index: 0
+  type: task
+relationships:
+- description: Task-specific distillation can negatively impact the performance of
+    BERT SMALL on tasks with limited data.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: BERT SMALL
+- description: General Distillation transfers knowledge from the teacher BERT to the
+    student TinyBERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 8.0
+  target_entity: BERT SMALL
+- description: General Distillation uses BERT BASE as a teacher model.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 6.0
+  target_entity: BERT BASE
+- description: Task-specific distillation continues learning the task-specific knowledge
+    of fine-tuned teacher BERT BASE.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 6.0
+  target_entity: BERT BASE
+- description: BERT SMALL's performance is evaluated on the MRPC task.
+  source_chunk_index: 0
+  source_entity: MRPC
+  strength: 5.0
+  target_entity: BERT SMALL
+- description: BERT SMALL's performance is evaluated on the CoLA task.
+  source_chunk_index: 0
+  source_entity: CoLA
+  strength: 5.0
+  target_entity: BERT SMALL
+- description: BERT SMALL's performance is evaluated on the MNLI task.
+  source_chunk_index: 0
+  source_entity: MNLI
+  strength: 5.0
+  target_entity: BERT SMALL
+- description: General Distillation (GD) is used to initialize TinyBERT, which helps
+    to maintain performance.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 8.0
+  target_entity: Maintain performance
+- description: Task-specific distillation boosts the performances of TinyBERT by continuing
+    on learning the task-specific knowledge of fine-tuned teacher BERT BASE, thus
+    helping to maintain performance.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: Maintain performance
+- description: Task-specific distillation can lead to poor performance on some tasks,
+    such as MRPC.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: MRPC
+- description: Task-specific distillation can lead to poor performance on some tasks,
+    such as CoLA.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: CoLA
+- description: Task-specific distillation can lead to good performance on intensive-data
+    tasks, such as MNLI.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: MNLI
+- description: General Distillation (GD) is used to initialize TinyBERT, which learns
+    knowledge from the teacher BERT, and the results are compared with BERT SMALL.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 8.0
+  target_entity: BERT SMALL
+- description: BERT SMALL performs worse in MRPC tasks.
+  source_chunk_index: 0
+  source_entity: BERT SMALL
+  strength: 7.0
+  target_entity: MRPC
+- description: BERT SMALL performs worse in CoLA tasks.
+  source_chunk_index: 0
+  source_entity: BERT SMALL
+  strength: 7.0
+  target_entity: CoLA
+- description: Knowledge Distillation (KD) is used to accelerate inference.
+  source_chunk_index: 0
+  source_entity: Knowledge Distillation (KD)
+  strength: 6.0
+  target_entity: Accelerate inference
+- description: Knowledge Distillation (KD) is used to reduce model size.
+  source_chunk_index: 0
+  source_entity: Knowledge Distillation (KD)
+  strength: 6.0
+  target_entity: Reduce model size
+- description: Knowledge Distillation (KD) is used to maintain performance.
+  source_chunk_index: 0
+  source_entity: Knowledge Distillation (KD)
+  strength: 6.0
+  target_entity: Maintain performance

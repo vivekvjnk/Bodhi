@@ -1,0 +1,1294 @@
+[2025-09-23 16:08:28,549][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 16:08:28,549][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 16:08:28,662][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 16:08:28,662][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 54457603
+[2025-09-23 16:08:28,663][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 16:08:28,663][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 16:08:29,155][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 16:08:30,007][root][INFO] - Token count: 1105
+[2025-09-23 16:08:30,097][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 16:08:30,866][root][INFO] - Token count: 1568
+[2025-09-23 16:08:33,405][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper focuses on **video-based activity recognition**, specifically addressing the challenge of **concurrent activity recognition**, where multiple activities occur simultaneously.  The core contribution is a novel deep learning architecture. Key concepts include: **feature extraction** (using a feature-to-activity attention mechanism to preserve temporal ordering), and **multi-label prediction** (employing a tri-axial self-attention encoder-decoder to capture associations between activities).  The system is evaluated on the **hockey, volleyball, and charades datasets**.  The architecture utilizes a modified **VLAD feature extractor** and a novel **activity mapping layer**.  The paper compares its performance against baselines like **AlexNet, CNN-LSTM, i3D, and non-local neural networks**.  The architecture aims to learn independent temporal associations and predict concurrent activities, leveraging a self-attention decoder to identify hidden activity relationships.  The paper contrasts with previous approaches that used hand-crafted features (HOG, HOF) and highlights the limitations of simply adapting single-activity recognition models or using softmax without considering activity associations.
+
+
+[2025-09-23 16:08:33,405][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 16:08:33,427][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 2 text units to Bodhi/54457603/54457603_text_units.yml
+[2025-09-23 16:08:33,450][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 2, Threads: 2. Distribution: 0 threads get 2 chunks, and 2 threads get 1 chunks. Chunks per thread: [1, 1]
+[2025-09-23 16:08:33,451][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 16:08:33,453][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 16:08:33,453][Thread 0][INFO] - source chunk:
+Beyond single - image activity recognition , a new temporal feature extractor was proposed to achieve video - based activity recognition [ 1 6 ] .Existing research simply modifies single - activity recognition models with a sigmoid output layer or uses multiple single - activity recognizers for concurrent activity recognition ; these have failed to achieve satisfactory performance [ 1 8 ] .Firstly , single - activity recognition focuses on selecting the most representative features associated with a certain activity ; many attentionbased methods were proposed to improve this feature extraction .Lastly , both types of activity recognition use probabilistic inference ( softmax ) for decision making .However , simply applying softmax with a threshold or using a parallel softmax layer for concurrent activity recognition would ignore the associations between activities .To address these challenges , we introduce a concurrent activity recognition model with a feature - to - activity attention for feature extraction and a tri - axial self - attention encoder - decoder for multi - label prediction .The proposed feature - to - activity attention maintains unaggregated temporal information to preserve temporal ordering ; different activities may occur at different times and require different temporal attentions , which would be Tri - axial Self - Attention for Concurrent Activity Recognition An overview of proposed concurrent activity recognition system that generates separated spatial - temporal features for independent activities . ignored by simple aggregation .We tested our system with published datasets : the hockey dataset [ 5 ] ( 1 2 activities ) , the volleyball dataset [ 1 5 ] ( 9 activities ) , and the charades dataset [ 2 5 ] ( 1 5 7 activities ) .Our contributions are : • A three level feature extraction strategy with a novel feature - to - activity attention for concurrent activity recognition . • A triaxial self - attention that learns independent temporal associations for different activities and makes concurrent activity predictions while being aware of possible activity combinations . • An activity association mask that helps the self - attentionbased decoder better capture the associations between activities .Traditional research was mainly based on hand - crafted features such as Histogram of Oriented Gradients ( HOG ) and Histogram of Optical Flow ( HOF ) [ 8 ] .Recently , deep learning has been commonly applied to activity recognition , initially using image recognition approaches with temporal feature fusion [ 1 6 ] .However , 2D CNNs originally used for image classification do not properly model spatio - temporal associations , which are critical for video - based activity recognition .CNN - LSTM strategies benefited from LSTM temporal association modeling .Spatial attention ( or region - based methods ) as well as temporal attention were proposed to help networks better focus on activity - associated features [ 2 4 ] [ 1 9 ] .The iDT [ 3 1 ] and TDD [ 3 4 ] works showed that manually - crafted ( as opposed to learned ) spatio - temporal descriptors can achieve good activity recognition performance .Most existing approaches simply modify single - activity recognition strategies for concurrent activity recognition .A CNN - LSTM structure was tested for concurrent activity recognition with limited success [ 1 8 ] .More effective feature extraction frameworks were proposed in recent years , including a multi - stream network [ 1 4 ] , a 3D convolution network [ 7 ] [ 3 7 ] , and a non - local neural network [ 3 2 ] .The features of visual objects are first extracted by the pre - trained VGG net on the ImageNet dataset .This is because unlike single - activity recognition , multiple activities might be distributed through the entire video clip ; the unspecific temporal attention will not be able to highlight the activityspecific features in time .Previous research modeled temporal features with a 3D ConvNet , LSTMs with attention , or 3D descriptors [ 1 8 ] [ 7 ] .Additionally , many previous works simply used the top N results or a sigmoid layer for concurrent activity recognition , which ignores the possible associations between activities .Previous decoder based on fully - connected layers with sigmoid [ 1 0 ] [ 7 ] ignored the feature associations between different activities .Batch normalization was used after each convolutional layer , and dropout ( rate= 0 . 5 ) was used after each dense layer to avoid overfitting .We used the Keras built - in VGG parameters for feature extraction , and set the last block as tunable .For the tunable VLAD descriptors , we made changes based on the action VLAD source code [ 3 6 ] . We tested our system with three commonly used concurrent activity recognition datasets : Hockey Dataset [ 5 ] : This was collected from real university - level hockey matches using two fixed cameras positioned at both ends of the rink on the spectator 's side .We compared our proposed method on the hockey and volleyball dataset with several baselines including : 1 .AlexNet for framewise activity recognition . 2 .CNN - LSTM with sigmoid layer [ 1 8 ] .CNNs over time [ 2 8 ] , and various SVMs .We also compared our method on the charades dataset ( Table 2 ) , the result shows our method outperformed most of the researches except the i 3 D and non - local neural network [ 3 2 ] .These two methods have much better performance on charades dataset , but they pre - trained their model on kinetics dataset ( 5 0 times larger ) and the time complexity of their methods are 5 times larger than our proposed method .Our
+[2025-09-23 16:08:33,453][Thread 1][INFO] - source chunk:
+model achieved comparable performance with only 2 0 % time complexity compared with i 3 D in charades .F 1 VGG Net [ 2 7 ] 9 1 System MAP complexity ( MACC ) AlexNet [ 1 7 ] 1 1 . 2 1. 2 B C 3 D [ 2 5 ] 1 0 . 7 8 0 B * Two - Stream + IDT [ 2 5 ] 1 8 . 6 / CoViAR [ 3 5 ] 2 1 . 9 / Asynchronous Temporal Fields [ 2 6 ] 2 2 . 4 / i 3 D [ 7 ] 3 4 .4 1 6 5 B Action VLAD [ 1 0 ] 1 7 . 6 3 4 B Non - local Neural Network [ 3 2 ] 3 7 . 5 1 6 5 B+ Our Model 2 2 . 6 3 4 B Table 2 : Experiment results on charades .We tried to replace the triaxial self - attention with a traditional LSTM encoder - decoder .Although we only demonstrated our proposed system on concurrent activity recognition , the core idea of feature - toactivity attention and tri - axial self - attention can be extended to general multi - label classification .Many recent works have demonstrated that non - local neural networks and i 3 D have good performance on activity recognition .We designed a novel deep learning architecture for recognizing concurrent activities that outperformed stateof - the - art mechanisms in three published datasets ( charades , volleyball , and hockey ) .We hope this paper delivers the following contribution to the society : • A modified VLAD feature extractor and novel activity mapping layer that extracts independent features for each activity while preserving the temporal information . • A novel triaxial self - attention that learns independent temporal associations for different activities and makes concurrent activity predictions aware of possible activity combinations . • A novel use of the self - attention decoder that helps extract hidden associations between activities and avoid redundant weights . • An implemented network architecture that can serve as a reference for any multi - label classification problem given sequential input .
+[2025-09-23 16:08:33,453][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 16:08:33,453][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 16:08:33,454][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:33,455][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:33,455][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 16:08:33,455][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 16:08:36,425][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Concurrent activity recognition
+    type: GENERIC
+    description: The task of identifying multiple activities happening simultaneously in a video.
+  - name: Deep learning architecture
+    type: GENERIC
+    description: A novel system designed for recognizing concurrent activities.
+  - name: Feature extraction
+    type: GENERIC
+    description: The process of extracting relevant features from video data, using a feature-to-activity attention mechanism.
+  - name: Tri-axial self-attention
+    type: GENERIC
+    description: A mechanism used in the architecture to capture associations between activities.
+  - name: Multi-label classification
+    type: GENERIC
+    description: A classification task where an instance can be assigned multiple labels, relevant to the architecture's application.
+  - name: Charades dataset
+    type: GENERIC
+    description: A dataset used for evaluating the performance of the proposed architecture.
+  - name: Volleyball dataset
+    type: GENERIC
+    description: A dataset used for evaluating the performance of the proposed architecture.
+  - name: Hockey dataset
+    type: GENERIC
+    description: A dataset used for evaluating the performance of the proposed architecture.
+  - name: VLAD feature extractor
+    type: GENERIC
+    description: A modified feature extractor used in the architecture.
+  - name: Activity mapping layer
+    type: GENERIC
+    description: A novel layer used in the architecture.
+  - name: Non-local neural networks
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: i3D
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: LSTM encoder-decoder
+    type: GENERIC
+    description: A traditional encoder-decoder architecture used for comparison.
+
+[2025-09-23 16:08:36,429][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:36,925][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Video-based activity recognition
+    type: GENERIC
+    description: The primary focus of the paper, addressing the challenge of recognizing activities in videos.
+  - name: Concurrent activity recognition
+    type: GENERIC
+    description: The specific challenge addressed, where multiple activities occur simultaneously in a video.
+  - name: Feature extraction
+    type: GENERIC
+    description: A key component of the proposed architecture, using a feature-to-activity attention mechanism.
+  - name: Multi-label prediction
+    type: GENERIC
+    description: Employed using a tri-axial self-attention encoder-decoder to capture associations between activities.
+  - name: Hockey dataset
+    type: GENERIC
+    description: One of the datasets used for evaluating the system, containing 12 activities.
+  - name: Volleyball dataset
+    type: GENERIC
+    description: One of the datasets used for evaluating the system, containing 9 activities.
+  - name: Charades dataset
+    type: GENERIC
+    description: One of the datasets used for evaluating the system, containing 157 activities.
+  - name: AlexNet
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: CNN-LSTM
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: i3D
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: Non-local neural networks
+    type: GENERIC
+    description: A baseline model used for comparison.
+  - name: Feature-to-activity attention
+    type: GENERIC
+    description: A novel mechanism for feature extraction, preserving temporal ordering.
+  - name: Tri-axial self-attention encoder-decoder
+    type: GENERIC
+    description: A novel architecture for multi-label prediction, capturing associations between activities.
+  - name: Histogram of Oriented Gradients (HOG)
+    type: GENERIC
+    description: A hand-crafted feature used in traditional activity recognition.
+  - name: Histogram of Optical Flow (HOF)
+    type: GENERIC
+    description: A hand-crafted feature used in traditional activity recognition.
+
+[2025-09-23 16:08:36,928][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:37,545][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are missing key method and baseline model details. Specifically, the specific architectures like VGG Net, AlexNet, and Two-Stream + IDT are missing.
+loop_required: true
+
+[2025-09-23 16:08:37,546][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:37,546][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:38,040][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key method and dataset entities. Specifically, the modified VLAD feature extractor and activity mapping layer are missing. Also, the specific details of the datasets are not fully captured.
+loop_required: true
+
+[2025-09-23 16:08:38,040][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:38,040][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:38,986][heimdall.core][INFO] - Cleaned output : entities:
+  - name: VGG Net
+    type: method
+    description: A convolutional neural network architecture used as a baseline for comparison in activity recognition.
+  - name: AlexNet
+    type: method
+    description: A convolutional neural network architecture used as a baseline for comparison in activity recognition.
+  - name: Two-Stream + IDT
+    type: method
+    description: A method combining two-stream convolutional networks with improved dense trajectories (IDT) for activity recognition, used as a baseline.
+
+[2025-09-23 16:08:38,989][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:39,946][heimdall.core][INFO] - Cleaned output : entities:
+  - name: VLAD FEATURE EXTRACTOR
+    type: method
+    description: A modified version of the VLAD feature extractor used in the proposed architecture for feature extraction.
+  - name: ACTIVITY MAPPING LAYER
+    type: method
+    description: A novel layer within the architecture, responsible for mapping features to activities.
+  - name: HOCKEY DATASET
+    type: dataset
+    description: A dataset collected from real university-level hockey matches, used for evaluating the performance of the proposed concurrent activity recognition model. It contains 12 activities.
+  - name: VOLLEYBALL DATASET
+    type: dataset
+    description: A dataset used for evaluating the performance of the proposed concurrent activity recognition model. It contains 9 activities.
+  - name: CHARADES DATASET
+    type: dataset
+    description: A dataset used for evaluating the performance of the proposed concurrent activity recognition model. It contains 157 activities.
+
+[2025-09-23 16:08:39,950][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:40,170][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key method and dataset entities. Specifically, the paper's core contribution (the novel deep learning architecture) and the specific datasets used for evaluation are not clearly represented.
+loop_required: true
+
+[2025-09-23 16:08:40,172][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:40,172][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:41,072][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and baselines mentioned in the text, such as the specific CNN-LSTM implementation and the multi-stream network.
+loop_required: true
+
+[2025-09-23 16:08:41,074][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:41,075][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:41,707][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CHARADES
+    type: dataset
+    description: A dataset used for evaluating the performance of the proposed concurrent activity recognition system.
+  - name: VOLLEYBALL
+    type: dataset
+    description: A dataset used for evaluating the performance of the proposed concurrent activity recognition system.
+  - name: HOCKEY
+    type: dataset
+    description: A dataset used for evaluating the performance of the proposed concurrent activity recognition system.
+  - name: Deep Learning Architecture
+    type: method
+    description: The novel deep learning architecture designed for recognizing concurrent activities, incorporating feature-to-activity attention and tri-axial self-attention.
+
+[2025-09-23 16:08:41,710][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:42,722][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing some key methods and datasets explicitly mentioned in the text, such as CoViAR, Asynchronous Temporal Fields, and Action VLAD. These are important baselines and should be included.
+loop_required: true
+
+[2025-09-23 16:08:42,723][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:42,724][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:43,146][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CNN-LSTM
+    type: method
+    description: A method that combines Convolutional Neural Networks (CNNs) and Long Short-Term Memory networks (LSTMs) for video-based activity recognition, used as a baseline for comparison.
+  - name: Multi-stream network
+    type: method
+    description: A feature extraction framework that processes video data through multiple streams, used for concurrent activity recognition.
+  - name: AlexNet
+    type: method
+    description: A convolutional neural network architecture used as a baseline for framewise activity recognition.
+  - name: i3D
+    type: method
+    description: A 3D convolutional neural network used as a baseline for comparison, particularly on the charades dataset.
+  - name: Non-local neural network
+    type: method
+    description: A neural network architecture that captures long-range dependencies in video data, used as a baseline for comparison, particularly on the charades dataset.
+
+[2025-09-23 16:08:43,150][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:43,846][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CoViAR
+    type: method
+    description: A method used for activity recognition, serving as a baseline for comparison.
+  - name: Asynchronous Temporal Fields
+    type: method
+    description: A method used for activity recognition, serving as a baseline for comparison.
+  - name: Action VLAD
+    type: method
+    description: A method used for activity recognition, serving as a baseline for comparison.
+
+[2025-09-23 16:08:43,849][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:44,266][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific methods used for feature extraction and the overall architecture.
+loop_required: true
+
+[2025-09-23 16:08:44,267][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 16:08:44,267][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 16:08:44,746][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 16:08:44,748][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:44,748][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 16:08:46,028][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Feature-to-Activity Attention
+    type: method
+    description: A novel attention mechanism used for feature extraction, designed to preserve temporal ordering by maintaining unaggregated temporal information.
+  - name: Tri-axial Self-Attention Encoder-Decoder
+    type: method
+    description: A novel deep learning architecture used for multi-label prediction, designed to capture associations between activities. It learns independent temporal associations and makes concurrent activity predictions.
+  - name: VLAD Feature Extractor
+    type: method
+    description: A modified version of the VLAD feature extractor used in the architecture.
+  - name: Activity Mapping Layer
+    type: method
+    description: A novel layer used in the architecture.
+
+[2025-09-23 16:08:46,032][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 16:08:46,914][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 16:08:46,916][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:46,916][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 16:08:50,833][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Concurrent activity recognition
+    target_entity: Deep learning architecture
+    description: The deep learning architecture is designed for concurrent activity recognition.
+    strength: 10.0
+  - source_entity: Deep learning architecture
+    target_entity: Feature extraction
+    description: The deep learning architecture utilizes feature extraction.
+    strength: 8.0
+  - source_entity: Deep learning architecture
+    target_entity: Tri-axial self-attention
+    description: The deep learning architecture incorporates tri-axial self-attention.
+    strength: 9.0
+  - source_entity: Deep learning architecture
+    target_entity: Multi-label classification
+    description: The core idea of the deep learning architecture can be extended to general multi-label classification.
+    strength: 7.0
+  - source_entity: Deep learning architecture
+    target_entity: Charades dataset
+    description: The deep learning architecture was evaluated on the Charades dataset.
+    strength: 8.0
+  - source_entity: Deep learning architecture
+    target_entity: Volleyball dataset
+    description: The deep learning architecture was evaluated on the Volleyball dataset.
+    strength: 8.0
+  - source_entity: Deep learning architecture
+    target_entity: Hockey dataset
+    description: The deep learning architecture was evaluated on the Hockey dataset.
+    strength: 8.0
+  - source_entity: Deep learning architecture
+    target_entity: VLAD feature extractor
+    description: The deep learning architecture uses a modified VLAD feature extractor.
+    strength: 8.0
+  - source_entity: Deep learning architecture
+    target_entity: Activity mapping layer
+    description: The deep learning architecture uses a novel activity mapping layer.
+    strength: 8.0
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks were used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: LSTM encoder-decoder
+    target_entity: Tri-axial self-attention
+    description: The text mentions replacing tri-axial self-attention with an LSTM encoder-decoder.
+    strength: 5.0
+  - source_entity: VGG Net
+    target_entity: Charades dataset
+    description: VGG Net was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: Two-Stream + IDT
+    target_entity: Charades dataset
+    description: Two-Stream + IDT was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: CoViAR
+    target_entity: Charades dataset
+    description: CoViAR was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: Asynchronous Temporal Fields
+    target_entity: Charades dataset
+    description: Asynchronous Temporal Fields was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: Action VLAD
+    target_entity: Charades dataset
+    description: Action VLAD was used for comparison on the Charades dataset.
+    strength: 6.0
+  - source_entity: CHARADES
+    target_entity: Concurrent activity recognition
+    description: CHARADES is a dataset used for concurrent activity recognition.
+    strength: 7.0
+  - source_entity: VOLLEYBALL
+    target_entity: Concurrent activity recognition
+    description: VOLLEYBALL is a dataset used for concurrent activity recognition.
+    strength: 7.0
+  - source_entity: HOCKEY
+    target_entity: Concurrent activity recognition
+    description: HOCKEY is a dataset used for concurrent activity recognition.
+    strength: 7.0
+  - source_entity: Deep Learning Architecture
+    target_entity: Charades dataset
+    description: The Deep Learning Architecture was evaluated on the Charades dataset.
+    strength: 8.0
+  - source_entity: Deep Learning Architecture
+    target_entity: Volleyball dataset
+    description: The Deep Learning Architecture was evaluated on the Volleyball dataset.
+    strength: 8.0
+  - source_entity: Deep Learning Architecture
+    target_entity: Hockey dataset
+    description: The Deep Learning Architecture was evaluated on the Hockey dataset.
+    strength: 8.0
+
+[2025-09-23 16:08:50,846][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 16:08:51,954][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between the comparison models (AlexNet, i3D, etc.) and the datasets (Charades, Volleyball, Hockey). Also, the relationship between 'Feature extraction' and 'VLAD feature extractor' is missing.
+loop_required: true
+
+[2025-09-23 16:08:51,955][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between the comparison models (AlexNet, i3D, etc.) and the datasets (Charades, Volleyball, Hockey). Also, the relationship between 'Feature extraction' and 'VLAD feature extractor' is missing.
+[2025-09-23 16:08:51,956][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:51,956][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:08:54,189][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet's performance is evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D's performance is evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: VLAD feature extractor
+    target_entity: Feature extraction
+    description: The VLAD feature extractor is a method used for feature extraction.
+    strength: 10
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks' performance is evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: Deep learning architecture
+    target_entity: Charades dataset
+    description: The deep learning architecture is evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: Deep learning architecture
+    target_entity: Volleyball dataset
+    description: The deep learning architecture is evaluated on the Volleyball dataset.
+    strength: 7
+  - source_entity: Deep learning architecture
+    target_entity: Hockey dataset
+    description: The deep learning architecture is evaluated on the Hockey dataset.
+    strength: 7
+
+[2025-09-23 16:08:54,193][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Concurrent activity recognition', 'target_entity': 'Deep learning architecture', 'description': 'The deep learning architecture is designed for concurrent activity recognition.', 'strength': 10.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Feature extraction', 'description': 'The deep learning architecture utilizes feature extraction.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Tri-axial self-attention', 'description': 'The deep learning architecture incorporates tri-axial self-attention.', 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Multi-label classification', 'description': 'The core idea of the deep learning architecture can be extended to general multi-label classification.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'VLAD feature extractor', 'description': 'The deep learning architecture uses a modified VLAD feature extractor.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Activity mapping layer', 'description': 'The deep learning architecture uses a novel activity mapping layer.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Tri-axial self-attention', 'description': 'The text mentions replacing tri-axial self-attention with an LSTM encoder-decoder.', 'strength': 5.0}, {'source_entity': 'VGG Net', 'target_entity': 'Charades dataset', 'description': 'VGG Net was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Two-Stream + IDT', 'target_entity': 'Charades dataset', 'description': 'Two-Stream + IDT was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CoViAR', 'target_entity': 'Charades dataset', 'description': 'CoViAR was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Asynchronous Temporal Fields', 'target_entity': 'Charades dataset', 'description': 'Asynchronous Temporal Fields was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Action VLAD', 'target_entity': 'Charades dataset', 'description': 'Action VLAD was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CHARADES', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'VOLLEYBALL', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'HOCKEY', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Charades dataset', 'description': 'The Deep Learning Architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Volleyball dataset', 'description': 'The Deep Learning Architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Hockey dataset', 'description': 'The Deep Learning Architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': "AlexNet's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': "i3D's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'VLAD feature extractor', 'target_entity': 'Feature extraction', 'description': 'The VLAD feature extractor is a method used for feature extraction.', 'strength': 10.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': "Non-local neural networks' performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture is evaluated on the Charades dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture is evaluated on the Volleyball dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture is evaluated on the Hockey dataset.', 'strength': 7.0}]
+
+[2025-09-23 16:08:54,194][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 16:08:54,940][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Video-based activity recognition
+    target_entity: Feature extraction
+    description: Feature extraction is a key component of video-based activity recognition.
+    strength: 8.0
+  - source_entity: Video-based activity recognition
+    target_entity: Concurrent activity recognition
+    description: The paper addresses the challenge of concurrent activity recognition within the context of video-based activity recognition.
+    strength: 9.0
+  - source_entity: Concurrent activity recognition
+    target_entity: Multi-label prediction
+    description: Multi-label prediction is used in concurrent activity recognition.
+    strength: 7.0
+  - source_entity: Concurrent activity recognition
+    target_entity: Feature-to-activity attention
+    description: Feature-to-activity attention is used for feature extraction in concurrent activity recognition.
+    strength: 8.0
+  - source_entity: Concurrent activity recognition
+    target_entity: Tri-axial self-attention encoder-decoder
+    description: The Tri-axial self-attention encoder-decoder is used for multi-label prediction in concurrent activity recognition.
+    strength: 8.0
+  - source_entity: Feature extraction
+    target_entity: Feature-to-activity attention
+    description: Feature-to-activity attention is a mechanism used for feature extraction.
+    strength: 9.0
+  - source_entity: Multi-label prediction
+    target_entity: Tri-axial self-attention encoder-decoder
+    description: The Tri-axial self-attention encoder-decoder is used for multi-label prediction.
+    strength: 9.0
+  - source_entity: Hockey dataset
+    target_entity: Concurrent activity recognition
+    description: The Hockey dataset is used to test the concurrent activity recognition model.
+    strength: 7.0
+  - source_entity: Volleyball dataset
+    target_entity: Concurrent activity recognition
+    description: The Volleyball dataset is used to test the concurrent activity recognition model.
+    strength: 7.0
+  - source_entity: Charades dataset
+    target_entity: Concurrent activity recognition
+    description: The Charades dataset is used to test the concurrent activity recognition model.
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: Video-based activity recognition
+    description: AlexNet is used as a baseline for video-based activity recognition.
+    strength: 6.0
+  - source_entity: CNN-LSTM
+    target_entity: Video-based activity recognition
+    description: CNN-LSTM is used as a baseline for video-based activity recognition.
+    strength: 6.0
+  - source_entity: i3D
+    target_entity: Video-based activity recognition
+    description: i3D is used as a baseline for video-based activity recognition.
+    strength: 6.0
+  - source_entity: Non-local neural networks
+    target_entity: Video-based activity recognition
+    description: Non-local neural networks are used as a baseline for video-based activity recognition.
+    strength: 6.0
+  - source_entity: Feature-to-activity attention
+    target_entity: Feature extraction
+    description: Feature-to-activity attention is used for feature extraction.
+    strength: 9.0
+  - source_entity: Tri-axial self-attention encoder-decoder
+    target_entity: Multi-label prediction
+    description: The Tri-axial self-attention encoder-decoder is used for multi-label prediction.
+    strength: 9.0
+  - source_entity: VLAD FEATURE EXTRACTOR
+    target_entity: Feature extraction
+    description: VLAD FEATURE EXTRACTOR is used for feature extraction.
+    strength: 7.0
+  - source_entity: ACTIVITY MAPPING LAYER
+    target_entity: Video-based activity recognition
+    description: ACTIVITY MAPPING LAYER is a novel layer within the architecture.
+    strength: 7.0
+  - source_entity: HOCKEY DATASET
+    target_entity: Concurrent activity recognition
+    description: HOCKEY DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.
+    strength: 8.0
+  - source_entity: VOLLEYBALL DATASET
+    target_entity: Concurrent activity recognition
+    description: VOLLEYBALL DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.
+    strength: 8.0
+  - source_entity: CHARADES DATASET
+    target_entity: Concurrent activity recognition
+    description: CHARADES DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.
+    strength: 8.0
+  - source_entity: CNN-LSTM
+    target_entity: Concurrent activity recognition
+    description: CNN-LSTM is tested for concurrent activity recognition.
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: framewise activity recognition
+    description: AlexNet is used for framewise activity recognition.
+    strength: 7.0
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D is compared on the charades dataset.
+    strength: 7.0
+  - source_entity: Non-local neural network
+    target_entity: Charades dataset
+    description: Non-local neural network is compared on the charades dataset.
+    strength: 7.0
+  - source_entity: Feature-to-Activity Attention
+    target_entity: Feature extraction
+    description: Feature-to-Activity Attention is used for feature extraction.
+    strength: 9.0
+  - source_entity: Tri-axial Self-Attention Encoder-Decoder
+    target_entity: Multi-label prediction
+    description: Tri-axial Self-Attention Encoder-Decoder is used for multi-label prediction.
+    strength: 9.0
+  - source_entity: VLAD Feature Extractor
+    target_entity: Feature extraction
+    description: VLAD Feature Extractor is used for feature extraction.
+    strength: 7.0
+  - source_entity: Activity Mapping Layer
+    target_entity: Video-based activity recognition
+    description: Activity Mapping Layer is a novel layer used in the architecture.
+    strength: 7.0
+
+[2025-09-23 16:08:54,953][Thread 0][WARNING] - Found false extractions in relationships: [{'source_entity': 'AlexNet', 'target_entity': 'framewise activity recognition', 'description': 'AlexNet is used for framewise activity recognition.', 'strength': 7.0}]
+[2025-09-23 16:08:54,953][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 16:08:55,297][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between the comparison models (AlexNet, i3D, etc.) and the datasets (Charades, Volleyball, Hockey) regarding their performance. Also, the relationship between 'LSTM encoder-decoder' and 'Deep learning architecture' is missing.
+loop_required: True
+
+[2025-09-23 16:08:55,299][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between the comparison models (AlexNet, i3D, etc.) and the datasets (Charades, Volleyball, Hockey) regarding their performance. Also, the relationship between 'LSTM encoder-decoder' and 'Deep learning architecture' is missing.
+[2025-09-23 16:08:55,300][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:55,300][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:08:56,267][heimdall.core][INFO] - Cleaned output : reason_to_loop: The current relationships are missing connections between the datasets and the specific methods used for comparison. For example, the text mentions AlexNet, CNN-LSTM, i3D, and Non-local neural networks are compared on the Hockey, Volleyball, and Charades datasets. These relationships are not explicitly captured. Also, the VLAD Feature Extractor and Activity Mapping Layer are not connected to the datasets.
+loop_required: true
+
+[2025-09-23 16:08:56,269][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The current relationships are missing connections between the datasets and the specific methods used for comparison. For example, the text mentions AlexNet, CNN-LSTM, i3D, and Non-local neural networks are compared on the Hockey, Volleyball, and Charades datasets. These relationships are not explicitly captured. Also, the VLAD Feature Extractor and Activity Mapping Layer are not connected to the datasets.
+[2025-09-23 16:08:56,270][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:56,270][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:08:57,706][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet's performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D's performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: LSTM encoder-decoder
+    target_entity: Deep learning architecture
+    description: The text mentions replacing the triaxial self-attention with a traditional LSTM encoder-decoder, indicating that LSTM encoder-decoder is a type of deep learning architecture.
+    strength: 8
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks' performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: Deep learning architecture
+    target_entity: Charades dataset
+    description: The deep learning architecture's performance was evaluated on the Charades dataset.
+    strength: 9
+  - source_entity: Deep learning architecture
+    target_entity: Volleyball dataset
+    description: The deep learning architecture's performance was evaluated on the Volleyball dataset.
+    strength: 9
+  - source_entity: Deep learning architecture
+    target_entity: Hockey dataset
+    description: The deep learning architecture's performance was evaluated on the Hockey dataset.
+    strength: 9
+
+[2025-09-23 16:08:57,711][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Concurrent activity recognition', 'target_entity': 'Deep learning architecture', 'description': 'The deep learning architecture is designed for concurrent activity recognition.', 'strength': 10.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Feature extraction', 'description': 'The deep learning architecture utilizes feature extraction.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Tri-axial self-attention', 'description': 'The deep learning architecture incorporates tri-axial self-attention.', 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Multi-label classification', 'description': 'The core idea of the deep learning architecture can be extended to general multi-label classification.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'VLAD feature extractor', 'description': 'The deep learning architecture uses a modified VLAD feature extractor.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Activity mapping layer', 'description': 'The deep learning architecture uses a novel activity mapping layer.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Tri-axial self-attention', 'description': 'The text mentions replacing tri-axial self-attention with an LSTM encoder-decoder.', 'strength': 5.0}, {'source_entity': 'VGG Net', 'target_entity': 'Charades dataset', 'description': 'VGG Net was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Two-Stream + IDT', 'target_entity': 'Charades dataset', 'description': 'Two-Stream + IDT was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CoViAR', 'target_entity': 'Charades dataset', 'description': 'CoViAR was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Asynchronous Temporal Fields', 'target_entity': 'Charades dataset', 'description': 'Asynchronous Temporal Fields was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Action VLAD', 'target_entity': 'Charades dataset', 'description': 'Action VLAD was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CHARADES', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'VOLLEYBALL', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'HOCKEY', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Charades dataset', 'description': 'The Deep Learning Architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Volleyball dataset', 'description': 'The Deep Learning Architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Hockey dataset', 'description': 'The Deep Learning Architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': "AlexNet's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': "i3D's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'VLAD feature extractor', 'target_entity': 'Feature extraction', 'description': 'The VLAD feature extractor is a method used for feature extraction.', 'strength': 10.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': "Non-local neural networks' performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture is evaluated on the Charades dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture is evaluated on the Volleyball dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture is evaluated on the Hockey dataset.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': "AlexNet's performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': "i3D's performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Deep learning architecture', 'description': 'The text mentions replacing the triaxial self-attention with a traditional LSTM encoder-decoder, indicating that LSTM encoder-decoder is a type of deep learning architecture.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': "Non-local neural networks' performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': "The deep learning architecture's performance was evaluated on the Charades dataset.", 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': "The deep learning architecture's performance was evaluated on the Volleyball dataset.", 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': "The deep learning architecture's performance was evaluated on the Hockey dataset.", 'strength': 9.0}]
+
+[2025-09-23 16:08:57,712][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 16:08:58,867][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between the performance of different models (AlexNet, i3D, VGG Net, etc.) and the Charades dataset. Also, the relationship between LSTM encoder-decoder and Deep learning architecture is missing.
+loop_required: True
+
+[2025-09-23 16:08:58,869][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between the performance of different models (AlexNet, i3D, VGG Net, etc.) and the Charades dataset. Also, the relationship between LSTM encoder-decoder and Deep learning architecture is missing.
+[2025-09-23 16:08:58,869][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:08:58,869][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:09:00,426][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Hockey dataset
+    description: AlexNet was used as a baseline and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: CNN-LSTM
+    target_entity: Hockey dataset
+    description: CNN-LSTM was used as a baseline and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: i3D
+    target_entity: Hockey dataset
+    description: i3D was used as a baseline and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: Non-local neural networks
+    target_entity: Hockey dataset
+    description: Non-local neural networks were used as a baseline and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: Volleyball dataset
+    description: AlexNet was used as a baseline and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: CNN-LSTM
+    target_entity: Volleyball dataset
+    description: CNN-LSTM was used as a baseline and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: i3D
+    target_entity: Volleyball dataset
+    description: i3D was used as a baseline and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: Non-local neural networks
+    target_entity: Volleyball dataset
+    description: Non-local neural networks were used as a baseline and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet was used as a baseline and compared on the Charades dataset.
+    strength: 8
+  - source_entity: CNN-LSTM
+    target_entity: Charades dataset
+    description: CNN-LSTM was used as a baseline and compared on the Charades dataset.
+    strength: 8
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D was used as a baseline and compared on the Charades dataset.
+    strength: 8
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks were used as a baseline and compared on the Charades dataset.
+    strength: 8
+  - source_entity: VLAD FEATURE EXTRACTOR
+    target_entity: Video-based activity recognition
+    description: The VLAD feature extractor is used in the context of video-based activity recognition.
+    strength: 7
+  - source_entity: ACTIVITY MAPPING LAYER
+    target_entity: Video-based activity recognition
+    description: The activity mapping layer is used in the context of video-based activity recognition.
+    strength: 7
+
+[2025-09-23 16:09:00,433][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Video-based activity recognition', 'target_entity': 'Feature extraction', 'description': 'Feature extraction is a key component of video-based activity recognition.', 'strength': 8.0}, {'source_entity': 'Video-based activity recognition', 'target_entity': 'Concurrent activity recognition', 'description': 'The paper addresses the challenge of concurrent activity recognition within the context of video-based activity recognition.', 'strength': 9.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Multi-label prediction', 'description': 'Multi-label prediction is used in concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is used for feature extraction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Feature extraction', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is a mechanism used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Multi-label prediction', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Hockey dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Volleyball dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Charades dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Charades dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Video-based activity recognition', 'description': 'AlexNet is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Video-based activity recognition', 'description': 'CNN-LSTM is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Video-based activity recognition', 'description': 'i3D is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Video-based activity recognition', 'description': 'Non-local neural networks are used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Feature-to-activity attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-activity attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial self-attention encoder-decoder', 'target_entity': 'Multi-label prediction', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Feature extraction', 'description': 'VLAD FEATURE EXTRACTOR is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'ACTIVITY MAPPING LAYER is a novel layer within the architecture.', 'strength': 7.0}, {'source_entity': 'HOCKEY DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'VOLLEYBALL DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CHARADES DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Concurrent activity recognition', 'description': 'CNN-LSTM is tested for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Non-local neural network', 'target_entity': 'Charades dataset', 'description': 'Non-local neural network is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Feature-to-Activity Attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-Activity Attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial Self-Attention Encoder-Decoder', 'target_entity': 'Multi-label prediction', 'description': 'Tri-axial Self-Attention Encoder-Decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD Feature Extractor', 'target_entity': 'Feature extraction', 'description': 'VLAD Feature Extractor is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'Activity Mapping Layer', 'target_entity': 'Video-based activity recognition', 'description': 'Activity Mapping Layer is a novel layer used in the architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Hockey dataset', 'description': 'AlexNet was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Hockey dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Hockey dataset', 'description': 'i3D was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Hockey dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Volleyball dataset', 'description': 'AlexNet was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Volleyball dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Volleyball dataset', 'description': 'i3D was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Volleyball dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Charades dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Video-based activity recognition', 'description': 'The VLAD feature extractor is used in the context of video-based activity recognition.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'The activity mapping layer is used in the context of video-based activity recognition.', 'strength': 7.0}]
+
+[2025-09-23 16:09:00,434][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 16:09:00,907][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet's performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D's performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: VGG Net
+    target_entity: Charades dataset
+    description: VGG Net's performance was evaluated on the Charades dataset.
+    strength: 7
+  - source_entity: LSTM encoder-decoder
+    target_entity: Deep learning architecture
+    description: The text mentions replacing the triaxial self-attention with a traditional LSTM encoder-decoder, indicating a relationship between LSTM encoder-decoder and the overall deep learning architecture.
+    strength: 8
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks' performance was evaluated on the Charades dataset.
+    strength: 7
+
+[2025-09-23 16:09:00,911][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Concurrent activity recognition', 'target_entity': 'Deep learning architecture', 'description': 'The deep learning architecture is designed for concurrent activity recognition.', 'strength': 10.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Feature extraction', 'description': 'The deep learning architecture utilizes feature extraction.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Tri-axial self-attention', 'description': 'The deep learning architecture incorporates tri-axial self-attention.', 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Multi-label classification', 'description': 'The core idea of the deep learning architecture can be extended to general multi-label classification.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'VLAD feature extractor', 'description': 'The deep learning architecture uses a modified VLAD feature extractor.', 'strength': 8.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Activity mapping layer', 'description': 'The deep learning architecture uses a novel activity mapping layer.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Tri-axial self-attention', 'description': 'The text mentions replacing tri-axial self-attention with an LSTM encoder-decoder.', 'strength': 5.0}, {'source_entity': 'VGG Net', 'target_entity': 'Charades dataset', 'description': 'VGG Net was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Two-Stream + IDT', 'target_entity': 'Charades dataset', 'description': 'Two-Stream + IDT was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CoViAR', 'target_entity': 'Charades dataset', 'description': 'CoViAR was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Asynchronous Temporal Fields', 'target_entity': 'Charades dataset', 'description': 'Asynchronous Temporal Fields was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'Action VLAD', 'target_entity': 'Charades dataset', 'description': 'Action VLAD was used for comparison on the Charades dataset.', 'strength': 6.0}, {'source_entity': 'CHARADES', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'VOLLEYBALL', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'HOCKEY', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY is a dataset used for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Charades dataset', 'description': 'The Deep Learning Architecture was evaluated on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Volleyball dataset', 'description': 'The Deep Learning Architecture was evaluated on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Deep Learning Architecture', 'target_entity': 'Hockey dataset', 'description': 'The Deep Learning Architecture was evaluated on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': "AlexNet's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': "i3D's performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'VLAD feature extractor', 'target_entity': 'Feature extraction', 'description': 'The VLAD feature extractor is a method used for feature extraction.', 'strength': 10.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': "Non-local neural networks' performance is evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': 'The deep learning architecture is evaluated on the Charades dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': 'The deep learning architecture is evaluated on the Volleyball dataset.', 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': 'The deep learning architecture is evaluated on the Hockey dataset.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': "AlexNet's performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': "i3D's performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Deep learning architecture', 'description': 'The text mentions replacing the triaxial self-attention with a traditional LSTM encoder-decoder, indicating that LSTM encoder-decoder is a type of deep learning architecture.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': "Non-local neural networks' performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Charades dataset', 'description': "The deep learning architecture's performance was evaluated on the Charades dataset.", 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Volleyball dataset', 'description': "The deep learning architecture's performance was evaluated on the Volleyball dataset.", 'strength': 9.0}, {'source_entity': 'Deep learning architecture', 'target_entity': 'Hockey dataset', 'description': "The deep learning architecture's performance was evaluated on the Hockey dataset.", 'strength': 9.0}, {'source_entity': 'VGG Net', 'target_entity': 'Charades dataset', 'description': "VGG Net's performance was evaluated on the Charades dataset.", 'strength': 7.0}, {'source_entity': 'LSTM encoder-decoder', 'target_entity': 'Deep learning architecture', 'description': 'The text mentions replacing the triaxial self-attention with a traditional LSTM encoder-decoder, indicating a relationship between LSTM encoder-decoder and the overall deep learning architecture.', 'strength': 8.0}]
+
+[2025-09-23 16:09:00,911][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 16:09:01,866][heimdall.core][INFO] - Cleaned output : reason_to_loop: The current relationships are missing connections between the datasets and the baselines used for comparison. Specifically, the text explicitly states that AlexNet, CNN-LSTM, i3D, and Non-local neural networks were compared on the Hockey, Volleyball, and Charades datasets. These relationships are not fully captured.
+loop_required: true
+
+[2025-09-23 16:09:01,868][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The current relationships are missing connections between the datasets and the baselines used for comparison. Specifically, the text explicitly states that AlexNet, CNN-LSTM, i3D, and Non-local neural networks were compared on the Hockey, Volleyball, and Charades datasets. These relationships are not fully captured.
+[2025-09-23 16:09:01,868][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:09:01,869][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:09:02,353][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit (4) has been reached. No further iterations are permitted, even if missing relationships exist. The current relationships capture the core connections, including the architecture''s components, datasets used, and comparisons to baselines. While more granular relationships could be extracted, the iteration limit prevents further refinement.'
+loop_required: false
+
+[2025-09-23 16:09:02,355][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit (4) has been reached. No further iterations are permitted, even if missing relationships exist. The current relationships capture the core connections, including the architecture's components, datasets used, and comparisons to baselines. While more granular relationships could be extracted, the iteration limit prevents further refinement.
+[2025-09-23 16:09:02,356][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 16:09:02,356][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 16:09:02,356][Thread 1][ERROR] - File doesn't exist: Bodhi/54457603/1/54457603_intermediate_data.yml. Creating file..
+[2025-09-23 16:09:02,372][Thread 1][INFO] - Nodes & relations saved to Bodhi/54457603/1/54457603_intermediate_data.yml
+[2025-09-23 16:09:02,372][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 16:09:02,372][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 16:09:02,373][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 28.92100715637207
+
+[2025-09-23 16:09:05,712][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Hockey dataset
+    target_entity: AlexNet
+    description: AlexNet was used as a baseline for comparison on the Hockey dataset.
+    strength: 8
+  - source_entity: Hockey dataset
+    target_entity: CNN-LSTM
+    description: CNN-LSTM was used as a baseline for comparison on the Hockey dataset.
+    strength: 8
+  - source_entity: Volleyball dataset
+    target_entity: AlexNet
+    description: AlexNet was used as a baseline for comparison on the Volleyball dataset.
+    strength: 8
+  - source_entity: Volleyball dataset
+    target_entity: CNN-LSTM
+    description: CNN-LSTM was used as a baseline for comparison on the Volleyball dataset.
+    strength: 8
+  - source_entity: Charades dataset
+    target_entity: AlexNet
+    description: AlexNet was used as a baseline for comparison on the Charades dataset.
+    strength: 8
+  - source_entity: Charades dataset
+    target_entity: CNN-LSTM
+    description: CNN-LSTM was used as a baseline for comparison on the Charades dataset.
+    strength: 8
+  - source_entity: Charades dataset
+    target_entity: i3D
+    description: i3D was used as a baseline for comparison on the Charades dataset.
+    strength: 9
+  - source_entity: Charades dataset
+    target_entity: Non-local neural networks
+    description: Non-local neural networks were used as a baseline for comparison on the Charades dataset.
+    strength: 9
+  - source_entity: Hockey dataset
+    target_entity: i3D
+    description: i3D was not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.
+    strength: 6
+  - source_entity: Hockey dataset
+    target_entity: Non-local neural networks
+    description: Non-local neural networks were not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.
+    strength: 6
+  - source_entity: Volleyball dataset
+    target_entity: i3D
+    description: i3D was not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.
+    strength: 6
+  - source_entity: Volleyball dataset
+    target_entity: Non-local neural networks
+    description: Non-local neural networks were not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.
+    strength: 6
+
+[2025-09-23 16:09:05,716][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Video-based activity recognition', 'target_entity': 'Feature extraction', 'description': 'Feature extraction is a key component of video-based activity recognition.', 'strength': 8.0}, {'source_entity': 'Video-based activity recognition', 'target_entity': 'Concurrent activity recognition', 'description': 'The paper addresses the challenge of concurrent activity recognition within the context of video-based activity recognition.', 'strength': 9.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Multi-label prediction', 'description': 'Multi-label prediction is used in concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is used for feature extraction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Feature extraction', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is a mechanism used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Multi-label prediction', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Hockey dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Volleyball dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Charades dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Charades dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Video-based activity recognition', 'description': 'AlexNet is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Video-based activity recognition', 'description': 'CNN-LSTM is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Video-based activity recognition', 'description': 'i3D is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Video-based activity recognition', 'description': 'Non-local neural networks are used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Feature-to-activity attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-activity attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial self-attention encoder-decoder', 'target_entity': 'Multi-label prediction', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Feature extraction', 'description': 'VLAD FEATURE EXTRACTOR is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'ACTIVITY MAPPING LAYER is a novel layer within the architecture.', 'strength': 7.0}, {'source_entity': 'HOCKEY DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'VOLLEYBALL DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CHARADES DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Concurrent activity recognition', 'description': 'CNN-LSTM is tested for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Non-local neural network', 'target_entity': 'Charades dataset', 'description': 'Non-local neural network is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Feature-to-Activity Attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-Activity Attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial Self-Attention Encoder-Decoder', 'target_entity': 'Multi-label prediction', 'description': 'Tri-axial Self-Attention Encoder-Decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD Feature Extractor', 'target_entity': 'Feature extraction', 'description': 'VLAD Feature Extractor is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'Activity Mapping Layer', 'target_entity': 'Video-based activity recognition', 'description': 'Activity Mapping Layer is a novel layer used in the architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Hockey dataset', 'description': 'AlexNet was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Hockey dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Hockey dataset', 'description': 'i3D was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Hockey dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Volleyball dataset', 'description': 'AlexNet was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Volleyball dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Volleyball dataset', 'description': 'i3D was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Volleyball dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Charades dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Video-based activity recognition', 'description': 'The VLAD feature extractor is used in the context of video-based activity recognition.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'The activity mapping layer is used in the context of video-based activity recognition.', 'strength': 7.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'i3D', 'description': 'i3D was used as a baseline for comparison on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'Charades dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were used as a baseline for comparison on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'i3D', 'description': 'i3D was not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'i3D', 'description': 'i3D was not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.', 'strength': 6.0}]
+
+[2025-09-23 16:09:05,716][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 16:09:07,024][heimdall.core][INFO] - Cleaned output : reason_to_loop: The current relationships are missing connections between the datasets and the baselines used for comparison. Specifically, the relationships between AlexNet, CNN-LSTM, i3D, and Non-local neural networks and the Hockey, Volleyball, and Charades datasets are not fully represented. The text explicitly states that these baselines were compared on these datasets.
+loop_required: true
+
+[2025-09-23 16:09:07,024][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The current relationships are missing connections between the datasets and the baselines used for comparison. Specifically, the relationships between AlexNet, CNN-LSTM, i3D, and Non-local neural networks and the Hockey, Volleyball, and Charades datasets are not fully represented. The text explicitly states that these baselines were compared on these datasets.
+[2025-09-23 16:09:07,025][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 16:09:07,025][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 16:09:09,559][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Hockey dataset
+    description: AlexNet was used as a baseline for framewise activity recognition and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: CNN-LSTM
+    target_entity: Hockey dataset
+    description: CNN-LSTM was used as a baseline and compared on the Hockey dataset.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: Volleyball dataset
+    description: AlexNet was used as a baseline for framewise activity recognition and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: CNN-LSTM
+    target_entity: Volleyball dataset
+    description: CNN-LSTM was used as a baseline and compared on the Volleyball dataset.
+    strength: 8
+  - source_entity: i3D
+    target_entity: Charades dataset
+    description: i3D was used as a baseline and compared on the Charades dataset.
+    strength: 9
+  - source_entity: Non-local neural networks
+    target_entity: Charades dataset
+    description: Non-local neural networks was used as a baseline and compared on the Charades dataset.
+    strength: 9
+  - source_entity: CNN-LSTM
+    target_entity: Charades dataset
+    description: CNN-LSTM was used as a baseline and compared on the Charades dataset.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: Charades dataset
+    description: AlexNet was used as a baseline for framewise activity recognition and compared on the Charades dataset.
+    strength: 8
+
+[2025-09-23 16:09:09,564][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Video-based activity recognition', 'target_entity': 'Feature extraction', 'description': 'Feature extraction is a key component of video-based activity recognition.', 'strength': 8.0}, {'source_entity': 'Video-based activity recognition', 'target_entity': 'Concurrent activity recognition', 'description': 'The paper addresses the challenge of concurrent activity recognition within the context of video-based activity recognition.', 'strength': 9.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Multi-label prediction', 'description': 'Multi-label prediction is used in concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is used for feature extraction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Concurrent activity recognition', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction in concurrent activity recognition.', 'strength': 8.0}, {'source_entity': 'Feature extraction', 'target_entity': 'Feature-to-activity attention', 'description': 'Feature-to-activity attention is a mechanism used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Multi-label prediction', 'target_entity': 'Tri-axial self-attention encoder-decoder', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Hockey dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Volleyball dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'Charades dataset', 'target_entity': 'Concurrent activity recognition', 'description': 'The Charades dataset is used to test the concurrent activity recognition model.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Video-based activity recognition', 'description': 'AlexNet is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Video-based activity recognition', 'description': 'CNN-LSTM is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'i3D', 'target_entity': 'Video-based activity recognition', 'description': 'i3D is used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Video-based activity recognition', 'description': 'Non-local neural networks are used as a baseline for video-based activity recognition.', 'strength': 6.0}, {'source_entity': 'Feature-to-activity attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-activity attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial self-attention encoder-decoder', 'target_entity': 'Multi-label prediction', 'description': 'The Tri-axial self-attention encoder-decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Feature extraction', 'description': 'VLAD FEATURE EXTRACTOR is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'ACTIVITY MAPPING LAYER is a novel layer within the architecture.', 'strength': 7.0}, {'source_entity': 'HOCKEY DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'HOCKEY DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'VOLLEYBALL DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'VOLLEYBALL DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CHARADES DATASET', 'target_entity': 'Concurrent activity recognition', 'description': 'CHARADES DATASET is used for evaluating the performance of the proposed concurrent activity recognition model.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Concurrent activity recognition', 'description': 'CNN-LSTM is tested for concurrent activity recognition.', 'strength': 7.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Non-local neural network', 'target_entity': 'Charades dataset', 'description': 'Non-local neural network is compared on the charades dataset.', 'strength': 7.0}, {'source_entity': 'Feature-to-Activity Attention', 'target_entity': 'Feature extraction', 'description': 'Feature-to-Activity Attention is used for feature extraction.', 'strength': 9.0}, {'source_entity': 'Tri-axial Self-Attention Encoder-Decoder', 'target_entity': 'Multi-label prediction', 'description': 'Tri-axial Self-Attention Encoder-Decoder is used for multi-label prediction.', 'strength': 9.0}, {'source_entity': 'VLAD Feature Extractor', 'target_entity': 'Feature extraction', 'description': 'VLAD Feature Extractor is used for feature extraction.', 'strength': 7.0}, {'source_entity': 'Activity Mapping Layer', 'target_entity': 'Video-based activity recognition', 'description': 'Activity Mapping Layer is a novel layer used in the architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Hockey dataset', 'description': 'AlexNet was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Hockey dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Hockey dataset', 'description': 'i3D was used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Hockey dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Volleyball dataset', 'description': 'AlexNet was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Volleyball dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Volleyball dataset', 'description': 'i3D was used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Volleyball dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'CNN-LSTM', 'target_entity': 'Charades dataset', 'description': 'CNN-LSTM was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks were used as a baseline and compared on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'VLAD FEATURE EXTRACTOR', 'target_entity': 'Video-based activity recognition', 'description': 'The VLAD feature extractor is used in the context of video-based activity recognition.', 'strength': 7.0}, {'source_entity': 'ACTIVITY MAPPING LAYER', 'target_entity': 'Video-based activity recognition', 'description': 'The activity mapping layer is used in the context of video-based activity recognition.', 'strength': 7.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'AlexNet', 'description': 'AlexNet was used as a baseline for comparison on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'CNN-LSTM', 'description': 'CNN-LSTM was used as a baseline for comparison on the Charades dataset.', 'strength': 8.0}, {'source_entity': 'Charades dataset', 'target_entity': 'i3D', 'description': 'i3D was used as a baseline for comparison on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'Charades dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were used as a baseline for comparison on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'i3D', 'description': 'i3D was not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Hockey dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were not explicitly mentioned as a baseline on the Hockey dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'i3D', 'description': 'i3D was not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'Volleyball dataset', 'target_entity': 'Non-local neural networks', 'description': 'Non-local neural networks were not explicitly mentioned as a baseline on the Volleyball dataset, but the context implies it was used for comparison.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Hockey dataset', 'description': 'AlexNet was used as a baseline for framewise activity recognition and compared on the Hockey dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Volleyball dataset', 'description': 'AlexNet was used as a baseline for framewise activity recognition and compared on the Volleyball dataset.', 'strength': 8.0}, {'source_entity': 'i3D', 'target_entity': 'Charades dataset', 'description': 'i3D was used as a baseline and compared on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'Non-local neural networks', 'target_entity': 'Charades dataset', 'description': 'Non-local neural networks was used as a baseline and compared on the Charades dataset.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Charades dataset', 'description': 'AlexNet was used as a baseline for framewise activity recognition and compared on the Charades dataset.', 'strength': 8.0}]
+
+[2025-09-23 16:09:09,565][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 16:09:11,333][heimdall.core][INFO] - Cleaned output : reason_to_loop: The current relationships are mostly complete, but some relationships are underrepresented. Specifically, the relationships between the datasets (Hockey, Volleyball, Charades) and the baselines (AlexNet, CNN-LSTM, i3D, Non-local neural networks) are not fully captured. The text mentions comparisons on these datasets, and the current relationships do not fully reflect this. Also, the relationship between VLAD FEATURE EXTRACTOR and Video-based activity recognition is missing. Since the iteration counter is at its maximum, no further extraction is allowed.
+loop_required: False
+
+[2025-09-23 16:09:11,335][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The current relationships are mostly complete, but some relationships are underrepresented. Specifically, the relationships between the datasets (Hockey, Volleyball, Charades) and the baselines (AlexNet, CNN-LSTM, i3D, Non-local neural networks) are not fully captured. The text mentions comparisons on these datasets, and the current relationships do not fully reflect this. Also, the relationship between VLAD FEATURE EXTRACTOR and Video-based activity recognition is missing. Since the iteration counter is at its maximum, no further extraction is allowed.
+[2025-09-23 16:09:11,336][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 16:09:11,336][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 16:09:11,336][Thread 0][ERROR] - File doesn't exist: Bodhi/54457603/0/54457603_intermediate_data.yml. Creating file..
+[2025-09-23 16:09:11,359][Thread 0][INFO] - Nodes & relations saved to Bodhi/54457603/0/54457603_intermediate_data.yml
+[2025-09-23 16:09:11,359][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 16:09:11,359][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 16:09:11,360][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 37.909610986709595
+
+[2025-09-23 16:09:11,360][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 16:09:11,395][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 16:09:11,419][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 16:09:11,452][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 2 intermediate files into Bodhi/54457603/54457603_combined_intermediate_data.yml
+[2025-09-23 16:09:11,452][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 54457603
+Total Chunks Processed: 2
+Threads Used: 2
+Chunks per Thread: [1, 1]
+Entities Extracted: 52
+Relationships Extracted: 99
+Combined Intermediate File: Bodhi/54457603/54457603_combined_intermediate_data.yml
+Total Time Taken: 42.79 seconds
+==========================================
+[2025-09-23 16:09:11,452][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 16:09:11,452][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 16:09:11,453][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 16:09:11,453][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 16:09:11,455][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 16:09:11,455][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 16:09:11,714][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 16:09:11,714][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 16:09:11,714][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['Video-based activity recognition', 'Concurrent activity recognition', 'Feature extraction', 'Multi-label prediction']...
+Number of elements: 41
+[2025-09-23 16:09:12,121][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 54457603 
+******************************
+ - Total number of entities before resolution: 41
+ - Total number of entities after resolution: 32
+ - Total number of descriptions in all resolved nodes before resolution: 30
+ - Total number of descriptions in all resolved nodes after resolution: 27
+******************************
+
+[2025-09-23 16:09:12,122][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'Video-based activity recognition': {'type': ['GENERIC'], 'description': ['The primary focus of the paper, addressing the challenge of recognizing activities in videos.'], 'source_chunk_index': [0]}, 'Concurrent activity recognition': {'type': ['GENERIC', 'GENERIC'], 'description': ['The specific challenge addressed, where multiple activities occur simultaneously in a video.', 'The task of identifying multiple activities happening simultaneously in a video.'], 'source_chunk_index': [0, 1]}, 'Feature extraction': {'type': ['GENERIC', 'GENERIC'], 'description': ['A key component of the proposed architecture, using a feature-to-activity attention mechanism.', 'The process of extracting relevant features from video data, using a feature-to-activity attention mechanism.'], 'source_chunk_index': [0, 1]}, 'Multi-label prediction': {'type': ['GENERIC'], 'description': ['Employed using a tri-axial self-attention encoder-decoder to capture associations between activities.'], 'source_chunk_index': [0]}, 'AlexNet': {'type': ['GENERIC', 'method', 'method'], 'description': ['A baseline model used for comparison.', 'A convolutional neural network architecture used as a baseline for framewise activity recognition.', 'A convolutional neural network architecture used as a baseline for comparison in activity recognition.'], 'source_chunk_index': [0, 0, 1]}, 'CNN-LSTM': {'type': ['GENERIC', 'method'], 'description': ['A baseline model used for comparison.', 'A method that combines Convolutional Neural Networks (CNNs) and Long Short-Term Memory networks (LSTMs) for video-based activity recognition, used as a baseline for comparison.'], 'source_chunk_index': [0, 0]}, 'i3D': {'type': ['GENERIC', 'method', 'GENERIC'], 'description': ['A baseline model used for comparison.', 'A 3D convolutional neural network used as a baseline for comparison, particularly on the charades dataset.', 'A baseline model used for comparison.'], 'source_chunk_index': [0, 0, 1]}, 'Histogram of Oriented Gradients (HOG)': {'type': ['GENERIC'], 'description': ['A hand-crafted feature used in traditional activity recognition.'], 'source_chunk_index': [0]}, 'Histogram of Optical Flow (HOF)': {'type': ['GENERIC'], 'description': ['A hand-crafted feature used in traditional activity recognition.'], 'source_chunk_index': [0]}, 'Multi-stream network': {'type': ['method'], 'description': ['A feature extraction framework that processes video data through multiple streams, used for concurrent activity recognition.'], 'source_chunk_index': [0]}, 'Tri-axial self-attention': {'type': ['GENERIC'], 'description': ['A mechanism used in the architecture to capture associations between activities.'], 'source_chunk_index': [1]}, 'Multi-label classification': {'type': ['GENERIC'], 'description': ["A classification task where an instance can be assigned multiple labels, relevant to the architecture's application."], 'source_chunk_index': [1]}, 'LSTM encoder-decoder': {'type': ['GENERIC'], 'description': ['A traditional encoder-decoder architecture used for comparison.'], 'source_chunk_index': [1]}, 'VGG Net': {'type': ['method'], 'description': ['A convolutional neural network architecture used as a baseline for comparison in activity recognition.'], 'source_chunk_index': [1]}, 'Two-Stream + IDT': {'type': ['method'], 'description': ['A method combining two-stream convolutional networks with improved dense trajectories (IDT) for activity recognition, used as a baseline.'], 'source_chunk_index': [1]}, 'CHARADES': {'type': ['dataset'], 'description': ['A dataset used for evaluating the performance of the proposed concurrent activity recognition system.'], 'source_chunk_index': [1]}, 'VOLLEYBALL': {'type': ['dataset'], 'description': ['A dataset used for evaluating the performance of the proposed concurrent activity recognition system.'], 'source_chunk_index': [1]}, 'HOCKEY': {'type': ['dataset'], 'description': ['A dataset used for evaluating the performance of the proposed concurrent activity recognition system.'], 'source_chunk_index': [1]}, 'CoViAR': {'type': ['method'], 'description': ['A method used for activity recognition, serving as a baseline for comparison.'], 'source_chunk_index': [1]}, 'Asynchronous Temporal Fields': {'type': ['method'], 'description': ['A method used for activity recognition, serving as a baseline for comparison.'], 'source_chunk_index': [1]}, 'Action VLAD': {'type': ['method'], 'description': ['A method used for activity recognition, serving as a baseline for comparison.'], 'source_chunk_index': [1]}, 'Hockey dataset': {'description': ['One of the datasets used for evaluating the system, containing 12 activities.', 'A dataset used for evaluating the performance of the proposed architecture.', 'A dataset collected from real university-level hockey matches, used for evaluating the performance of the proposed concurrent activity recognition model. It contains 12 activities.'], 'type': ['GENERIC', 'dataset'], 'source_chunk_index': [0, 1]}, 'Volleyball dataset': {'description': ['One of the datasets used for evaluating the system, containing 9 activities.', 'A dataset used for evaluating the performance of the proposed architecture.', 'A dataset used for evaluating the performance of the proposed concurrent activity recognition model. It contains 9 activities.'], 'type': ['GENERIC', 'dataset'], 'source_chunk_index': [0, 1]}, 'Charades dataset': {'description': ['One of the datasets used for evaluating the system, containing 157 activities.', 'A dataset used for evaluating the performance of the proposed architecture.', 'A dataset used for evaluating the performance of the proposed concurrent activity recognition model. It contains 157 activities.'], 'type': ['GENERIC', 'dataset'], 'source_chunk_index': [0, 1]}, 'Non-local neural networks': {'description': ['A baseline model used for comparison.', 'A baseline model used for comparison.', 'A neural network architecture that captures long-range dependencies in video data, used as a baseline for comparison, particularly on the charades dataset.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0, 1]}, 'Feature-to-activity attention': {'description': ['A novel mechanism for feature extraction, preserving temporal ordering.', 'A novel attention mechanism used for feature extraction, designed to preserve temporal ordering by maintaining unaggregated temporal information.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0]}, 'Tri-axial self-attention encoder-decoder': {'description': ['A novel architecture for multi-label prediction, capturing associations between activities.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0]}, 'VLAD FEATURE EXTRACTOR': {'description': ['A modified version of the VLAD feature extractor used in the proposed architecture for feature extraction.', 'A modified feature extractor used in the architecture.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0, 1]}, 'ACTIVITY MAPPING LAYER': {'description': ['A novel layer within the architecture, responsible for mapping features to activities.', 'A novel layer used in the architecture.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0, 1]}, 'VLAD Feature Extractor': {'description': ['A modified version of the VLAD feature extractor used in the architecture.', 'A modified feature extractor used in the architecture.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0, 1]}, 'Activity Mapping Layer': {'description': ['A novel layer used in the architecture.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [0, 1]}, 'Deep learning architecture': {'description': ['A novel system designed for recognizing concurrent activities.', 'The novel deep learning architecture designed for recognizing concurrent activities, incorporating feature-to-activity attention and tri-axial self-attention.'], 'type': ['GENERIC', 'method'], 'source_chunk_index': [1]}}
+[2025-09-23 16:09:12,122][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 16:09:12,122][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 16:09:12,149][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 16:09:12,149][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:54457603...
+[2025-09-23 16:09:12,202][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 16:09:12,213][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--single - image activity recognition:
+Total number of sentences: 7722
+Sources:[300]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--temporal feature extractor:
+Total number of sentences: 7722
+Sources:[300]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--video - based activity recognition:
+Total number of sentences: 7722
+Sources:[311]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--single - activity recognition models:
+Total number of sentences: 7722
+Sources:[301]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--sigmoid:
+Total number of sentences: 7722
+Sources:[328]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--multiple single - activity recognizers:
+Total number of sentences: 7722
+Sources:[301]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--concurrent activity recognition:
+Total number of sentences: 7722
+Sources:[335]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--single - activity recognition:
+Total number of sentences: 7722
+Sources:[319]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--feature extraction:
+Total number of sentences: 7722
+Sources:[324]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--activity recognition:
+Total number of sentences: 7722
+Sources:[336]
+[2025-09-23 16:09:12,214][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--probabilistic inference:
+Total number of sentences: 7722
+Sources:[303]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--softmax:
+Total number of sentences: 7722
+Sources:[303]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--decision making:
+Total number of sentences: 7722
+Sources:[303]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--softmax with a threshold:
+Total number of sentences: 7722
+Sources:[304]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--parallel softmax:
+Total number of sentences: 7722
+Sources:[304]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--concurrent activity recognition model:
+Total number of sentences: 7722
+Sources:[305]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--feature - to - activity attention:
+Total number of sentences: 7722
+Sources:[308]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--tri - axial self - attention encoder - decoder:
+Total number of sentences: 7722
+Sources:[305]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--multi - label prediction:
+Total number of sentences: 7722
+Sources:[305]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--temporal attentions:
+Total number of sentences: 7722
+Sources:[306]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Tri - axial Self - Attention:
+Total number of sentences: 7722
+Sources:[306]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Concurrent Activity Recognition:
+Total number of sentences: 7722
+Sources:[306]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--proposed concurrent activity recognition system:
+Total number of sentences: 7722
+Sources:[306]
+[2025-09-23 16:09:12,215][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--generates separated spatial - temporal features:
+Total number of sentences: 7722
+Sources:[306]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--hockey:
+Total number of sentences: 7722
+Sources:[337]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--volleyball:
+Total number of sentences: 7722
+Sources:[337]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--charades:
+Total number of sentences: 7722
+Sources:[337]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--feature extraction strategy:
+Total number of sentences: 7722
+Sources:[308]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--triaxial self - attention:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--self - attentionbased decoder:
+Total number of sentences: 7722
+Sources:[308]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Histogram of Oriented Gradients:
+Total number of sentences: 7722
+Sources:[309]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--HOG:
+Total number of sentences: 7722
+Sources:[309]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Histogram of Optical Flow:
+Total number of sentences: 7722
+Sources:[309]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--HOF:
+Total number of sentences: 7722
+Sources:[309]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--deep learning:
+Total number of sentences: 7722
+Sources:[337]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--image recognition approaches:
+Total number of sentences: 7722
+Sources:[310]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--temporal feature fusion:
+Total number of sentences: 7722
+Sources:[310]
+[2025-09-23 16:09:12,216][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--2D CNNs:
+Total number of sentences: 7722
+Sources:[311]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--image classification:
+Total number of sentences: 7722
+Sources:[311]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--CNN - LSTM:
+Total number of sentences: 7722
+Sources:[328]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--LSTM:
+Total number of sentences: 7722
+Sources:[312]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Spatial attention:
+Total number of sentences: 7722
+Sources:[313]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--region - based methods:
+Total number of sentences: 7722
+Sources:[313]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--temporal attention:
+Total number of sentences: 7722
+Sources:[313]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--activity - associated features:
+Total number of sentences: 7722
+Sources:[313]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--iDT:
+Total number of sentences: 7722
+Sources:[314]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--TDD:
+Total number of sentences: 7722
+Sources:[314]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--single - activity recognition strategies:
+Total number of sentences: 7722
+Sources:[315]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--feature extraction frameworks:
+Total number of sentences: 7722
+Sources:[317]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--multi - stream network:
+Total number of sentences: 7722
+Sources:[317]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--3D convolution network:
+Total number of sentences: 7722
+Sources:[317]
+[2025-09-23 16:09:12,217][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--non - local neural network:
+Total number of sentences: 7722
+Sources:[330]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--VGG:
+Total number of sentences: 7722
+Sources:[324]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--ImageNet:
+Total number of sentences: 7722
+Sources:[318]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--unspecific temporal attention:
+Total number of sentences: 7722
+Sources:[319]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--activityspecific features:
+Total number of sentences: 7722
+Sources:[319]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--3D ConvNet:
+Total number of sentences: 7722
+Sources:[320]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--LSTMs:
+Total number of sentences: 7722
+Sources:[320]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--attention:
+Total number of sentences: 7722
+Sources:[320]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--3D descriptors:
+Total number of sentences: 7722
+Sources:[320]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--decoder:
+Total number of sentences: 7722
+Sources:[322]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--fully - connected layers:
+Total number of sentences: 7722
+Sources:[322]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Batch normalization:
+Total number of sentences: 7722
+Sources:[323]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--convolutional layer:
+Total number of sentences: 7722
+Sources:[323]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--dropout:
+Total number of sentences: 7722
+Sources:[323]
+[2025-09-23 16:09:12,218][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--dense layer:
+Total number of sentences: 7722
+Sources:[323]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--VLAD:
+Total number of sentences: 7722
+Sources:[325]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Hockey:
+Total number of sentences: 7722
+Sources:[325]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--AlexNet:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--framewise activity recognition:
+Total number of sentences: 7722
+Sources:[327]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--CNNs:
+Total number of sentences: 7722
+Sources:[329]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--SVMs:
+Total number of sentences: 7722
+Sources:[329]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--i 3 D:
+Total number of sentences: 7722
+Sources:[336]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--kinetics:
+Total number of sentences: 7722
+Sources:[331]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--VGG Net:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Two - Stream + IDT:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--CoViAR:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Asynchronous Temporal Fields:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Action VLAD:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--Non - local Neural Network:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--B+ Our Model:
+Total number of sentences: 7722
+Sources:[333]
+[2025-09-23 16:09:12,219][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--LSTM encoder - decoder:
+Total number of sentences: 7722
+Sources:[334]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--feature - toactivity attention:
+Total number of sentences: 7722
+Sources:[335]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--tri - axial self - attention:
+Total number of sentences: 7722
+Sources:[335]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--multi - label classification:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--non - local neural networks:
+Total number of sentences: 7722
+Sources:[336]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--recognizing concurrent activities:
+Total number of sentences: 7722
+Sources:[337]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--VLAD feature extractor:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--activity mapping layer:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--concurrent activity predictions:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--54457603--self - attention decoder:
+Total number of sentences: 7722
+Sources:[338]
+[2025-09-23 16:09:12,220][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 16:09:12,227][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_54457603.yml, skipping classification.
+[2025-09-23 16:09:12,227][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_54457603.yml
+[2025-09-23 16:09:12,232][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/15-41-16/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/storage/Bodhi/54457603/54457603_graph.yml']
+[2025-09-23 16:09:12,271][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/15-41-16/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/storage/Bodhi/54457603/54457603_graph.yml
+[2025-09-23 16:09:12,328][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 16:09:12,328][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 54457603
+[2025-09-23 16:09:12,490][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 16:09:13,362][root][INFO] - Token count: 1570
+[2025-09-23 16:09:14,138][root][INFO] - Batch token estimation (hf) complete for 30 strings.
+[2025-09-23 16:09:14,170][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:VIDEO-BASED ACTIVITY RECOGNITION\nDescription:The primary focus of the paper, addressing the challenge of recognizing activities in videos.\n', 'Name:CONCURRENT ACTIVITY RECOGNITION\nDescription:The specific challenge addressed, where multiple activities occur simultaneously in a video. ; The task of identifying multiple activities happening simultaneously in a video.\n', 'Name:FEATURE EXTRACTION\nDescription:A key component of the proposed architecture, using a feature-to-activity attention mechanism. ; The process of extracting relevant features from video data, using a feature-to-activity attention mechanism.\n', 'Name:MULTI-LABEL PREDICTION\nDescription:Employed using a tri-axial self-attention encoder-decoder to capture associations between activities.\n', 'Name:ALEXNET\nDescription:A baseline model used for comparison. ; A convolutional neural network architecture used as a baseline for framewise activity recognition. ; A convolutional neural network architecture used as a baseline for comparison in activity recognition.\n']split_entities: text_tokens=1570, instructions_tokens=500, budget_for_entities=7930, number_of_entities=30, avg_entity_tokens=35, max_entities=226, num_groups=1, entities_per_group=[30]
+[2025-09-23 16:09:38,574][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: VIDEO-BASED ACTIVITY RECOGNITION
+    type: METHOD
+  - entity: CONCURRENT ACTIVITY RECOGNITION
+    type: METHOD
+  - entity: FEATURE EXTRACTION
+    type: METHOD
+  - entity: MULTI-LABEL PREDICTION
+    type: METHOD
+  - entity: ALEXNET
+    type: METHOD
+  - entity: CNN-LSTM
+    type: METHOD
+  - entity: I3D
+    type: METHOD
+  - entity: HISTOGRAM OF ORIENTED GRADIENTS (HOG)
+    type: METHOD
+  - entity: HISTOGRAM OF OPTICAL FLOW (HOF)
+    type: METHOD
+  - entity: MULTI-STREAM NETWORK
+    type: METHOD
+  - entity: TRI-AXIAL SELF-ATTENTION
+    type: DOMAIN
+  - entity: MULTI-LABEL CLASSIFICATION
+    type: METHOD
+  - entity: LSTM ENCODER-DECODER
+    type: METHOD
+  - entity: VGG NET
+    type: METHOD
+  - entity: TWO-STREAM + IDT
+    type: METHOD
+  - entity: CHARADES
+    type: METHOD
+  - entity: VOLLEYBALL
+    type: METHOD
+  - entity: HOCKEY
+    type: METHOD
+  - entity: COVIAR
+    type: METHOD
+  - entity: ASYNCHRONOUS TEMPORAL FIELDS
+    type: METHOD
+  - entity: ACTION VLAD
+    type: METHOD
+  - entity: HOCKEY DATASET
+    type: METHOD
+  - entity: VOLLEYBALL DATASET
+    type: METHOD
+  - entity: CHARADES DATASET
+    type: METHOD
+  - entity: NON-LOCAL NEURAL NETWORKS
+    type: METHOD
+  - entity: FEATURE-TO-ACTIVITY ATTENTION
+    type: DOMAIN
+  - entity: TRI-AXIAL SELF-ATTENTION ENCODER-DECODER
+    type: DOMAIN
+  - entity: VLAD FEATURE EXTRACTOR
+    type: DOMAIN
+  - entity: ACTIVITY MAPPING LAYER
+    type: DOMAIN
+  - entity: DEEP LEARNING ARCHITECTURE
+    type: DOMAIN
+
+[2025-09-23 16:09:38,582][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 16:09:38,584][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/15-41-16/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/54457603/eval_results/classification_results.yml
+[2025-09-23 16:09:38,586][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 16:09:38,586][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 16:09:38,586][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 16:09:38,588][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 12 exact matches, 18 unmatched bodhi entities.
+[2025-09-23 16:09:38,588][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 16:09:38,681][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 13 fuzzy matches, 5 unmatched bodhi entities remain.
+[2025-09-23 16:09:38,683][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 16:09:39,556][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 16:09:40,353][root][INFO] - Batch token estimation (hf) complete for 91 strings.
+[2025-09-23 16:09:40,383][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'single - image activity recognition': 5, 'temporal feature extractor': 4, 'video - based activity recognition': 5, 'single - activity recognition models': 5, 'sigmoid': 1, 'multiple single - activity recognizers': 6, 'concurrent activity recognition': 4, 'single - activity recognition': 4, 'feature extraction': 2, 'activity recognition': 2, 'probabilistic inference': 4, 'softmax': 1, 'decision making': 2, 'softmax with a threshold': 4, 'parallel softmax': 2, 'concurrent activity recognition model': 5, 'multi - label prediction': 4, 'temporal attentions': 4, 'Concurrent Activity Recognition': 4, 'hockey': 2, 'volleyball': 3, 'charades': 2, 'feature extraction strategy': 3, 'self - attentionbased decoder': 5, 'Histogram of Oriented Gradients': 6, 'HOG': 2, 'Histogram of Optical Flow': 4, 'HOF': 2, 'deep learning': 2, 'image recognition approaches': 3, 'temporal feature fusion': 4, '2D CNNs': 4, 'image classification': 2, 'CNN - LSTM': 3, 'LSTM': 2, 'Spatial attention': 2, 'region - based methods': 4, 'temporal attention': 3, 'activity - associated features': 4, 'iDT': 2, 'TDD': 2, 'single - activity recognition strategies': 5, 'feature extraction frameworks': 3, 'multi - stream network': 4, '3D convolution network': 4, 'non - local neural network': 5, 'VGG': 2, 'ImageNet': 2, 'unspecific temporal attention': 4, 'activityspecific features': 3, '3D ConvNet': 4, 'LSTMs': 3, 'attention': 1, '3D descriptors': 3, 'decoder': 1, 'fully - connected layers': 4, 'Batch normalization': 2, 'convolutional layer': 4, 'dropout': 1, 'dense layer': 2, 'VLAD': 2, 'Hockey': 2, 'AlexNet': 2, 'framewise activity recognition': 4, 'CNNs': 2, 'SVMs': 3, 'i 3 D': 4, 'kinetics': 2, 'VGG Net': 3, 'Two - Stream + IDT': 6, 'CoViAR': 3, 'Asynchronous Temporal Fields': 5, 'Action VLAD': 3, 'Non - local Neural Network': 5, 'LSTM encoder - decoder': 5, 'multi - label classification': 4, 'non - local neural networks': 5, 'recognizing concurrent activities': 4, 'concurrent activity predictions': 4, 'self - attention decoder': 4, 'feature - to - activity attention': 6, 'tri - axial self - attention encoder - decoder': 9, 'Tri - axial Self - Attention': 6, 'proposed concurrent activity recognition system': 6, 'generates separated spatial - temporal features': 7, 'triaxial self - attention': 7, 'B+ Our Model': 4, 'feature - toactivity attention': 5, 'tri - axial self - attention': 6, 'VLAD feature extractor': 4, 'activity mapping layer': 3}
+[2025-09-23 16:09:41,151][root][INFO] - Batch token estimation (hf) complete for 5 strings.
+[2025-09-23 16:09:41,181][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_c95a4d7c728105dca5d0f5e02845900ba528b5b9786441906e27d9b6df05378c.pkl
+[2025-09-23 16:09:42,387][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 5 entities.
+[2025-09-23 16:09:42,387][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 16:09:42,388][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 0.45454545454545453, 'method_coverage': 0.25, 'precision': 0.45454545454545453, 'recall': 0.21551724137931033, 'f1': 0.29239766081871343, 'domain_precision': 0.45454545454545453, 'domain_recall': 0.3125, 'domain_f1': 0.3703703703703703, 'method_precision': 0.45454545454545453, 'method_recall': 0.2, 'method_f1': 0.2777777777777778, 'adjusted_domain_precision': 0.45454545454545453, 'adjusted_domain_recall': 0.45454545454545453, 'adjusted_domain_f1': 0.45454545454545453, 'adjusted_method_precision': 0.45454545454545453, 'adjusted_method_recall': 0.25, 'adjusted_method_f1': 0.3225806451612903, 'adjusted_precision': 0.45454545454545453, 'adjusted_recall': 0.27472527472527475, 'adjusted_f1': 0.34246575342465757}
+[2025-09-23 16:09:42,392][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/15-41-16/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/54457603/eval_results/eval_output.yml
+[2025-09-23 16:09:42,393][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/15-41-16/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/54457603/eval_results/eval_metrics.yml

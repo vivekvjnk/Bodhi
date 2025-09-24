@@ -1,0 +1,114 @@
+chunk_indices:
+- 0
+entities:
+- description: A language model that has been pre-trained on a large corpus of text
+    data.
+  name: Pre-trained Language Model (PLM)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component of the Transformer architecture.
+  name: Multi-Head Attention (MHA)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component of the Transformer architecture.
+  name: Feed-Forward Networks (FFN)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A stage in the two-stage learning framework where TinyBERT is fine-tuned
+    on downstream tasks, potentially using Data Augmentation.
+  name: Task-specific Distillation (TD)
+  source_chunk_index: 0
+  type: method
+- description: The larger "teacher" model that TinyBERT learns from, built with Transformer
+    layers.
+  name: BERT
+  source_chunk_index: 0
+  type: method
+- description: A smaller, faster, and more efficient version of BERT, designed to
+    learn from BERT through Knowledge Distillation.
+  name: TinyBERT
+  source_chunk_index: 0
+  type: method
+- description: A stage in the two-stage learning framework where TinyBERT learns knowledge
+    from intermediate layers of the teacher BERT during the pre-training stage.
+  name: General Distillation (GD)
+  source_chunk_index: 0
+  type: method
+- description: The core concept where a smaller "student" model (TinyBERT) learns
+    from a larger "teacher" model (BERT).
+  name: Knowledge Distillation
+  source_chunk_index: 0
+  type: method
+- description: Used in the Task-specific Distillation stage to improve TinyBERT's
+    performance.
+  name: Data Augmentation (DA)
+  source_chunk_index: 0
+  type: method
+- description: The architecture used in BERT, including Multi-Head Attention and Feed-Forward
+    Networks.
+  name: Transformer
+  source_chunk_index: 0
+  type: generic
+- description: A dataset used to evaluate TinyBERT, specifically mentioned in the
+    context of task-specific distillation and its impact on performance.
+  name: MRPC
+  source_chunk_index: 0
+  type: dataset
+- description: A dataset used to evaluate TinyBERT, specifically mentioned in the
+    context of task-specific distillation and its impact on performance.
+  name: CoLA
+  source_chunk_index: 0
+  type: dataset
+- description: A dataset used to evaluate TinyBERT, specifically mentioned as an intensive-data
+    task where task-specific distillation performs well.
+  name: MNLI
+  source_chunk_index: 0
+  type: dataset
+relationships:
+- description: Task-specific distillation is performed under the supervision of BERT.
+  source_chunk_index: 0
+  source_entity: BERT
+  strength: 8.0
+  target_entity: Task-specific Distillation (TD)
+- description: General Distillation is used to initialize TinyBERT.
+  source_chunk_index: 0
+  source_entity: TinyBERT
+  strength: 9.0
+  target_entity: General Distillation (GD)
+- description: TinyBERT learns from BERT.
+  source_chunk_index: 0
+  source_entity: BERT
+  strength: 9.0
+  target_entity: TinyBERT
+- description: Task-specific distillation's performance is evaluated on the MRPC dataset.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: MRPC
+- description: Task-specific distillation's performance is evaluated on the CoLA dataset.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 7.0
+  target_entity: CoLA
+- description: Task-specific distillation performs well on the MNLI dataset.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: MNLI
+- description: General Distillation transfers knowledge from BERT to TinyBERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: BERT
+- description: General Distillation (GD) transfers knowledge from the teacher BERT
+    to the student TinyBERT.
+  source_chunk_index: 0
+  source_entity: General Distillation (GD)
+  strength: 9.0
+  target_entity: BERT
+- description: Task-specific Distillation (TD) boosts the performances of TinyBERT
+    by continuing on learning the task-specific knowledge of fine-tuned teacher BERT.
+  source_chunk_index: 0
+  source_entity: Task-specific Distillation (TD)
+  strength: 8.0
+  target_entity: TinyBERT

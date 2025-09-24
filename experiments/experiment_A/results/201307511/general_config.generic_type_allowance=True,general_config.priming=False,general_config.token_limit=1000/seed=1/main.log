@@ -1,0 +1,1462 @@
+[2025-09-23 21:07:01,563][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:07:01,564][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 21:07:01,730][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:07:01,731][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 201307511
+[2025-09-23 21:07:01,731][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 21:07:01,731][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 21:07:02,965][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:07:03,460][root][INFO] - Token count: 1161
+[2025-09-23 21:07:03,502][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:07:04,532][root][INFO] - Token count: 2278
+[2025-09-23 21:07:04,581][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:07:05,148][root][INFO] - Token count: 2646
+[2025-09-23 21:07:07,664][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper introduces ViCo, a method for learning word embeddings from visual co-occurrences extracted from large-scale, textually-annotated visual datasets like VisualGenome and ImageNet.  ViCo aims to improve upon text-only embeddings like GloVe by better representing visual concept similarities and differences.  Key concepts include: **word embeddings** (e.g., GloVe, ViCo), **visual co-occurrences** (object-attribute, object-hypernym), **unsupervised clustering**, **supervised partitioning**, and **zero-shot-like generalization**.  The research compares ViCo's performance against GloVe and other baselines across various vision-language tasks (e.g., image retrieval, VQA).  The methodology involves learning embeddings via a multi-task approach, incorporating different co-occurrence types.  Evaluation metrics include V-Measure, and performance on tasks like CIFAR-100 zero-shot classification.  The paper also explores the use of WordNet synsets and hypernyms to enhance the embeddings.  The goal is to create embeddings that capture relationships between visual concepts better than text-based methods.
+
+
+[2025-09-23 21:07:07,664][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 21:07:07,693][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 3 text units to Bodhi/201307511/201307511_text_units.yml
+[2025-09-23 21:07:07,715][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 3, Threads: 3. Distribution: 0 threads get 2 chunks, and 3 threads get 1 chunks. Chunks per thread: [1, 1, 1]
+[2025-09-23 21:07:07,716][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:07,718][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:07,718][Thread 0][INFO] - source chunk:
+Specifically , we extract four types of visual co - occurrences between object and attribute words from large - scale , textually - annotated visual databases like VisualGenome and ImageNet .Through unsupervised clustering , supervised partitioning , and a zero - shot - like generalization analysis we show that our word embeddings complement text - only embeddings like GloVe by better representing similarities and differences between visual concepts that are difficult to obtain from text corpora alone .These word embeddings , e.g. , GloVe and word 2 vec , are typically learned from large - scale text corpora by modeling textual co - occurrences .While no visual dataset exists with such exhaus - tive annotations ( many non - annotated words may still be applicable to an image region ) , large scale datasets like Vi - sualGenome [ 1 7 ] and ImageNet [ 8 ] along with their Word - Net [ 3 2 ] synset annotations provide a good starting point .We use ImageNet annotations augmented with WordNet hypernyms to compute Object - Hypernym co - occurrences while the remaining types of co - occurrence are computed from VisualGenome 's object and attribute annotations .To learn ViCo , i.e. , word embeddings from Visual Cooccurrences , we could concatenate GloVe - like embeddings trained separately for each co - occurrence type via a logbilinear model .To test ViCo 's ability to capture similarities and differences between visual concepts , we analyze performance in an unsupervised clustering , supervised partitioning ( see supplementary material ) , and a zero - shot - like visual generalization setting .In both cases , ViCo augmented GloVe outperforms GloVe , random vectors , vis - w 2 v , or their combinations .Through a qualitative analogy question answering evaluation , we also find ViCo embedding space to better capture relations between visual concepts than GloVe .The latter includes Caption - Image Retrieval , VQA , Referring Expression Comprehension , and Image Captioning .Systems using ViCo outperform those using GloVe for almost all tasks and metrics .To summarize our contributions : ( 1 ) We develop a multitask method to learn a word embedding from multiple types of co - occurrences ; ( 2 ) We show that the embeddings learned from multiple visual co - occurrences , when com - bined with GloVe , outperform GloVe alone in unsupervised clustering , supervised partitioning , and zero - shot - like analysis , as well as on multiple vision - language tasks ; ( 3 ) We find that performance of supervised vision - language models is relatively insensitive to word embeddings , with even random embeddings leading to nearly the same performance as learned embeddings .Semantic Differential ( SD ) [ 3 4 ] is among the earliest attempts to obtain vector representations of words .Another approach involved acquiring word similarity annotations followed by applying Multidimensional Scaling ( MDS ) [ 2 1 ] to obtain low dimensional ( typically 2 - 4 ) embeddings and then identifying meaningful clusters or interpretable dimensions [ 4 5 ] .Like SD , the MDS approach lacked representation power , and embeddings and their interpretations varied based on words ( e.g. , food names [ 4 5 ] , animals [ 4 4 ] , etc . ) to which MDS was applied .Recent neural approaches like the Continuous Bag - of - Words ( CBOW ) and the Skip - Gram models [ 2 9 , 3 1 , 3 0 ] learn from co - occurrences in local context windows as opposed to global co - occurrence statistics .We show loss computation of different approaches for learning word embeddings wi and wj for words i and j. The embeddings are denoted by colored vertical bars . ( i ) shows GloVe 's log - bilinear model . ( ii ) is our multi - task extension to learn from multiple co - occurrence matrices .There is some work on incorporating image representations into word embeddings . vis - w 2 v [ 1 8 ] uses abstract ( synthetic ) scenes to learn visual relatedness .ViEW [ 1 3 ] is another approach to visually enhance existing word embeddings .An autoencoder is trained on pre - trained word embeddings while matching intermediate representations to visual features extracted from a convolutional network trained on ImageNet .The past year has seen several advances in contextualized word representations through pre - training on language models such as ELMo [ 3 9 ] , OpenAI GPT [ 4 2 ] , and BERT [ 9 ] .GloVe learns d - dimensional embeddings w i ∈ R d for all words i by optimizing where f : R → R is a weighting function that assigns lower weight to less frequent , noisy co - occurrences and b i is a learnable bias term for word i. Intuitively , the program in Eq. ( 1 ) learns word embeddings such that for any word pair with non - zero cooccurrence , the dot product w T i w j approximates the log co - occurrence count up to an additive constant .Note the slight difference between the objective in Eq. ( 1 ) and the original GloVe objective : GloVe replaces w j and b j withw j ( context vector ) andb j which are also trainable .We learn ViCo embeddings w i ∈ R d for all words i by minimizing the following loss function Here φ t : R d → R dt is a co - occurrence type - specific transformation function that maps ViCo embeddings to a type - specialized embedding space . b t i is a learned bias term for word i and type t. We set function f ( X ) in Eq. ( 1 ) to the constant 1 for all X.
+[2025-09-23 21:07:07,718][Thread 1][INFO] - source chunk:
+Next , we discuss the transformations φ t , benefits of capturing different types of co - occurrences , use of the second term in Eq.( 2 ) , and training details .Pennington et al. [ 3 7 ] report Adagrad to work best for GloVe .We use Visual Genome and ImageNet for estimating visual co - occurrence counts .ImageNet synsets and their ancestors in WordNet are used to compute Object - Hypernym ( oh ) counts .For each region in Vi - sualGenome , we increment X oa ij by 1 , for each word pair ( i , j ) ∈ S o ×S a , and for all synset pairs ( S o , S a ) ∈ O × A. X oa ji is also incremented unless i = j. • For each region in VisualGenome , we increment X aa ij by 1 , for each word pair ( i , j ) ∈ S a 1 × S a 2 , and for all synset pairs ( S a 1 , S a 2 ) ∈ A × A. • Let C be the union of all object synsets annotated in an image .For each image in VisualGenome , X c ij is incremented by 1 , for each word pair ( i , j ) ∈ S c 1 × S c 2 , and for all synset pairs ( S c 1 , S c 2 ) ∈ C × C. • Let H be a set of object synsets annotated for an image in ImageNet and its ancestors in WordNet .For each each image in ImageNet , X oh ij is incremented by 1 , for each word pair ( i , j ) ∈ S h 1 × S h 2 , and for all synset pairs ( S h 1 , S h 2 ) ∈ H × H. We analyze ViCo embeddings with respect to the following properties : ( 1 ) 1 Data for clustering analysis .We hypothesize that ViCo represents similarities and differences between visual categories that are missing from GloVe .Qualitative evidence to support this hypothesis can be found in t - SNE plots shown in Fig. 4 , where concatenation of GloVe and ViCo embeddings leads to tighter , more homogenous clusters of the 1 3 coarse categories than GloVe .Plots ( c , d ) in Fig. 4 compare random vectors , GloVe , variants of ViCo and their combinations ( concatenation ) for different number of clusters using V - Measure .Tab . 3 shows that ViCo alone outperforms GloVe , random , and vis - w 2 v based embeddings .WordNet is not the sole contributor to strong performance of ViCo .To verify that ViCo 's gains are not simply due to the hierarchical nature of WordNet , we evaluate a version of ViCo trained on co - occurrences computed without using WordNet , i.e. , using raw word annotations in VisualGenome instead of synset annotations and without Object - Hypernym co - occurrences .Tab . 3 shows that GloVe+ViCo(linear, 1 0 0 ,w/o WordNet ) outperforms GloVe for both coarse and fine categories on both metrics .ViCo outperforms existing visual word embeddings .Tab . 3 evaluates performance of existing visual word embeddings which are learned from abstract scenes [ 1 8 ] . wiki and coco are different versions of vis - w 2 v depending on the dataset ( Wikipedia or MS - COCO [ 2 5 , 5 ] ) used for training word 2 vec for initialization .GloVe+vis - w 2 v - wiki performs similarly to GloVe and GloVe+vis - w 2 v - wiki - coco performs only slightly better than GloVe , showing that the majority of the information captured by vis - w 2 v may already be present in GloVe .GloVe+random performs similarly to GloVe or worse .This implies that gains of GloVe+ViCo over GloVe are not just an artifact of increased dimensionality .To assess this ability , we evaluate embeddings on their zero - shot - like object classification performance using the CIFAR - 1 0 0 dataset .Note that our zero - shot - like setup is slightly different from a typical zero - shot setup because even though the visual classifier is not trained on unseen class images in CIFAR , annotations associated with images of unseen categories in VisualGenome or ImageNet may be used to compute word co - occurrences while learning word embeddings .Let f ( I ) ∈ R n be the features extracted from image I using a CNN and let w c ∈ R m denote the word embedding for class c ∈ C. Let g : R m → R n denote a function that projects word embeddings into the space of image features .In our experiments , f ( I ) is a 6 4 - dimensional feature vector produced by the last linear layer of a 3 4 - layer ResNet ( modified to accept 3 2 × 3 2 CIFAR images ) and g is a linear transformation .Fig. 5 compares chance performance ( 1/|U| ) , random vectors , GloVe , and GloVe+ViCo on four seen/unseen splits .The key conclusions are as follows : ViCo generalizes to unseen classes better than GloVe .ViCo based embeddings , especially 2 0 0 - dim .
+[2025-09-23 21:07:07,720][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:07,721][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:07,721][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:07,721][Thread 2][INFO] - source chunk:
+select and linear variants show healthy gains over GloVe .Note that this is not just due to higher dimensions of the embeddings since GloVe+random( 2 0 0 ) performs worse than GloVe .However , GloVe+ViCo(linear, 1 0 0 ) still outperforms GloVe in 3 out of 4 splits .On all tasks GloVe+ViCo outpeforms GloVe and GloVe+random .Comparing ViCo to GloVe and random vectors .GloVe+ViCo(linear ) outperforms GloVe and GloVe+random for all tasks and outperforms random for all tasks except Image Captioning .Let w 1 , w 2 , and a be the word embeddings ( GloVe or ViCo ) for the two concept words and the attribute word .We compute the scores s g and s v for GloVe and ViCo using function s(a , w 1 , w 2 ) =cosine(a , w 1 ) − cosine(a , w 2 ) , where cosine ( · ) is the cosine similarity .We then learn a linear SVM over s g for the GloVe only model and over s g and s v for the GloVe+ViCo model .Image features are then fused with a question representation using a GRU operating on word embeddings and fed into an answer classifier .We use the open source implementation of MAt - tNet [ 5 4 ] to compare localization accuracy with different embeddings on the RefCOCO+ dataset using the UNC split .Out of 3 0 analogy pairings tested , we found both GloVe and ViCo to be correct 1 9 times , only ViCo was correct 8 times , and only Glove was correct 3 times .
+[2025-09-23 21:07:07,722][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:07,723][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:07:07,723][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:07,734][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:07,734][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:07:07,735][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:07,738][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:07:10,839][heimdall.core][INFO] - Cleaned output : entities:
+  - name: ViCo embeddings
+    type: method
+    description: A method for learning visual word embeddings.
+  - name: GloVe
+    type: method
+    description: A method for learning word embeddings.
+  - name: WordNet
+    type: dataset
+    description: A lexical database of English.
+  - name: Visual Genome
+    type: dataset
+    description: A dataset used for estimating visual co-occurrence counts.
+  - name: ImageNet
+    type: dataset
+    description: A dataset used for estimating visual co-occurrence counts.
+  - name: Adagrad
+    type: method
+    description: An optimization algorithm reported to work best for GloVe.
+  - name: t-SNE plots
+    type: generic
+    description: Plots used for qualitative analysis of ViCo embeddings.
+  - name: CIFAR-100 dataset
+    type: dataset
+    description: A dataset used for evaluating zero-shot-like object classification performance.
+  - name: ResNet
+    type: method
+    description: A convolutional neural network used for feature extraction.
+  - name: Word embeddings
+    type: generic
+    description: Vector representations of words.
+  - name: Object-Hypernym (oh) counts
+    type: generic
+    description: Counts computed using ImageNet synsets and their ancestors in WordNet.
+  - name: Zero-shot object classification
+    type: task
+    description: A task used to assess the generalization ability of embeddings.
+  - name: Visual word embeddings
+    type: generic
+    description: Word embeddings specifically designed for visual data.
+  - name: MS-COCO
+    type: dataset
+    description: A dataset used for training word2vec for initialization.
+
+[2025-09-23 21:07:10,846][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:11,146][heimdall.core][INFO] - Cleaned output : entities:
+  - name: GloVe
+    type: method
+    description: A word embedding model used for representing words as vectors.
+  - name: ViCo
+    type: method
+    description: A method used for word embedding, compared with GloVe.
+  - name: Image Captioning
+    type: task
+    description: A task where the model generates a textual description for an image.
+  - name: RefCOCO+ dataset
+    type: dataset
+    description: A dataset used for image-based tasks, specifically for evaluating localization accuracy.
+  - name: UNC split
+    type: generic
+    description: A specific data split used within the RefCOCO+ dataset.
+  - name: word embeddings
+    type: generic
+    description: Vector representations of words, used as input for various models.
+  - name: linear SVM
+    type: method
+    description: A linear Support Vector Machine used for classification.
+  - name: GRU
+    type: method
+    description: Gated Recurrent Unit, a type of recurrent neural network used for processing sequential data.
+  - name: answer classifier
+    type: generic
+    description: A component of the model responsible for classifying answers.
+  - name: localization accuracy
+    type: task
+    description: A metric used to evaluate the performance of models in identifying the location of objects within an image.
+  - name: cosine similarity
+    type: method
+    description: A measure of similarity between two non-zero vectors of an inner product space.
+  - name: Image features
+    type: generic
+    description: Features extracted from images, used as input to the model.
+  - name: word embeddings
+    type: generic
+    description: Vector representations of words, used as input for various models.
+
+[2025-09-23 21:07:11,152][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:11,557][heimdall.core][INFO] - Cleaned output : entities:
+  - name: ViCo
+    type: method
+    description: Word embeddings from Visual Co-occurrences, learned from multiple types of co-occurrences.
+  - name: GloVe
+    type: method
+    description: Word embeddings learned from large-scale text corpora by modeling textual co-occurrences.
+  - name: ImageNet
+    type: dataset
+    description: A large-scale visual database used for training and evaluation, providing annotations and hypernyms.
+  - name: VisualGenome
+    type: dataset
+    description: A large-scale, textually-annotated visual database used for extracting visual co-occurrences.
+  - name: WordNet
+    type: dataset
+    description: A lexical database of English, used for synset annotations and hypernyms.
+  - name: unsupervised clustering
+    type: task
+    description: A method to group data points without prior knowledge of their categories.
+  - name: supervised partitioning
+    type: task
+    description: A method to divide a dataset into predefined groups based on labeled data.
+  - name: zero-shot-like visual generalization
+    type: task
+    description: Evaluating the ability of a model to generalize to unseen visual concepts.
+  - name: word embeddings
+    type: generic
+    description: Vector representations of words, capturing semantic relationships.
+  - name: logbilinear model
+    type: method
+    description: A model used to train GloVe-like embeddings.
+  - name: Caption-Image Retrieval
+    type: task
+    description: A vision-language task where the goal is to retrieve the image that best matches a given caption.
+  - name: VQA
+    type: task
+    description: Visual Question Answering, a task that involves answering questions about images.
+  - name: Referring Expression Comprehension
+    type: task
+    description: A task where the goal is to identify the region in an image that corresponds to a given textual description.
+  - name: Image Captioning
+    type: task
+    description: A task that involves generating a textual description for a given image.
+  - name: ELMo
+    type: method
+    description: A contextualized word representation model.
+  - name: BERT
+    type: method
+    description: A contextualized word representation model.
+
+[2025-09-23 21:07:11,563][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:11,864][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets used in the experiments, such as vis-w2v and wiki.
+loop_required: true
+
+[2025-09-23 21:07:11,866][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:11,866][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:12,375][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing specific details about the experimental setup, such as the specific splits used beyond UNC and the exact configurations of the GloVe and ViCo models (e.g., dimensions, random initialization). These details are important for understanding the experiments.
+loop_required: true
+
+[2025-09-23 21:07:12,377][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:12,377][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:12,786][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing some key methods and datasets mentioned in the text. Specifically, vis-w2v, ViEW, CBOW, and Skip-Gram models are missing. Also, the datasets used for training and evaluation are not fully captured.
+loop_required: true
+
+[2025-09-23 21:07:12,788][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:12,788][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:12,989][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Vis-w2v
+    type: method
+    description: "A visual word embedding method. Different versions of vis-w2v are trained depending on the dataset used for training word2vec for initialization."
+  - name: Wiki
+    type: dataset
+    description: "A dataset used for training vis-w2v. It refers to Wikipedia."
+
+[2025-09-23 21:07:12,992][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:14,320][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key datasets and methods directly related to the ViCo embeddings and their evaluation. Specifically, the paper mentions the use of "wiki" and "coco" datasets for training vis-w2v, which are not extracted. Also, the paper mentions "word2vec" which is used for initialization.
+loop_required: true
+
+[2025-09-23 21:07:14,323][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:14,323][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:14,363][heimdall.core][INFO] - Cleaned output : entities:
+  - name: UNC Split
+    type: dataset
+    description: The specific split of the RefCOCO+ dataset used for evaluation.
+  - name: GloVe Model Dimensions
+    type: method
+    description: The specific dimensionality of the GloVe word embeddings used in the experiments.
+  - name: ViCo Model Configurations
+    type: method
+    description: The specific configurations of the ViCo models, including the linear and other variants, and their respective parameters (e.g., dimensions).
+  - name: Random Initialization Dimensions
+    type: method
+    description: The dimensionality of the random embeddings used for comparison with GloVe and ViCo.
+  - name: Image Captioning
+    type: task
+    description: The specific task used in the experiments, where ViCo is compared to GloVe and random vectors.
+
+[2025-09-23 21:07:14,366][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:14,731][heimdall.core][INFO] - Cleaned output : entities:
+  - name: vis-w2v
+    type: method
+    description: "A method that uses abstract (synthetic) scenes to learn visual relatedness."
+  - name: ViEW
+    type: method
+    description: "An approach to visually enhance existing word embeddings."
+  - name: CBOW
+    type: method
+    description: "Continuous Bag-of-Words model, a neural approach for learning word embeddings from co-occurrences in local context windows."
+  - name: Skip-Gram models
+    type: method
+    description: "A neural approach for learning word embeddings from co-occurrences in local context windows."
+  - name: VisualGenome
+    type: dataset
+    description: "A large-scale, textually-annotated visual database used for training and evaluation."
+  - name: ImageNet
+    type: dataset
+    description: "A large-scale dataset used for training and evaluation, particularly for image-related tasks."
+
+[2025-09-23 21:07:14,735][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:15,604][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Wiki
+    type: dataset
+    description: The Wikipedia dataset used for training vis-w2v embeddings.
+  - name: Coco
+    type: dataset
+    description: The MS-COCO dataset used for training vis-w2v embeddings.
+  - name: Word2Vec
+    type: method
+    description: The word embedding model used for initialization of vis-w2v.
+
+[2025-09-23 21:07:15,608][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:15,650][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing some key methods and datasets mentioned in the text, such as the MDS approach and the datasets used for training the models.
+loop_required: true
+
+[2025-09-23 21:07:15,652][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:15,652][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:15,730][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from explicitly identifying the specific tasks and datasets used for evaluating the methods. Specifically, the text mentions "3 out of 4 splits" and "30 analogy pairings tested", which could be extracted as datasets or tasks.
+loop_required: true
+
+[2025-09-23 21:07:15,731][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:15,732][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:16,594][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including specific details about the evaluation metrics used.
+loop_required: true
+
+[2025-09-23 21:07:16,595][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:16,595][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:16,915][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Image Captioning
+    type: task
+    description: The task of generating textual descriptions for images.
+  - name: RefCOCO+ dataset
+    type: dataset
+    description: A dataset used for referring expression comprehension, specifically the UNC split is used.
+  - name: Analogy Pairings
+    type: task
+    description: The task of evaluating the performance of word embeddings on analogy tasks.
+
+[2025-09-23 21:07:16,918][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:17,190][heimdall.core][INFO] - Cleaned output : entities:
+  - name: MDS approach
+    type: method
+    description: "An approach involving acquiring word similarity annotations followed by applying Multidimensional Scaling (MDS) to obtain low dimensional embeddings and then identifying meaningful clusters or interpretable dimensions."
+  - name: ImageNet
+    type: dataset
+    description: "A large-scale visual database used for training and evaluating computer vision models, and also used in this study for its annotations and visual features."
+
+[2025-09-23 21:07:17,195][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:17,978][heimdall.core][INFO] - Cleaned output : entities:
+  - name: V-Measure
+    type: generic
+    description: "The evaluation metric used to compare random vectors, GloVe, variants of ViCo and their combinations (concatenation) for different number of clusters."
+  - name: Zero-shot-like object classification performance
+    type: task
+    description: "The task used to assess the ability of the embeddings to generalize to unseen classes, evaluated using the CIFAR-100 dataset."
+  - name: CIFAR-100 dataset
+    type: dataset
+    description: "The dataset used to evaluate the zero-shot-like object classification performance."
+
+[2025-09-23 21:07:17,981][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:17,987][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from explicitly capturing the specific configurations and dimensions mentioned for GloVe, ViCo, and random embeddings. This information is crucial for understanding the experimental setup and results.
+loop_required: true
+
+[2025-09-23 21:07:17,989][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:17,989][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:18,521][heimdall.core][INFO] - Cleaned output : reason_to_loop: While the extraction is fairly comprehensive, the specific loss functions and equations used for ViCo and GloVe, which are central to the method's operation, are not explicitly extracted as methods. Extracting these would provide a more complete picture of the technical details.
+loop_required: true
+
+[2025-09-23 21:07:18,524][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:07:18,524][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:07:18,894][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iterations reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 21:07:18,896][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:18,896][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:07:19,277][heimdall.core][INFO] - Cleaned output : entities:
+  - name: GloVe+random(200)
+    type: method
+    description: A method that uses GloVe embeddings combined with random embeddings of dimension 200.
+  - name: GloVe+ViCo(linear, 100)
+    type: method
+    description: A method that uses GloVe embeddings combined with ViCo embeddings (linear variant) of dimension 100.
+
+[2025-09-23 21:07:19,279][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:20,101][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iteration count reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 21:07:20,102][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:20,103][Thread 2][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:07:21,060][heimdall.core][INFO] - Cleaned output : entities:
+  - name: GloVe Loss Function
+    type: method
+    description: The loss function used by GloVe to learn word embeddings. It is defined as:  ∑_(i,j)  f(X_(i,j)) * (w_i^T w_j + b_i + b_j - log(X_(i,j)))^2, where X_(i,j) is the co-occurrence count of words i and j, f is a weighting function, w_i and w_j are the word embeddings, and b_i and b_j are bias terms.
+  - name: ViCo Loss Function
+    type: method
+    description: The loss function used by ViCo to learn word embeddings from multiple types of co-occurrences. It is defined as:  ∑_(i,j,t)  f(X_(i,j,t)) * (w_i^T φ_t(w_j) + b_t_i + b_t_j - log(X_(i,j,t)))^2, where X_(i,j,t) is the co-occurrence count of words i and j for co-occurrence type t, f is a weighting function, w_i and w_j are the word embeddings, φ_t is a type-specific transformation function, and b_t_i and b_t_j are bias terms for word i and j for type t.
+
+[2025-09-23 21:07:21,061][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 4, column 92:
+     ... ord embeddings. It is defined as:  ∑_(i,j)  f(X_(i,j)) * (w_i^T  ... 
+                                         ^
+[2025-09-23 21:07:24,317][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ViCo embeddings
+    target_entity: t-SNE plots
+    description: t-SNE plots are used for qualitative analysis of ViCo embeddings.
+    strength: 8.0
+  - source_entity: GloVe
+    target_entity: Adagrad
+    description: Adagrad is reported to work best for GloVe.
+    strength: 7.0
+  - source_entity: Visual Genome
+    target_entity: ImageNet
+    description: Visual Genome and ImageNet are used for estimating visual co-occurrence counts.
+    strength: 9.0
+  - source_entity: ImageNet
+    target_entity: WordNet
+    description: ImageNet synsets and their ancestors in WordNet are used to compute Object-Hypernym (oh) counts.
+    strength: 9.0
+  - source_entity: Object-Hypernym (oh) counts
+    target_entity: WordNet
+    description: Object-Hypernym (oh) counts are computed using WordNet.
+    strength: 8.0
+  - source_entity: ViCo embeddings
+    target_entity: GloVe
+    description: ViCo embeddings are compared with GloVe.
+    strength: 9.0
+  - source_entity: CIFAR-100 dataset
+    target_entity: Zero-shot-like object classification performance
+    description: The CIFAR-100 dataset is used to evaluate zero-shot-like object classification performance.
+    strength: 9.0
+  - source_entity: ResNet
+    target_entity: CIFAR-100 dataset
+    description: ResNet is used to extract features from images in the CIFAR-100 dataset.
+    strength: 7.0
+  - source_entity: Word embeddings
+    target_entity: Zero-shot-like object classification performance
+    description: Word embeddings are evaluated on their zero-shot-like object classification performance.
+    strength: 7.0
+  - source_entity: Vis-w2v
+    target_entity: Wiki
+    description: Wiki (Wikipedia) is a dataset used for training vis-w2v.
+    strength: 8.0
+  - source_entity: Vis-w2v
+    target_entity: Coco
+    description: Coco (MS-COCO) is a dataset used for training vis-w2v.
+    strength: 8.0
+  - source_entity: Word2Vec
+    target_entity: Vis-w2v
+    description: Word2Vec is used for initialization of vis-w2v.
+    strength: 9.0
+  - source_entity: ViCo embeddings
+    target_entity: V-Measure
+    description: V-Measure is used to compare ViCo embeddings.
+    strength: 7.0
+  - source_entity: GloVe
+    target_entity: V-Measure
+    description: V-Measure is used to compare GloVe.
+    strength: 7.0
+  - source_entity: Zero-shot-like object classification performance
+    target_entity: CIFAR-100 dataset
+    description: The zero-shot-like object classification performance is evaluated using the CIFAR-100 dataset.
+    strength: 9.0
+  - source_entity: ViCo embeddings
+    target_entity: Zero-shot-like object classification performance
+    description: ViCo embeddings are evaluated on their zero-shot-like object classification performance.
+    strength: 8.0
+  - source_entity: GloVe
+    target_entity: Zero-shot-like object classification performance
+    description: GloVe is evaluated on its zero-shot-like object classification performance.
+    strength: 8.0
+
+[2025-09-23 21:07:24,320][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:07:24,970][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: GloVe
+    target_entity: ViCo
+    description: ViCo is compared to GloVe.
+    strength: 8.0
+  - source_entity: GloVe+random(200)
+    target_entity: GloVe
+    description: GloVe+random(200) performs worse than GloVe.
+    strength: 7.0
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe
+    description: GloVe+ViCo(linear, 100) outperforms GloVe.
+    strength: 8.0
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: Image Captioning
+    description: GloVe+ViCo(linear, 100) is used for Image Captioning.
+    strength: 6.0
+  - source_entity: ViCo
+    target_entity: GloVe
+    description: ViCo is compared to GloVe.
+    strength: 8.0
+  - source_entity: word embeddings
+    target_entity: GRU
+    description: GRU operates on word embeddings.
+    strength: 7.0
+  - source_entity: Image features
+    target_entity: GRU
+    description: Image features are fused with a question representation using a GRU.
+    strength: 7.0
+  - source_entity: RefCOCO+ dataset
+    target_entity: UNC split
+    description: The UNC split is used within the RefCOCO+ dataset.
+    strength: 9.0
+  - source_entity: localization accuracy
+    target_entity: RefCOCO+ dataset
+    description: Localization accuracy is compared on the RefCOCO+ dataset.
+    strength: 7.0
+  - source_entity: GloVe
+    target_entity: cosine similarity
+    description: Cosine similarity is used to compute scores for GloVe.
+    strength: 7.0
+  - source_entity: ViCo
+    target_entity: cosine similarity
+    description: Cosine similarity is used to compute scores for ViCo.
+    strength: 7.0
+  - source_entity: GloVe
+    target_entity: linear SVM
+    description: A linear SVM is learned over GloVe.
+    strength: 7.0
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: linear SVM
+    description: A linear SVM is learned over GloVe+ViCo(linear, 100).
+    strength: 7.0
+  - source_entity: Analogy Pairings
+    target_entity: GloVe
+    description: GloVe is evaluated on Analogy Pairings.
+    strength: 6.0
+  - source_entity: Analogy Pairings
+    target_entity: ViCo
+    description: ViCo is evaluated on Analogy Pairings.
+    strength: 6.0
+  - source_entity: Image Captioning
+    target_entity: GloVe
+    description: GloVe is used for Image Captioning.
+    strength: 6.0
+  - source_entity: Image Captioning
+    target_entity: ViCo
+    description: ViCo is used for Image Captioning.
+    strength: 6.0
+
+[2025-09-23 21:07:24,979][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:07:24,989][heimdall.core][INFO] - Cleaned output : entities:
+  - name: GloVe Loss Function
+    type: method
+    description: "The loss function used by GloVe to learn word embeddings. It is defined as:  ∑_(i,j)  f(X_(i,j)) * (w_i^T w_j + b_i + b_j - log(X_(i,j)))^2, where X_(i,j) is the co-occurrence count of words i and j, f is a weighting function, w_i and w_j are the word embeddings, and b_i and b_j are bias terms."
+  - name: ViCo Loss Function
+    type: method
+    description: "The loss function used by ViCo to learn word embeddings from multiple types of co-occurrences. It is defined as:  ∑_(i,j,t)  f(X_(i,j,t)) * (w_i^T φ_t(w_j) + b_t_i + b_t_j - log(X_(i,j,t)))^2, where X_(i,j,t) is the co-occurrence count of words i and j for co-occurrence type t, f is a weighting function, w_i and w_j are the word embeddings, φ_t is a type-specific transformation function, and b_t_i and b_t_j are bias terms for word i and j for type t."
+
+[2025-09-23 21:07:24,991][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:07:25,568][heimdall.core][INFO] - Cleaned output : reason_to_loop: The provided relationships are missing connections related to how ViCo embeddings are evaluated and compared with other methods. Specifically, the text mentions that ViCo is compared with GloVe, random vectors, and vis-w2v based embeddings using V-Measure and zero-shot-like object classification performance. Also, ResNet is used to extract features.
+loop_required: true
+
+[2025-09-23 21:07:25,570][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The provided relationships are missing connections related to how ViCo embeddings are evaluated and compared with other methods. Specifically, the text mentions that ViCo is compared with GloVe, random vectors, and vis-w2v based embeddings using V-Measure and zero-shot-like object classification performance. Also, ResNet is used to extract features.
+[2025-09-23 21:07:25,570][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:25,571][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:25,996][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing the comparison between GloVe+ViCo(linear) and GloVe+random. Also, the relationship between GRU and answer classifier is missing.
+loop_required: true
+
+[2025-09-23 21:07:25,998][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing the comparison between GloVe+ViCo(linear) and GloVe+random. Also, the relationship between GRU and answer classifier is missing.
+[2025-09-23 21:07:25,999][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:26,001][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iteration count reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 21:07:26,002][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:26,003][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:26,010][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:07:27,531][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe+random(200)
+    description: The text compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) to highlight the benefits of ViCo.
+    strength: 9
+  - source_entity: GRU
+    target_entity: answer classifier
+    description: The GRU processes image features and word embeddings and feeds the output into the answer classifier.
+    strength: 10
+
+[2025-09-23 21:07:27,534][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'GloVe', 'target_entity': 'ViCo', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'GloVe', 'description': 'GloVe+random(200) performs worse than GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'Image Captioning', 'description': 'GloVe+ViCo(linear, 100) is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'word embeddings', 'target_entity': 'GRU', 'description': 'GRU operates on word embeddings.', 'strength': 7.0}, {'source_entity': 'Image features', 'target_entity': 'GRU', 'description': 'Image features are fused with a question representation using a GRU.', 'strength': 7.0}, {'source_entity': 'RefCOCO+ dataset', 'target_entity': 'UNC split', 'description': 'The UNC split is used within the RefCOCO+ dataset.', 'strength': 9.0}, {'source_entity': 'localization accuracy', 'target_entity': 'RefCOCO+ dataset', 'description': 'Localization accuracy is compared on the RefCOCO+ dataset.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for GloVe.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for ViCo.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe+ViCo(linear, 100).', 'strength': 7.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'GloVe', 'description': 'GloVe is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'ViCo', 'description': 'ViCo is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'GloVe', 'description': 'GloVe is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'ViCo', 'description': 'ViCo is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'The text compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) to highlight the benefits of ViCo.', 'strength': 9.0}, {'source_entity': 'GRU', 'target_entity': 'answer classifier', 'description': 'The GRU processes image features and word embeddings and feeds the output into the answer classifier.', 'strength': 10.0}]
+
+[2025-09-23 21:07:27,534][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:07:28,247][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ViCo embeddings
+    target_entity: GloVe
+    description: ViCo embeddings are compared with GloVe to evaluate their performance.
+    strength: 10
+  - source_entity: ViCo embeddings
+    target_entity: Vis-w2v
+    description: ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.
+    strength: 9
+  - source_entity: ViCo embeddings
+    target_entity: random vectors
+    description: ViCo embeddings are compared with random vectors to evaluate their performance.
+    strength: 8
+  - source_entity: ViCo embeddings
+    target_entity: V-Measure
+    description: V-Measure is used to evaluate the performance of ViCo embeddings, GloVe, random vectors, and vis-w2v based embeddings.
+    strength: 9
+  - source_entity: ViCo embeddings
+    target_entity: Zero-shot-like object classification performance
+    description: ViCo embeddings are evaluated on their zero-shot-like object classification performance.
+    strength: 9
+  - source_entity: ResNet
+    target_entity: CIFAR-100 dataset
+    description: ResNet is used to extract features from images in the CIFAR-100 dataset for zero-shot-like object classification.
+    strength: 8
+  - source_entity: ViCo embeddings
+    target_entity: Zero-shot object classification
+    description: ViCo embeddings are evaluated on their zero-shot-like object classification performance.
+    strength: 9
+
+[2025-09-23 21:07:28,251][Thread 1][WARNING] - Found false extractions in relationships: [{'source_entity': 'ViCo embeddings', 'target_entity': 'random vectors', 'description': 'ViCo embeddings are compared with random vectors to evaluate their performance.', 'strength': 8.0}]
+[2025-09-23 21:07:28,252][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo embeddings', 'target_entity': 't-SNE plots', 'description': 't-SNE plots are used for qualitative analysis of ViCo embeddings.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Adagrad', 'description': 'Adagrad is reported to work best for GloVe.', 'strength': 7.0}, {'source_entity': 'Visual Genome', 'target_entity': 'ImageNet', 'description': 'Visual Genome and ImageNet are used for estimating visual co-occurrence counts.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'WordNet', 'description': 'ImageNet synsets and their ancestors in WordNet are used to compute Object-Hypernym (oh) counts.', 'strength': 9.0}, {'source_entity': 'Object-Hypernym (oh) counts', 'target_entity': 'WordNet', 'description': 'Object-Hypernym (oh) counts are computed using WordNet.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe.', 'strength': 9.0}, {'source_entity': 'CIFAR-100 dataset', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'The CIFAR-100 dataset is used to evaluate zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset.', 'strength': 7.0}, {'source_entity': 'Word embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'Word embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 7.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Wiki', 'description': 'Wiki (Wikipedia) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Coco', 'description': 'Coco (MS-COCO) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Word2Vec', 'target_entity': 'Vis-w2v', 'description': 'Word2Vec is used for initialization of vis-w2v.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare ViCo embeddings.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare GloVe.', 'strength': 7.0}, {'source_entity': 'Zero-shot-like object classification performance', 'target_entity': 'CIFAR-100 dataset', 'description': 'The zero-shot-like object classification performance is evaluated using the CIFAR-100 dataset.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'GloVe is evaluated on its zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe to evaluate their performance.', 'strength': 10.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Vis-w2v', 'description': 'ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to evaluate the performance of ViCo embeddings, GloVe, random vectors, and vis-w2v based embeddings.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset for zero-shot-like object classification.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot object classification', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}]
+
+[2025-09-23 21:07:28,252][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:07:28,863][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing the comparison of GloVe, ViCo, and GloVe+random(200) on the UNC split and the relationship between GRU and Image Captioning. Also, the text mentions that GloVe+ViCo(linear) outperforms GloVe and GloVe+random for all tasks, which is not captured.
+loop_required: true
+
+[2025-09-23 21:07:28,865][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing the comparison of GloVe, ViCo, and GloVe+random(200) on the UNC split and the relationship between GRU and Image Captioning. Also, the text mentions that GloVe+ViCo(linear) outperforms GloVe and GloVe+random for all tasks, which is not captured.
+[2025-09-23 21:07:28,866][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:28,866][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:29,430][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between ResNet and Zero-shot-like object classification performance, and also between Word embeddings and CIFAR-100 dataset. The text explicitly states that ResNet is used for feature extraction for zero-shot-like object classification, and word embeddings are evaluated on CIFAR-100 dataset.
+loop_required: true
+
+[2025-09-23 21:07:29,432][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between ResNet and Zero-shot-like object classification performance, and also between Word embeddings and CIFAR-100 dataset. The text explicitly states that ResNet is used for feature extraction for zero-shot-like object classification, and word embeddings are evaluated on CIFAR-100 dataset.
+[2025-09-23 21:07:29,433][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:29,433][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:30,807][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ResNet
+    target_entity: Zero-shot-like object classification performance
+    description: ResNet is used to extract features for evaluating zero-shot-like object classification performance.
+    strength: 10
+  - source_entity: Word embeddings
+    target_entity: CIFAR-100 dataset
+    description: Word embeddings are evaluated on the CIFAR-100 dataset.
+    strength: 10
+
+[2025-09-23 21:07:30,809][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo embeddings', 'target_entity': 't-SNE plots', 'description': 't-SNE plots are used for qualitative analysis of ViCo embeddings.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Adagrad', 'description': 'Adagrad is reported to work best for GloVe.', 'strength': 7.0}, {'source_entity': 'Visual Genome', 'target_entity': 'ImageNet', 'description': 'Visual Genome and ImageNet are used for estimating visual co-occurrence counts.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'WordNet', 'description': 'ImageNet synsets and their ancestors in WordNet are used to compute Object-Hypernym (oh) counts.', 'strength': 9.0}, {'source_entity': 'Object-Hypernym (oh) counts', 'target_entity': 'WordNet', 'description': 'Object-Hypernym (oh) counts are computed using WordNet.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe.', 'strength': 9.0}, {'source_entity': 'CIFAR-100 dataset', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'The CIFAR-100 dataset is used to evaluate zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset.', 'strength': 7.0}, {'source_entity': 'Word embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'Word embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 7.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Wiki', 'description': 'Wiki (Wikipedia) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Coco', 'description': 'Coco (MS-COCO) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Word2Vec', 'target_entity': 'Vis-w2v', 'description': 'Word2Vec is used for initialization of vis-w2v.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare ViCo embeddings.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare GloVe.', 'strength': 7.0}, {'source_entity': 'Zero-shot-like object classification performance', 'target_entity': 'CIFAR-100 dataset', 'description': 'The zero-shot-like object classification performance is evaluated using the CIFAR-100 dataset.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'GloVe is evaluated on its zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe to evaluate their performance.', 'strength': 10.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Vis-w2v', 'description': 'ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to evaluate the performance of ViCo embeddings, GloVe, random vectors, and vis-w2v based embeddings.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset for zero-shot-like object classification.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot object classification', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ResNet is used to extract features for evaluating zero-shot-like object classification performance.', 'strength': 10.0}, {'source_entity': 'Word embeddings', 'target_entity': 'CIFAR-100 dataset', 'description': 'Word embeddings are evaluated on the CIFAR-100 dataset.', 'strength': 10.0}]
+
+[2025-09-23 21:07:30,810][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:07:32,139][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: GloVe
+    target_entity: UNC split
+    description: The performance of GloVe is evaluated on the UNC split of the RefCOCO+ dataset.
+    strength: 8
+  - source_entity: ViCo
+    target_entity: UNC split
+    description: The performance of ViCo is evaluated on the UNC split of the RefCOCO+ dataset.
+    strength: 8
+  - source_entity: GloVe+random(200)
+    target_entity: UNC split
+    description: The performance of GloVe+random(200) is evaluated on the UNC split of the RefCOCO+ dataset.
+    strength: 7
+  - source_entity: GRU
+    target_entity: Image Captioning
+    description: A GRU is used in conjunction with word embeddings for Image Captioning.
+    strength: 9
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe
+    description: GloVe+ViCo(linear, 100) outperforms GloVe for all tasks.
+    strength: 10
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe+random(200)
+    description: GloVe+ViCo(linear, 100) outperforms GloVe+random(200) for all tasks.
+    strength: 10
+  - source_entity: GloVe
+    target_entity: Image Captioning
+    description: GloVe is used for Image Captioning.
+    strength: 7
+  - source_entity: GloVe+random(200)
+    target_entity: Image Captioning
+    description: GloVe+random(200) is used for Image Captioning.
+    strength: 7
+  - source_entity: ViCo
+    target_entity: Image Captioning
+    description: ViCo is used for Image Captioning.
+    strength: 7
+
+[2025-09-23 21:07:32,141][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are still incomplete. The text explicitly mentions that ResNet is used to extract features, and Word embeddings are evaluated on CIFAR-100 dataset. These relationships are missing. Also, the text mentions that ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance, which is already present.
+loop_required: True
+
+[2025-09-23 21:07:32,147][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are still incomplete. The text explicitly mentions that ResNet is used to extract features, and Word embeddings are evaluated on CIFAR-100 dataset. These relationships are missing. Also, the text mentions that ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance, which is already present.
+[2025-09-23 21:07:32,148][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:32,150][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'GloVe', 'target_entity': 'ViCo', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'GloVe', 'description': 'GloVe+random(200) performs worse than GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'Image Captioning', 'description': 'GloVe+ViCo(linear, 100) is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'word embeddings', 'target_entity': 'GRU', 'description': 'GRU operates on word embeddings.', 'strength': 7.0}, {'source_entity': 'Image features', 'target_entity': 'GRU', 'description': 'Image features are fused with a question representation using a GRU.', 'strength': 7.0}, {'source_entity': 'RefCOCO+ dataset', 'target_entity': 'UNC split', 'description': 'The UNC split is used within the RefCOCO+ dataset.', 'strength': 9.0}, {'source_entity': 'localization accuracy', 'target_entity': 'RefCOCO+ dataset', 'description': 'Localization accuracy is compared on the RefCOCO+ dataset.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for GloVe.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for ViCo.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe+ViCo(linear, 100).', 'strength': 7.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'GloVe', 'description': 'GloVe is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'ViCo', 'description': 'ViCo is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'GloVe', 'description': 'GloVe is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'ViCo', 'description': 'ViCo is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'The text compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) to highlight the benefits of ViCo.', 'strength': 9.0}, {'source_entity': 'GRU', 'target_entity': 'answer classifier', 'description': 'The GRU processes image features and word embeddings and feeds the output into the answer classifier.', 'strength': 10.0}, {'source_entity': 'GloVe', 'target_entity': 'UNC split', 'description': 'The performance of GloVe is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'UNC split', 'description': 'The performance of ViCo is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 8.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'UNC split', 'description': 'The performance of GloVe+random(200) is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 7.0}, {'source_entity': 'GRU', 'target_entity': 'Image Captioning', 'description': 'A GRU is used in conjunction with word embeddings for Image Captioning.', 'strength': 9.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe for all tasks.', 'strength': 10.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe+random(200) for all tasks.', 'strength': 10.0}, {'source_entity': 'GloVe', 'target_entity': 'Image Captioning', 'description': 'GloVe is used for Image Captioning.', 'strength': 7.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'Image Captioning', 'description': 'GloVe+random(200) is used for Image Captioning.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'Image Captioning', 'description': 'ViCo is used for Image Captioning.', 'strength': 7.0}]
+
+[2025-09-23 21:07:32,151][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:32,151][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:07:33,014][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ViCo
+    target_entity: GloVe
+    description: ViCo word embeddings are compared with GloVe word embeddings.
+    strength: 8.0
+  - source_entity: ViCo
+    target_entity: unsupervised clustering
+    description: ViCo is evaluated using unsupervised clustering.
+    strength: 7.0
+  - source_entity: ViCo
+    target_entity: supervised partitioning
+    description: ViCo is evaluated using supervised partitioning.
+    strength: 7.0
+  - source_entity: ViCo
+    target_entity: zero-shot-like visual generalization
+    description: ViCo is evaluated using zero-shot-like visual generalization.
+    strength: 7.0
+  - source_entity: GloVe
+    target_entity: word embeddings
+    description: GloVe is a method for creating word embeddings.
+    strength: 9.0
+  - source_entity: ImageNet
+    target_entity: VisualGenome
+    description: VisualGenome and ImageNet are used as datasets.
+    strength: 8.0
+  - source_entity: VisualGenome
+    target_entity: ViCo
+    description: VisualGenome is used to extract visual co-occurrences for ViCo.
+    strength: 7.0
+  - source_entity: ImageNet
+    target_entity: ViCo
+    description: ImageNet is used to extract visual co-occurrences for ViCo.
+    strength: 7.0
+  - source_entity: ViCo
+    target_entity: Caption-Image Retrieval
+    description: ViCo is used in Caption-Image Retrieval.
+    strength: 6.0
+  - source_entity: ViCo
+    target_entity: VQA
+    description: ViCo is used in VQA.
+    strength: 6.0
+  - source_entity: ViCo
+    target_entity: Referring Expression Comprehension
+    description: ViCo is used in Referring Expression Comprehension.
+    strength: 6.0
+  - source_entity: ViCo
+    target_entity: Image Captioning
+    description: ViCo is used in Image Captioning.
+    strength: 6.0
+  - source_entity: GloVe
+    target_entity: Caption-Image Retrieval
+    description: GloVe is used in Caption-Image Retrieval.
+    strength: 6.0
+  - source_entity: GloVe
+    target_entity: VQA
+    description: GloVe is used in VQA.
+    strength: 6.0
+  - source_entity: GloVe
+    target_entity: Referring Expression Comprehension
+    description: GloVe is used in Referring Expression Comprehension.
+    strength: 6.0
+  - source_entity: GloVe
+    target_entity: Image Captioning
+    description: GloVe is used in Image Captioning.
+    strength: 6.0
+  - source_entity: ViCo
+    target_entity: ViCo Loss Function
+    description: ViCo uses a specific loss function.
+    strength: 9.0
+  - source_entity: GloVe
+    target_entity: GloVe Loss Function
+    description: GloVe uses a specific loss function.
+    strength: 9.0
+  - source_entity: logbilinear model
+    target_entity: GloVe
+    description: The logbilinear model is used to train GloVe-like embeddings.
+    strength: 7.0
+  - source_entity: vis-w2v
+    target_entity: word embeddings
+    description: vis-w2v is a method for learning word embeddings.
+    strength: 7.0
+  - source_entity: ViEW
+    target_entity: word embeddings
+    description: ViEW is a method for visually enhancing word embeddings.
+    strength: 7.0
+  - source_entity: CBOW
+    target_entity: word embeddings
+    description: CBOW is a method for learning word embeddings.
+    strength: 7.0
+  - source_entity: Skip-Gram models
+    target_entity: word embeddings
+    description: Skip-Gram models are used to learn word embeddings.
+    strength: 7.0
+  - source_entity: ImageNet
+    target_entity: ViEW
+    description: ImageNet is used in ViEW.
+    strength: 6.0
+  - source_entity: BERT
+    target_entity: word embeddings
+    description: BERT is a contextualized word representation model.
+    strength: 7.0
+  - source_entity: ELMo
+    target_entity: word embeddings
+    description: ELMo is a contextualized word representation model.
+    strength: 7.0
+
+[2025-09-23 21:07:33,025][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:07:33,674][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between 'GloVe+ViCo(linear, 100)' and 'GloVe+random(200)' are underrepresented. The text explicitly states performance comparisons, but the current relationships don't fully capture the extent of these comparisons. Also, the relationship between 'GRU' and 'answer classifier' is missing the context of how the GRU feeds into the answer classifier.
+loop_required: true
+
+[2025-09-23 21:07:33,675][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between 'GloVe+ViCo(linear, 100)' and 'GloVe+random(200)' are underrepresented. The text explicitly states performance comparisons, but the current relationships don't fully capture the extent of these comparisons. Also, the relationship between 'GRU' and 'answer classifier' is missing the context of how the GRU feeds into the answer classifier.
+[2025-09-23 21:07:33,675][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:33,675][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:33,879][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ResNet
+    target_entity: Word embeddings
+    description: ResNet is used to extract features, which are then used to create word embeddings.
+    strength: 9
+  - source_entity: Word embeddings
+    target_entity: CIFAR-100 dataset
+    description: Word embeddings are evaluated on the CIFAR-100 dataset.
+    strength: 8
+  - source_entity: Vis-w2v
+    target_entity: ViCo embeddings
+    description: ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.
+    strength: 7
+
+[2025-09-23 21:07:33,880][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo embeddings', 'target_entity': 't-SNE plots', 'description': 't-SNE plots are used for qualitative analysis of ViCo embeddings.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Adagrad', 'description': 'Adagrad is reported to work best for GloVe.', 'strength': 7.0}, {'source_entity': 'Visual Genome', 'target_entity': 'ImageNet', 'description': 'Visual Genome and ImageNet are used for estimating visual co-occurrence counts.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'WordNet', 'description': 'ImageNet synsets and their ancestors in WordNet are used to compute Object-Hypernym (oh) counts.', 'strength': 9.0}, {'source_entity': 'Object-Hypernym (oh) counts', 'target_entity': 'WordNet', 'description': 'Object-Hypernym (oh) counts are computed using WordNet.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe.', 'strength': 9.0}, {'source_entity': 'CIFAR-100 dataset', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'The CIFAR-100 dataset is used to evaluate zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset.', 'strength': 7.0}, {'source_entity': 'Word embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'Word embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 7.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Wiki', 'description': 'Wiki (Wikipedia) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'Coco', 'description': 'Coco (MS-COCO) is a dataset used for training vis-w2v.', 'strength': 8.0}, {'source_entity': 'Word2Vec', 'target_entity': 'Vis-w2v', 'description': 'Word2Vec is used for initialization of vis-w2v.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare ViCo embeddings.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to compare GloVe.', 'strength': 7.0}, {'source_entity': 'Zero-shot-like object classification performance', 'target_entity': 'CIFAR-100 dataset', 'description': 'The zero-shot-like object classification performance is evaluated using the CIFAR-100 dataset.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'GloVe', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'GloVe is evaluated on its zero-shot-like object classification performance.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'GloVe', 'description': 'ViCo embeddings are compared with GloVe to evaluate their performance.', 'strength': 10.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Vis-w2v', 'description': 'ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'V-Measure', 'description': 'V-Measure is used to evaluate the performance of ViCo embeddings, GloVe, random vectors, and vis-w2v based embeddings.', 'strength': 9.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'CIFAR-100 dataset', 'description': 'ResNet is used to extract features from images in the CIFAR-100 dataset for zero-shot-like object classification.', 'strength': 8.0}, {'source_entity': 'ViCo embeddings', 'target_entity': 'Zero-shot object classification', 'description': 'ViCo embeddings are evaluated on their zero-shot-like object classification performance.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'Zero-shot-like object classification performance', 'description': 'ResNet is used to extract features for evaluating zero-shot-like object classification performance.', 'strength': 10.0}, {'source_entity': 'Word embeddings', 'target_entity': 'CIFAR-100 dataset', 'description': 'Word embeddings are evaluated on the CIFAR-100 dataset.', 'strength': 10.0}, {'source_entity': 'ResNet', 'target_entity': 'Word embeddings', 'description': 'ResNet is used to extract features, which are then used to create word embeddings.', 'strength': 9.0}, {'source_entity': 'Word embeddings', 'target_entity': 'CIFAR-100 dataset', 'description': 'Word embeddings are evaluated on the CIFAR-100 dataset.', 'strength': 8.0}, {'source_entity': 'Vis-w2v', 'target_entity': 'ViCo embeddings', 'description': 'ViCo embeddings are compared with Vis-w2v based embeddings to evaluate their performance.', 'strength': 7.0}]
+
+[2025-09-23 21:07:33,881][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:07:34,597][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between 'ViCo' and the datasets used for its training and evaluation. Specifically, the relationship between 'ViCo' and 'WordNet' is missing. Also, the relationship between 'ViCo' and 'MDS approach' is missing.
+loop_required: true
+
+[2025-09-23 21:07:34,597][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between 'ViCo' and the datasets used for its training and evaluation. Specifically, the relationship between 'ViCo' and 'WordNet' is missing. Also, the relationship between 'ViCo' and 'MDS approach' is missing.
+[2025-09-23 21:07:34,598][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:34,598][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:35,062][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'Iteration limit reached. No further iterations are allowed. The existing relationships cover the core connections described in the text, including the use of datasets, the comparison of embeddings, and the evaluation of performance. While more granular relationships might exist, the current set provides a sufficient overview.'
+loop_required: false
+
+[2025-09-23 21:07:35,063][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: Iteration limit reached. No further iterations are allowed. The existing relationships cover the core connections described in the text, including the use of datasets, the comparison of embeddings, and the evaluation of performance. While more granular relationships might exist, the current set provides a sufficient overview.
+[2025-09-23 21:07:35,063][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:35,063][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:07:35,063][Thread 1][ERROR] - File doesn't exist: Bodhi/201307511/1/201307511_intermediate_data.yml. Creating file..
+[2025-09-23 21:07:35,068][Thread 1][INFO] - Nodes & relations saved to Bodhi/201307511/1/201307511_intermediate_data.yml
+[2025-09-23 21:07:35,068][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:07:35,068][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:35,069][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 27.351938009262085
+
+[2025-09-23 21:07:36,132][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ViCo
+    target_entity: WordNet
+    description: 'ViCo uses WordNet synset annotations to compute Object-Hypernym co-occurrences, which are used in the ViCo model.'
+    strength: 8
+  - source_entity: ViCo
+    target_entity: MDS approach
+    description: 'The text mentions MDS approach as an alternative method for obtaining word embeddings. While not directly related, the context implies a comparison or contrast with ViCo.'
+    strength: 3
+
+[2025-09-23 21:07:36,133][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo word embeddings are compared with GloVe word embeddings.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'unsupervised clustering', 'description': 'ViCo is evaluated using unsupervised clustering.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'supervised partitioning', 'description': 'ViCo is evaluated using supervised partitioning.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'zero-shot-like visual generalization', 'description': 'ViCo is evaluated using zero-shot-like visual generalization.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'word embeddings', 'description': 'GloVe is a method for creating word embeddings.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'VisualGenome', 'description': 'VisualGenome and ImageNet are used as datasets.', 'strength': 8.0}, {'source_entity': 'VisualGenome', 'target_entity': 'ViCo', 'description': 'VisualGenome is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViCo', 'description': 'ImageNet is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'Caption-Image Retrieval', 'description': 'ViCo is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'VQA', 'description': 'ViCo is used in VQA.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Referring Expression Comprehension', 'description': 'ViCo is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Image Captioning', 'description': 'ViCo is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Caption-Image Retrieval', 'description': 'GloVe is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'VQA', 'description': 'GloVe is used in VQA.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Referring Expression Comprehension', 'description': 'GloVe is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Image Captioning', 'description': 'GloVe is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'ViCo Loss Function', 'description': 'ViCo uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'GloVe', 'target_entity': 'GloVe Loss Function', 'description': 'GloVe uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'logbilinear model', 'target_entity': 'GloVe', 'description': 'The logbilinear model is used to train GloVe-like embeddings.', 'strength': 7.0}, {'source_entity': 'vis-w2v', 'target_entity': 'word embeddings', 'description': 'vis-w2v is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'ViEW', 'target_entity': 'word embeddings', 'description': 'ViEW is a method for visually enhancing word embeddings.', 'strength': 7.0}, {'source_entity': 'CBOW', 'target_entity': 'word embeddings', 'description': 'CBOW is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'Skip-Gram models', 'target_entity': 'word embeddings', 'description': 'Skip-Gram models are used to learn word embeddings.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViEW', 'description': 'ImageNet is used in ViEW.', 'strength': 6.0}, {'source_entity': 'BERT', 'target_entity': 'word embeddings', 'description': 'BERT is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'word embeddings', 'description': 'ELMo is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'WordNet', 'description': 'ViCo uses WordNet synset annotations to compute Object-Hypernym co-occurrences, which are used in the ViCo model.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'MDS approach', 'description': 'The text mentions MDS approach as an alternative method for obtaining word embeddings. While not directly related, the context implies a comparison or contrast with ViCo.', 'strength': 3.0}]
+
+[2025-09-23 21:07:36,133][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:07:36,182][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe+random(200)
+    description: The text explicitly compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) across multiple tasks, highlighting that GloVe+ViCo(linear, 100) often outperforms GloVe+random(200).
+    strength: 9
+  - source_entity: GRU
+    target_entity: answer classifier
+    description: The GRU processes word embeddings and image features and feeds the output into the answer classifier.
+    strength: 10
+  - source_entity: word embeddings
+    target_entity: GRU
+    description: The GRU operates on word embeddings.
+    strength: 8
+  - source_entity: GloVe+ViCo(linear, 100)
+    target_entity: GloVe
+    description: The text compares the performance of GloVe+ViCo(linear, 100) and GloVe.
+    strength: 9
+  - source_entity: GloVe
+    target_entity: GloVe+random(200)
+    description: The text compares the performance of GloVe and GloVe+random(200).
+    strength: 8
+
+[2025-09-23 21:07:36,185][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'GloVe', 'target_entity': 'ViCo', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'GloVe', 'description': 'GloVe+random(200) performs worse than GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe.', 'strength': 8.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'Image Captioning', 'description': 'GloVe+ViCo(linear, 100) is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo is compared to GloVe.', 'strength': 8.0}, {'source_entity': 'word embeddings', 'target_entity': 'GRU', 'description': 'GRU operates on word embeddings.', 'strength': 7.0}, {'source_entity': 'Image features', 'target_entity': 'GRU', 'description': 'Image features are fused with a question representation using a GRU.', 'strength': 7.0}, {'source_entity': 'RefCOCO+ dataset', 'target_entity': 'UNC split', 'description': 'The UNC split is used within the RefCOCO+ dataset.', 'strength': 9.0}, {'source_entity': 'localization accuracy', 'target_entity': 'RefCOCO+ dataset', 'description': 'Localization accuracy is compared on the RefCOCO+ dataset.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for GloVe.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'cosine similarity', 'description': 'Cosine similarity is used to compute scores for ViCo.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'linear SVM', 'description': 'A linear SVM is learned over GloVe+ViCo(linear, 100).', 'strength': 7.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'GloVe', 'description': 'GloVe is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Analogy Pairings', 'target_entity': 'ViCo', 'description': 'ViCo is evaluated on Analogy Pairings.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'GloVe', 'description': 'GloVe is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'Image Captioning', 'target_entity': 'ViCo', 'description': 'ViCo is used for Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'The text compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) to highlight the benefits of ViCo.', 'strength': 9.0}, {'source_entity': 'GRU', 'target_entity': 'answer classifier', 'description': 'The GRU processes image features and word embeddings and feeds the output into the answer classifier.', 'strength': 10.0}, {'source_entity': 'GloVe', 'target_entity': 'UNC split', 'description': 'The performance of GloVe is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'UNC split', 'description': 'The performance of ViCo is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 8.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'UNC split', 'description': 'The performance of GloVe+random(200) is evaluated on the UNC split of the RefCOCO+ dataset.', 'strength': 7.0}, {'source_entity': 'GRU', 'target_entity': 'Image Captioning', 'description': 'A GRU is used in conjunction with word embeddings for Image Captioning.', 'strength': 9.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe for all tasks.', 'strength': 10.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'GloVe+ViCo(linear, 100) outperforms GloVe+random(200) for all tasks.', 'strength': 10.0}, {'source_entity': 'GloVe', 'target_entity': 'Image Captioning', 'description': 'GloVe is used for Image Captioning.', 'strength': 7.0}, {'source_entity': 'GloVe+random(200)', 'target_entity': 'Image Captioning', 'description': 'GloVe+random(200) is used for Image Captioning.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'Image Captioning', 'description': 'ViCo is used for Image Captioning.', 'strength': 7.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe+random(200)', 'description': 'The text explicitly compares the performance of GloVe+ViCo(linear, 100) and GloVe+random(200) across multiple tasks, highlighting that GloVe+ViCo(linear, 100) often outperforms GloVe+random(200).', 'strength': 9.0}, {'source_entity': 'GRU', 'target_entity': 'answer classifier', 'description': 'The GRU processes word embeddings and image features and feeds the output into the answer classifier.', 'strength': 10.0}, {'source_entity': 'word embeddings', 'target_entity': 'GRU', 'description': 'The GRU operates on word embeddings.', 'strength': 8.0}, {'source_entity': 'GloVe+ViCo(linear, 100)', 'target_entity': 'GloVe', 'description': 'The text compares the performance of GloVe+ViCo(linear, 100) and GloVe.', 'strength': 9.0}, {'source_entity': 'GloVe', 'target_entity': 'GloVe+random(200)', 'description': 'The text compares the performance of GloVe and GloVe+random(200).', 'strength': 8.0}]
+
+[2025-09-23 21:07:36,185][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:07:37,259][heimdall.core][INFO] - Cleaned output : reason_to_loop: The iteration limit has been reached. No further extraction is permitted. The existing relationships cover the core comparisons and usages of the entities.
+loop_required: false
+
+[2025-09-23 21:07:37,260][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further extraction is permitted. The existing relationships cover the core comparisons and usages of the entities.
+[2025-09-23 21:07:37,260][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:37,260][Thread 2][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:07:37,260][Thread 2][ERROR] - File doesn't exist: Bodhi/201307511/2/201307511_intermediate_data.yml. Creating file..
+[2025-09-23 21:07:37,266][Thread 2][INFO] - Nodes & relations saved to Bodhi/201307511/2/201307511_intermediate_data.yml
+[2025-09-23 21:07:37,266][Thread 2][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:07:37,266][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:37,266][Thread 2][INFO] - ===Thread-2===
+Total number of chunks processed : 1
+Total time taken for extraction : 29.547510147094727
+
+[2025-09-23 21:07:37,769][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between ViCo, GloVe, and other word embedding methods (vis-w2v, ViEW, CBOW, Skip-Gram models, BERT, ELMo) and the tasks they are used in (Caption-Image Retrieval, VQA, Referring Expression Comprehension, Image Captioning) are well-represented. However, the relationship between 'MDS approach' and 'word embeddings' is missing. Also, the text mentions that ViCo is a 'multi-task method', which is not captured in the current relationships.
+loop_required: True
+
+[2025-09-23 21:07:37,769][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between ViCo, GloVe, and other word embedding methods (vis-w2v, ViEW, CBOW, Skip-Gram models, BERT, ELMo) and the tasks they are used in (Caption-Image Retrieval, VQA, Referring Expression Comprehension, Image Captioning) are well-represented. However, the relationship between 'MDS approach' and 'word embeddings' is missing. Also, the text mentions that ViCo is a 'multi-task method', which is not captured in the current relationships.
+[2025-09-23 21:07:37,770][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:37,770][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:38,898][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: MDS approach
+    target_entity: word embeddings
+    description: The MDS approach is used to obtain word embeddings.
+    strength: 8
+  - source_entity: ViCo
+    target_entity: multi-task method
+    description: The text explicitly states that ViCo is a multi-task method.
+    strength: 10
+
+[2025-09-23 21:07:38,900][Thread 0][WARNING] - Found false extractions in relationships: [{'source_entity': 'ViCo', 'target_entity': 'multi-task method', 'description': 'The text explicitly states that ViCo is a multi-task method.', 'strength': 10.0}]
+[2025-09-23 21:07:38,900][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo word embeddings are compared with GloVe word embeddings.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'unsupervised clustering', 'description': 'ViCo is evaluated using unsupervised clustering.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'supervised partitioning', 'description': 'ViCo is evaluated using supervised partitioning.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'zero-shot-like visual generalization', 'description': 'ViCo is evaluated using zero-shot-like visual generalization.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'word embeddings', 'description': 'GloVe is a method for creating word embeddings.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'VisualGenome', 'description': 'VisualGenome and ImageNet are used as datasets.', 'strength': 8.0}, {'source_entity': 'VisualGenome', 'target_entity': 'ViCo', 'description': 'VisualGenome is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViCo', 'description': 'ImageNet is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'Caption-Image Retrieval', 'description': 'ViCo is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'VQA', 'description': 'ViCo is used in VQA.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Referring Expression Comprehension', 'description': 'ViCo is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Image Captioning', 'description': 'ViCo is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Caption-Image Retrieval', 'description': 'GloVe is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'VQA', 'description': 'GloVe is used in VQA.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Referring Expression Comprehension', 'description': 'GloVe is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Image Captioning', 'description': 'GloVe is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'ViCo Loss Function', 'description': 'ViCo uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'GloVe', 'target_entity': 'GloVe Loss Function', 'description': 'GloVe uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'logbilinear model', 'target_entity': 'GloVe', 'description': 'The logbilinear model is used to train GloVe-like embeddings.', 'strength': 7.0}, {'source_entity': 'vis-w2v', 'target_entity': 'word embeddings', 'description': 'vis-w2v is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'ViEW', 'target_entity': 'word embeddings', 'description': 'ViEW is a method for visually enhancing word embeddings.', 'strength': 7.0}, {'source_entity': 'CBOW', 'target_entity': 'word embeddings', 'description': 'CBOW is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'Skip-Gram models', 'target_entity': 'word embeddings', 'description': 'Skip-Gram models are used to learn word embeddings.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViEW', 'description': 'ImageNet is used in ViEW.', 'strength': 6.0}, {'source_entity': 'BERT', 'target_entity': 'word embeddings', 'description': 'BERT is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'word embeddings', 'description': 'ELMo is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'WordNet', 'description': 'ViCo uses WordNet synset annotations to compute Object-Hypernym co-occurrences, which are used in the ViCo model.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'MDS approach', 'description': 'The text mentions MDS approach as an alternative method for obtaining word embeddings. While not directly related, the context implies a comparison or contrast with ViCo.', 'strength': 3.0}, {'source_entity': 'MDS approach', 'target_entity': 'word embeddings', 'description': 'The MDS approach is used to obtain word embeddings.', 'strength': 8.0}]
+
+[2025-09-23 21:07:38,901][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:07:40,227][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are mostly complete, but there's a missed relationship: 'ViCo' is a method for learning word embeddings. Also, the relationship between 'GloVe Loss Function' and 'GloVe' is missing.
+loop_required: True
+
+[2025-09-23 21:07:40,228][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 1, column 89:
+     ... ut there's a missed relationship: 'ViCo' is a method for learnin ... 
+                                         ^
+[2025-09-23 21:07:42,801][heimdall.core][INFO] - Cleaned output : reason_to_loop: "The relationships are mostly complete, but there's a missed relationship: 'ViCo' is a method for learning word embeddings. Also, the relationship between 'GloVe Loss Function' and 'GloVe' is missing."
+loop_required: True
+
+[2025-09-23 21:07:42,801][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are mostly complete, but there's a missed relationship: 'ViCo' is a method for learning word embeddings. Also, the relationship between 'GloVe Loss Function' and 'GloVe' is missing.
+[2025-09-23 21:07:42,802][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:07:42,802][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:07:43,953][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ViCo
+    target_entity: word embeddings
+    description: ViCo is a method for learning word embeddings.
+    strength: 10
+  - source_entity: GloVe Loss Function
+    target_entity: GloVe
+    description: The GloVe Loss Function is used in the training of GloVe.
+    strength: 10
+
+[2025-09-23 21:07:43,954][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ViCo', 'target_entity': 'GloVe', 'description': 'ViCo word embeddings are compared with GloVe word embeddings.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'unsupervised clustering', 'description': 'ViCo is evaluated using unsupervised clustering.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'supervised partitioning', 'description': 'ViCo is evaluated using supervised partitioning.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'zero-shot-like visual generalization', 'description': 'ViCo is evaluated using zero-shot-like visual generalization.', 'strength': 7.0}, {'source_entity': 'GloVe', 'target_entity': 'word embeddings', 'description': 'GloVe is a method for creating word embeddings.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'VisualGenome', 'description': 'VisualGenome and ImageNet are used as datasets.', 'strength': 8.0}, {'source_entity': 'VisualGenome', 'target_entity': 'ViCo', 'description': 'VisualGenome is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViCo', 'description': 'ImageNet is used to extract visual co-occurrences for ViCo.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'Caption-Image Retrieval', 'description': 'ViCo is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'VQA', 'description': 'ViCo is used in VQA.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Referring Expression Comprehension', 'description': 'ViCo is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'Image Captioning', 'description': 'ViCo is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Caption-Image Retrieval', 'description': 'GloVe is used in Caption-Image Retrieval.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'VQA', 'description': 'GloVe is used in VQA.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Referring Expression Comprehension', 'description': 'GloVe is used in Referring Expression Comprehension.', 'strength': 6.0}, {'source_entity': 'GloVe', 'target_entity': 'Image Captioning', 'description': 'GloVe is used in Image Captioning.', 'strength': 6.0}, {'source_entity': 'ViCo', 'target_entity': 'ViCo Loss Function', 'description': 'ViCo uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'GloVe', 'target_entity': 'GloVe Loss Function', 'description': 'GloVe uses a specific loss function.', 'strength': 9.0}, {'source_entity': 'logbilinear model', 'target_entity': 'GloVe', 'description': 'The logbilinear model is used to train GloVe-like embeddings.', 'strength': 7.0}, {'source_entity': 'vis-w2v', 'target_entity': 'word embeddings', 'description': 'vis-w2v is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'ViEW', 'target_entity': 'word embeddings', 'description': 'ViEW is a method for visually enhancing word embeddings.', 'strength': 7.0}, {'source_entity': 'CBOW', 'target_entity': 'word embeddings', 'description': 'CBOW is a method for learning word embeddings.', 'strength': 7.0}, {'source_entity': 'Skip-Gram models', 'target_entity': 'word embeddings', 'description': 'Skip-Gram models are used to learn word embeddings.', 'strength': 7.0}, {'source_entity': 'ImageNet', 'target_entity': 'ViEW', 'description': 'ImageNet is used in ViEW.', 'strength': 6.0}, {'source_entity': 'BERT', 'target_entity': 'word embeddings', 'description': 'BERT is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'word embeddings', 'description': 'ELMo is a contextualized word representation model.', 'strength': 7.0}, {'source_entity': 'ViCo', 'target_entity': 'WordNet', 'description': 'ViCo uses WordNet synset annotations to compute Object-Hypernym co-occurrences, which are used in the ViCo model.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'MDS approach', 'description': 'The text mentions MDS approach as an alternative method for obtaining word embeddings. While not directly related, the context implies a comparison or contrast with ViCo.', 'strength': 3.0}, {'source_entity': 'MDS approach', 'target_entity': 'word embeddings', 'description': 'The MDS approach is used to obtain word embeddings.', 'strength': 8.0}, {'source_entity': 'ViCo', 'target_entity': 'word embeddings', 'description': 'ViCo is a method for learning word embeddings.', 'strength': 10.0}, {'source_entity': 'GloVe Loss Function', 'target_entity': 'GloVe', 'description': 'The GloVe Loss Function is used in the training of GloVe.', 'strength': 10.0}]
+
+[2025-09-23 21:07:43,954][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:07:45,027][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit (4) has been reached. No further extraction is permitted, even if some relationships could be added. The current relationships cover the core concepts and their interactions as described in the text.'
+loop_required: false
+
+[2025-09-23 21:07:45,028][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit (4) has been reached. No further extraction is permitted, even if some relationships could be added. The current relationships cover the core concepts and their interactions as described in the text.
+[2025-09-23 21:07:45,028][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:07:45,028][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:07:45,028][Thread 0][ERROR] - File doesn't exist: Bodhi/201307511/0/201307511_intermediate_data.yml. Creating file..
+[2025-09-23 21:07:45,034][Thread 0][INFO] - Nodes & relations saved to Bodhi/201307511/0/201307511_intermediate_data.yml
+[2025-09-23 21:07:45,034][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:07:45,034][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:07:45,034][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 37.319276571273804
+
+[2025-09-23 21:07:45,034][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 21:07:45,046][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 21:07:45,065][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 21:07:45,082][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 2 with offset 2
+[2025-09-23 21:07:45,116][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 3 intermediate files into Bodhi/201307511/201307511_combined_intermediate_data.yml
+[2025-09-23 21:07:45,116][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 201307511
+Total Chunks Processed: 3
+Threads Used: 3
+Chunks per Thread: [1, 1, 1]
+Entities Extracted: 71
+Relationships Extracted: 92
+Combined Intermediate File: Bodhi/201307511/201307511_combined_intermediate_data.yml
+Total Time Taken: 43.39 seconds
+==========================================
+[2025-09-23 21:07:45,116][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 21:07:45,117][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 21:07:45,117][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 21:07:45,117][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 21:07:45,119][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:07:45,119][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 21:07:45,310][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 21:07:45,310][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 21:07:45,310][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['ViCo', 'GloVe', 'ImageNet', 'VisualGenome']...
+Number of elements: 55
+[2025-09-23 21:07:45,453][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 201307511 
+******************************
+ - Total number of entities before resolution: 55
+ - Total number of entities after resolution: 51
+ - Total number of descriptions in all resolved nodes before resolution: 10
+ - Total number of descriptions in all resolved nodes after resolution: 8
+******************************
+
+[2025-09-23 21:07:45,453][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'ViCo': {'type': ['method', 'method'], 'description': ['Word embeddings from Visual Co-occurrences, learned from multiple types of co-occurrences.', 'A method used for word embedding, compared with GloVe.'], 'source_chunk_index': [0, 2]}, 'GloVe': {'type': ['method', 'method', 'method'], 'description': ['Word embeddings learned from large-scale text corpora by modeling textual co-occurrences.', 'A method for learning word embeddings.', 'A word embedding model used for representing words as vectors.'], 'source_chunk_index': [0, 1, 2]}, 'ImageNet': {'type': ['dataset', 'dataset', 'dataset', 'dataset'], 'description': ['A large-scale visual database used for training and evaluation, providing annotations and hypernyms.', 'A large-scale dataset used for training and evaluation, particularly for image-related tasks.', 'A large-scale visual database used for training and evaluating computer vision models, and also used in this study for its annotations and visual features.', 'A dataset used for estimating visual co-occurrence counts.'], 'source_chunk_index': [0, 0, 0, 1]}, 'VisualGenome': {'type': ['dataset', 'dataset'], 'description': ['A large-scale, textually-annotated visual database used for extracting visual co-occurrences.', 'A large-scale, textually-annotated visual database used for training and evaluation.'], 'source_chunk_index': [0, 0]}, 'WordNet': {'type': ['dataset', 'dataset'], 'description': ['A lexical database of English, used for synset annotations and hypernyms.', 'A lexical database of English.'], 'source_chunk_index': [0, 1]}, 'unsupervised clustering': {'type': ['task'], 'description': ['A method to group data points without prior knowledge of their categories.'], 'source_chunk_index': [0]}, 'supervised partitioning': {'type': ['task'], 'description': ['A method to divide a dataset into predefined groups based on labeled data.'], 'source_chunk_index': [0]}, 'zero-shot-like visual generalization': {'type': ['task'], 'description': ['Evaluating the ability of a model to generalize to unseen visual concepts.'], 'source_chunk_index': [0]}, 'logbilinear model': {'type': ['method'], 'description': ['A model used to train GloVe-like embeddings.'], 'source_chunk_index': [0]}, 'Caption-Image Retrieval': {'type': ['task'], 'description': ['A vision-language task where the goal is to retrieve the image that best matches a given caption.'], 'source_chunk_index': [0]}, 'VQA': {'type': ['task'], 'description': ['Visual Question Answering, a task that involves answering questions about images.'], 'source_chunk_index': [0]}, 'Referring Expression Comprehension': {'type': ['task'], 'description': ['A task where the goal is to identify the region in an image that corresponds to a given textual description.'], 'source_chunk_index': [0]}, 'Image Captioning': {'type': ['task', 'task', 'task', 'task'], 'description': ['A task that involves generating a textual description for a given image.', 'A task where the model generates a textual description for an image.', 'The specific task used in the experiments, where ViCo is compared to GloVe and random vectors.', 'The task of generating textual descriptions for images.'], 'source_chunk_index': [0, 2, 2, 2]}, 'ELMo': {'type': ['method'], 'description': ['A contextualized word representation model.'], 'source_chunk_index': [0]}, 'BERT': {'type': ['method'], 'description': ['A contextualized word representation model.'], 'source_chunk_index': [0]}, 'ViEW': {'type': ['method'], 'description': ['An approach to visually enhance existing word embeddings.'], 'source_chunk_index': [0]}, 'CBOW': {'type': ['method'], 'description': ['Continuous Bag-of-Words model, a neural approach for learning word embeddings from co-occurrences in local context windows.'], 'source_chunk_index': [0]}, 'Skip-Gram models': {'type': ['method'], 'description': ['A neural approach for learning word embeddings from co-occurrences in local context windows.'], 'source_chunk_index': [0]}, 'MDS approach': {'type': ['method'], 'description': ['An approach involving acquiring word similarity annotations followed by applying Multidimensional Scaling (MDS) to obtain low dimensional embeddings and then identifying meaningful clusters or interpretable dimensions.'], 'source_chunk_index': [0]}, 'GloVe Loss Function': {'type': ['method'], 'description': ['The loss function used by GloVe to learn word embeddings. It is defined as:  ∑_(i,j)  f(X_(i,j)) * (w_i^T w_j + b_i + b_j - log(X_(i,j)))^2, where X_(i,j) is the co-occurrence count of words i and j, f is a weighting function, w_i and w_j are the word embeddings, and b_i and b_j are bias terms.'], 'source_chunk_index': [0]}, 'ViCo Loss Function': {'type': ['method'], 'description': ['The loss function used by ViCo to learn word embeddings from multiple types of co-occurrences. It is defined as:  ∑_(i,j,t)  f(X_(i,j,t)) * (w_i^T φ_t(w_j) + b_t_i + b_t_j - log(X_(i,j,t)))^2, where X_(i,j,t) is the co-occurrence count of words i and j for co-occurrence type t, f is a weighting function, w_i and w_j are the word embeddings, φ_t is a type-specific transformation function, and b_t_i and b_t_j are bias terms for word i and j for type t.'], 'source_chunk_index': [0]}, 'ViCo embeddings': {'type': ['method'], 'description': ['A method for learning visual word embeddings.'], 'source_chunk_index': [1]}, 'Visual Genome': {'type': ['dataset'], 'description': ['A dataset used for estimating visual co-occurrence counts.'], 'source_chunk_index': [1]}, 'Adagrad': {'type': ['method'], 'description': ['An optimization algorithm reported to work best for GloVe.'], 'source_chunk_index': [1]}, 't-SNE plots': {'type': ['generic'], 'description': ['Plots used for qualitative analysis of ViCo embeddings.'], 'source_chunk_index': [1]}, 'CIFAR-100 dataset': {'type': ['dataset', 'dataset'], 'description': ['A dataset used for evaluating zero-shot-like object classification performance.', 'The dataset used to evaluate the zero-shot-like object classification performance.'], 'source_chunk_index': [1, 1]}, 'ResNet': {'type': ['method'], 'description': ['A convolutional neural network used for feature extraction.'], 'source_chunk_index': [1]}, 'Object-Hypernym (oh) counts': {'type': ['generic'], 'description': ['Counts computed using ImageNet synsets and their ancestors in WordNet.'], 'source_chunk_index': [1]}, 'Visual word embeddings': {'type': ['generic'], 'description': ['Word embeddings specifically designed for visual data.'], 'source_chunk_index': [1]}, 'MS-COCO': {'type': ['dataset'], 'description': ['A dataset used for training word2vec for initialization.'], 'source_chunk_index': [1]}, 'Wiki': {'type': ['dataset', 'dataset'], 'description': ['A dataset used for training vis-w2v. It refers to Wikipedia.', 'The Wikipedia dataset used for training vis-w2v embeddings.'], 'source_chunk_index': [1, 1]}, 'Coco': {'type': ['dataset'], 'description': ['The MS-COCO dataset used for training vis-w2v embeddings.'], 'source_chunk_index': [1]}, 'Word2Vec': {'type': ['method'], 'description': ['The word embedding model used for initialization of vis-w2v.'], 'source_chunk_index': [1]}, 'V-Measure': {'type': ['generic'], 'description': ['The evaluation metric used to compare random vectors, GloVe, variants of ViCo and their combinations (concatenation) for different number of clusters.'], 'source_chunk_index': [1]}, 'RefCOCO+ dataset': {'type': ['dataset', 'dataset'], 'description': ['A dataset used for image-based tasks, specifically for evaluating localization accuracy.', 'A dataset used for referring expression comprehension, specifically the UNC split is used.'], 'source_chunk_index': [2, 2]}, 'linear SVM': {'type': ['method'], 'description': ['A linear Support Vector Machine used for classification.'], 'source_chunk_index': [2]}, 'GRU': {'type': ['method'], 'description': ['Gated Recurrent Unit, a type of recurrent neural network used for processing sequential data.'], 'source_chunk_index': [2]}, 'answer classifier': {'type': ['generic'], 'description': ['A component of the model responsible for classifying answers.'], 'source_chunk_index': [2]}, 'localization accuracy': {'type': ['task'], 'description': ['A metric used to evaluate the performance of models in identifying the location of objects within an image.'], 'source_chunk_index': [2]}, 'cosine similarity': {'type': ['method'], 'description': ['A measure of similarity between two non-zero vectors of an inner product space.'], 'source_chunk_index': [2]}, 'Image features': {'type': ['generic'], 'description': ['Features extracted from images, used as input to the model.'], 'source_chunk_index': [2]}, 'GloVe Model Dimensions': {'type': ['method'], 'description': ['The specific dimensionality of the GloVe word embeddings used in the experiments.'], 'source_chunk_index': [2]}, 'ViCo Model Configurations': {'type': ['method'], 'description': ['The specific configurations of the ViCo models, including the linear and other variants, and their respective parameters (e.g., dimensions).'], 'source_chunk_index': [2]}, 'Random Initialization Dimensions': {'type': ['method'], 'description': ['The dimensionality of the random embeddings used for comparison with GloVe and ViCo.'], 'source_chunk_index': [2]}, 'Analogy Pairings': {'type': ['task'], 'description': ['The task of evaluating the performance of word embeddings on analogy tasks.'], 'source_chunk_index': [2]}, 'GloVe+random(200)': {'type': ['method'], 'description': ['A method that uses GloVe embeddings combined with random embeddings of dimension 200.'], 'source_chunk_index': [2]}, 'GloVe+ViCo(linear, 100)': {'type': ['method'], 'description': ['A method that uses GloVe embeddings combined with ViCo embeddings (linear variant) of dimension 100.'], 'source_chunk_index': [2]}, 'word embeddings': {'description': ['Vector representations of words, capturing semantic relationships.', 'Vector representations of words, used as input for various models.'], 'type': ['generic'], 'source_chunk_index': [0, 1, 2]}, 'vis-w2v': {'description': ['A method that uses abstract (synthetic) scenes to learn visual relatedness.', 'A visual word embedding method. Different versions of vis-w2v are trained depending on the dataset used for training word2vec for initialization.'], 'type': ['method'], 'source_chunk_index': [0, 1]}, 'Zero-shot object classification': {'description': ['A task used to assess the generalization ability of embeddings.', 'The task used to assess the ability of the embeddings to generalize to unseen classes, evaluated using the CIFAR-100 dataset.'], 'type': ['task'], 'source_chunk_index': [1]}, 'UNC split': {'description': ['A specific data split used within the RefCOCO+ dataset.', 'The specific split of the RefCOCO+ dataset used for evaluation.'], 'type': ['dataset', 'generic'], 'source_chunk_index': [2]}}
+[2025-09-23 21:07:45,454][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 21:07:45,454][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 21:07:45,477][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 21:07:45,477][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:201307511...
+[2025-09-23 21:07:45,523][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--VisualGenome:
+Total number of sentences: 7722
+Sources:[696]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ImageNet:
+Total number of sentences: 7722
+Sources:[696]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--unsupervised clustering:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--supervised partitioning:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--zero - shot - like generalization analysis:
+Total number of sentences: 7722
+Sources:[654]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--word embeddings:
+Total number of sentences: 7722
+Sources:[710]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--text - only embeddings:
+Total number of sentences: 7722
+Sources:[654]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe:
+Total number of sentences: 7722
+Sources:[712]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--word 2 vec:
+Total number of sentences: 7722
+Sources:[691]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Vi - sualGenome:
+Total number of sentences: 7722
+Sources:[680]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Word - Net:
+Total number of sentences: 7722
+Sources:[656]
+[2025-09-23 21:07:45,539][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--WordNet:
+Total number of sentences: 7722
+Sources:[689]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ViCo:
+Total number of sentences: 7722
+Sources:[712]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Visual Cooccurrences:
+Total number of sentences: 7722
+Sources:[658]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--zero - shot - like visual generalization:
+Total number of sentences: 7722
+Sources:[659]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ViCo augmented GloVe:
+Total number of sentences: 7722
+Sources:[660]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--random vectors:
+Total number of sentences: 7722
+Sources:[705]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--vis - w 2 v ,:
+Total number of sentences: 7722
+Sources:[660]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--question answering:
+Total number of sentences: 7722
+Sources:[661]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Caption - Image Retrieval:
+Total number of sentences: 7722
+Sources:[662]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--VQA:
+Total number of sentences: 7722
+Sources:[662]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Referring Expression Comprehension:
+Total number of sentences: 7722
+Sources:[662]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Image Captioning:
+Total number of sentences: 7722
+Sources:[706]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--word embedding:
+Total number of sentences: 7722
+Sources:[697]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--com - bined with GloVe:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe alone:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--zero - shot - like analysis:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--vision - language:
+Total number of sentences: 7722
+Sources:[664]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Semantic Differential:
+Total number of sentences: 7722
+Sources:[665]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--SD:
+Total number of sentences: 7722
+Sources:[667]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Multidimensional Scaling:
+Total number of sentences: 7722
+Sources:[666]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--MDS:
+Total number of sentences: 7722
+Sources:[667]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Continuous Bag - of - Words:
+Total number of sentences: 7722
+Sources:[668]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--CBOW:
+Total number of sentences: 7722
+Sources:[668]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Skip - Gram:
+Total number of sentences: 7722
+Sources:[668]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--learning word embeddings:
+Total number of sentences: 7722
+Sources:[696]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--vis - w 2 v:
+Total number of sentences: 7722
+Sources:[692]
+[2025-09-23 21:07:45,540][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ViEW:
+Total number of sentences: 7722
+Sources:[671]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--autoencoder:
+Total number of sentences: 7722
+Sources:[672]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--convolutional network:
+Total number of sentences: 7722
+Sources:[672]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--pre - training on language models:
+Total number of sentences: 7722
+Sources:[673]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ELMo:
+Total number of sentences: 7722
+Sources:[673]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GPT:
+Total number of sentences: 7722
+Sources:[673]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--BERT:
+Total number of sentences: 7722
+Sources:[673]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Adagrad:
+Total number of sentences: 7722
+Sources:[677]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Visual Genome:
+Total number of sentences: 7722
+Sources:[678]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--t - SNE:
+Total number of sentences: 7722
+Sources:[684]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--variants of ViCo:
+Total number of sentences: 7722
+Sources:[685]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--random:
+Total number of sentences: 7722
+Sources:[686]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+ViCo(linear,:
+Total number of sentences: 7722
+Sources:[703]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--visual word embeddings:
+Total number of sentences: 7722
+Sources:[690]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--wiki:
+Total number of sentences: 7722
+Sources:[691]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--coco:
+Total number of sentences: 7722
+Sources:[691]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Wikipedia:
+Total number of sentences: 7722
+Sources:[691]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--MS - COCO:
+Total number of sentences: 7722
+Sources:[691]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+vis - w 2 v - wiki:
+Total number of sentences: 7722
+Sources:[692]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+vis - w 2 v - wiki - coco:
+Total number of sentences: 7722
+Sources:[692]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+random:
+Total number of sentences: 7722
+Sources:[706]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+ViCo:
+Total number of sentences: 7722
+Sources:[709]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--object classification:
+Total number of sentences: 7722
+Sources:[695]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--CIFAR - 1 0 0:
+Total number of sentences: 7722
+Sources:[695]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--CIFAR:
+Total number of sentences: 7722
+Sources:[698]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--CNN:
+Total number of sentences: 7722
+Sources:[697]
+[2025-09-23 21:07:45,541][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--linear layer:
+Total number of sentences: 7722
+Sources:[698]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--ResNet:
+Total number of sentences: 7722
+Sources:[698]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+random(:
+Total number of sentences: 7722
+Sources:[702]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe+ViCo(linear ):
+Total number of sentences: 7722
+Sources:[706]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--linear SVM:
+Total number of sentences: 7722
+Sources:[709]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GloVe only model:
+Total number of sentences: 7722
+Sources:[709]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--GRU:
+Total number of sentences: 7722
+Sources:[710]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--MAt - tNet:
+Total number of sentences: 7722
+Sources:[711]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--localization:
+Total number of sentences: 7722
+Sources:[711]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--RefCOCO+:
+Total number of sentences: 7722
+Sources:[711]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201307511--Glove:
+Total number of sentences: 7722
+Sources:[712]
+[2025-09-23 21:07:45,542][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 21:07:45,548][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_201307511.yml, skipping classification.
+[2025-09-23 21:07:45,548][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_201307511.yml
+[2025-09-23 21:07:45,550][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/20-28-55/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=1/storage/Bodhi/201307511/201307511_graph.yml']
+[2025-09-23 21:07:45,604][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/20-28-55/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=1/storage/Bodhi/201307511/201307511_graph.yml
+[2025-09-23 21:07:45,647][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:07:45,648][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 201307511
+[2025-09-23 21:07:45,739][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 21:07:46,267][root][INFO] - Token count: 2647
+[2025-09-23 21:07:46,784][root][INFO] - Batch token estimation (hf) complete for 51 strings.
+[2025-09-23 21:07:46,802][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:VICO\nDescription:Word embeddings from Visual Co-occurrences, learned from multiple types of co-occurrences. ; A method used for word embedding, compared with GloVe.\n', 'Name:GLOVE\nDescription:Word embeddings learned from large-scale text corpora by modeling textual co-occurrences. ; A method for learning word embeddings. ; A word embedding model used for representing words as vectors.\n', 'Name:IMAGENET\nDescription:A large-scale visual database used for training and evaluation, providing annotations and hypernyms. ; A large-scale dataset used for training and evaluation, particularly for image-related tasks. ; A large-scale visual database used for training and evaluating computer vision models, and also used in this study for its annotations and visual features. ; A dataset used for estimating visual co-occurrence counts.\n', 'Name:VISUALGENOME\nDescription:A large-scale, textually-annotated visual database used for extracting visual co-occurrences. ; A large-scale, textually-annotated visual database used for training and evaluation.\n', 'Name:WORDNET\nDescription:A lexical database of English, used for synset annotations and hypernyms. ; A lexical database of English.\n']split_entities: text_tokens=2647, instructions_tokens=500, budget_for_entities=6853, number_of_entities=51, avg_entity_tokens=33, max_entities=207, num_groups=1, entities_per_group=[51]
+[2025-09-23 21:08:21,188][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: VICO
+    type: DOMAIN
+  - entity: GLOVE
+    type: METHOD
+  - entity: IMAGENET
+    type: METHOD
+  - entity: VISUALGENOME
+    type: METHOD
+  - entity: WORDNET
+    type: METHOD
+  - entity: UNSUPERVISED CLUSTERING
+    type: METHOD
+  - entity: SUPERVISED PARTITIONING
+    type: METHOD
+  - entity: ZERO-SHOT-LIKE VISUAL GENERALIZATION
+    type: DOMAIN
+  - entity: LOGBILINEAR MODEL
+    type: METHOD
+  - entity: CAPTION-IMAGE RETRIEVAL
+    type: METHOD
+  - entity: VQA
+    type: METHOD
+  - entity: REFERRING EXPRESSION COMPREHENSION
+    type: METHOD
+  - entity: IMAGE CAPTIONING
+    type: METHOD
+  - entity: ELMO
+    type: METHOD
+  - entity: BERT
+    type: METHOD
+  - entity: VIEW
+    type: METHOD
+  - entity: CBOW
+    type: METHOD
+  - entity: SKIP-GRAM MODELS
+    type: METHOD
+  - entity: MDS APPROACH
+    type: METHOD
+  - entity: GLOVE LOSS FUNCTION
+    type: METHOD
+  - entity: VICO LOSS FUNCTION
+    type: DOMAIN
+  - entity: VICO EMBEDDINGS
+    type: DOMAIN
+  - entity: VISUAL GENOME
+    type: METHOD
+  - entity: ADAGRAD
+    type: METHOD
+  - entity: T-SNE PLOTS
+    type: METHOD
+  - entity: CIFAR-100 DATASET
+    type: METHOD
+  - entity: RESNET
+    type: METHOD
+  - entity: OBJECT-HYPERNYM (OH) COUNTS
+    type: DOMAIN
+  - entity: VISUAL WORD EMBEDDINGS
+    type: METHOD
+  - entity: MS-COCO
+    type: METHOD
+  - entity: WIKI
+    type: METHOD
+  - entity: COCO
+    type: METHOD
+  - entity: WORD2VEC
+    type: METHOD
+  - entity: V-MEASURE
+    type: METHOD
+  - entity: REFCOCO+ DATASET
+    type: METHOD
+  - entity: LINEAR SVM
+    type: METHOD
+  - entity: GRU
+    type: METHOD
+  - entity: ANSWER CLASSIFIER
+    type: METHOD
+  - entity: LOCALIZATION ACCURACY
+    type: METHOD
+  - entity: COSINE SIMILARITY
+    type: METHOD
+  - entity: IMAGE FEATURES
+    type: METHOD
+  - entity: GLOVE MODEL DIMENSIONS
+    type: METHOD
+  - entity: VICO MODEL CONFIGURATIONS
+    type: DOMAIN
+  - entity: RANDOM INITIALIZATION DIMENSIONS
+    type: METHOD
+  - entity: ANALOGY PAIRINGS
+    type: METHOD
+  - entity: GLOVE+RANDOM(200)
+    type: DOMAIN
+  - entity: GLOVE+VICO(LINEAR, 100)
+    type: DOMAIN
+  - entity: WORD EMBEDDINGS
+    type: METHOD
+  - entity: VIS-W2V
+    type: METHOD
+  - entity: ZERO-SHOT OBJECT CLASSIFICATION
+    type: METHOD
+  - entity: UNC SPLIT
+    type: METHOD
+
+[2025-09-23 21:08:21,199][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 21:08:21,201][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/20-28-55/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=1/201307511/eval_results/classification_results.yml
+[2025-09-23 21:08:21,206][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 21:08:21,206][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 21:08:21,206][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 21:08:21,207][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 23 exact matches, 28 unmatched bodhi entities.
+[2025-09-23 21:08:21,207][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 21:08:21,316][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 4 fuzzy matches, 24 unmatched bodhi entities remain.
+[2025-09-23 21:08:21,318][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 21:08:21,871][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 21:08:22,382][root][INFO] - Batch token estimation (hf) complete for 74 strings.
+[2025-09-23 21:08:22,400][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'VisualGenome': 3, 'ImageNet': 2, 'unsupervised clustering': 4, 'supervised partitioning': 4, 'word embeddings': 2, 'text - only embeddings': 4, 'GloVe': 3, 'word 2 vec': 4, 'Vi - sualGenome': 6, 'Word - Net': 3, 'WordNet': 2, 'random vectors': 2, 'vis - w 2 v ,': 7, 'question answering': 2, 'Caption - Image Retrieval': 5, 'VQA': 2, 'Referring Expression Comprehension': 6, 'Image Captioning': 3, 'word embedding': 2, 'vision - language': 3, 'Semantic Differential': 2, 'SD': 1, 'Multidimensional Scaling': 4, 'MDS': 2, 'Continuous Bag - of - Words': 6, 'CBOW': 2, 'Skip - Gram': 3, 'learning word embeddings': 3, 'vis - w 2 v': 6, 'ViEW': 2, 'autoencoder': 2, 'convolutional network': 4, 'pre - training on language models': 6, 'ELMo': 2, 'GPT': 2, 'BERT': 1, 'Adagrad': 3, 'Visual Genome': 2, 't - SNE': 4, 'random': 1, 'visual word embeddings': 3, 'wiki': 1, 'coco': 2, 'Wikipedia': 2, 'MS - COCO': 4, 'object classification': 2, 'CIFAR - 1 0 0': 10, 'CIFAR': 3, 'CNN': 1, 'linear layer': 2, 'ResNet': 2, 'linear SVM': 2, 'GRU': 2, 'MAt - tNet': 5, 'localization': 2, 'RefCOCO+': 5, 'Glove': 2, 'zero - shot - like generalization analysis': 8, 'ViCo': 2, 'Visual Cooccurrences': 4, 'zero - shot - like visual generalization': 8, 'ViCo augmented GloVe': 5, 'com - bined with GloVe': 7, 'GloVe alone': 4, 'zero - shot - like analysis': 6, 'variants of ViCo': 4, 'GloVe+ViCo(linear,': 9, 'GloVe+vis - w 2 v - wiki': 12, 'GloVe+vis - w 2 v - wiki - coco': 14, 'GloVe+random': 5, 'GloVe+ViCo': 6, 'GloVe+random(': 6, 'GloVe+ViCo(linear )': 9, 'GloVe only model': 5}
+[2025-09-23 21:08:22,893][root][INFO] - Batch token estimation (hf) complete for 24 strings.
+[2025-09-23 21:08:22,908][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_995b3767b3b300997911174528a8534d701a20590b653df6abcc61db26c9aae6.pkl
+[2025-09-23 21:08:25,926][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 24 entities.
+[2025-09-23 21:08:26,647][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 21:08:27,538][root][INFO] - Batch token estimation (hf) complete for 8 strings.
+[2025-09-23 21:08:27,576][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'LOGBILINEAR MODEL': 5, 'V-MEASURE': 4, 'ANSWER CLASSIFIER': 4, 'COSINE SIMILARITY': 7, 'IMAGE FEATURES': 2, 'ANALOGY PAIRINGS': 7, 'UNC SPLIT': 3, 'OBJECT-HYPERNYM (OH) COUNTS': 11}
+[2025-09-23 21:08:27,576][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for novel entity assessment chunk: novel_assess_5b308795e3232c7c92da4aa7cd97df4a6e1af846f750d055453c5f72dde94892.pkl
+[2025-09-23 21:08:31,013][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Novel entity assessment completed for 8 entities.
+[2025-09-23 21:08:31,013][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 21:08:31,013][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 0.11764705882352941, 'method_coverage': 0.43859649122807015, 'precision': 0.36486486486486486, 'recall': 0.27835051546391754, 'f1': 0.31578947368421056, 'domain_precision': 0.2, 'domain_recall': 0.10526315789473684, 'domain_f1': 0.13793103448275862, 'method_precision': 0.390625, 'method_recall': 0.32051282051282054, 'method_f1': 0.35211267605633806, 'adjusted_domain_precision': 0.3, 'adjusted_domain_recall': 0.16666666666666666, 'adjusted_domain_f1': 0.21428571428571427, 'adjusted_method_precision': 0.5, 'adjusted_method_recall': 0.5, 'adjusted_method_f1': 0.5, 'adjusted_precision': 0.47297297297297297, 'adjusted_recall': 0.4268292682926829, 'adjusted_f1': 0.44871794871794873}
+[2025-09-23 21:08:31,019][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/20-28-55/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=1/201307511/eval_results/eval_output.yml
+[2025-09-23 21:08:31,021][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/20-28-55/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=1/201307511/eval_results/eval_metrics.yml

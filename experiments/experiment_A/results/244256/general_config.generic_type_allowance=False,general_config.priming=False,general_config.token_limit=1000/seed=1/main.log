@@ -1,0 +1,1468 @@
+[2025-09-23 11:40:27,066][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 11:40:27,067][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 11:40:27,262][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 11:40:27,262][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 244256
+[2025-09-23 11:40:27,263][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 11:40:27,263][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 11:40:28,499][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 11:40:29,194][root][INFO] - Token count: 1190
+[2025-09-23 11:40:29,350][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 11:40:30,121][root][INFO] - Token count: 2303
+[2025-09-23 11:40:30,261][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 11:40:30,898][root][INFO] - Token count: 2576
+[2025-09-23 11:40:33,195][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper focuses on car detection within the context of Advanced Driver-Assistance Systems (ADAS), leveraging deep learning techniques, specifically Faster R-CNN, on the KITTI dataset. Key concepts include: **Object Detection**, **Image Classification**, and **Localization**. The study explores various **Convolutional Neural Network (CNN)** architectures like **AlexNet** and **VGG16**, comparing their performance in Faster R-CNN configurations.  The **Region Proposal Network (RPN)** is central to Faster R-CNN, generating region proposals for the **R-CNN** classification network.  The paper investigates the impact of input image resolution and feature layer selection (e.g., conv4_3, conv5_3) on detection accuracy.  It also examines the use of **context windows** and different **anchor box** selection schemes.  The study compares performance against other methods like SDP+CRC and analyzes inference times.  The goal is to improve car detection accuracy, particularly on the challenging KITTI dataset, by optimizing Faster R-CNN configurations.  Key datasets mentioned are KITTI, ImageNet, and PASCAL.
+
+
+[2025-09-23 11:40:33,196][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 11:40:33,222][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 3 text units to Bodhi/244256/244256_text_units.yml
+[2025-09-23 11:40:33,242][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 3, Threads: 3. Distribution: 0 threads get 2 chunks, and 3 threads get 1 chunks. Chunks per thread: [1, 1, 1]
+[2025-09-23 11:40:33,243][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:40:33,244][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:40:33,245][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:40:33,246][Thread 1][INFO] - source chunk:
+than using the convolution features of the last pooled layer ( as is done in the original faster R - CNN paper ) , we use features from convolutional layers that are the bottom layers of the previous pooling layer .For VGG 1 6 and AlexNet , fully connected layers are used as the R - CNN branch .Asthe standard procedure introduced in faster R - CNN , we randomly sample 1 2 8 positive and 1 2 8 negative roi proposals per batch to train the R - CNN layer .A total of 7 0 K iterations are run during R - CNN training starting from imagenet pre - trained weights for the convolution layers .We use the KITTI object detection dataset .In KITTI 's evaluation criteria , proposal boxes having overlap with the ground truth or IoU greater than 7 0 % are counted as true detection for cars .The Faster R - CNN algorithm has been shown to deliver high accuracy on the PASCAL [ 6 ] dataset .Adapting that pipeline from PASCAL to KITTI poses a few natural challenges .First , the image sizes in the KITTI dataset is 1 2 4 2 x 3 7 5 pixels whereas the image sizes in PASCAL dataset is 5 0 0 pixels in the longest dimension ( many PASCAL images are 5 0 0 x 3 3 3 or 3 3 3 x 5 0 0 ) .We performed extensive design space search of Faster R - CNN configurations on the KITTI dataset .Our starting point is the VGG 1 6 network that has achieved high accuracy in both image classification [ 2 1 ] and localization [ 1 9 ] .KITTI images have a native resolution of 1 2 9 5 x 3 7 5 , so the default Faster R - CNN behavior is to resize KITTI images to 1 0 0 0 x 3 0 2 .For example , the conv 5 3 activations -which serves as input to both the region proposal network ( RPN ) and the classification network -double in height and width .In the next section , we consider shallower networks with fewer layers of activation planes , which enables us to move to even higher input resolutions . So far , we have upsampled the input image until we ran out of on - chip GPU memory when training R - CNN models with a VGG 1 6 - based feature representation .In VGG 1 6 's scheme for naming layers , conv 4 3 is the 1 0 th layer , and conv 5 3 is the 1 3 th layer in the CNN .We expected that the accuracy of R - CNN with conv 4 3 would be slightly lower than R - CNN with conv 5 3 , but as we show in Table 2 that the accuracy is higher with conv 4 3 by 5. 5 , 9. 4 , and 1 2 . 4 percentage - points for easy , medium , and hard detections .We initially considered using the earlier layers of VGG 1 6 as input to the Region Proposal Network .Besides depth , one of the differences between VGG 1 6 and AlexNet is that AlexNet downsamples more aggressively in the early layers -for example AlexNet has stride= 4 in the conv 1 layer ( 4x downsampling ) , while the conv 1 layer of VGG 1 6 has stride= 1 ( no downsampling ) .So , to evaluate this question of how using shallower ( < 1 0 conv layers ) network impacts accuracy , we use AlexNet instead of VGG 1 6 .We use conv 5 ( 5th layer ) activations as input to the R - CNN region - proposal and classification branches , and we report the results in Table 2 .With resolution of 2 0 0 0 x 6 0 4 for both AlexNet - conv 5 and VGG 1 6 - conv 4 3 , the VGG 1 6 - based configuration delivers significantly higher accuracy on easy , medium , and hard detections in Table 2 .We have additional memory available when running AlexNet with 2 0 0 0 x 6 0 4 input images , so we now try upsampling the AlexNet input images to 5 0 0 0 x 1 5 1 0 .In this configuration , on the easy detections , AlexNet with 5 0 0 0 x 1 5 1 0 input is within 0. 5 of a percentage - point of our best VGG 1 6 - based result so far .On medium and hard categories , VGG 1 6 conv 4 3 with an input resolution of 2 0 0 0 x 6 0 4 delivers higher accuracy than AlexNet with 2 0 0 0 x 6 0 4 or 5 0 0 0 x 1 5 1 0 input images .We also conduct a sweep of input image sizes applied to an AlexNet - based R - CNN model that uses conv 5 features .In
+[2025-09-23 11:40:33,246][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:40:33,245][Thread 0][INFO] - source chunk:
+Specifically relevant to ADAS application is the dramatic increase in accuracy of image object classification [ 1 6 , 2 2 , 2 1 , 1 2 ] and localization [ 2 0 , 2 6 , 1 0 , 9 , 1 9 ] in the last few years .R - CNN and its faster variants have become the state of the art in different object detection tasks .In this work , we leverage this method to establish a number of observations related to car detection on the challenging KITTI [ 8 ] dataset .Surprisingly , even shallow models like AlexNet provide high accuracy on the detection task .We do additional exploration of R - CNN based configurations in Section 7 We summarize our findings in the context of the related work in Section 8 , and we conclude in Section 9 . Deformable parts models ( DPM ) were the state of the art for image object detection [ 7 ] before the emergence of deep convolutional neural nets .The R - CNN method uses selective search for object region proposal [ 1 0 ] .The proposed regions in an image are warped to a fixed size and fed into a classification network called R - CNN .Fast R - CNN was introduced to reuse the shared convolution features for the region proposals [ 9 ] .In Fast R - CNN [ 9 ] , the inference speed is still dominated by the region proposal in the selective search method .Inspired by the SPPNet [ 1 1 ] method , Faster R - CNN uses a region proposal network ( RPN ) to regress proposal boxes to ground truth boxes .The regions proposed by the RPN network is fed into the R - CNN network for classification .For example , the OverFeat [ 2 0 ] method predicts a single box for localization whereas the Multibox [ 5 , 2 3 ] method predicts multiple boxes in a class - agnostic way .The SPP method [ 1 1 ] uses shared convolutional feature maps for fast object detection .Deep neural networks are the backbone of most high - accuracy approaches to identifying objects such as cars in KITTI and similar datasets .A high - accuracy method for identifying objects in KITTI dataset is scale dependent pooling ( SDP ) combined with cascaded region classifiers ( CRC ) [ 2 5 ] .The crux of SDP+CRC lies in selecting a high - resolution CNN layer ( e.g. conv 3 3 in VGG 1 6 [ 2 1 ] ) or a heavily downsampled CNN layer ( e.g. conv 5 3 ) , depending on the resolution of each region proposal .By combining features from multiple convolution layers , they were able to achieve very high accuracy on KITTI 's object detection task .Another approach is Monocular 3D ( Mono 3 D ) which actually uses 2D images , but it aims to identify the pose of objects , with the goal of detecting objects as 3D bounding boxes .Like SDP+CRC , Mono 3 D is built around a version of R - CNN .There are also a number of anonymous and/or sparsely - explained submissions to the KITTI website 's leaderboard that are reportedly built on top of R - CNN .To build supervised 2D datasets such as ImageNet [ 4 ] and PASCAL [ 6 ] , a widely - used approach is to have mechanical turk workers annotate user - generated images and videos from websites such as Flickr or YouTube .For example , in VGG 1 6 , for a standard input image size 2 2 4 x 2 2 4 , the features calculated by the first convolution layer is 2 2 4 x 2 2 4 which reduce to 1 4 x 1 4 at the output of conv 5 3 .Similarly for AlexNet , the convolution feature dimension reduces from 5 5 x 5 5 in conv 1 to 6x 6 in pool 5 .In some CNN architectures such as AlexNet [ 1 6 ] and VGG 1 6 [ 2 1 ] , the first fully - connected layer expects a specific height and width for its input data ( e.g. 6x 6 for AlexNet ) .At the CNN architecture level , an easy way around this is to design a CNN architecture that has global average pooling prior to the first FC layer -this approach was popularized in the Network - in - Network ( NiN ) architecture [ 1 7 ] , and it is now used in other architectures such as SqueezeNet [ 1 5 ] and ResNet architectures [ 1 2 ] .However , when using AlexNet or VGG 1 9 , the R - CNN authors developed a technique called ROI Pooling that allows any size input image to be used in concert with AlexNet/VGG FC layers .We briefly review how the region proposal network ( RPN ) in Faster R - CNN generate proposals [ 1 9 ] that will be useful later .RPN starts with convolution layers , which computes a high dimensional , low resolution feature map for the input image .As we will see later in this paper , reducing this distance , or relatively , increasing the " anchor density " will significantly increase the localization accuracy , thus improve the detection accuracy . We train faster R - CNN networks built on the VGG 1 6 [ 2 1 ] and AlexNet [ 1 6 ] , pretrained on the ImageNet - 1 k [ 4 ] classification dataset .VGG 1 6 has sixteen convolution layers [ 2 1 ] and AlexNet has only five convolutional layers [ 1 6 ] .Rather
+[2025-09-23 11:40:33,247][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:33,247][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 11:40:33,246][Thread 2][INFO] - source chunk:
+the experiments with context window , in addition to the original R - CNN branch , an extra R - CNN branch is added that trains on the features extracted from context window .The original R - CNN features and the context R - CNN features are concatenated before classification .When applying the context window to an AlexNet - based R - CNN configuration , we find that the accuracy of all the categories improve as shown in Table 4 .We tested the AlexNet - based Faster R - CNN 's detection accuracy with different anchor box selection schemes , and the result is shown in Table 3 .The inference time using AlexNet conv 5 layer with input image size of 5 0 0 0 x 1 5 1 0 and VGG 1 6 conv 4 3 layer with input image size of 2 0 0 0 x 6 0 4 is 0. 3 4 s and 0. 6 s respectively .Inferencetimes for other published high accuracy methods on the KITTI dataset are 3s for 3DOP [ 3 ] and 0. 4 s for SDP+CRC [ 2 5 ] .We have shown that input image resolution has a large impact on the accuracy of car detection using the faster R - CNN network .
+[2025-09-23 11:40:33,251][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:40:33,255][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:33,262][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 11:40:33,262][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:40:33,266][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:33,266][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 11:40:35,383][heimdall.core][INFO] - Cleaned output : entities:
+  - name: R-CNN
+    type: method
+    description: A method used for object detection, with modifications involving context windows.
+  - name: AlexNet
+    type: method
+    description: A convolutional neural network architecture used as a base for the R-CNN method.
+  - name: Faster R-CNN
+    type: method
+    description: An improved version of the R-CNN method, used for object detection.
+  - name: context window
+    type: method
+    description: A technique used to enhance the features extracted by R-CNN by incorporating contextual information.
+  - name: car detection
+    type: task
+    description: The objective of identifying and locating cars within images.
+  - name: KITTI dataset
+    type: dataset
+    description: A dataset used to evaluate the performance of object detection methods.
+  - name: object detection
+    type: task
+    description: The task of identifying and locating objects within images.
+  - name: VGG16
+    type: method
+    description: A convolutional neural network architecture used for feature extraction.
+
+[2025-09-23 11:40:35,388][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:36,382][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but the specific methods used for comparison (e.g., 3DOP, SDP+CRC) are missing. Adding these would improve the understanding of the methods being compared.
+loop_required: true
+
+[2025-09-23 11:40:36,385][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:36,385][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:36,602][heimdall.core][INFO] - Cleaned output : entities:
+  - name: R-CNN
+    type: method
+    description: A method that uses selective search for object region proposal and a classification network.
+  - name: KITTI dataset
+    type: dataset
+    description: A dataset used for car detection, challenging for object detection tasks.
+  - name: AlexNet
+    type: method
+    description: A shallow convolutional neural network that provides high accuracy on the detection task.
+  - name: Fast R-CNN
+    type: method
+    description: An improved version of R-CNN that reuses shared convolution features for region proposals.
+  - name: Faster R-CNN
+    type: method
+    description: A method that uses a region proposal network (RPN) to regress proposal boxes to ground truth boxes.
+  - name: OverFeat
+    type: method
+    description: A method that predicts a single box for localization.
+  - name: SPP method
+    type: method
+    description: A method that uses shared convolutional feature maps for fast object detection.
+  - name: VGG16
+    type: method
+    description: A convolutional neural network architecture with sixteen convolution layers.
+  - name: ImageNet
+    type: dataset
+    description: A widely-used dataset for training and evaluating image recognition models.
+  - name: Deformable parts models (DPM)
+    type: method
+    description: A method that was the state of the art for image object detection before the emergence of deep convolutional neural nets.
+  - name: Region Proposal Network (RPN)
+    type: method
+    description: A network used in Faster R-CNN to generate proposal boxes.
+  - name: Monocular 3D (Mono 3D)
+    type: method
+    description: A method that aims to identify the pose of objects, with the goal of detecting objects as 3D bounding boxes.
+  - name: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)
+    type: method
+    description: A high-accuracy method for identifying objects in the KITTI dataset.
+
+[2025-09-23 11:40:36,613][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:36,663][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Faster R-CNN
+    type: method
+    description: An object detection algorithm used as a foundation for the research, delivering high accuracy on the PASCAL dataset.
+  - name: VGG16
+    type: method
+    description: A convolutional neural network architecture used as a feature extractor in the Faster R-CNN framework, known for its high accuracy in image classification and localization.
+  - name: AlexNet
+    type: method
+    description: A convolutional neural network architecture used as an alternative to VGG16 to evaluate the impact of shallower networks on accuracy.
+  - name: KITTI object detection dataset
+    type: dataset
+    description: A dataset used for training and evaluating the Faster R-CNN algorithm, focusing on object detection in autonomous driving scenarios.
+  - name: R-CNN layer
+    type: method
+    description: The region-based convolutional neural network layer, trained using positive and negative region of interest (ROI) proposals.
+  - name: Region Proposal Network (RPN)
+    type: method
+    description: A network within Faster R-CNN that proposes potential object locations.
+  - name: ImageNet
+    type: dataset
+    description: A dataset used to pre-train the convolutional layers of the Faster R-CNN model.
+  - name: conv4_3
+    type: method
+    description: A convolutional layer in VGG16, used as input to the RPN and classification network.
+  - name: conv5_3
+    type: method
+    description: A convolutional layer in VGG16, used as input to the RPN and classification network.
+  - name: conv5
+    type: method
+    description: The 5th convolutional layer in AlexNet, used as input to the R-CNN region-proposal and classification branches.
+  - name: Object detection
+    type: task
+    description: The primary objective of the research, focusing on identifying and locating objects within images, particularly in the context of the KITTI dataset.
+
+[2025-09-23 11:40:36,671][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:37,490][heimdall.core][INFO] - Cleaned output : entities:
+  - name: 3DOP
+    type: method
+    description: A method used for car detection, mentioned for comparison of inference time.
+  - name: SDP+CRC
+    type: method
+    description: Another method used for car detection, also mentioned for comparison of inference time.
+
+[2025-09-23 11:40:37,493][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:37,508][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the PASCAL dataset, which is a key dataset used for comparison and the Faster R-CNN algorithm.
+loop_required: true
+
+[2025-09-23 11:40:37,511][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:37,511][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:37,660][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing some key methods and datasets mentioned in the text, such as PASCAL, NiN, SqueezeNet, ResNet, and VGG19. Adding these will improve the completeness of the extracted entities.
+loop_required: true
+
+[2025-09-23 11:40:37,663][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:37,663][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:38,413][heimdall.core][INFO] - Cleaned output : entities:
+  - name: PASCAL
+    type: dataset
+    description: A dataset used for object detection, serving as a benchmark for the Faster R-CNN algorithm and used for comparison with the KITTI dataset.
+
+[2025-09-23 11:40:38,416][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:38,491][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including specific details about the AlexNet and VGG16 configurations used (e.g., layer numbers). However, these are not critical for understanding the core concepts.
+loop_required: false
+
+[2025-09-23 11:40:38,494][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:38,494][Thread 2][INFO] - 
+--extract_relationships--
+
+[2025-09-23 11:40:39,332][heimdall.core][INFO] - Cleaned output : entities:
+  - name: PASCAL
+    type: dataset
+    description: A widely-used dataset for object detection, used to build supervised 2D datasets.
+  - name: NiN
+    type: method
+    description: The Network-in-Network architecture, which popularized the use of global average pooling prior to the first fully-connected layer in CNNs.
+  - name: SqueezeNet
+    type: method
+    description: A CNN architecture that uses global average pooling prior to the first FC layer, similar to NiN.
+  - name: ResNet
+    type: method
+    description: A CNN architecture that uses global average pooling prior to the first FC layer, similar to NiN.
+  - name: VGG19
+    type: method
+    description: A CNN architecture, similar to VGG16, used in the context of R-CNN.
+
+[2025-09-23 11:40:39,336][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:39,499][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including the specific evaluation metrics used in the KITTI dataset (e.g., IoU threshold, precision, recall). Also, the specific layers used in the experiments (e.g., conv1, conv2, etc.) could be extracted as methods.
+loop_required: true
+
+[2025-09-23 11:40:39,502][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:39,502][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:40,517][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but there's a potential omission of the 'ROI Pooling' technique, which is mentioned as a method used with AlexNet/VGG layers. Adding this would improve the completeness of the methods.
+loop_required: true
+
+[2025-09-23 11:40:40,519][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:40,519][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:41,380][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: R-CNN
+    target_entity: context window
+    description: The context window technique is used to enhance the features extracted by R-CNN.
+    strength: 8.0
+  - source_entity: AlexNet
+    target_entity: R-CNN
+    description: AlexNet is used as a base for the R-CNN method.
+    strength: 7.0
+  - source_entity: Faster R-CNN
+    target_entity: AlexNet
+    description: Faster R-CNN is based on AlexNet.
+    strength: 6.0
+  - source_entity: Faster R-CNN
+    target_entity: car detection
+    description: Faster R-CNN is used for car detection.
+    strength: 7.0
+  - source_entity: context window
+    target_entity: R-CNN
+    description: Context window is used with R-CNN.
+    strength: 9.0
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: Faster R-CNN is based on AlexNet.
+    strength: 6.0
+  - source_entity: VGG16
+    target_entity: Faster R-CNN
+    description: VGG16 is used in Faster R-CNN for feature extraction.
+    strength: 6.0
+  - source_entity: KITTI dataset
+    target_entity: 3DOP
+    description: The KITTI dataset is used to evaluate the performance of 3DOP.
+    strength: 5.0
+  - source_entity: KITTI dataset
+    target_entity: SDP+CRC
+    description: The KITTI dataset is used to evaluate the performance of SDP+CRC.
+    strength: 5.0
+  - source_entity: car detection
+    target_entity: Faster R-CNN
+    description: Faster R-CNN is used for car detection.
+    strength: 7.0
+
+[2025-09-23 11:40:41,382][heimdall.core][INFO] - Cleaned output : entities:
+  - name: ROI Pooling
+    type: method
+    description: A technique developed by the R-CNN authors that allows input images of any size to be used with AlexNet/VGG FC layers.
+
+[2025-09-23 11:40:41,389][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:41,393][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 11:40:41,613][heimdall.core][INFO] - Cleaned output : entities:
+  - name: IoU threshold
+    type: method
+    description: The Intersection over Union (IoU) threshold used in the KITTI dataset's evaluation criteria to determine if a proposal box is considered a true detection. Specifically, proposal boxes having overlap with the ground truth or IoU greater than 70% are counted as true detection for cars.
+  - name: conv1
+    type: method
+    description: The first convolutional layer in a convolutional neural network (CNN), such as AlexNet or VGG16.
+  - name: conv2
+    type: method
+    description: The second convolutional layer in a convolutional neural network (CNN).
+  - name: conv43
+    type: method
+    description: The 10th layer in the VGG16 network.
+  - name: conv5
+    type: method
+    description: The fifth convolutional layer in a convolutional neural network (CNN), used as input to the R-CNN region-proposal and classification branches in the AlexNet-based model.
+  - name: conv53
+    type: method
+    description: The 13th layer in the VGG16 network.
+
+[2025-09-23 11:40:41,617][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:42,498][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but the paper mentions "Multibox" and "Mono 3D" methods, which are relevant to the topic and were not extracted. Adding these would improve the completeness of the extracted methods.
+loop_required: true
+
+[2025-09-23 11:40:42,501][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:42,501][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:42,645][heimdall.core][INFO] - Cleaned output : reason_to_loop: The content explicitly states that 'context window' is used with 'R-CNN' and also with 'AlexNet'. The current relationships do not capture the relationship between 'context window' and 'AlexNet'. Also, the content mentions that 'Faster R-CNN' is used for 'car detection', which is already captured, but the impact of input image resolution on the accuracy of 'car detection' using 'Faster R-CNN' is not captured.
+loop_required: true
+
+[2025-09-23 11:40:42,648][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The content explicitly states that 'context window' is used with 'R-CNN' and also with 'AlexNet'. The current relationships do not capture the relationship between 'context window' and 'AlexNet'. Also, the content mentions that 'Faster R-CNN' is used for 'car detection', which is already captured, but the impact of input image resolution on the accuracy of 'car detection' using 'Faster R-CNN' is not captured.
+[2025-09-23 11:40:42,649][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:42,650][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:42,749][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including the specific layer numbers used in AlexNet (e.g., conv1, conv3, etc.) and the specific input image sizes used for each network configuration. This information is crucial for understanding the experimental setup and results.
+loop_required: true
+
+[2025-09-23 11:40:42,751][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 11:40:42,751][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 11:40:43,530][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Multibox
+    type: method
+    description: A method for object detection that predicts multiple bounding boxes in a class-agnostic way.
+  - name: Mono 3D
+    type: method
+    description: A method that uses 2D images to identify the pose of objects, with the goal of detecting objects as 3D bounding boxes.
+
+[2025-09-23 11:40:43,534][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:44,144][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: context window
+    target_entity: AlexNet
+    description: The content states that context window is applied to an AlexNet-based R-CNN configuration.
+    strength: 9
+  - source_entity: Faster R-CNN
+    target_entity: car detection
+    description: The content mentions that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.
+    strength: 8
+  - source_entity: input image resolution
+    target_entity: car detection
+    description: The content states that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.
+    strength: 8
+
+[2025-09-23 11:40:44,148][Thread 2][WARNING] - Found false extractions in relationships: [{'source_entity': 'input image resolution', 'target_entity': 'car detection', 'description': 'The content states that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.', 'strength': 8.0}]
+[2025-09-23 11:40:44,149][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'context window', 'description': 'The context window technique is used to enhance the features extracted by R-CNN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used as a base for the R-CNN method.', 'strength': 7.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'R-CNN', 'description': 'Context window is used with R-CNN.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used in Faster R-CNN for feature extraction.', 'strength': 6.0}, {'source_entity': 'KITTI dataset', 'target_entity': '3DOP', 'description': 'The KITTI dataset is used to evaluate the performance of 3DOP.', 'strength': 5.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'SDP+CRC', 'description': 'The KITTI dataset is used to evaluate the performance of SDP+CRC.', 'strength': 5.0}, {'source_entity': 'car detection', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'AlexNet', 'description': 'The content states that context window is applied to an AlexNet-based R-CNN configuration.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'The content mentions that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.', 'strength': 8.0}]
+
+[2025-09-23 11:40:44,150][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 11:40:44,322][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iteration count reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 11:40:44,324][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:44,324][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 11:40:45,479][heimdall.core][INFO] - Cleaned output : reason_to_loop: The content explicitly states that the original R-CNN features and the context R-CNN features are concatenated before classification. This relationship, which describes how the features are combined, is missing. Also, the content mentions that AlexNet conv 5 layer is used with a specific input image size, and VGG16 conv 4 3 layer is used with a specific input image size. These relationships are missing.
+loop_required: true
+
+[2025-09-23 11:40:45,481][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The content explicitly states that the original R-CNN features and the context R-CNN features are concatenated before classification. This relationship, which describes how the features are combined, is missing. Also, the content mentions that AlexNet conv 5 layer is used with a specific input image size, and VGG16 conv 4 3 layer is used with a specific input image size. These relationships are missing.
+[2025-09-23 11:40:45,482][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:45,482][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:45,494][heimdall.core][INFO] - Cleaned output : entities:
+  - name: AlexNet conv1 layer
+    type: method
+    description: The first convolutional layer in the AlexNet architecture, characterized by a stride of 4, indicating a 4x downsampling of the input image.
+  - name: AlexNet conv5
+    type: method
+    description: The fifth convolutional layer in the AlexNet architecture, used as input to the R-CNN region-proposal and classification branches.
+  - name: VGG16 conv4 3
+    type: method
+    description: The 10th layer in the VGG16 network, specifically the third convolutional layer in the fourth convolutional block.
+  - name: VGG16 conv5 3
+    type: method
+    description: The 13th layer in the VGG16 network, specifically the third convolutional layer in the fifth convolutional block.
+  - name: AlexNet 2000 x 604
+    type: dataset
+    description: The input image size of 2000 pixels in width and 604 pixels in height used for AlexNet-based R-CNN models.
+  - name: AlexNet 5000 x 1510
+    type: dataset
+    description: The input image size of 5000 pixels in width and 1510 pixels in height used for AlexNet-based R-CNN models.
+  - name: VGG16 2000 x 604
+    type: dataset
+    description: The input image size of 2000 pixels in width and 604 pixels in height used for VGG16-based R-CNN models.
+
+[2025-09-23 11:40:45,500][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 11:40:46,338][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iterations reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 11:40:46,340][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:46,340][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 11:40:47,974][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: R-CNN
+    target_entity: R-CNN
+    description: The original R-CNN features and the context R-CNN features are concatenated before classification.
+    strength: 10
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: AlexNet conv 5 layer is used in a Faster R-CNN configuration.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: object detection
+    description: AlexNet is used for object detection.
+    strength: 7
+  - source_entity: VGG16
+    target_entity: object detection
+    description: VGG16 is used for object detection.
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: context window
+    description: The context window is applied to an AlexNet-based R-CNN configuration.
+    strength: 9
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: AlexNet is used in a Faster R-CNN configuration.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: object detection
+    description: AlexNet conv 5 layer is used with a specific input image size.
+    strength: 9
+  - source_entity: VGG16
+    target_entity: object detection
+    description: VGG16 conv 4 3 layer is used with a specific input image size.
+    strength: 9
+
+[2025-09-23 11:40:47,979][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'context window', 'description': 'The context window technique is used to enhance the features extracted by R-CNN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used as a base for the R-CNN method.', 'strength': 7.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'R-CNN', 'description': 'Context window is used with R-CNN.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used in Faster R-CNN for feature extraction.', 'strength': 6.0}, {'source_entity': 'KITTI dataset', 'target_entity': '3DOP', 'description': 'The KITTI dataset is used to evaluate the performance of 3DOP.', 'strength': 5.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'SDP+CRC', 'description': 'The KITTI dataset is used to evaluate the performance of SDP+CRC.', 'strength': 5.0}, {'source_entity': 'car detection', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'AlexNet', 'description': 'The content states that context window is applied to an AlexNet-based R-CNN configuration.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'The content mentions that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.', 'strength': 8.0}, {'source_entity': 'R-CNN', 'target_entity': 'R-CNN', 'description': 'The original R-CNN features and the context R-CNN features are concatenated before classification.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet conv 5 layer is used in a Faster R-CNN configuration.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'object detection', 'description': 'AlexNet is used for object detection.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'object detection', 'description': 'VGG16 is used for object detection.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'context window', 'description': 'The context window is applied to an AlexNet-based R-CNN configuration.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used in a Faster R-CNN configuration.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'object detection', 'description': 'AlexNet conv 5 layer is used with a specific input image size.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'object detection', 'description': 'VGG16 conv 4 3 layer is used with a specific input image size.', 'strength': 9.0}]
+
+[2025-09-23 11:40:47,980][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 11:40:49,061][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing information about the impact of input image resolution on object detection accuracy using AlexNet and VGG16. Also, the content mentions the inference time of AlexNet and VGG16, which could be extracted as relationships.
+loop_required: True
+
+[2025-09-23 11:40:49,063][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing information about the impact of input image resolution on object detection accuracy using AlexNet and VGG16. Also, the content mentions the inference time of AlexNet and VGG16, which could be extracted as relationships.
+[2025-09-23 11:40:49,063][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:49,063][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:51,135][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: R-CNN
+    target_entity: KITTI dataset
+    description: R-CNN is used for car detection on the KITTI dataset.
+    strength: 8.0
+  - source_entity: AlexNet
+    target_entity: R-CNN
+    description: AlexNet is used in the context of R-CNN.
+    strength: 7.0
+  - source_entity: Fast R-CNN
+    target_entity: R-CNN
+    description: Fast R-CNN is an improved version of R-CNN.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: R-CNN
+    description: Faster R-CNN is a faster variant of R-CNN.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: Region Proposal Network (RPN)
+    description: Faster R-CNN uses a Region Proposal Network (RPN).
+    strength: 10.0
+  - source_entity: OverFeat
+    target_entity: localization
+    description: OverFeat is a method for localization.
+    strength: 7.0
+  - source_entity: Multibox
+    target_entity: localization
+    description: Multibox is a method for object detection that predicts multiple bounding boxes.
+    strength: 7.0
+  - source_entity: SPP method
+    target_entity: Fast object detection
+    description: SPP method is used for fast object detection.
+    strength: 7.0
+  - source_entity: VGG16
+    target_entity: R-CNN
+    description: VGG16 is used in the context of R-CNN.
+    strength: 7.0
+  - source_entity: KITTI dataset
+    target_entity: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)
+    description: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is a high-accuracy method for identifying objects in the KITTI dataset.
+    strength: 9.0
+  - source_entity: ImageNet
+    target_entity: AlexNet
+    description: AlexNet is pretrained on the ImageNet dataset.
+    strength: 8.0
+  - source_entity: ImageNet
+    target_entity: VGG16
+    description: VGG16 is pretrained on the ImageNet dataset.
+    strength: 8.0
+  - source_entity: Deformable parts models (DPM)
+    target_entity: image object detection
+    description: Deformable parts models (DPM) were the state of the art for image object detection before the emergence of deep convolutional neural nets.
+    strength: 9.0
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: Faster R-CNN
+    description: Region Proposal Network (RPN) is used in Faster R-CNN.
+    strength: 10.0
+  - source_entity: Monocular 3D (Mono 3D)
+    target_entity: R-CNN
+    description: Monocular 3D (Mono 3D) is built around a version of R-CNN.
+    strength: 8.0
+  - source_entity: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)
+    target_entity: KITTI dataset
+    description: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is used for object detection in the KITTI dataset.
+    strength: 9.0
+  - source_entity: VGG16
+    target_entity: Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)
+    description: VGG16 is used in Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC).
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: VGG16
+    description: AlexNet and VGG16 are CNN architectures.
+    strength: 8.0
+  - source_entity: NiN
+    target_entity: SqueezeNet
+    description: SqueezeNet uses a similar architecture to NiN.
+    strength: 8.0
+  - source_entity: NiN
+    target_entity: ResNet
+    description: ResNet uses a similar architecture to NiN.
+    strength: 8.0
+  - source_entity: AlexNet
+    target_entity: ROI Pooling
+    description: ROI Pooling is used with AlexNet.
+    strength: 9.0
+  - source_entity: VGG19
+    target_entity: ROI Pooling
+    description: ROI Pooling is used with VGG19.
+    strength: 9.0
+  - source_entity: VGG16
+    target_entity: AlexNet
+    description: VGG16 and AlexNet are CNN architectures.
+    strength: 8.0
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: Faster R-CNN networks built on AlexNet.
+    strength: 7.0
+  - source_entity: VGG16
+    target_entity: Faster R-CNN
+    description: Faster R-CNN networks built on VGG16.
+    strength: 7.0
+
+[2025-09-23 11:40:51,146][Thread 0][WARNING] - Found false extractions in relationships: [{'source_entity': 'OverFeat', 'target_entity': 'localization', 'description': 'OverFeat is a method for localization.', 'strength': 7.0}, {'source_entity': 'Multibox', 'target_entity': 'localization', 'description': 'Multibox is a method for object detection that predicts multiple bounding boxes.', 'strength': 7.0}, {'source_entity': 'SPP method', 'target_entity': 'Fast object detection', 'description': 'SPP method is used for fast object detection.', 'strength': 7.0}, {'source_entity': 'Deformable parts models (DPM)', 'target_entity': 'image object detection', 'description': 'Deformable parts models (DPM) were the state of the art for image object detection before the emergence of deep convolutional neural nets.', 'strength': 9.0}]
+[2025-09-23 11:40:51,147][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 11:40:51,578][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: object detection
+    description: AlexNet is used for object detection.
+    strength: 8
+  - source_entity: VGG16
+    target_entity: object detection
+    description: VGG16 is used for object detection.
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: AlexNet is used as the base network in Faster R-CNN.
+    strength: 9
+  - source_entity: VGG16
+    target_entity: Faster R-CNN
+    description: VGG16 is used as the base network in Faster R-CNN.
+    strength: 9
+  - source_entity: AlexNet
+    target_entity: inference time
+    description: The content mentions the inference time of AlexNet.
+    strength: 7
+  - source_entity: VGG16
+    target_entity: inference time
+    description: The content mentions the inference time of VGG16.
+    strength: 7
+  - source_entity: Faster R-CNN
+    target_entity: car detection
+    description: The content mentions the impact of input image resolution on the accuracy of car detection using Faster R-CNN.
+    strength: 9
+  - source_entity: AlexNet
+    target_entity: context window
+    description: The content mentions the use of context window with AlexNet.
+    strength: 7
+  - source_entity: Faster R-CNN
+    target_entity: KITTI dataset
+    description: The Faster R-CNN network is used for car detection on the KITTI dataset.
+    strength: 8
+
+[2025-09-23 11:40:51,584][Thread 2][WARNING] - Found false extractions in relationships: [{'source_entity': 'AlexNet', 'target_entity': 'inference time', 'description': 'The content mentions the inference time of AlexNet.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'inference time', 'description': 'The content mentions the inference time of VGG16.', 'strength': 7.0}]
+[2025-09-23 11:40:51,584][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'context window', 'description': 'The context window technique is used to enhance the features extracted by R-CNN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used as a base for the R-CNN method.', 'strength': 7.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'R-CNN', 'description': 'Context window is used with R-CNN.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is based on AlexNet.', 'strength': 6.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used in Faster R-CNN for feature extraction.', 'strength': 6.0}, {'source_entity': 'KITTI dataset', 'target_entity': '3DOP', 'description': 'The KITTI dataset is used to evaluate the performance of 3DOP.', 'strength': 5.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'SDP+CRC', 'description': 'The KITTI dataset is used to evaluate the performance of SDP+CRC.', 'strength': 5.0}, {'source_entity': 'car detection', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN is used for car detection.', 'strength': 7.0}, {'source_entity': 'context window', 'target_entity': 'AlexNet', 'description': 'The content states that context window is applied to an AlexNet-based R-CNN configuration.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'The content mentions that input image resolution has a large impact on the accuracy of car detection using the faster R-CNN network.', 'strength': 8.0}, {'source_entity': 'R-CNN', 'target_entity': 'R-CNN', 'description': 'The original R-CNN features and the context R-CNN features are concatenated before classification.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet conv 5 layer is used in a Faster R-CNN configuration.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'object detection', 'description': 'AlexNet is used for object detection.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'object detection', 'description': 'VGG16 is used for object detection.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'context window', 'description': 'The context window is applied to an AlexNet-based R-CNN configuration.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used in a Faster R-CNN configuration.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'object detection', 'description': 'AlexNet conv 5 layer is used with a specific input image size.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'object detection', 'description': 'VGG16 conv 4 3 layer is used with a specific input image size.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'object detection', 'description': 'AlexNet is used for object detection.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'object detection', 'description': 'VGG16 is used for object detection.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as the base network in Faster R-CNN.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as the base network in Faster R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'car detection', 'description': 'The content mentions the impact of input image resolution on the accuracy of car detection using Faster R-CNN.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'context window', 'description': 'The content mentions the use of context window with AlexNet.', 'strength': 7.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'KITTI dataset', 'description': 'The Faster R-CNN network is used for car detection on the KITTI dataset.', 'strength': 8.0}]
+
+[2025-09-23 11:40:51,585][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 11:40:52,338][heimdall.core][INFO] - Cleaned output : reason_to_loop: The following relationships are missing: 1) AlexNet is used in Faster R-CNN. 2) VGG16 is used in Faster R-CNN. 3) ROI Pooling is used with AlexNet and VGG19. 4) The SPP method is used for fast object detection.
+loop_required: true
+
+[2025-09-23 11:40:52,338][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 1, column 56:
+     ... lowing relationships are missing: 1) AlexNet is used in Faster R ... 
+                                         ^
+[2025-09-23 11:40:52,671][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit has been reached. No further extraction is permitted, even if some relationships could still be added. The current relationships cover the core concepts, but further iterations are not allowed.'
+loop_required: false
+
+[2025-09-23 11:40:52,673][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further extraction is permitted, even if some relationships could still be added. The current relationships cover the core concepts, but further iterations are not allowed.
+[2025-09-23 11:40:52,674][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:40:52,674][Thread 2][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 11:40:52,674][Thread 2][ERROR] - File doesn't exist: Bodhi/244256/2/244256_intermediate_data.yml. Creating file..
+[2025-09-23 11:40:52,685][Thread 2][INFO] - Nodes & relations saved to Bodhi/244256/2/244256_intermediate_data.yml
+[2025-09-23 11:40:52,685][Thread 2][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 11:40:52,685][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:40:52,686][Thread 2][INFO] - ===Thread-2===
+Total number of chunks processed : 1
+Total time taken for extraction : 19.441463470458984
+
+[2025-09-23 11:40:53,644][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Faster R-CNN
+    target_entity: VGG16
+    description: VGG16 is used as a feature extractor within the Faster R-CNN framework.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: AlexNet
+    description: AlexNet is used as an alternative to VGG16 within the Faster R-CNN framework.
+    strength: 8.0
+  - source_entity: Faster R-CNN
+    target_entity: KITTI object detection dataset
+    description: The Faster R-CNN algorithm is used for object detection on the KITTI dataset.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: PASCAL
+    description: The Faster R-CNN algorithm was initially developed and tested on the PASCAL dataset.
+    strength: 8.0
+  - source_entity: VGG16
+    target_entity: conv4_3
+    description: conv4_3 is a convolutional layer within the VGG16 architecture.
+    strength: 10.0
+  - source_entity: VGG16
+    target_entity: conv5_3
+    description: conv5_3 is a convolutional layer within the VGG16 architecture.
+    strength: 10.0
+  - source_entity: AlexNet
+    target_entity: conv5
+    description: conv5 is a convolutional layer within the AlexNet architecture.
+    strength: 10.0
+  - source_entity: Faster R-CNN
+    target_entity: R-CNN layer
+    description: The R-CNN layer is a component of the Faster R-CNN architecture.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: Region Proposal Network (RPN)
+    description: The Region Proposal Network (RPN) is a component of the Faster R-CNN architecture.
+    strength: 9.0
+  - source_entity: Faster R-CNN
+    target_entity: ImageNet
+    description: ImageNet is used to pre-train the convolutional layers of the Faster R-CNN model.
+    strength: 7.0
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: conv5_3
+    description: conv5_3 is used as input to the RPN.
+    strength: 7.0
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: conv4_3
+    description: conv4_3 is used as input to the RPN.
+    strength: 7.0
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: conv5
+    description: conv5 is used as input to the RPN.
+    strength: 7.0
+  - source_entity: VGG16
+    target_entity: VGG16 conv4 3
+    description: VGG16 conv4 3 refers to a specific layer within the VGG16 architecture.
+    strength: 10.0
+  - source_entity: VGG16
+    target_entity: VGG16 conv5 3
+    description: VGG16 conv5 3 refers to a specific layer within the VGG16 architecture.
+    strength: 10.0
+  - source_entity: AlexNet
+    target_entity: AlexNet conv5
+    description: AlexNet conv5 refers to a specific layer within the AlexNet architecture.
+    strength: 10.0
+  - source_entity: AlexNet
+    target_entity: AlexNet 2000 x 604
+    description: AlexNet 2000 x 604 is an input image size used with AlexNet.
+    strength: 8.0
+  - source_entity: AlexNet
+    target_entity: AlexNet 5000 x 1510
+    description: AlexNet 5000 x 1510 is an input image size used with AlexNet.
+    strength: 8.0
+  - source_entity: VGG16
+    target_entity: VGG16 2000 x 604
+    description: VGG16 2000 x 604 is an input image size used with VGG16.
+    strength: 8.0
+  - source_entity: IoU threshold
+    target_entity: KITTI object detection dataset
+    description: The IoU threshold is used in the evaluation criteria for the KITTI dataset.
+    strength: 9.0
+  - source_entity: conv1
+    target_entity: AlexNet
+    description: AlexNet uses conv1 as its first convolutional layer.
+    strength: 9.0
+  - source_entity: conv1
+    target_entity: VGG16
+    description: VGG16 uses conv1 as its first convolutional layer.
+    strength: 9.0
+  - source_entity: conv5
+    target_entity: AlexNet
+    description: conv5 is the fifth convolutional layer in AlexNet.
+    strength: 10.0
+  - source_entity: conv43
+    target_entity: VGG16
+    description: conv43 is a layer in VGG16.
+    strength: 10.0
+  - source_entity: conv53
+    target_entity: VGG16
+    description: conv53 is a layer in VGG16.
+    strength: 10.0
+
+[2025-09-23 11:40:53,655][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 11:40:54,680][heimdall.core][INFO] - Cleaned output : reason_to_loop: "The following relationships are missing: 1) AlexNet is used in Faster R-CNN. 2) VGG16 is used in Faster R-CNN. 3) ROI Pooling is used with AlexNet and VGG19. 4) The SPP method is used for fast object detection."
+loop_required: true
+
+[2025-09-23 11:40:54,682][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The following relationships are missing: 1) AlexNet is used in Faster R-CNN. 2) VGG16 is used in Faster R-CNN. 3) ROI Pooling is used with AlexNet and VGG19. 4) The SPP method is used for fast object detection.
+[2025-09-23 11:40:54,683][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:54,684][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:55,001][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between convolutional layers and the Region Proposal Network (RPN) and R-CNN layer. Specifically, the text indicates that conv4_3, conv5_3, and conv5 are inputs to the RPN and that fully connected layers are used as the R-CNN branch. Also, the relationship between AlexNet conv1 layer and AlexNet is missing.
+loop_required: true
+
+[2025-09-23 11:40:55,003][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between convolutional layers and the Region Proposal Network (RPN) and R-CNN layer. Specifically, the text indicates that conv4_3, conv5_3, and conv5 are inputs to the RPN and that fully connected layers are used as the R-CNN branch. Also, the relationship between AlexNet conv1 layer and AlexNet is missing.
+[2025-09-23 11:40:55,004][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:55,004][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:57,115][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: AlexNet is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on AlexNet.
+    strength: 9
+  - source_entity: VGG16
+    target_entity: Faster R-CNN
+    description: VGG16 is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on VGG16.
+    strength: 9
+  - source_entity: ROI Pooling
+    target_entity: AlexNet
+    description: ROI Pooling is used with AlexNet to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with AlexNet FC layers.
+    strength: 10
+  - source_entity: ROI Pooling
+    target_entity: VGG19
+    description: ROI Pooling is used with VGG19 to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with VGG19 FC layers.
+    strength: 10
+  - source_entity: SPP method
+    target_entity: Fast R-CNN
+    description: The SPP method inspired the development of Faster R-CNN, which is mentioned in the context of fast object detection.
+    strength: 7
+
+[2025-09-23 11:40:57,119][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'KITTI dataset', 'description': 'R-CNN is used for car detection on the KITTI dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'Fast R-CNN', 'target_entity': 'R-CNN', 'description': 'Fast R-CNN is an improved version of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN', 'description': 'Faster R-CNN is a faster variant of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'Faster R-CNN uses a Region Proposal Network (RPN).', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN', 'description': 'VGG16 is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is a high-accuracy method for identifying objects in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'AlexNet', 'description': 'AlexNet is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'ImageNet', 'target_entity': 'VGG16', 'description': 'VGG16 is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Faster R-CNN', 'description': 'Region Proposal Network (RPN) is used in Faster R-CNN.', 'strength': 10.0}, {'source_entity': 'Monocular 3D (Mono 3D)', 'target_entity': 'R-CNN', 'description': 'Monocular 3D (Mono 3D) is built around a version of R-CNN.', 'strength': 8.0}, {'source_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'target_entity': 'KITTI dataset', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is used for object detection in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'VGG16 is used in Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC).', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'VGG16', 'description': 'AlexNet and VGG16 are CNN architectures.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'SqueezeNet', 'description': 'SqueezeNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'ResNet', 'description': 'ResNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG19', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with VGG19.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'AlexNet', 'description': 'VGG16 and AlexNet are CNN architectures.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on AlexNet.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on VGG16.', 'strength': 9.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'AlexNet', 'description': 'ROI Pooling is used with AlexNet to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with AlexNet FC layers.', 'strength': 10.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'VGG19', 'description': 'ROI Pooling is used with VGG19 to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with VGG19 FC layers.', 'strength': 10.0}, {'source_entity': 'SPP method', 'target_entity': 'Fast R-CNN', 'description': 'The SPP method inspired the development of Faster R-CNN, which is mentioned in the context of fast object detection.', 'strength': 7.0}]
+
+[2025-09-23 11:40:57,119][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 11:40:57,137][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: conv4_3
+    target_entity: Region Proposal Network (RPN)
+    description: The text indicates that conv4_3 is an input to the Region Proposal Network (RPN).
+    strength: 8
+  - source_entity: conv5_3
+    target_entity: Region Proposal Network (RPN)
+    description: The text indicates that conv5_3 is an input to the Region Proposal Network (RPN).
+    strength: 8
+  - source_entity: conv5
+    target_entity: Region Proposal Network (RPN)
+    description: The text indicates that conv5 is an input to the Region Proposal Network (RPN).
+    strength: 8
+  - source_entity: VGG16
+    target_entity: R-CNN layer
+    description: The text states that fully connected layers are used as the R-CNN branch for VGG16.
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: R-CNN layer
+    description: The text states that fully connected layers are used as the R-CNN branch for AlexNet.
+    strength: 7
+  - source_entity: AlexNet conv1 layer
+    target_entity: AlexNet
+    description: The AlexNet conv1 layer is a component of the AlexNet architecture.
+    strength: 10
+
+[2025-09-23 11:40:57,141][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Faster R-CNN', 'target_entity': 'VGG16', 'description': 'VGG16 is used as a feature extractor within the Faster R-CNN framework.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'AlexNet is used as an alternative to VGG16 within the Faster R-CNN framework.', 'strength': 8.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'KITTI object detection dataset', 'description': 'The Faster R-CNN algorithm is used for object detection on the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'PASCAL', 'description': 'The Faster R-CNN algorithm was initially developed and tested on the PASCAL dataset.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'conv4_3', 'description': 'conv4_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'conv5_3', 'description': 'conv5_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'conv5', 'description': 'conv5 is a convolutional layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN layer', 'description': 'The R-CNN layer is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The Region Proposal Network (RPN) is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'ImageNet', 'description': 'ImageNet is used to pre-train the convolutional layers of the Faster R-CNN model.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5_3', 'description': 'conv5_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv4_3', 'description': 'conv4_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5', 'description': 'conv5 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv4 3', 'description': 'VGG16 conv4 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv5 3', 'description': 'VGG16 conv5 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet conv5', 'description': 'AlexNet conv5 refers to a specific layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'AlexNet 2000 x 604 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'AlexNet 5000 x 1510 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'VGG16 2000 x 604 is an input image size used with VGG16.', 'strength': 8.0}, {'source_entity': 'IoU threshold', 'target_entity': 'KITTI object detection dataset', 'description': 'The IoU threshold is used in the evaluation criteria for the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'AlexNet', 'description': 'AlexNet uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'VGG16', 'description': 'VGG16 uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv5', 'target_entity': 'AlexNet', 'description': 'conv5 is the fifth convolutional layer in AlexNet.', 'strength': 10.0}, {'source_entity': 'conv43', 'target_entity': 'VGG16', 'description': 'conv43 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv53', 'target_entity': 'VGG16', 'description': 'conv53 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv4_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv4_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for AlexNet.', 'strength': 7.0}, {'source_entity': 'AlexNet conv1 layer', 'target_entity': 'AlexNet', 'description': 'The AlexNet conv1 layer is a component of the AlexNet architecture.', 'strength': 10.0}]
+
+[2025-09-23 11:40:57,141][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 11:40:58,222][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between the input image sizes and the networks (VGG16 and AlexNet) and the R-CNN layer. Also, the relationship between conv1 and AlexNet is missing.
+loop_required: true
+
+[2025-09-23 11:40:58,223][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between the input image sizes and the networks (VGG16 and AlexNet) and the R-CNN layer. Also, the relationship between conv1 and AlexNet is missing.
+[2025-09-23 11:40:58,224][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:58,224][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:40:58,288][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between AlexNet, VGG16, and ROI Pooling, and their use in the context of Faster R-CNN. The text explicitly mentions these connections.
+loop_required: true
+
+[2025-09-23 11:40:58,290][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between AlexNet, VGG16, and ROI Pooling, and their use in the context of Faster R-CNN. The text explicitly mentions these connections.
+[2025-09-23 11:40:58,290][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:40:58,291][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:41:00,532][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: AlexNet is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on AlexNet.
+    strength: 9
+  - source_entity: VGG16
+    target_entity: Faster R-CNN
+    description: VGG16 is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on VGG16.
+    strength: 9
+  - source_entity: ROI Pooling
+    target_entity: AlexNet
+    description: ROI Pooling is used with AlexNet to handle variable input sizes, allowing AlexNet to be used in R-CNN based architectures.
+    strength: 8
+  - source_entity: ROI Pooling
+    target_entity: VGG16
+    description: ROI Pooling is used with VGG16 to handle variable input sizes, allowing VGG16 to be used in R-CNN based architectures.
+    strength: 8
+  - source_entity: Faster R-CNN
+    target_entity: ROI Pooling
+    description: ROI Pooling is a technique used in Faster R-CNN to extract feature maps from the region proposals generated by the RPN.
+    strength: 9
+
+[2025-09-23 11:41:00,536][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'KITTI dataset', 'description': 'R-CNN is used for car detection on the KITTI dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'Fast R-CNN', 'target_entity': 'R-CNN', 'description': 'Fast R-CNN is an improved version of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN', 'description': 'Faster R-CNN is a faster variant of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'Faster R-CNN uses a Region Proposal Network (RPN).', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN', 'description': 'VGG16 is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is a high-accuracy method for identifying objects in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'AlexNet', 'description': 'AlexNet is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'ImageNet', 'target_entity': 'VGG16', 'description': 'VGG16 is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Faster R-CNN', 'description': 'Region Proposal Network (RPN) is used in Faster R-CNN.', 'strength': 10.0}, {'source_entity': 'Monocular 3D (Mono 3D)', 'target_entity': 'R-CNN', 'description': 'Monocular 3D (Mono 3D) is built around a version of R-CNN.', 'strength': 8.0}, {'source_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'target_entity': 'KITTI dataset', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is used for object detection in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'VGG16 is used in Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC).', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'VGG16', 'description': 'AlexNet and VGG16 are CNN architectures.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'SqueezeNet', 'description': 'SqueezeNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'ResNet', 'description': 'ResNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG19', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with VGG19.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'AlexNet', 'description': 'VGG16 and AlexNet are CNN architectures.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on AlexNet.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on VGG16.', 'strength': 9.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'AlexNet', 'description': 'ROI Pooling is used with AlexNet to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with AlexNet FC layers.', 'strength': 10.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'VGG19', 'description': 'ROI Pooling is used with VGG19 to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with VGG19 FC layers.', 'strength': 10.0}, {'source_entity': 'SPP method', 'target_entity': 'Fast R-CNN', 'description': 'The SPP method inspired the development of Faster R-CNN, which is mentioned in the context of fast object detection.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on VGG16.', 'strength': 9.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'AlexNet', 'description': 'ROI Pooling is used with AlexNet to handle variable input sizes, allowing AlexNet to be used in R-CNN based architectures.', 'strength': 8.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'VGG16', 'description': 'ROI Pooling is used with VGG16 to handle variable input sizes, allowing VGG16 to be used in R-CNN based architectures.', 'strength': 8.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is a technique used in Faster R-CNN to extract feature maps from the region proposals generated by the RPN.', 'strength': 9.0}]
+
+[2025-09-23 11:41:00,537][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 11:41:01,652][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between AlexNet, VGG16, and ROI Pooling are not fully captured. Specifically, the relationship of VGG19 and ROI Pooling is missing. Also, the relationship between AlexNet and Faster R-CNN is underrepresented.
+loop_required: True
+
+[2025-09-23 11:41:01,654][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between AlexNet, VGG16, and ROI Pooling are not fully captured. Specifically, the relationship of VGG19 and ROI Pooling is missing. Also, the relationship between AlexNet and Faster R-CNN is underrepresented.
+[2025-09-23 11:41:01,655][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:41:01,655][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:41:01,968][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: VGG16
+    target_entity: AlexNet 2000 x 604
+    description: The text mentions that VGG16 is used with the image size 2000 x 604.
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: AlexNet 2000 x 604
+    description: The text mentions that AlexNet is used with the image size 2000 x 604.
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: AlexNet 5000 x 1510
+    description: The text mentions that AlexNet is used with the image size 5000 x 1510.
+    strength: 7
+  - source_entity: VGG16
+    target_entity: VGG16 2000 x 604
+    description: The text mentions that VGG16 is used with the image size 2000 x 604.
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: R-CNN layer
+    description: AlexNet is used as a feature extractor for the R-CNN layer.
+    strength: 8
+  - source_entity: VGG16
+    target_entity: R-CNN layer
+    description: VGG16 is used as a feature extractor for the R-CNN layer.
+    strength: 8
+  - source_entity: conv1
+    target_entity: AlexNet
+    description: The text describes the conv1 layer as a part of the AlexNet architecture.
+    strength: 9
+  - source_entity: AlexNet 2000 x 604
+    target_entity: R-CNN layer
+    description: The text implies that AlexNet with input size 2000 x 604 is used with the R-CNN layer.
+    strength: 7
+  - source_entity: AlexNet 5000 x 1510
+    target_entity: R-CNN layer
+    description: The text implies that AlexNet with input size 5000 x 1510 is used with the R-CNN layer.
+    strength: 7
+  - source_entity: VGG16 2000 x 604
+    target_entity: R-CNN layer
+    description: The text implies that VGG16 with input size 2000 x 604 is used with the R-CNN layer.
+    strength: 7
+
+[2025-09-23 11:41:01,974][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Faster R-CNN', 'target_entity': 'VGG16', 'description': 'VGG16 is used as a feature extractor within the Faster R-CNN framework.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'AlexNet is used as an alternative to VGG16 within the Faster R-CNN framework.', 'strength': 8.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'KITTI object detection dataset', 'description': 'The Faster R-CNN algorithm is used for object detection on the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'PASCAL', 'description': 'The Faster R-CNN algorithm was initially developed and tested on the PASCAL dataset.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'conv4_3', 'description': 'conv4_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'conv5_3', 'description': 'conv5_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'conv5', 'description': 'conv5 is a convolutional layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN layer', 'description': 'The R-CNN layer is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The Region Proposal Network (RPN) is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'ImageNet', 'description': 'ImageNet is used to pre-train the convolutional layers of the Faster R-CNN model.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5_3', 'description': 'conv5_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv4_3', 'description': 'conv4_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5', 'description': 'conv5 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv4 3', 'description': 'VGG16 conv4 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv5 3', 'description': 'VGG16 conv5 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet conv5', 'description': 'AlexNet conv5 refers to a specific layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'AlexNet 2000 x 604 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'AlexNet 5000 x 1510 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'VGG16 2000 x 604 is an input image size used with VGG16.', 'strength': 8.0}, {'source_entity': 'IoU threshold', 'target_entity': 'KITTI object detection dataset', 'description': 'The IoU threshold is used in the evaluation criteria for the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'AlexNet', 'description': 'AlexNet uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'VGG16', 'description': 'VGG16 uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv5', 'target_entity': 'AlexNet', 'description': 'conv5 is the fifth convolutional layer in AlexNet.', 'strength': 10.0}, {'source_entity': 'conv43', 'target_entity': 'VGG16', 'description': 'conv43 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv53', 'target_entity': 'VGG16', 'description': 'conv53 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv4_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv4_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for AlexNet.', 'strength': 7.0}, {'source_entity': 'AlexNet conv1 layer', 'target_entity': 'AlexNet', 'description': 'The AlexNet conv1 layer is a component of the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'AlexNet 2000 x 604', 'description': 'The text mentions that VGG16 is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'The text mentions that AlexNet is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'The text mentions that AlexNet is used with the image size 5000 x 1510.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'The text mentions that VGG16 is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN layer', 'description': 'AlexNet is used as a feature extractor for the R-CNN layer.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN layer', 'description': 'VGG16 is used as a feature extractor for the R-CNN layer.', 'strength': 8.0}, {'source_entity': 'conv1', 'target_entity': 'AlexNet', 'description': 'The text describes the conv1 layer as a part of the AlexNet architecture.', 'strength': 9.0}, {'source_entity': 'AlexNet 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'The text implies that AlexNet with input size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'AlexNet 5000 x 1510', 'target_entity': 'R-CNN layer', 'description': 'The text implies that AlexNet with input size 5000 x 1510 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'VGG16 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'The text implies that VGG16 with input size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}]
+
+[2025-09-23 11:41:01,975][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 11:41:02,886][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: VGG19
+    target_entity: ROI Pooling
+    description: "VGG19 can be used with ROI Pooling, which allows it to handle input images of varying sizes."
+    strength: 9
+  - source_entity: AlexNet
+    target_entity: Faster R-CNN
+    description: "Faster R-CNN networks can be built on AlexNet, as stated in the text."
+    strength: 7
+
+[2025-09-23 11:41:02,889][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'R-CNN', 'target_entity': 'KITTI dataset', 'description': 'R-CNN is used for car detection on the KITTI dataset.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN', 'description': 'AlexNet is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'Fast R-CNN', 'target_entity': 'R-CNN', 'description': 'Fast R-CNN is an improved version of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN', 'description': 'Faster R-CNN is a faster variant of R-CNN.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'Faster R-CNN uses a Region Proposal Network (RPN).', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN', 'description': 'VGG16 is used in the context of R-CNN.', 'strength': 7.0}, {'source_entity': 'KITTI dataset', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is a high-accuracy method for identifying objects in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'ImageNet', 'target_entity': 'AlexNet', 'description': 'AlexNet is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'ImageNet', 'target_entity': 'VGG16', 'description': 'VGG16 is pretrained on the ImageNet dataset.', 'strength': 8.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Faster R-CNN', 'description': 'Region Proposal Network (RPN) is used in Faster R-CNN.', 'strength': 10.0}, {'source_entity': 'Monocular 3D (Mono 3D)', 'target_entity': 'R-CNN', 'description': 'Monocular 3D (Mono 3D) is built around a version of R-CNN.', 'strength': 8.0}, {'source_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'target_entity': 'KITTI dataset', 'description': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC) is used for object detection in the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)', 'description': 'VGG16 is used in Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC).', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'VGG16', 'description': 'AlexNet and VGG16 are CNN architectures.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'SqueezeNet', 'description': 'SqueezeNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'NiN', 'target_entity': 'ResNet', 'description': 'ResNet uses a similar architecture to NiN.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG19', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is used with VGG19.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'AlexNet', 'description': 'VGG16 and AlexNet are CNN architectures.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on AlexNet.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks built on VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as a base network within the Faster R-CNN architecture. The content mentions training Faster R-CNN networks built on VGG16.', 'strength': 9.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'AlexNet', 'description': 'ROI Pooling is used with AlexNet to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with AlexNet FC layers.', 'strength': 10.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'VGG19', 'description': 'ROI Pooling is used with VGG19 to handle varying input sizes. The text states that ROI Pooling allows any size input image to be used in concert with VGG19 FC layers.', 'strength': 10.0}, {'source_entity': 'SPP method', 'target_entity': 'Fast R-CNN', 'description': 'The SPP method inspired the development of Faster R-CNN, which is mentioned in the context of fast object detection.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'AlexNet is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on AlexNet.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'Faster R-CNN', 'description': 'VGG16 is used as a backbone CNN architecture within Faster R-CNN. The text mentions training Faster R-CNN networks built on VGG16.', 'strength': 9.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'AlexNet', 'description': 'ROI Pooling is used with AlexNet to handle variable input sizes, allowing AlexNet to be used in R-CNN based architectures.', 'strength': 8.0}, {'source_entity': 'ROI Pooling', 'target_entity': 'VGG16', 'description': 'ROI Pooling is used with VGG16 to handle variable input sizes, allowing VGG16 to be used in R-CNN based architectures.', 'strength': 8.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'ROI Pooling', 'description': 'ROI Pooling is a technique used in Faster R-CNN to extract feature maps from the region proposals generated by the RPN.', 'strength': 9.0}, {'source_entity': 'VGG19', 'target_entity': 'ROI Pooling', 'description': 'VGG19 can be used with ROI Pooling, which allows it to handle input images of varying sizes.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'Faster R-CNN', 'description': 'Faster R-CNN networks can be built on AlexNet, as stated in the text.', 'strength': 7.0}]
+
+[2025-09-23 11:41:02,890][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 11:41:03,398][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections regarding the use of specific convolutional layers (conv4_3, conv5_3, conv5) as input to the R-CNN layer for both VGG16 and AlexNet. Also, the relationship between image sizes and the R-CNN layer is not fully captured.
+loop_required: true
+
+[2025-09-23 11:41:03,399][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections regarding the use of specific convolutional layers (conv4_3, conv5_3, conv5) as input to the R-CNN layer for both VGG16 and AlexNet. Also, the relationship between image sizes and the R-CNN layer is not fully captured.
+[2025-09-23 11:41:03,400][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 11:41:03,400][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 11:41:04,015][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit (4) has been reached. No further extraction is permitted, even if some relationships might be missing. The current relationships are considered complete for this iteration.'
+loop_required: false
+
+[2025-09-23 11:41:04,017][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit (4) has been reached. No further extraction is permitted, even if some relationships might be missing. The current relationships are considered complete for this iteration.
+[2025-09-23 11:41:04,018][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:41:04,018][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 11:41:04,018][Thread 0][ERROR] - File doesn't exist: Bodhi/244256/0/244256_intermediate_data.yml. Creating file..
+[2025-09-23 11:41:04,035][Thread 0][INFO] - Nodes & relations saved to Bodhi/244256/0/244256_intermediate_data.yml
+[2025-09-23 11:41:04,036][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 11:41:04,036][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:41:04,037][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 30.794599771499634
+
+[2025-09-23 11:41:08,008][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: VGG16
+    target_entity: conv4_3
+    description: 'The content mentions using conv4_3 features from VGG16 as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: VGG16
+    target_entity: conv5_3
+    description: 'The content mentions using conv5_3 features from VGG16 as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: AlexNet
+    target_entity: conv5
+    description: 'The content mentions using conv5 features from AlexNet as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: conv4_3
+    target_entity: R-CNN layer
+    description: 'conv4_3 from VGG16 is used as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: conv5_3
+    target_entity: R-CNN layer
+    description: 'conv5_3 from VGG16 is used as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: conv5
+    target_entity: R-CNN layer
+    description: 'conv5 from AlexNet is used as input to the R-CNN layer.'
+    strength: 9
+  - source_entity: AlexNet 2000 x 604
+    target_entity: R-CNN layer
+    description: 'AlexNet with input images of size 2000 x 604 is used with the R-CNN layer.'
+    strength: 7
+  - source_entity: AlexNet 5000 x 1510
+    target_entity: R-CNN layer
+    description: 'AlexNet with input images of size 5000 x 1510 is used with the R-CNN layer.'
+    strength: 7
+  - source_entity: VGG16 2000 x 604
+    target_entity: R-CNN layer
+    description: 'VGG16 with input images of size 2000 x 604 is used with the R-CNN layer.'
+    strength: 7
+  - source_entity: AlexNet
+    target_entity: AlexNet 2000 x 604
+    description: 'AlexNet is used with input images of size 2000 x 604.'
+    strength: 8
+  - source_entity: AlexNet
+    target_entity: AlexNet 5000 x 1510
+    description: 'AlexNet is used with input images of size 5000 x 1510.'
+    strength: 8
+  - source_entity: VGG16
+    target_entity: VGG16 2000 x 604
+    description: 'VGG16 is used with input images of size 2000 x 604.'
+    strength: 8
+
+[2025-09-23 11:41:08,016][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Faster R-CNN', 'target_entity': 'VGG16', 'description': 'VGG16 is used as a feature extractor within the Faster R-CNN framework.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'AlexNet', 'description': 'AlexNet is used as an alternative to VGG16 within the Faster R-CNN framework.', 'strength': 8.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'KITTI object detection dataset', 'description': 'The Faster R-CNN algorithm is used for object detection on the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'PASCAL', 'description': 'The Faster R-CNN algorithm was initially developed and tested on the PASCAL dataset.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'conv4_3', 'description': 'conv4_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'conv5_3', 'description': 'conv5_3 is a convolutional layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'conv5', 'description': 'conv5 is a convolutional layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'R-CNN layer', 'description': 'The R-CNN layer is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The Region Proposal Network (RPN) is a component of the Faster R-CNN architecture.', 'strength': 9.0}, {'source_entity': 'Faster R-CNN', 'target_entity': 'ImageNet', 'description': 'ImageNet is used to pre-train the convolutional layers of the Faster R-CNN model.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5_3', 'description': 'conv5_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv4_3', 'description': 'conv4_3 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'conv5', 'description': 'conv5 is used as input to the RPN.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv4 3', 'description': 'VGG16 conv4 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 conv5 3', 'description': 'VGG16 conv5 3 refers to a specific layer within the VGG16 architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet conv5', 'description': 'AlexNet conv5 refers to a specific layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'AlexNet 2000 x 604 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'AlexNet 5000 x 1510 is an input image size used with AlexNet.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'VGG16 2000 x 604 is an input image size used with VGG16.', 'strength': 8.0}, {'source_entity': 'IoU threshold', 'target_entity': 'KITTI object detection dataset', 'description': 'The IoU threshold is used in the evaluation criteria for the KITTI dataset.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'AlexNet', 'description': 'AlexNet uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv1', 'target_entity': 'VGG16', 'description': 'VGG16 uses conv1 as its first convolutional layer.', 'strength': 9.0}, {'source_entity': 'conv5', 'target_entity': 'AlexNet', 'description': 'conv5 is the fifth convolutional layer in AlexNet.', 'strength': 10.0}, {'source_entity': 'conv43', 'target_entity': 'VGG16', 'description': 'conv43 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv53', 'target_entity': 'VGG16', 'description': 'conv53 is a layer in VGG16.', 'strength': 10.0}, {'source_entity': 'conv4_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv4_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5_3', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5_3 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'conv5', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The text indicates that conv5 is an input to the Region Proposal Network (RPN).', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for VGG16.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN layer', 'description': 'The text states that fully connected layers are used as the R-CNN branch for AlexNet.', 'strength': 7.0}, {'source_entity': 'AlexNet conv1 layer', 'target_entity': 'AlexNet', 'description': 'The AlexNet conv1 layer is a component of the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'VGG16', 'target_entity': 'AlexNet 2000 x 604', 'description': 'The text mentions that VGG16 is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'The text mentions that AlexNet is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'The text mentions that AlexNet is used with the image size 5000 x 1510.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'The text mentions that VGG16 is used with the image size 2000 x 604.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'R-CNN layer', 'description': 'AlexNet is used as a feature extractor for the R-CNN layer.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'R-CNN layer', 'description': 'VGG16 is used as a feature extractor for the R-CNN layer.', 'strength': 8.0}, {'source_entity': 'conv1', 'target_entity': 'AlexNet', 'description': 'The text describes the conv1 layer as a part of the AlexNet architecture.', 'strength': 9.0}, {'source_entity': 'AlexNet 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'The text implies that AlexNet with input size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'AlexNet 5000 x 1510', 'target_entity': 'R-CNN layer', 'description': 'The text implies that AlexNet with input size 5000 x 1510 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'VGG16 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'The text implies that VGG16 with input size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'VGG16', 'target_entity': 'conv4_3', 'description': 'The content mentions using conv4_3 features from VGG16 as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'VGG16', 'target_entity': 'conv5_3', 'description': 'The content mentions using conv5_3 features from VGG16 as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'AlexNet', 'target_entity': 'conv5', 'description': 'The content mentions using conv5 features from AlexNet as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'conv4_3', 'target_entity': 'R-CNN layer', 'description': 'conv4_3 from VGG16 is used as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'conv5_3', 'target_entity': 'R-CNN layer', 'description': 'conv5_3 from VGG16 is used as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'conv5', 'target_entity': 'R-CNN layer', 'description': 'conv5 from AlexNet is used as input to the R-CNN layer.', 'strength': 9.0}, {'source_entity': 'AlexNet 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'AlexNet with input images of size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'AlexNet 5000 x 1510', 'target_entity': 'R-CNN layer', 'description': 'AlexNet with input images of size 5000 x 1510 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'VGG16 2000 x 604', 'target_entity': 'R-CNN layer', 'description': 'VGG16 with input images of size 2000 x 604 is used with the R-CNN layer.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 2000 x 604', 'description': 'AlexNet is used with input images of size 2000 x 604.', 'strength': 8.0}, {'source_entity': 'AlexNet', 'target_entity': 'AlexNet 5000 x 1510', 'description': 'AlexNet is used with input images of size 5000 x 1510.', 'strength': 8.0}, {'source_entity': 'VGG16', 'target_entity': 'VGG16 2000 x 604', 'description': 'VGG16 is used with input images of size 2000 x 604.', 'strength': 8.0}]
+
+[2025-09-23 11:41:08,017][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 11:41:09,316][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit (4) has been reached. No further iterations are allowed, even if some relationships might still be missing. The current relationships cover the core aspects of the Faster R-CNN architecture, its components, and the datasets used. Further iterations would likely yield diminishing returns.'
+loop_required: false
+
+[2025-09-23 11:41:09,318][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit (4) has been reached. No further iterations are allowed, even if some relationships might still be missing. The current relationships cover the core aspects of the Faster R-CNN architecture, its components, and the datasets used. Further iterations would likely yield diminishing returns.
+[2025-09-23 11:41:09,319][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 11:41:09,319][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 11:41:09,319][Thread 1][ERROR] - File doesn't exist: Bodhi/244256/1/244256_intermediate_data.yml. Creating file..
+[2025-09-23 11:41:09,339][Thread 1][INFO] - Nodes & relations saved to Bodhi/244256/1/244256_intermediate_data.yml
+[2025-09-23 11:41:09,339][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 11:41:09,339][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 11:41:09,340][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 36.0963716506958
+
+[2025-09-23 11:41:09,340][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 11:41:09,376][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 11:41:09,447][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 11:41:09,479][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 2 with offset 2
+[2025-09-23 11:41:09,522][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 3 intermediate files into Bodhi/244256/244256_combined_intermediate_data.yml
+[2025-09-23 11:41:09,523][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 244256
+Total Chunks Processed: 3
+Threads Used: 3
+Chunks per Thread: [1, 1, 1]
+Entities Extracted: 56
+Relationships Extracted: 113
+Combined Intermediate File: Bodhi/244256/244256_combined_intermediate_data.yml
+Total Time Taken: 42.26 seconds
+==========================================
+[2025-09-23 11:41:09,523][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 11:41:09,523][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 11:41:09,523][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 11:41:09,523][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 11:41:09,526][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 11:41:09,526][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 11:41:09,855][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 11:41:09,855][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 11:41:09,855][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['R-CNN', 'KITTI dataset', 'AlexNet', 'Fast R-CNN']...
+Number of elements: 44
+[2025-09-23 11:41:10,155][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 244256 
+******************************
+ - Total number of entities before resolution: 44
+ - Total number of entities after resolution: 40
+ - Total number of descriptions in all resolved nodes before resolution: 13
+ - Total number of descriptions in all resolved nodes after resolution: 12
+******************************
+
+[2025-09-23 11:41:10,156][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'R-CNN': {'type': ['method', 'method'], 'description': ['A method that uses selective search for object region proposal and a classification network.', 'A method used for object detection, with modifications involving context windows.'], 'source_chunk_index': [0, 2]}, 'KITTI dataset': {'type': ['dataset', 'dataset'], 'description': ['A dataset used for car detection, challenging for object detection tasks.', 'A dataset used to evaluate the performance of object detection methods.'], 'source_chunk_index': [0, 2]}, 'AlexNet': {'type': ['method', 'method', 'method'], 'description': ['A shallow convolutional neural network that provides high accuracy on the detection task.', 'A convolutional neural network architecture used as an alternative to VGG16 to evaluate the impact of shallower networks on accuracy.', 'A convolutional neural network architecture used as a base for the R-CNN method.'], 'source_chunk_index': [0, 1, 2]}, 'OverFeat': {'type': ['method'], 'description': ['A method that predicts a single box for localization.'], 'source_chunk_index': [0]}, 'SPP method': {'type': ['method'], 'description': ['A method that uses shared convolutional feature maps for fast object detection.'], 'source_chunk_index': [0]}, 'VGG16': {'type': ['method', 'method', 'method'], 'description': ['A convolutional neural network architecture with sixteen convolution layers.', 'A convolutional neural network architecture used as a feature extractor in the Faster R-CNN framework, known for its high accuracy in image classification and localization.', 'A convolutional neural network architecture used for feature extraction.'], 'source_chunk_index': [0, 1, 2]}, 'ImageNet': {'type': ['dataset', 'dataset'], 'description': ['A widely-used dataset for training and evaluating image recognition models.', 'A dataset used to pre-train the convolutional layers of the Faster R-CNN model.'], 'source_chunk_index': [0, 1]}, 'Deformable parts models (DPM)': {'type': ['method'], 'description': ['A method that was the state of the art for image object detection before the emergence of deep convolutional neural nets.'], 'source_chunk_index': [0]}, 'Region Proposal Network (RPN)': {'type': ['method', 'method'], 'description': ['A network used in Faster R-CNN to generate proposal boxes.', 'A network within Faster R-CNN that proposes potential object locations.'], 'source_chunk_index': [0, 1]}, 'Monocular 3D (Mono 3D)': {'type': ['method'], 'description': ['A method that aims to identify the pose of objects, with the goal of detecting objects as 3D bounding boxes.'], 'source_chunk_index': [0]}, 'Scale dependent pooling (SDP) combined with cascaded region classifiers (CRC)': {'type': ['method'], 'description': ['A high-accuracy method for identifying objects in the KITTI dataset.'], 'source_chunk_index': [0]}, 'PASCAL': {'type': ['dataset', 'dataset'], 'description': ['A widely-used dataset for object detection, used to build supervised 2D datasets.', 'A dataset used for object detection, serving as a benchmark for the Faster R-CNN algorithm and used for comparison with the KITTI dataset.'], 'source_chunk_index': [0, 1]}, 'NiN': {'type': ['method'], 'description': ['The Network-in-Network architecture, which popularized the use of global average pooling prior to the first fully-connected layer in CNNs.'], 'source_chunk_index': [0]}, 'SqueezeNet': {'type': ['method'], 'description': ['A CNN architecture that uses global average pooling prior to the first FC layer, similar to NiN.'], 'source_chunk_index': [0]}, 'ResNet': {'type': ['method'], 'description': ['A CNN architecture that uses global average pooling prior to the first FC layer, similar to NiN.'], 'source_chunk_index': [0]}, 'VGG19': {'type': ['method'], 'description': ['A CNN architecture, similar to VGG16, used in the context of R-CNN.'], 'source_chunk_index': [0]}, 'ROI Pooling': {'type': ['method'], 'description': ['A technique developed by the R-CNN authors that allows input images of any size to be used with AlexNet/VGG FC layers.'], 'source_chunk_index': [0]}, 'Multibox': {'type': ['method'], 'description': ['A method for object detection that predicts multiple bounding boxes in a class-agnostic way.'], 'source_chunk_index': [0]}, 'Mono 3D': {'type': ['method'], 'description': ['A method that uses 2D images to identify the pose of objects, with the goal of detecting objects as 3D bounding boxes.'], 'source_chunk_index': [0]}, 'KITTI object detection dataset': {'type': ['dataset'], 'description': ['A dataset used for training and evaluating the Faster R-CNN algorithm, focusing on object detection in autonomous driving scenarios.'], 'source_chunk_index': [1]}, 'R-CNN layer': {'type': ['method'], 'description': ['The region-based convolutional neural network layer, trained using positive and negative region of interest (ROI) proposals.'], 'source_chunk_index': [1]}, 'IoU threshold': {'type': ['method'], 'description': ["The Intersection over Union (IoU) threshold used in the KITTI dataset's evaluation criteria to determine if a proposal box is considered a true detection. Specifically, proposal boxes having overlap with the ground truth or IoU greater than 70% are counted as true detection for cars."], 'source_chunk_index': [1]}, 'conv2': {'type': ['method'], 'description': ['The second convolutional layer in a convolutional neural network (CNN).'], 'source_chunk_index': [1]}, 'conv43': {'type': ['method'], 'description': ['The 10th layer in the VGG16 network.'], 'source_chunk_index': [1]}, 'conv53': {'type': ['method'], 'description': ['The 13th layer in the VGG16 network.'], 'source_chunk_index': [1]}, 'AlexNet conv1 layer': {'type': ['method'], 'description': ['The first convolutional layer in the AlexNet architecture, characterized by a stride of 4, indicating a 4x downsampling of the input image.'], 'source_chunk_index': [1]}, 'AlexNet conv5': {'type': ['method'], 'description': ['The fifth convolutional layer in the AlexNet architecture, used as input to the R-CNN region-proposal and classification branches.'], 'source_chunk_index': [1]}, 'VGG16 conv4 3': {'type': ['method'], 'description': ['The 10th layer in the VGG16 network, specifically the third convolutional layer in the fourth convolutional block.'], 'source_chunk_index': [1]}, 'VGG16 conv5 3': {'type': ['method'], 'description': ['The 13th layer in the VGG16 network, specifically the third convolutional layer in the fifth convolutional block.'], 'source_chunk_index': [1]}, 'AlexNet 2000 x 604': {'type': ['dataset'], 'description': ['The input image size of 2000 pixels in width and 604 pixels in height used for AlexNet-based R-CNN models.'], 'source_chunk_index': [1]}, 'AlexNet 5000 x 1510': {'type': ['dataset'], 'description': ['The input image size of 5000 pixels in width and 1510 pixels in height used for AlexNet-based R-CNN models.'], 'source_chunk_index': [1]}, 'VGG16 2000 x 604': {'type': ['dataset'], 'description': ['The input image size of 2000 pixels in width and 604 pixels in height used for VGG16-based R-CNN models.'], 'source_chunk_index': [1]}, 'context window': {'type': ['method'], 'description': ['A technique used to enhance the features extracted by R-CNN by incorporating contextual information.'], 'source_chunk_index': [2]}, 'car detection': {'type': ['task'], 'description': ['The objective of identifying and locating cars within images.'], 'source_chunk_index': [2]}, '3DOP': {'type': ['method'], 'description': ['A method used for car detection, mentioned for comparison of inference time.'], 'source_chunk_index': [2]}, 'SDP+CRC': {'type': ['method'], 'description': ['Another method used for car detection, also mentioned for comparison of inference time.'], 'source_chunk_index': [2]}, 'Fast R-CNN': {'description': ['An improved version of R-CNN that reuses shared convolution features for region proposals.', 'A method that uses a region proposal network (RPN) to regress proposal boxes to ground truth boxes.', 'An object detection algorithm used as a foundation for the research, delivering high accuracy on the PASCAL dataset.', 'An improved version of the R-CNN method, used for object detection.'], 'type': ['method'], 'source_chunk_index': [0, 1, 2]}, 'conv4_3': {'description': ['A convolutional layer in VGG16, used as input to the RPN and classification network.', 'The first convolutional layer in a convolutional neural network (CNN), such as AlexNet or VGG16.'], 'type': ['method'], 'source_chunk_index': [1]}, 'conv5_3': {'description': ['A convolutional layer in VGG16, used as input to the RPN and classification network.', 'The 5th convolutional layer in AlexNet, used as input to the R-CNN region-proposal and classification branches.', 'The fifth convolutional layer in a convolutional neural network (CNN), used as input to the R-CNN region-proposal and classification branches in the AlexNet-based model.'], 'type': ['method'], 'source_chunk_index': [1]}, 'Object detection': {'description': ['The primary objective of the research, focusing on identifying and locating objects within images, particularly in the context of the KITTI dataset.', 'The task of identifying and locating objects within images.'], 'type': ['task'], 'source_chunk_index': [1, 2]}}
+[2025-09-23 11:41:10,156][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 11:41:10,156][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 11:41:10,206][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 11:41:10,206][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:244256...
+[2025-09-23 11:41:10,267][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 11:41:10,766][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--image object classification:
+Total number of sentences: 7722
+Sources:[2085]
+[2025-09-23 11:41:10,766][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--localization:
+Total number of sentences: 7722
+Sources:[2125]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN:
+Total number of sentences: 7722
+Sources:[2142]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--object detection:
+Total number of sentences: 7722
+Sources:[2101]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--car detection:
+Total number of sentences: 7722
+Sources:[2146]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--KITTI:
+Total number of sentences: 7722
+Sources:[2145]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--AlexNet:
+Total number of sentences: 7722
+Sources:[2143]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--detection:
+Total number of sentences: 7722
+Sources:[2143]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Deformable parts models:
+Total number of sentences: 7722
+Sources:[2089]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--DPM:
+Total number of sentences: 7722
+Sources:[2089]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--image object detection:
+Total number of sentences: 7722
+Sources:[2089]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--convolutional neural nets:
+Total number of sentences: 7722
+Sources:[2089]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--selective search:
+Total number of sentences: 7722
+Sources:[2093]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--classification:
+Total number of sentences: 7722
+Sources:[2141]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Fast R - CNN:
+Total number of sentences: 7722
+Sources:[2093]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--convolution:
+Total number of sentences: 7722
+Sources:[2118]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--region proposals:
+Total number of sentences: 7722
+Sources:[2092]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--region proposal:
+Total number of sentences: 7722
+Sources:[2100]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--SPPNet:
+Total number of sentences: 7722
+Sources:[2094]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Faster R - CNN:
+Total number of sentences: 7722
+Sources:[2143]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--region proposal network:
+Total number of sentences: 7722
+Sources:[2127]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--RPN:
+Total number of sentences: 7722
+Sources:[2127]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--OverFeat:
+Total number of sentences: 7722
+Sources:[2096]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Multibox:
+Total number of sentences: 7722
+Sources:[2096]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--SPP:
+Total number of sentences: 7722
+Sources:[2097]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Deep neural networks:
+Total number of sentences: 7722
+Sources:[2098]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--scale dependent pooling:
+Total number of sentences: 7722
+Sources:[2099]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--SDP:
+Total number of sentences: 7722
+Sources:[2099]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--cascaded region classifiers:
+Total number of sentences: 7722
+Sources:[2099]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--CRC:
+Total number of sentences: 7722
+Sources:[2099]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--SDP+CRC:
+Total number of sentences: 7722
+Sources:[2145]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--high - resolution CNN layer:
+Total number of sentences: 7722
+Sources:[2100]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--conv 3 3:
+Total number of sentences: 7722
+Sources:[2100]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--VGG 1 6:
+Total number of sentences: 7722
+Sources:[2137]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--downsampled CNN layer:
+Total number of sentences: 7722
+Sources:[2100]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--conv 5 3:
+Total number of sentences: 7722
+Sources:[2129]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Monocular 3D:
+Total number of sentences: 7722
+Sources:[2102]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Mono 3 D:
+Total number of sentences: 7722
+Sources:[2103]
+[2025-09-23 11:41:10,767][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--ImageNet:
+Total number of sentences: 7722
+Sources:[2105]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--PASCAL:
+Total number of sentences: 7722
+Sources:[2123]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--CNN:
+Total number of sentences: 7722
+Sources:[2129]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--fully - connected layer:
+Total number of sentences: 7722
+Sources:[2108]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--global average pooling:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--FC layer:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Network - in - Network:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--NiN:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--SqueezeNet:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--ResNet:
+Total number of sentences: 7722
+Sources:[2109]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--VGG 1 9:
+Total number of sentences: 7722
+Sources:[2110]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--ROI Pooling:
+Total number of sentences: 7722
+Sources:[2110]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--AlexNet/VGG FC layers:
+Total number of sentences: 7722
+Sources:[2110]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--faster R - CNN:
+Total number of sentences: 7722
+Sources:[2146]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--ImageNet - 1 k:
+Total number of sentences: 7722
+Sources:[2113]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--convolutional layers:
+Total number of sentences: 7722
+Sources:[2115]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--pooling layer:
+Total number of sentences: 7722
+Sources:[2115]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--fully connected layers:
+Total number of sentences: 7722
+Sources:[2116]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN layer:
+Total number of sentences: 7722
+Sources:[2117]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--imagenet:
+Total number of sentences: 7722
+Sources:[2118]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--KITTI object detection:
+Total number of sentences: 7722
+Sources:[2119]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--image classification:
+Total number of sentences: 7722
+Sources:[2125]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--conv 4 3:
+Total number of sentences: 7722
+Sources:[2129]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN with conv 4 3:
+Total number of sentences: 7722
+Sources:[2130]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN with conv 5 3:
+Total number of sentences: 7722
+Sources:[2130]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--Region Proposal Network:
+Total number of sentences: 7722
+Sources:[2131]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--conv 1 layer:
+Total number of sentences: 7722
+Sources:[2132]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--conv 5:
+Total number of sentences: 7722
+Sources:[2139]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN region - proposal:
+Total number of sentences: 7722
+Sources:[2134]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--classification branches:
+Total number of sentences: 7722
+Sources:[2134]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--AlexNet - conv 5:
+Total number of sentences: 7722
+Sources:[2135]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--VGG 1 6 - conv 4 3:
+Total number of sentences: 7722
+Sources:[2135]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--VGG 1 6 conv 4 3:
+Total number of sentences: 7722
+Sources:[2138]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--R - CNN branch:
+Total number of sentences: 7722
+Sources:[2140]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--AlexNet conv 5 layer:
+Total number of sentences: 7722
+Sources:[2144]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--VGG 1 6 conv 4 3 layer:
+Total number of sentences: 7722
+Sources:[2144]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--244256--3DOP:
+Total number of sentences: 7722
+Sources:[2145]
+[2025-09-23 11:41:10,768][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 11:41:10,773][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_244256.yml, skipping classification.
+[2025-09-23 11:41:10,773][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_244256.yml
+[2025-09-23 11:41:10,776][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/11-01-51/general_config.generic_type_allowance=False,general_config.priming=False,general_config.token_limit=1000/seed=1/storage/Bodhi/244256/244256_graph.yml']
+[2025-09-23 11:41:10,828][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/11-01-51/general_config.generic_type_allowance=False,general_config.priming=False,general_config.token_limit=1000/seed=1/storage/Bodhi/244256/244256_graph.yml
+[2025-09-23 11:41:10,881][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 11:41:10,881][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 244256
+[2025-09-23 11:41:10,992][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 11:41:11,773][root][INFO] - Token count: 2579
+[2025-09-23 11:41:12,402][root][INFO] - Batch token estimation (hf) complete for 40 strings.
+[2025-09-23 11:41:12,437][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:R-CNN\nDescription:A method that uses selective search for object region proposal and a classification network. ; A method used for object detection, with modifications involving context windows.\n', 'Name:KITTI DATASET\nDescription:A dataset used for car detection, challenging for object detection tasks. ; A dataset used to evaluate the performance of object detection methods.\n', 'Name:ALEXNET\nDescription:A shallow convolutional neural network that provides high accuracy on the detection task. ; A convolutional neural network architecture used as an alternative to VGG16 to evaluate the impact of shallower networks on accuracy. ; A convolutional neural network architecture used as a base for the R-CNN method.\n', 'Name:OVERFEAT\nDescription:A method that predicts a single box for localization.\n', 'Name:SPP METHOD\nDescription:A method that uses shared convolutional feature maps for fast object detection.\n']split_entities: text_tokens=2579, instructions_tokens=500, budget_for_entities=6921, number_of_entities=40, avg_entity_tokens=39, max_entities=177, num_groups=1, entities_per_group=[40]
+[2025-09-23 11:41:55,947][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: R-CNN
+    type: METHOD
+  - entity: KITTI DATASET
+    type: METHOD
+  - entity: ALEXNET
+    type: METHOD
+  - entity: OVERFEAT
+    type: METHOD
+  - entity: SPP METHOD
+    type: METHOD
+  - entity: VGG16
+    type: METHOD
+  - entity: IMAGENET
+    type: METHOD
+  - entity: DEFORMABLE PARTS MODELS (DPM)
+    type: METHOD
+  - entity: REGION PROPOSAL NETWORK (RPN)
+    type: METHOD
+  - entity: MONOCULAR 3D (MONO 3D)
+    type: METHOD
+  - entity: SCALE DEPENDENT POOLING (SDP) COMBINED WITH CASCADED REGION CLASSIFIERS
+      (CRC)
+    type: METHOD
+  - entity: PASCAL
+    type: METHOD
+  - entity: NIN
+    type: METHOD
+  - entity: SQUEEZENET
+    type: METHOD
+  - entity: RESNET
+    type: METHOD
+  - entity: VGG19
+    type: METHOD
+  - entity: ROI POOLING
+    type: METHOD
+  - entity: MULTIBOX
+    type: METHOD
+  - entity: MONO 3D
+    type: METHOD
+  - entity: KITTI OBJECT DETECTION DATASET
+    type: METHOD
+  - entity: R-CNN LAYER
+    type: METHOD
+  - entity: IOU THRESHOLD
+    type: METHOD
+  - entity: CONV2
+    type: METHOD
+  - entity: CONV43
+    type: METHOD
+  - entity: CONV53
+    type: METHOD
+  - entity: ALEXNET CONV1 LAYER
+    type: METHOD
+  - entity: ALEXNET CONV5
+    type: METHOD
+  - entity: VGG16 CONV4 3
+    type: METHOD
+  - entity: VGG16 CONV5 3
+    type: METHOD
+  - entity: ALEXNET 2000 X 604
+    type: DOMAIN
+  - entity: ALEXNET 5000 X 1510
+    type: DOMAIN
+  - entity: VGG16 2000 X 604
+    type: DOMAIN
+  - entity: CONTEXT WINDOW
+    type: DOMAIN
+  - entity: CAR DETECTION
+    type: METHOD
+  - entity: 3DOP
+    type: METHOD
+  - entity: SDP+CRC
+    type: METHOD
+  - entity: FAST R-CNN
+    type: METHOD
+  - entity: CONV4_3
+    type: METHOD
+  - entity: CONV5_3
+    type: METHOD
+  - entity: OBJECT DETECTION
+    type: METHOD
+
+[2025-09-23 11:41:55,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 11:41:55,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/11-01-51/general_config.generic_type_allowance=False,general_config.priming=False,general_config.token_limit=1000/seed=1/244256/eval_results/classification_results.yml
+[2025-09-23 11:41:55,962][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 11:41:55,962][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 11:41:55,962][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 11:41:55,963][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 13 exact matches, 27 unmatched bodhi entities.
+[2025-09-23 11:41:55,963][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 11:41:56,056][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 8 fuzzy matches, 19 unmatched bodhi entities remain.
+[2025-09-23 11:41:56,058][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 11:41:56,761][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 11:41:57,635][root][INFO] - Batch token estimation (hf) complete for 75 strings.
+[2025-09-23 11:41:57,700][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'image object classification': 3, 'localization': 2, 'R - CNN': 3, 'object detection': 2, 'AlexNet': 2, 'detection': 2, 'Deformable parts models': 5, 'DPM': 2, 'image object detection': 3, 'convolutional neural nets': 5, 'selective search': 3, 'classification': 1, 'Fast R - CNN': 4, 'convolution': 2, 'region proposals': 2, 'region proposal': 2, 'SPPNet': 3, 'Faster R - CNN': 5, 'region proposal network': 3, 'RPN': 2, 'OverFeat': 2, 'Multibox': 2, 'SPP': 2, 'Deep neural networks': 3, 'scale dependent pooling': 3, 'SDP': 2, 'cascaded region classifiers': 5, 'CRC': 1, 'SDP+CRC': 4, 'high - resolution CNN layer': 5, 'VGG 1 6': 6, 'downsampled CNN layer': 5, 'Monocular 3D': 5, 'Mono 3 D': 4, 'CNN': 1, 'fully - connected layer': 4, 'global average pooling': 3, 'FC layer': 2, 'Network - in - Network': 5, 'NiN': 2, 'SqueezeNet': 3, 'ResNet': 2, 'VGG 1 9': 6, 'ROI Pooling': 3, 'AlexNet/VGG FC layers': 6, 'faster R - CNN': 5, 'convolutional layers': 4, 'pooling layer': 3, 'fully connected layers': 3, 'R - CNN layer': 4, 'image classification': 2, 'Region Proposal Network': 3, 'conv 1 layer': 4, 'R - CNN region - proposal': 6, 'classification branches': 2, 'R - CNN branch': 4, '3DOP': 3, 'car detection': 2, 'KITTI': 2, 'conv 3 3': 5, 'conv 5 3': 5, 'ImageNet': 2, 'PASCAL': 3, 'ImageNet - 1 k': 6, 'imagenet': 2, 'KITTI object detection': 4, 'conv 4 3': 5, 'R - CNN with conv 4 3': 9, 'R - CNN with conv 5 3': 9, 'conv 5': 3, 'AlexNet - conv 5': 6, 'VGG 1 6 - conv 4 3': 12, 'VGG 1 6 conv 4 3': 11, 'AlexNet conv 5 layer': 6, 'VGG 1 6 conv 4 3 layer': 12}
+[2025-09-23 11:41:58,509][root][INFO] - Batch token estimation (hf) complete for 19 strings.
+[2025-09-23 11:41:58,547][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_f53d44a58e7a63029c89bf23bc0b3f73f97eed81308c804c434e502cb189aded.pkl
+[2025-09-23 11:42:01,071][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 19 entities.
+[2025-09-23 11:42:01,666][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 11:42:02,301][root][INFO] - Batch token estimation (hf) complete for 7 strings.
+[2025-09-23 11:42:02,337][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'IOU THRESHOLD': 5, 'CONV2': 3, 'VGG16 CONV5 3': 9, 'ALEXNET 2000 X 604': 13, 'ALEXNET 5000 X 1510': 14, 'VGG16 2000 X 604': 14, 'CONTEXT WINDOW': 2}
+[2025-09-23 11:42:02,338][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for novel entity assessment chunk: novel_assess_96b82daf8f9a3f720449b4832ebcbd2abc151cfac36003a5b9d8c4381cdaa517.pkl
+[2025-09-23 11:42:05,355][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Novel entity assessment completed for 7 entities.
+[2025-09-23 11:42:05,356][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 11:42:05,356][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 0.2777777777777778, 'method_coverage': 0.2807017543859649, 'precision': 0.3559322033898305, 'recall': 0.22340425531914893, 'f1': 0.2745098039215686, 'domain_precision': 0.5555555555555556, 'domain_recall': 0.21739130434782608, 'domain_f1': 0.3125, 'method_precision': 0.32, 'method_recall': 0.22535211267605634, 'method_f1': 0.2644628099173554, 'adjusted_domain_precision': 1.0, 'adjusted_domain_recall': 0.4090909090909091, 'adjusted_domain_f1': 0.5806451612903226, 'adjusted_method_precision': 0.38, 'adjusted_method_recall': 0.31666666666666665, 'adjusted_method_f1': 0.34545454545454546, 'adjusted_precision': 0.4745762711864407, 'adjusted_recall': 0.34146341463414637, 'adjusted_f1': 0.3971631205673759}
+[2025-09-23 11:42:05,362][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/11-01-51/general_config.generic_type_allowance=False,general_config.priming=False,general_config.token_limit=1000/seed=1/244256/eval_results/eval_output.yml
+[2025-09-23 11:42:05,364][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/11-01-51/general_config.generic_type_allowance=False,general_config.priming=False,general_config.token_limit=1000/seed=1/244256/eval_results/eval_metrics.yml

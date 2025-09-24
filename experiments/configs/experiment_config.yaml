@@ -1,0 +1,29 @@
+defaults:
+  - _self_
+  - general_config: base
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+      # general_config.token_limit: 250,500,750,1000
+      # general_config.generic_type_allowance: True,False
+      # general_config.priming: True,False
+      general_config.priming: True
+      
+      # seed variable sweep for multi-sampling
+      # general_config.seed: 0,1,2
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}/seed=${general_config.seed}
+    
+  job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - general_config.seed
+
+# Total runtime for 48 jobs
+# real    97m37.973s
+# user    9m30.590s
+# sys     0m35.246s

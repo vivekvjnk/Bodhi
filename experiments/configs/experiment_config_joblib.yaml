@@ -1,0 +1,57 @@
+defaults:
+  - _self_
+  - general_config: base
+  - general_config/doc_names
+  - override hydra/launcher: joblib
+
+
+
+hydra:
+  mode: MULTIRUN
+  launcher:
+    # Sets the number of parallel jobs (CPU cores)
+    # -1 uses all available cores (Recommended for Joblib)
+    n_jobs: 2
+    # 'processes' is the recommended backend for Joblib with Hydra
+    prefer: processes 
+
+  # This section gives you a clean, structured log file
+  # job_logging:
+  #   handlers:
+  #     # Quiets the terminal by only showing critical errors
+  #     console:
+  #       class: logging.StreamHandler
+  #       level: CRITICAL
+
+      # Saves structured logs from your application to a file
+      # file:
+      #   class: logging.FileHandler
+      #   # You can customize the filename
+      #   filename: "${hydra.runtime.output_dir}/bodhi_run.log" 
+      #   # Log all messages from the DEBUG level and up
+      #   level: DEBUG
+      #   # Add a rich formatter for detailed logs
+      #   formatter:
+      #     _target_: hydra.logging.HydraFormatter
+      #     format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+          
+  sweeper:
+    params:
+      # general_config.token_limit: 250,500,750,1000
+      # general_config.generic_type_allowance: True,False
+      # general_config.priming: True,False
+      general_config.priming: True
+
+      # Sweep document names 
+      # general_config.document_name: ${general_config.doc_names}
+
+      # seed variable sweep for multi-sampling
+      # general_config.seed: 0,1,2
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}/seed=${general_config.seed}
+  job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - general_config.seed

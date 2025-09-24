@@ -1,0 +1,1722 @@
+[2025-09-23 21:27:54,974][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:27:54,974][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 21:27:55,068][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:27:55,069][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 2032742
+[2025-09-23 21:27:55,070][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 21:27:55,070][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 21:27:55,651][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:27:56,249][root][INFO] - Token count: 298
+[2025-09-23 21:27:56,307][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:27:57,043][root][INFO] - Token count: 858
+[2025-09-23 21:27:57,163][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:27:57,865][root][INFO] - Token count: 1352
+[2025-09-23 21:27:57,963][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:27:58,675][root][INFO] - Token count: 1892
+[2025-09-23 21:28:01,344][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper focuses on optimizing Convolutional Neural Networks (CNNs) for improved speed and reduced size while maintaining accuracy. Key concepts include: **CNNs**, widely used in applications like image recognition and autonomous driving, are deployed on various platforms. The "golden trident" of CNN performance is defined by **accuracy, speed, and model size**.  **Sparsity** is a core technique explored to reduce model size and/or accelerate classification speed.  The paper differentiates between pruning **fully connected layers** (affecting model size) and **convolution layers** (impacting computation and speed).  **Sparse CNNs** are investigated, with a focus on both layer types.  The paper introduces a **Holistic SparseCNN** approach, aiming for simultaneous optimization of speed, size, and accuracy across both layer types.  **Direct sparse convolution** is presented as a key algorithm.  The paper analyzes the trade-offs between sparsity levels, speedups, and accuracy, including the impact of **arithmetic intensity** and the challenges of applying sparsity to different layers (e.g., conv1 vs. conv2).  The goal is to achieve significant speedups (e.g., 3.4x and 7.3x) on platforms like Xeon and Atom processors.
+
+
+[2025-09-23 21:28:01,344][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 21:28:01,358][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 4 text units to Bodhi/2032742/2032742_text_units.yml
+[2025-09-23 21:28:01,374][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 4, Threads: 4. Distribution: 0 threads get 2 chunks, and 4 threads get 1 chunks. Chunks per thread: [1, 1, 1, 1]
+[2025-09-23 21:28:01,375][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:01,376][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:01,376][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:01,376][Thread 0][INFO] - source chunk:
+Phenomenally successful in practical inference problems , convolutional neural networks ( CNN ) are widely deployed in mobile devices , data centers , and even supercomputers .While pruning the fully connected layers reduces a CNN 's size considerably , it does not improve inference speed noticeably as the compute heavy parts lie in convolutions .Pruning CNNs in a way that increase inference speed often imposes specific sparsity structures , thus limiting the achievable sparsity levels . We present a method to realize simultaneously size economy and speed improvement while pruning CNNs .Deep neural networks , especially CNNs , have been pervasive in computer vision recently and served as a foundation for many critical applications ranging from image recognition [ 1 7 ] and video analytics [ 2 1 ] to autonomous driving [ 1 ] .The trained CNN models are deployed broadly for classification on a large variety of platforms , covering the spectrum of data center servers to mobile clients such as smart phones and autonomous - driving cars .When the trained CNN models perform classification on these platforms , especially on resource constraint mobile platforms , accuracy , ( classification ) speed , and model size are the three key requirements that together form the threepronged " golden trident " .Exploiting or imposing sparsity in CNNs [ 1 2 , 1 1 , 7 , 1 9 , 8 , 1 4 ] have been recently studied to reduce model size and/or accelerate classification speed with minimal or zero accuracy loss .One
+[2025-09-23 21:28:01,377][Thread 3][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:01,377][Thread 1][INFO] - source chunk:
+research thrust [ 1 2 , 1 1 , 7 ] of sparse CNN has been focusing on reducing model size by sparsifying/compressing fully connected layers that have most of the parameters of the entire CNN model .However , such designs provide limited benefits to the classification speed of CNN , because the majority of the computation , i.e. , FLOPS , are within the convolution layers instead .For example , in AlexNet , while fully connected layers comprise more than 9 0 % of the total model size , it is the convolution layers that comprise more than 9 0 % of the total computation .Therefore , another research thrust [ 1 9 , 8 , 1 4 ] of sparse CNN focuses on convolution layers to reduce compute requirements and thus to improve classification speed .However , there are challenges for sparse CNN to achieve its full potential , including 1 ) sparse convolution has lower arithmetic intensity , thus additional data transfers involved in lowering tensors to matrices used in [ 1 9 , 8 , 1 4 ] add higher overhead , 2 ) some prior sparse convolution methods [ 8 , 1 4 ] are only applicable to large filters ( e.g. , 9 × 9 ) , which limits their usage for modern CNNs where small filters ( e.g. , 3 × 3 ) are popular .Moreover , while current sparse CNN methods focus mostly on either fully connected layers or convolution layers , it is desirable to apply sparse methods to both layers simultaneously .We also provide guidelines for the range of sparsity that should be targeted during training .• A highly - optimized sparse CNN implementation that provides 3. 4 × and 7. 3 × speedups of convolution layers in AlexNet over the best dense direct convolution performance on Xeon and Atom processors , respectively , with no accuracy drop .We also show 2, 3 7 1 and 1 2 0 images per second AlexNet classification throughput , which are significantly higher than the best published performance on respective platforms .Sparse methods have been popular to reduce model size and accelerate classification speed of CNNs with minimal or zero accuracy loss .However , the speedup of end - to - end performance is limited , because the fully connected layers only account for less than 1 0 % total computation in most CNNs such as AlexNet [ 1 7 ] .Another research thrust [ 1 9 , 8 , 1 4 ] of sparse CNN focuses on convolution layers , mostly targeting the classification speed .However , prior work on sparse convolution involves the overhead of transforming tensors to matrices , and some are inapplicable to small kernel size and thus can not exploit the full potential of the sparse convolution .While
+[2025-09-23 21:28:01,377][Thread 2][INFO] - source chunk:
+Perforated - CNN [ 9 ] also improves the classification speed of convolution layers by eliminating redundant computations , it relies on interpolating redundant convolution computation instead of using sparse methods .Therefore , the acceleration due to sparse methods on classification speed of CNNs is not as good as the sparse - method - enabled reduction of model size .Thesecond challenge is the lack of holistical optimization of speed and size of sparse CNNs ( convolution layers and fully connected layers mostly affect speed and size , respectively ) .This section first presents our direct sparse convolution algorithm to advance the stateof - the - art in sparse convolution for speeding up CNNs .Finally , we discuss the synergies between sparse convolution and sparse methods on fully connected layers .Figure 3 : Ideal speedups of sparse convolution over dense convolution . conv 2 / 4 _direct : direct sparse convolution , conv 2 / 4 _lowered : sparse convolution on tensors lowered to matrices ( see Section 3. 1 . 2 for details ) .In convolution layers of CNN , an input channel is reused against multiple output channels and vice versa , thus the arithmetic intensity of our direct sparse convolution algorithm is higher than SpMV that is memory bandwidth bound but lower than dense convolution that is compute - bound .The potential acceleration of sparse convolution over dense convolution can be expressed by where x is the proportion of non - zeros in filters ( lower the x , higher the sparsity of weight tensor W ) , and this proportion directly affects the final speedup .Therefore , sparse convolution 's actual FLOP/s is lower than that of dense convolution .Hence , there is a lower bound of useful sparsity such that , with a sparsity lower than that , sparse convolution provides no speedup over dense convolution .Therefore , in Atom processors , sparse convolution outperform dense convolution in a wider range of sparsity and the speedups are higher as will be shown in Section 5 .The lowering and lifting process has demonstrated overhead for dense convolution [ 1 0 ] , and it is particularly problematic for sparse convolution with intensity already much lower than its dense counter part .Even though a bulk of computation belongs to convolution layers , fully connected layers can become a bottleneck after sparse convolution optimizations .Exploiting sparsity in fully connected layers is actually simpler than convolution layers , because fully connected layers are implemented as GEMM and we can leverage work done before on sparse matrix and dense matrix multiplication ( SpMDM )
+[2025-09-23 21:28:01,377][Thread 3][INFO] - source chunk:
+.Simultaneously learning the sparsity of convolution and fully connected layers is beneficial in amortizing the training cost and in performing holistic trade - off among accuracy , classification speed , and model size .However , when targeting no accuracy loss from sparse models , we find that using the same regularization parameters across all layers tends to provide a high sparsity on fully connected ( fc ) layers but not enough sparsity on convolution layers to obtain speedups from sparse convolutions .Therefore , trading off a small increase in model size of fc layers for a large speedup of convolution layers can be often beneficial for holistically optimizing the accuracy - speed - size of CNN .Thelower convolution layers such as conv 1 in AlexNet are much harder to sparsify than higher layers such as conv 2 and above unless we can tolerate a large accuracy drop .Specifically , we use weight decay 1e - 5 , 5e - 5 , and 6e - 5 , for FC decay multiplier 1 , 0. 1 , and 0.0 1 , respectively . among accuracy , speed , and model size .Our Holistic SparseCNN achieves a classification speed of 2, 3 7 1 images per second on BDW , without accuracy drop compared to the reference Caffe model .With no accuracy loss , our Holistic SparseCNN achieves a classification speed of 1 2 0 images per second , about 2. 8 × higher than a best case dense CNN implementation where all conv and fc layers would perform at the speed of SGEMM .This provides high sparsity on fc layers but sparsity on conv layers is so low that sparse convolution is slower than dense convolution on BDW .We use highly optimized SGEMM performance as a proxy of dense convolution performance to quantify layer - wise speedups of our Holistic SparseCNN .As a centerpiece of deep learning , CNNs are under relentless pressure to be smaller , faster , and with higher evaluation/classification accuracy .In this paper , we present Holistic SparseCNN , a collection of techniques that pave the road to unleash the full potential of sparse CNNs .Secondly , unlike prior research focusing on using sparse methods on convolution layers or fully connected layers in isolation , our new cross - layer holistic methodology not only exploits the synergies of sparse methods on convolution layers and fully connected layers but also enables optimizing accuracy , speed , and size together .Our results on AlexNet demonstrated 3. 4 × and 7. 3 × speedups of convolution layers over the best dense convolution on representative server and mobile platforms as well as the best classification throughputs on these platforms .
+[2025-09-23 21:28:01,377][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:01,377][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:01,378][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:01,378][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:01,378][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:01,378][Thread 3][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:01,378][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:01,378][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:28:01,379][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:28:01,379][Thread 3][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:01,379][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:28:01,383][Thread 3][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:28:04,110][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: CNNs
+    description: Widely used in applications like image recognition and autonomous driving, deployed on various platforms.
+  - name: Accuracy
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Speed
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Model Size
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Sparsity
+    type: GENERIC
+    description: A technique used to reduce model size and/or accelerate classification speed.
+  - name: Fully Connected Layers
+    type: GENERIC
+    description: Pruning these layers reduces a CNN's size but may not improve inference speed significantly.
+  - name: Convolution Layers
+    type: GENERIC
+    description: The compute-heavy parts of CNNs, where pruning impacts computation and speed.
+  - name: Image Recognition
+    type: GENERIC
+    description: An application area where CNNs are widely used.
+  - name: Autonomous Driving
+    type: GENERIC
+    description: An application area where CNNs are widely used.
+  - name: Mobile Devices
+    type: GENERIC
+    description: Platforms where CNNs are deployed.
+  - name: Data Centers
+    type: GENERIC
+    description: Platforms where CNNs are deployed.
+  - name: "golden trident"
+    type: GENERIC
+    description: The three key requirements for CNN performance: accuracy, speed, and model size.
+
+[2025-09-23 21:28:04,112][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 37, column 64:
+     ... requirements for CNN performance: accuracy, speed, and model size.
+                                         ^
+[2025-09-23 21:28:04,686][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: CNNs
+    description: Deep learning models widely used in image recognition and other applications, with a focus on optimizing their speed, size, and accuracy.
+  - name: Accuracy
+    type: GENERIC
+    description: A key performance metric for CNNs, representing the correctness of the model's predictions.
+  - name: Classification speed
+    type: GENERIC
+    description: The speed at which a CNN can classify images, a critical factor in real-world applications.
+  - name: Model size
+    type: GENERIC
+    description: The amount of memory required to store a CNN, a factor in deployment on resource-constrained platforms.
+  - name: Sparsity
+    type: GENERIC
+    description: A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of active parameters.
+  - name: Fully connected layers
+    type: GENERIC
+    description: Layers in a CNN that are fully connected, and whose sparsity affects model size.
+  - name: Convolution layers
+    type: GENERIC
+    description: Layers in a CNN that perform convolutional operations, and whose sparsity impacts computation and speed.
+  - name: Holistic SparseCNN
+    type: GENERIC
+    description: An approach aiming for simultaneous optimization of speed, size, and accuracy across both fully connected and convolutional layers in CNNs.
+  - name: AlexNet
+    type: GENERIC
+    description: A specific CNN architecture used as a test case in the paper.
+  - name: Speedups
+    type: GENERIC
+    description: Improvements in classification speed achieved through techniques like sparsity.
+  - name: BDW
+    type: GENERIC
+    description: A platform where the Holistic SparseCNN was tested.
+  - name: SGEMM
+    type: GENERIC
+    description: Highly optimized performance used as a proxy of dense convolution performance.
+
+[2025-09-23 21:28:04,690][Thread 3][WARNING] - 0 :Found following new entity types in the extracted entities.
+ {'cnns'}
+ Following are extracted entities which belong to the hallucinated entity types: 
+ [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'CNNs', 'description': 'Deep learning models widely used in image recognition and other applications, with a focus on optimizing their speed, size, and accuracy.'}]
+Update the listed entities with single best-fitting allowed type from the ENTITY TYPES list.
+
+[2025-09-23 21:28:04,930][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: CNNs
+    description: Deep learning models widely used in image recognition and other applications; the paper focuses on optimizing their speed and size.
+  - name: Classification speed
+    type: GENERIC
+    description: The speed at which a CNN can classify data, a key performance metric.
+  - name: Sparse CNNs
+    type: CNNs
+    description: CNNs that utilize sparsity to reduce model size and/or accelerate classification speed.
+  - name: Fully connected layers
+    type: GENERIC
+    description: Layers in a neural network that connect all neurons from the previous layer to all neurons in the current layer; their size impacts model size.
+  - name: Convolution layers
+    type: GENERIC
+    description: Layers in a CNN that perform convolution operations; their computational complexity impacts speed.
+  - name: Holistic SparseCNN
+    type: GENERIC
+    description: An approach aiming for simultaneous optimization of speed, size, and accuracy across both convolution and fully connected layers in sparse CNNs.
+  - name: Direct sparse convolution
+    type: GENERIC
+    description: A specific algorithm presented in the paper to speed up sparse convolution operations.
+  - name: Sparsity
+    type: GENERIC
+    description: The proportion of zero-valued elements in a tensor, used to reduce model size and/or accelerate computation.
+  - name: Arithmetic intensity
+    type: GENERIC
+    description: A measure of the ratio of computation to memory access, relevant to the performance of sparse convolution.
+  - name: Model size
+    type: GENERIC
+    description: The number of parameters in a neural network, a key factor in deployment and efficiency.
+  - name: Speedups
+    type: GENERIC
+    description: The improvement in speed achieved by using sparse convolution compared to dense convolution.
+  - name: Atom processors
+    type: GENERIC
+    description: A type of processor where sparse convolution can outperform dense convolution in a wider range of sparsity.
+  - name: Dense convolution
+    type: GENERIC
+    description: Standard convolution operations without sparsity applied.
+
+[2025-09-23 21:28:04,932][Thread 2][WARNING] - 0 :Found following new entity types in the extracted entities.
+ {'cnns'}
+ Following are extracted entities which belong to the hallucinated entity types: 
+ [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'CNNs', 'description': 'Deep learning models widely used in image recognition and other applications; the paper focuses on optimizing their speed and size.'}, {'name': 'Sparse CNNs', 'type': 'CNNs', 'description': 'CNNs that utilize sparsity to reduce model size and/or accelerate classification speed.'}]
+Update the listed entities with single best-fitting allowed type from the ENTITY TYPES list.
+
+[2025-09-23 21:28:04,933][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CNNs
+    type: CNNs
+    description: Convolutional Neural Networks, widely used in applications like image recognition, and the focus of optimization efforts for speed and size.
+  - name: Fully connected layers
+    type: GENERIC
+    description: Layers within a CNN that are often targeted for sparsification to reduce model size. They contain most of the parameters in a CNN.
+  - name: Convolution layers
+    type: GENERIC
+    description: Layers within a CNN that perform the majority of the computation (FLOPS) and are targeted for sparsification to improve classification speed.
+  - name: Sparsity
+    type: GENERIC
+    description: A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of parameters or computations.
+  - name: Sparse CNNs
+    type: CNNs
+    description: CNNs that incorporate sparsity to reduce model size and/or improve classification speed.
+  - name: AlexNet
+    type: CNNs
+    description: A specific CNN architecture used as a test case in the paper, where the performance of sparse convolution is evaluated.
+  - name: Classification speed
+    type: GENERIC
+    description: The speed at which a CNN can classify inputs, a key performance metric targeted for improvement through sparsity.
+  - name: Model size
+    type: GENERIC
+    description: The amount of memory required to store a CNN model, a key performance metric targeted for reduction through sparsity.
+  - name: Arithmetic intensity
+    type: GENERIC
+    description: A factor that affects the efficiency of sparse convolution, with lower arithmetic intensity potentially leading to overhead.
+  - name: Xeon processors
+    type: GENERIC
+    description: A type of processor on which the performance of sparse CNN implementations is evaluated.
+  - name: Atom processors
+    type: GENERIC
+    description: A type of processor on which the performance of sparse CNN implementations is evaluated.
+  - name: Direct sparse convolution
+    type: GENERIC
+    description: A key algorithm presented in the paper.
+
+[2025-09-23 21:28:04,937][Thread 1][WARNING] - 0 :Found following new entity types in the extracted entities.
+ {'cnns'}
+ Following are extracted entities which belong to the hallucinated entity types: 
+ [{'name': 'CNNs', 'type': 'CNNs', 'description': 'Convolutional Neural Networks, widely used in applications like image recognition, and the focus of optimization efforts for speed and size.'}, {'name': 'Sparse CNNs', 'type': 'CNNs', 'description': 'CNNs that incorporate sparsity to reduce model size and/or improve classification speed.'}, {'name': 'AlexNet', 'type': 'CNNs', 'description': 'A specific CNN architecture used as a test case in the paper, where the performance of sparse convolution is evaluated.'}]
+Update the listed entities with single best-fitting allowed type from the ENTITY TYPES list.
+
+[2025-09-23 21:28:05,718][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: method
+    description: Deep learning models widely used in image recognition and other applications, with a focus on optimizing their speed, size, and accuracy.
+
+[2025-09-23 21:28:05,720][Thread 3][INFO] - resolved entities: {'entities': [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'method', 'description': 'Deep learning models widely used in image recognition and other applications, with a focus on optimizing their speed, size, and accuracy.'}]}
+[2025-09-23 21:28:05,721][Thread 3][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:05,787][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: method
+    description: Deep learning models widely used in image recognition and other applications; the paper focuses on optimizing their speed and size.
+  - name: Sparse CNNs
+    type: method
+    description: CNNs that utilize sparsity to reduce model size and/or accelerate classification speed.
+
+[2025-09-23 21:28:05,789][Thread 2][INFO] - resolved entities: {'entities': [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'method', 'description': 'Deep learning models widely used in image recognition and other applications; the paper focuses on optimizing their speed and size.'}, {'name': 'Sparse CNNs', 'type': 'method', 'description': 'CNNs that utilize sparsity to reduce model size and/or accelerate classification speed.'}]}
+[2025-09-23 21:28:05,790][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:06,160][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CNNs
+    type: method
+    description: Convolutional Neural Networks, widely used in applications like image recognition, and the focus of optimization efforts for speed and size.
+  - name: Sparse CNNs
+    type: method
+    description: CNNs that incorporate sparsity to reduce model size and/or improve classification speed.
+  - name: AlexNet
+    type: method
+    description: A specific CNN architecture used as a test case in the paper, where the performance of sparse convolution is evaluated.
+
+[2025-09-23 21:28:06,166][Thread 1][INFO] - resolved entities: {'entities': [{'name': 'CNNs', 'type': 'method', 'description': 'Convolutional Neural Networks, widely used in applications like image recognition, and the focus of optimization efforts for speed and size.'}, {'name': 'Sparse CNNs', 'type': 'method', 'description': 'CNNs that incorporate sparsity to reduce model size and/or improve classification speed.'}, {'name': 'AlexNet', 'type': 'method', 'description': 'A specific CNN architecture used as a test case in the paper, where the performance of sparse convolution is evaluated.'}]}
+[2025-09-23 21:28:06,167][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:06,773][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key entities related to the specific techniques and platforms discussed in the text, such as direct sparse convolution and the Xeon/Atom processors.
+loop_required: true
+
+[2025-09-23 21:28:06,775][Thread 3][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:06,775][Thread 3][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:07,184][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and tasks related to the optimization of CNNs, specifically the direct sparse convolution algorithm and its impact on speedups.
+loop_required: true
+
+[2025-09-23 21:28:07,187][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:07,187][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:07,200][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the Holistic SparseCNN approach, which is a key concept from the priming summary. Also, the paper's goal of achieving speedups on specific processors is not explicitly captured.
+loop_required: true
+
+[2025-09-23 21:28:07,213][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:07,213][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:07,906][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: CNNs
+    description: Widely used in applications like image recognition and autonomous driving, deployed on various platforms.
+  - name: Accuracy
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Speed
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Model Size
+    type: GENERIC
+    description: A key requirement for CNN models, especially on resource-constrained platforms.
+  - name: Sparsity
+    type: GENERIC
+    description: A technique used to reduce model size and/or accelerate classification speed.
+  - name: Fully Connected Layers
+    type: GENERIC
+    description: Pruning these layers reduces a CNN's size but may not improve inference speed significantly.
+  - name: Convolution Layers
+    type: GENERIC
+    description: The compute-heavy parts of CNNs, where pruning impacts computation and speed.
+  - name: Image Recognition
+    type: GENERIC
+    description: An application area where CNNs are widely used.
+  - name: Autonomous Driving
+    type: GENERIC
+    description: An application area where CNNs are widely used.
+  - name: Mobile Devices
+    type: GENERIC
+    description: Platforms where CNNs are deployed.
+  - name: Data Centers
+    type: GENERIC
+    description: Platforms where CNNs are deployed.
+  - name: "golden trident"
+    type: GENERIC
+    description: "The three key requirements for CNN performance: accuracy, speed, and model size."
+
+[2025-09-23 21:28:07,911][Thread 0][WARNING] - 0 :Found following new entity types in the extracted entities.
+ {'cnns'}
+ Following are extracted entities which belong to the hallucinated entity types: 
+ [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'CNNs', 'description': 'Widely used in applications like image recognition and autonomous driving, deployed on various platforms.'}]
+Update the listed entities with single best-fitting allowed type from the ENTITY TYPES list.
+
+[2025-09-23 21:28:08,104][heimdall.core][INFO] - Cleaned output : entities:
+  - name: DIRECT SPARSE CONVOLUTION
+    type: method
+    description: A key algorithm presented in the paper, likely used for efficient computation in sparse CNNs.
+  - name: XEON
+    type: generic
+    description: A type of processor mentioned as a platform for achieving speedups.
+  - name: ATOM
+    type: generic
+    description: A type of processor mentioned as a platform for achieving speedups.
+
+[2025-09-23 21:28:08,107][Thread 3][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:08,382][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Direct Sparse Convolution Algorithm
+    type: METHOD
+    description: A specific algorithm presented in the paper to speed up CNNs by eliminating redundant computations in convolution layers.
+  - name: Speedups
+    type: TASK
+    description: The objective of achieving improved classification speed in CNNs, particularly through the use of sparse convolution methods.
+
+[2025-09-23 21:28:08,385][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:08,504][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Holistic SparseCNN
+    type: method
+    description: An approach that aims for simultaneous optimization of speed, size, and accuracy across both fully connected and convolution layers in CNNs.
+  - name: Xeon
+    type: generic
+    description: A type of processor on which the paper aims to achieve speedups.
+  - name: Atom
+    type: generic
+    description: A type of processor on which the paper aims to achieve speedups.
+
+[2025-09-23 21:28:08,509][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:08,684][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: method
+    description: Widely used in applications like image recognition and autonomous driving, deployed on various platforms.
+
+[2025-09-23 21:28:08,685][Thread 0][INFO] - resolved entities: {'entities': [{'name': 'Convolutional Neural Networks (CNNs)', 'type': 'method', 'description': 'Widely used in applications like image recognition and autonomous driving, deployed on various platforms.'}]}
+[2025-09-23 21:28:08,686][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:09,203][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key details about the specific techniques and parameters used for sparsity and regularization, which are central to the paper's approach. Adding these details will improve the completeness of the knowledge graph.
+loop_required: true
+
+[2025-09-23 21:28:09,205][Thread 3][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:09,205][Thread 3][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:09,435][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and tasks related to the optimization techniques discussed, specifically SpMV and SpMDM.
+loop_required: true
+
+[2025-09-23 21:28:09,437][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:09,437][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:09,741][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific tasks that sparse CNNs are designed to accomplish, such as reducing model size and improving classification speed. Also, the paper mentions specific speedups achieved, which are important details.
+loop_required: true
+
+[2025-09-23 21:28:09,742][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:09,742][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:10,042][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the core task of the paper, which is to improve CNN performance. Also, the paper's method of achieving this goal is missing.
+loop_required: true
+
+[2025-09-23 21:28:10,044][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:10,044][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:10,517][heimdall.core][INFO] - Cleaned output : entities:
+  - name: SpMV
+    type: method
+    description: Sparse Matrix-Vector Multiplication, a computational method relevant to sparse matrix operations.
+  - name: SpMDM
+    type: method
+    description: Sparse Matrix and Dense Matrix Multiplication, a method used in fully connected layers to exploit sparsity.
+
+[2025-09-23 21:28:10,518][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:10,766][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Weight decay
+    type: METHOD
+    description: A regularization technique used to prevent overfitting in machine learning models. The paper uses specific weight decay values for different layers to control sparsity.
+  - name: FC decay multiplier
+    type: METHOD
+    description: A parameter used in conjunction with weight decay to control the level of regularization applied to fully connected (FC) layers. Different multipliers are used to achieve varying levels of sparsity.
+  - name: Holistic SparseCNN
+    type: METHOD
+    description: The paper's proposed approach, which simultaneously optimizes accuracy, speed, and model size across both fully connected and convolutional layers.
+
+[2025-09-23 21:28:10,767][Thread 3][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:11,073][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Improve CNN performance
+    type: task
+    description: The overall objective of the paper, which is to enhance the performance of Convolutional Neural Networks.
+  - name: Pruning CNNs
+    type: method
+    description: A method used to reduce model size and/or accelerate classification speed.
+
+[2025-09-23 21:28:11,073][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:11,315][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Reducing Model Size
+    type: task
+    description: The objective of sparse CNNs to decrease the number of parameters in the model, leading to a smaller model footprint.
+  - name: Improving Classification Speed
+    type: task
+    description: The objective of sparse CNNs to accelerate the process of image classification, making it faster.
+  - name: 3.4x Speedup
+    type: generic
+    description: The speedup achieved in convolution layers of AlexNet on Xeon processors using a highly-optimized sparse CNN implementation.
+  - name: 7.3x Speedup
+    type: generic
+    description: The speedup achieved in convolution layers of AlexNet on Atom processors using a highly-optimized sparse CNN implementation.
+
+[2025-09-23 21:28:11,318][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:11,451][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and tasks related to the performance optimization of CNNs, specifically the techniques used to achieve speedups and reduce model size.
+loop_required: true
+
+[2025-09-23 21:28:11,451][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:11,451][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:11,996][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key details about the platforms where speedups were achieved and the specific types of layers (conv1, conv2) discussed in the context of sparsity.
+loop_required: true
+
+[2025-09-23 21:28:11,997][Thread 3][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:11,997][Thread 3][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:12,017][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific platforms where CNNs are deployed, such as supercomputers, and the paper's focus on improving speed and size.
+loop_required: true
+
+[2025-09-23 21:28:12,018][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:12,018][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:12,404][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific challenges of sparse convolution, such as the overhead of transforming tensors to matrices and the inapplicability to small kernel sizes. These are key aspects of the paper's focus on optimizing CNNs.
+loop_required: true
+
+[2025-09-23 21:28:12,404][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:12,405][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:13,121][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Supercomputers
+    type: generic
+    description: Platforms where convolutional neural networks (CNNs) are deployed.
+  - name: Speed
+    type: task
+    description: The objective of improving the inference speed of CNNs.
+  - name: Model Size
+    type: task
+    description: The objective of reducing the size of CNN models.
+
+[2025-09-23 21:28:13,122][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:13,205][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Direct Sparse Convolution Algorithm
+    type: METHOD
+    description: A specific algorithm presented in the paper to speed up CNNs by directly performing sparse convolution operations.
+  - name: Sparse Convolution
+    type: METHOD
+    description: A method to accelerate CNNs by reducing computations in convolution layers, leveraging sparsity in the weight tensors.
+  - name: Speedups
+    type: TASK
+    description: The objective of achieving faster computation in CNNs, specifically through the use of sparse methods and algorithms like direct sparse convolution.
+  - name: Model Size Reduction
+    type: TASK
+    description: The objective of decreasing the size of CNN models, often achieved through techniques like pruning and sparsity, particularly in fully connected layers.
+
+[2025-09-23 21:28:13,206][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:13,837][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Sparse Convolution
+    type: method
+    description: A method used to reduce the computational requirements and improve classification speed in CNNs by applying sparsity to the convolution layers.
+  - name: Tensor-to-Matrix Transformation Overhead
+    type: generic
+    description: The computational overhead associated with transforming tensors to matrices, a challenge in sparse convolution methods.
+  - name: Small Kernel Size Inapplicability
+    type: generic
+    description: The limitation of some sparse convolution methods, which are not applicable to small kernel sizes (e.g., 3x3), restricting their use in modern CNNs.
+
+[2025-09-23 21:28:13,839][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:14,146][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CONV1
+    type: GENERIC
+    description: The first convolutional layer in a CNN architecture, such as AlexNet. It is often more difficult to sparsify than higher layers.
+  - name: CONV2
+    type: GENERIC
+    description: A convolutional layer in a CNN architecture, typically following CONV1. It is often easier to sparsify than CONV1.
+  - name: ALEXNET
+    type: GENERIC
+    description: A specific CNN architecture used as a test case in the paper.
+  - name: BDW
+    type: GENERIC
+    description: A platform where the Holistic SparseCNN achieved a classification speed of 2,371 images per second.
+  - name: SERVER PLATFORMS
+    type: GENERIC
+    description: Representative server platforms where speedups of convolution layers were demonstrated.
+  - name: MOBILE PLATFORMS
+    type: GENERIC
+    description: Representative mobile platforms where speedups of convolution layers were demonstrated.
+
+[2025-09-23 21:28:14,149][Thread 3][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:14,152][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 21:28:14,154][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:14,155][Thread 2][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:28:14,195][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific platforms (e.g., smartphones) where CNNs are deployed and the "golden trident" is relevant. Also, the paper mentions video analytics as an application, which is missing.
+loop_required: True
+
+[2025-09-23 21:28:14,197][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:28:14,197][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:28:14,863][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The maximum iteration count has been reached. No further loops are permitted, even if there are minor omissions.'
+loop_required: false
+
+[2025-09-23 21:28:14,865][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:14,865][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:28:15,245][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted. The extracted entities cover the core concepts, and further iterations are not possible.
+loop_required: false
+
+[2025-09-23 21:28:15,247][Thread 3][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:15,247][Thread 3][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:28:15,988][heimdall.core][INFO] - Cleaned output : entities:
+  - name: SMARTPHONES
+    type: GENERIC
+    description: Mobile platforms, such as smartphones, where CNN models are deployed for classification.
+  - name: VIDEO ANALYTICS
+    type: GENERIC
+    description: A critical application area where deep neural networks, especially CNNs, are used.
+  - name: ACCURACY
+    type: GENERIC
+    description: One of the three key requirements, along with speed and model size, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.
+  - name: SPEED
+    type: GENERIC
+    description: One of the three key requirements, along with accuracy and model size, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.
+  - name: MODEL SIZE
+    type: GENERIC
+    description: One of the three key requirements, along with accuracy and speed, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.
+
+[2025-09-23 21:28:15,993][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:28:16,807][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 21:28:16,809][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:16,809][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 21:28:18,651][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Classification speed
+    target_entity: Convolution layers
+    description: The text mentions improving the classification speed of convolution layers.
+    strength: 7.0
+  - source_entity: Convolution layers
+    target_entity: Direct sparse convolution
+    description: The text presents a direct sparse convolution algorithm to speed up CNNs in convolution layers.
+    strength: 8.0
+  - source_entity: Sparse CNNs
+    target_entity: Convolution layers
+    description: The text discusses the optimization of speed and size in sparse CNNs, with convolution layers affecting speed.
+    strength: 7.0
+  - source_entity: Sparse CNNs
+    target_entity: Fully connected layers
+    description: The text discusses the optimization of speed and size in sparse CNNs, with fully connected layers affecting size.
+    strength: 7.0
+  - source_entity: Direct sparse convolution
+    target_entity: Speedups
+    description: The direct sparse convolution algorithm is presented to advance the state-of-the-art in sparse convolution for speeding up CNNs.
+    strength: 9.0
+  - source_entity: Sparse Convolution
+    target_entity: Speedups
+    description: Sparse convolution is used to achieve speedups in CNNs.
+    strength: 9.0
+  - source_entity: Arithmetic intensity
+    target_entity: Direct sparse convolution
+    description: The arithmetic intensity of the direct sparse convolution algorithm is discussed.
+    strength: 6.0
+  - source_entity: Sparse Convolution
+    target_entity: Dense convolution
+    description: The text compares sparse convolution to dense convolution.
+    strength: 8.0
+  - source_entity: Atom processors
+    target_entity: Sparse Convolution
+    description: Sparse convolution can outperform dense convolution in a wider range of sparsity on Atom processors.
+    strength: 8.0
+  - source_entity: Fully connected layers
+    target_entity: SpMDM
+    description: Fully connected layers can leverage SpMDM to exploit sparsity.
+    strength: 7.0
+  - source_entity: Model size
+    target_entity: Fully connected layers
+    description: Fully connected layers mostly affect model size.
+    strength: 7.0
+  - source_entity: Speedups
+    target_entity: Sparse Convolution
+    description: Sparse convolution provides speedups.
+    strength: 9.0
+  - source_entity: Speedups
+    target_entity: Dense convolution
+    description: Sparse convolution provides speedups over dense convolution.
+    strength: 9.0
+  - source_entity: Sparsity
+    target_entity: Speedups
+    description: Sparsity affects the speedups of sparse convolution.
+    strength: 8.0
+  - source_entity: Convolution layers
+    target_entity: Model size
+    description: Convolution layers mostly affect speed.
+    strength: 7.0
+
+[2025-09-23 21:28:18,659][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:28:20,084][heimdall.core][INFO] - Cleaned output : reason_to_loop: The text explicitly states that 'fully connected layers can become a bottleneck after sparse convolution optimizations'. This suggests a relationship between 'Sparse Convolution' and 'Fully connected layers' regarding optimization and potential bottlenecks, which is currently missing. Also, the text mentions that 'fully connected layers are implemented as GEMM and we can leverage work done before on sparse matrix and dense matrix multiplication (SpMDM)', which suggests a relationship between 'Fully connected layers' and 'SpMDM'.
+loop_required: true
+
+[2025-09-23 21:28:20,087][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The text explicitly states that 'fully connected layers can become a bottleneck after sparse convolution optimizations'. This suggests a relationship between 'Sparse Convolution' and 'Fully connected layers' regarding optimization and potential bottlenecks, which is currently missing. Also, the text mentions that 'fully connected layers are implemented as GEMM and we can leverage work done before on sparse matrix and dense matrix multiplication (SpMDM)', which suggests a relationship between 'Fully connected layers' and 'SpMDM'.
+[2025-09-23 21:28:20,087][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:20,087][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:20,701][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Fully connected layers
+    target_entity: Reducing Model Size
+    description: Sparsifying fully connected layers is a method for reducing model size.
+    strength: 8.0
+  - source_entity: Convolution layers
+    target_entity: Improving Classification Speed
+    description: Sparse CNNs focus on convolution layers to improve classification speed.
+    strength: 8.0
+  - source_entity: Sparsity
+    target_entity: Reducing Model Size
+    description: Sparsity is used to reduce model size in CNNs.
+    strength: 9.0
+  - source_entity: Sparsity
+    target_entity: Improving Classification Speed
+    description: Sparsity is used to accelerate classification speed in CNNs.
+    strength: 9.0
+  - source_entity: Fully connected layers
+    target_entity: CNNs
+    description: Fully connected layers are a component of CNNs.
+    strength: 7.0
+  - source_entity: Convolution layers
+    target_entity: CNNs
+    description: Convolution layers are a component of CNNs.
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: Fully connected layers
+    description: AlexNet is a CNN architecture that contains fully connected layers.
+    strength: 6.0
+  - source_entity: AlexNet
+    target_entity: Convolution layers
+    description: AlexNet is a CNN architecture that contains convolution layers.
+    strength: 6.0
+  - source_entity: Convolution layers
+    target_entity: Classification speed
+    description: Convolution layers are targeted to improve classification speed.
+    strength: 7.0
+  - source_entity: Arithmetic intensity
+    target_entity: Direct sparse convolution
+    description: Lower arithmetic intensity can lead to overhead in direct sparse convolution.
+    strength: 6.0
+  - source_entity: Sparse Convolution
+    target_entity: Improving Classification Speed
+    description: Sparse convolution is used to improve classification speed.
+    strength: 8.0
+  - source_entity: Sparse Convolution
+    target_entity: AlexNet
+    description: The performance of sparse convolution is evaluated on AlexNet.
+    strength: 7.0
+  - source_entity: Tensor-to-Matrix Transformation Overhead
+    target_entity: Sparse Convolution
+    description: Transforming tensors to matrices adds overhead to sparse convolution.
+    strength: 7.0
+  - source_entity: Small Kernel Size Inapplicability
+    target_entity: Sparse Convolution
+    description: Some sparse convolution methods are not applicable to small kernel sizes.
+    strength: 7.0
+  - source_entity: 3.4x Speedup
+    target_entity: Xeon processors
+    description: A 3.4x speedup was achieved on Xeon processors.
+    strength: 9.0
+  - source_entity: 7.3x Speedup
+    target_entity: Atom processors
+    description: A 7.3x speedup was achieved on Atom processors.
+    strength: 9.0
+  - source_entity: 3.4x Speedup
+    target_entity: AlexNet
+    description: A 3.4x speedup was achieved in AlexNet.
+    strength: 8.0
+  - source_entity: 7.3x Speedup
+    target_entity: AlexNet
+    description: A 7.3x speedup was achieved in AlexNet.
+    strength: 8.0
+  - source_entity: Xeon
+    target_entity: 3.4x Speedup
+    description: Xeon processors achieved a 3.4x speedup.
+    strength: 9.0
+  - source_entity: Atom
+    target_entity: 7.3x Speedup
+    description: Atom processors achieved a 7.3x speedup.
+    strength: 9.0
+  - source_entity: Sparse CNNs
+    target_entity: Reducing Model Size
+    description: Sparse CNNs aim to reduce model size.
+    strength: 9.0
+  - source_entity: Sparse CNNs
+    target_entity: Improving Classification Speed
+    description: Sparse CNNs aim to improve classification speed.
+    strength: 9.0
+
+[2025-09-23 21:28:20,702][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Accuracy
+    target_entity: Classification speed
+    description: Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.
+    strength: 8.0
+  - source_entity: Classification speed
+    target_entity: Model size
+    description: Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.
+    strength: 8.0
+  - source_entity: Holistic SparseCNN
+    target_entity: Accuracy
+    description: Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.
+    strength: 9.0
+  - source_entity: Holistic SparseCNN
+    target_entity: Classification speed
+    description: Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.
+    strength: 9.0
+  - source_entity: Holistic SparseCNN
+    target_entity: Model size
+    description: Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.
+    strength: 9.0
+  - source_entity: Fully connected layers
+    target_entity: Model size
+    description: Sparsity in fully connected layers affects model size.
+    strength: 7.0
+  - source_entity: Convolution layers
+    target_entity: Classification speed
+    description: Sparsity in convolution layers impacts computation and speed.
+    strength: 7.0
+  - source_entity: Convolution layers
+    target_entity: Speedups
+    description: Sparsity in convolution layers can lead to speedups.
+    strength: 7.0
+  - source_entity: Holistic SparseCNN
+    target_entity: AlexNet
+    description: Holistic SparseCNN was tested on AlexNet.
+    strength: 6.0
+  - source_entity: Holistic SparseCNN
+    target_entity: BDW
+    description: Holistic SparseCNN achieved a classification speed on BDW.
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: CONV1
+    description: CONV1 is a layer in the AlexNet architecture.
+    strength: 7.0
+  - source_entity: AlexNet
+    target_entity: CONV2
+    description: CONV2 is a layer in the AlexNet architecture.
+    strength: 7.0
+  - source_entity: CONV1
+    target_entity: Sparsity
+    description: CONV1 is harder to sparsify.
+    strength: 7.0
+  - source_entity: CONV2
+    target_entity: Sparsity
+    description: CONV2 is easier to sparsify.
+    strength: 7.0
+  - source_entity: SGEMM
+    target_entity: Classification speed
+    description: SGEMM is used as a proxy for dense convolution performance.
+    strength: 6.0
+  - source_entity: Holistic SparseCNN
+    target_entity: Speedups
+    description: Holistic SparseCNN achieves speedups.
+    strength: 8.0
+  - source_entity: Convolution layers
+    target_entity: Speedups
+    description: Holistic SparseCNN demonstrated speedups of convolution layers.
+    strength: 8.0
+  - source_entity: SERVER PLATFORMS
+    target_entity: Speedups
+    description: Speedups of convolution layers were demonstrated on server platforms.
+    strength: 7.0
+  - source_entity: MOBILE PLATFORMS
+    target_entity: Speedups
+    description: Speedups of convolution layers were demonstrated on mobile platforms.
+    strength: 7.0
+  - source_entity: Weight decay
+    target_entity: Fully connected layers
+    description: Weight decay is used to control sparsity in fully connected layers.
+    strength: 6.0
+  - source_entity: FC decay multiplier
+    target_entity: Fully connected layers
+    description: FC decay multiplier is used to control sparsity in fully connected layers.
+    strength: 6.0
+
+[2025-09-23 21:28:20,722][Thread 3][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:28:20,740][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:28:21,313][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Sparse Convolution
+    target_entity: Fully connected layers
+    description: Sparse convolution optimizations can create bottlenecks in fully connected layers.
+    strength: 8
+  - source_entity: Fully connected layers
+    target_entity: SpMDM
+    description: Fully connected layers are implemented as GEMM and can leverage sparse matrix and dense matrix multiplication (SpMDM).
+    strength: 7
+
+[2025-09-23 21:28:21,316][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Classification speed', 'target_entity': 'Convolution layers', 'description': 'The text mentions improving the classification speed of convolution layers.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Direct sparse convolution', 'description': 'The text presents a direct sparse convolution algorithm to speed up CNNs in convolution layers.', 'strength': 8.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Convolution layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with convolution layers affecting speed.', 'strength': 7.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Fully connected layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with fully connected layers affecting size.', 'strength': 7.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'Speedups', 'description': 'The direct sparse convolution algorithm is presented to advance the state-of-the-art in sparse convolution for speeding up CNNs.', 'strength': 9.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Speedups', 'description': 'Sparse convolution is used to achieve speedups in CNNs.', 'strength': 9.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'The arithmetic intensity of the direct sparse convolution algorithm is discussed.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Dense convolution', 'description': 'The text compares sparse convolution to dense convolution.', 'strength': 8.0}, {'source_entity': 'Atom processors', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution can outperform dense convolution in a wider range of sparsity on Atom processors.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers can leverage SpMDM to exploit sparsity.', 'strength': 7.0}, {'source_entity': 'Model size', 'target_entity': 'Fully connected layers', 'description': 'Fully connected layers mostly affect model size.', 'strength': 7.0}, {'source_entity': 'Speedups', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution provides speedups.', 'strength': 9.0}, {'source_entity': 'Speedups', 'target_entity': 'Dense convolution', 'description': 'Sparse convolution provides speedups over dense convolution.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speedups', 'description': 'Sparsity affects the speedups of sparse convolution.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Model size', 'description': 'Convolution layers mostly affect speed.', 'strength': 7.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Fully connected layers', 'description': 'Sparse convolution optimizations can create bottlenecks in fully connected layers.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers are implemented as GEMM and can leverage sparse matrix and dense matrix multiplication (SpMDM).', 'strength': 7.0}]
+
+[2025-09-23 21:28:21,316][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:28:21,928][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Mobile Devices
+    description: CNNs are deployed on mobile devices.
+    strength: 8.0
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Data Centers
+    description: CNNs are deployed in data centers.
+    strength: 8.0
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Supercomputers
+    description: CNNs are deployed on supercomputers.
+    strength: 7.0
+  - source_entity: Fully Connected Layers
+    target_entity: Model Size
+    description: Pruning fully connected layers reduces model size.
+    strength: 9.0
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Image Recognition
+    description: CNNs are used in image recognition.
+    strength: 9.0
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Autonomous Driving
+    description: CNNs are used in autonomous driving.
+    strength: 9.0
+  - source_entity: Pruning CNNs
+    target_entity: Speed
+    description: Pruning CNNs can improve inference speed.
+    strength: 7.0
+  - source_entity: Pruning CNNs
+    target_entity: Model Size
+    description: Pruning CNNs can reduce model size.
+    strength: 8.0
+  - source_entity: Speed
+    target_entity: Accuracy
+    description: Accuracy, speed, and model size are key requirements.
+    strength: 7.0
+  - source_entity: Model Size
+    target_entity: Accuracy
+    description: Accuracy, speed, and model size are key requirements.
+    strength: 7.0
+  - source_entity: Accuracy
+    target_entity: golden trident
+    description: Accuracy is part of the "golden trident".
+    strength: 10.0
+  - source_entity: Speed
+    target_entity: golden trident
+    description: Speed is part of the "golden trident".
+    strength: 10.0
+  - source_entity: Model Size
+    target_entity: golden trident
+    description: Model Size is part of the "golden trident".
+    strength: 10.0
+  - source_entity: SMARTPHONES
+    target_entity: Mobile Devices
+    description: Smartphones are a type of mobile device.
+    strength: 9.0
+  - source_entity: VIDEO ANALYTICS
+    target_entity: Convolutional Neural Networks (CNNs)
+    description: CNNs are used in video analytics.
+    strength: 9.0
+  - source_entity: ACCURACY
+    target_entity: golden trident
+    description: ACCURACY is part of the "golden trident".
+    strength: 10.0
+  - source_entity: SPEED
+    target_entity: golden trident
+    description: SPEED is part of the "golden trident".
+    strength: 10.0
+  - source_entity: MODEL SIZE
+    target_entity: golden trident
+    description: MODEL SIZE is part of the "golden trident".
+    strength: 10.0
+  - source_entity: Sparsity
+    target_entity: Model Size
+    description: Sparsity is used to reduce model size.
+    strength: 8.0
+  - source_entity: Sparsity
+    target_entity: Speed
+    description: Sparsity is used to accelerate classification speed.
+    strength: 8.0
+
+[2025-09-23 21:28:21,934][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between Holistic SparseCNN and XEON/ATOM, and also the impact of sparsity on classification speed. The text mentions speedups on these platforms and the goal of optimizing classification speed.
+loop_required: true
+
+[2025-09-23 21:28:21,935][Thread 3][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between Holistic SparseCNN and XEON/ATOM, and also the impact of sparsity on classification speed. The text mentions speedups on these platforms and the goal of optimizing classification speed.
+[2025-09-23 21:28:21,936][Thread 3][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:21,936][Thread 3][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:21,947][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 21:28:21,988][heimdall.core][INFO] - Cleaned output : reason_to_loop: The text explicitly states that sparse CNNs are applied to both fully connected and convolution layers, but there is no relationship connecting 'Holistic SparseCNN' to 'Fully connected layers' or 'Convolution layers'. Also, the text mentions that 'Direct sparse convolution' is used in AlexNet, but there is no relationship between them.
+loop_required: true
+
+[2025-09-23 21:28:21,989][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The text explicitly states that sparse CNNs are applied to both fully connected and convolution layers, but there is no relationship connecting 'Holistic SparseCNN' to 'Fully connected layers' or 'Convolution layers'. Also, the text mentions that 'Direct sparse convolution' is used in AlexNet, but there is no relationship between them.
+[2025-09-23 21:28:21,990][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:21,990][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:22,542][heimdall.core][INFO] - Cleaned output : reason_to_loop: The text explicitly states that sparse convolution can be used to reduce model size, which is not currently captured in the relationships. Also, the text mentions that fully connected layers can become a bottleneck after sparse convolution optimizations, which is a relationship that should be captured.
+loop_required: true
+
+[2025-09-23 21:28:22,543][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The text explicitly states that sparse convolution can be used to reduce model size, which is not currently captured in the relationships. Also, the text mentions that fully connected layers can become a bottleneck after sparse convolution optimizations, which is a relationship that should be captured.
+[2025-09-23 21:28:22,544][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:22,544][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:23,158][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between 'Convolution Layers' and 'Speed', and 'Convolution Layers' and 'Model Size'. The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed. Also, pruning convolution layers can affect model size.
+loop_required: true
+
+[2025-09-23 21:28:23,159][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between 'Convolution Layers' and 'Speed', and 'Convolution Layers' and 'Model Size'. The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed. Also, pruning convolution layers can affect model size.
+[2025-09-23 21:28:23,159][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:23,159][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:23,362][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Holistic SparseCNN
+    target_entity: Fully connected layers
+    description: Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.
+    strength: 8
+  - source_entity: Holistic SparseCNN
+    target_entity: Convolution layers
+    description: Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.
+    strength: 8
+  - source_entity: Direct sparse convolution
+    target_entity: AlexNet
+    description: The text mentions that direct sparse convolution is used in AlexNet.
+    strength: 7
+
+[2025-09-23 21:28:23,363][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Fully connected layers', 'target_entity': 'Reducing Model Size', 'description': 'Sparsifying fully connected layers is a method for reducing model size.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs focus on convolution layers to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Reducing Model Size', 'description': 'Sparsity is used to reduce model size in CNNs.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Improving Classification Speed', 'description': 'Sparsity is used to accelerate classification speed in CNNs.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'CNNs', 'description': 'Fully connected layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'CNNs', 'description': 'Convolution layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Fully connected layers', 'description': 'AlexNet is a CNN architecture that contains fully connected layers.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Convolution layers', 'description': 'AlexNet is a CNN architecture that contains convolution layers.', 'strength': 6.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Convolution layers are targeted to improve classification speed.', 'strength': 7.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'Lower arithmetic intensity can lead to overhead in direct sparse convolution.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse convolution is used to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'AlexNet', 'description': 'The performance of sparse convolution is evaluated on AlexNet.', 'strength': 7.0}, {'source_entity': 'Tensor-to-Matrix Transformation Overhead', 'target_entity': 'Sparse Convolution', 'description': 'Transforming tensors to matrices adds overhead to sparse convolution.', 'strength': 7.0}, {'source_entity': 'Small Kernel Size Inapplicability', 'target_entity': 'Sparse Convolution', 'description': 'Some sparse convolution methods are not applicable to small kernel sizes.', 'strength': 7.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'Xeon processors', 'description': 'A 3.4x speedup was achieved on Xeon processors.', 'strength': 9.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'Atom processors', 'description': 'A 7.3x speedup was achieved on Atom processors.', 'strength': 9.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'AlexNet', 'description': 'A 3.4x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'AlexNet', 'description': 'A 7.3x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': 'Xeon', 'target_entity': '3.4x Speedup', 'description': 'Xeon processors achieved a 3.4x speedup.', 'strength': 9.0}, {'source_entity': 'Atom', 'target_entity': '7.3x Speedup', 'description': 'Atom processors achieved a 7.3x speedup.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Reducing Model Size', 'description': 'Sparse CNNs aim to reduce model size.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs aim to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Fully connected layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Convolution layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'AlexNet', 'description': 'The text mentions that direct sparse convolution is used in AlexNet.', 'strength': 7.0}]
+
+[2025-09-23 21:28:23,363][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:28:23,366][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Holistic SparseCNN
+    target_entity: XEON
+    description: Holistic SparseCNN achieves speedups on XEON platforms.
+    strength: 8
+  - source_entity: Holistic SparseCNN
+    target_entity: ATOM
+    description: Holistic SparseCNN achieves speedups on ATOM platforms.
+    strength: 8
+  - source_entity: Sparsity
+    target_entity: Classification speed
+    description: Sparsity is used to improve classification speed.
+    strength: 9
+  - source_entity: Holistic SparseCNN
+    target_entity: Classification speed
+    description: Holistic SparseCNN optimizes for classification speed.
+    strength: 9
+
+[2025-09-23 21:28:23,367][Thread 3][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Accuracy', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Classification speed', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Accuracy', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'Model size', 'description': 'Sparsity in fully connected layers affects model size.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Sparsity in convolution layers impacts computation and speed.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Sparsity in convolution layers can lead to speedups.', 'strength': 7.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'AlexNet', 'description': 'Holistic SparseCNN was tested on AlexNet.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'BDW', 'description': 'Holistic SparseCNN achieved a classification speed on BDW.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV1', 'description': 'CONV1 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV2', 'description': 'CONV2 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'CONV1', 'target_entity': 'Sparsity', 'description': 'CONV1 is harder to sparsify.', 'strength': 7.0}, {'source_entity': 'CONV2', 'target_entity': 'Sparsity', 'description': 'CONV2 is easier to sparsify.', 'strength': 7.0}, {'source_entity': 'SGEMM', 'target_entity': 'Classification speed', 'description': 'SGEMM is used as a proxy for dense convolution performance.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN achieves speedups.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN demonstrated speedups of convolution layers.', 'strength': 8.0}, {'source_entity': 'SERVER PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on server platforms.', 'strength': 7.0}, {'source_entity': 'MOBILE PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on mobile platforms.', 'strength': 7.0}, {'source_entity': 'Weight decay', 'target_entity': 'Fully connected layers', 'description': 'Weight decay is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'Fully connected layers', 'description': 'FC decay multiplier is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'XEON', 'description': 'Holistic SparseCNN achieves speedups on XEON platforms.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'ATOM', 'description': 'Holistic SparseCNN achieves speedups on ATOM platforms.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Classification speed', 'description': 'Sparsity is used to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN optimizes for classification speed.', 'strength': 9.0}]
+
+[2025-09-23 21:28:23,367][Thread 3][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:28:23,770][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Sparse Convolution
+    target_entity: Model size
+    description: Sparse convolution can be used to reduce model size.
+    strength: 8
+  - source_entity: Fully connected layers
+    target_entity: Sparse CNNs
+    description: Fully connected layers can become a bottleneck after sparse convolution optimizations.
+    strength: 7
+
+[2025-09-23 21:28:23,771][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Classification speed', 'target_entity': 'Convolution layers', 'description': 'The text mentions improving the classification speed of convolution layers.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Direct sparse convolution', 'description': 'The text presents a direct sparse convolution algorithm to speed up CNNs in convolution layers.', 'strength': 8.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Convolution layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with convolution layers affecting speed.', 'strength': 7.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Fully connected layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with fully connected layers affecting size.', 'strength': 7.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'Speedups', 'description': 'The direct sparse convolution algorithm is presented to advance the state-of-the-art in sparse convolution for speeding up CNNs.', 'strength': 9.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Speedups', 'description': 'Sparse convolution is used to achieve speedups in CNNs.', 'strength': 9.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'The arithmetic intensity of the direct sparse convolution algorithm is discussed.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Dense convolution', 'description': 'The text compares sparse convolution to dense convolution.', 'strength': 8.0}, {'source_entity': 'Atom processors', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution can outperform dense convolution in a wider range of sparsity on Atom processors.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers can leverage SpMDM to exploit sparsity.', 'strength': 7.0}, {'source_entity': 'Model size', 'target_entity': 'Fully connected layers', 'description': 'Fully connected layers mostly affect model size.', 'strength': 7.0}, {'source_entity': 'Speedups', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution provides speedups.', 'strength': 9.0}, {'source_entity': 'Speedups', 'target_entity': 'Dense convolution', 'description': 'Sparse convolution provides speedups over dense convolution.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speedups', 'description': 'Sparsity affects the speedups of sparse convolution.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Model size', 'description': 'Convolution layers mostly affect speed.', 'strength': 7.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Fully connected layers', 'description': 'Sparse convolution optimizations can create bottlenecks in fully connected layers.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers are implemented as GEMM and can leverage sparse matrix and dense matrix multiplication (SpMDM).', 'strength': 7.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Model size', 'description': 'Sparse convolution can be used to reduce model size.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'Sparse CNNs', 'description': 'Fully connected layers can become a bottleneck after sparse convolution optimizations.', 'strength': 7.0}]
+
+[2025-09-23 21:28:23,771][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:28:24,282][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Convolution Layers
+    target_entity: Speed
+    description: The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed.
+    strength: 8
+  - source_entity: Convolution Layers
+    target_entity: Model Size
+    description: Pruning convolution layers can affect model size.
+    strength: 6
+
+[2025-09-23 21:28:24,284][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Mobile Devices', 'description': 'CNNs are deployed on mobile devices.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Data Centers', 'description': 'CNNs are deployed in data centers.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Supercomputers', 'description': 'CNNs are deployed on supercomputers.', 'strength': 7.0}, {'source_entity': 'Fully Connected Layers', 'target_entity': 'Model Size', 'description': 'Pruning fully connected layers reduces model size.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Image Recognition', 'description': 'CNNs are used in image recognition.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Autonomous Driving', 'description': 'CNNs are used in autonomous driving.', 'strength': 9.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Speed', 'description': 'Pruning CNNs can improve inference speed.', 'strength': 7.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Model Size', 'description': 'Pruning CNNs can reduce model size.', 'strength': 8.0}, {'source_entity': 'Speed', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Model Size', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Accuracy', 'target_entity': 'golden trident', 'description': 'Accuracy is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Speed', 'target_entity': 'golden trident', 'description': 'Speed is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Model Size', 'target_entity': 'golden trident', 'description': 'Model Size is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SMARTPHONES', 'target_entity': 'Mobile Devices', 'description': 'Smartphones are a type of mobile device.', 'strength': 9.0}, {'source_entity': 'VIDEO ANALYTICS', 'target_entity': 'Convolutional Neural Networks (CNNs)', 'description': 'CNNs are used in video analytics.', 'strength': 9.0}, {'source_entity': 'ACCURACY', 'target_entity': 'golden trident', 'description': 'ACCURACY is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SPEED', 'target_entity': 'golden trident', 'description': 'SPEED is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'MODEL SIZE', 'target_entity': 'golden trident', 'description': 'MODEL SIZE is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Sparsity', 'target_entity': 'Model Size', 'description': 'Sparsity is used to reduce model size.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speed', 'description': 'Sparsity is used to accelerate classification speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Speed', 'description': 'The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Model Size', 'description': 'Pruning convolution layers can affect model size.', 'strength': 6.0}]
+
+[2025-09-23 21:28:24,284][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 21:28:24,590][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between 'Weight decay' and 'Sparsity', 'FC decay multiplier' and 'Sparsity', and 'Convolution layers' and 'AlexNet'. Also, the relationship between 'SGEMM' and 'Classification speed' could be strengthened by adding 'Holistic SparseCNN'.
+loop_required: true
+
+[2025-09-23 21:28:24,591][Thread 3][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between 'Weight decay' and 'Sparsity', 'FC decay multiplier' and 'Sparsity', and 'Convolution layers' and 'AlexNet'. Also, the relationship between 'SGEMM' and 'Classification speed' could be strengthened by adding 'Holistic SparseCNN'.
+[2025-09-23 21:28:24,591][Thread 3][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:24,591][Thread 3][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:24,645][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between 'Convolution layers' and 'Improving Classification Speed' and 'Fully connected layers' and 'Reducing Model Size' are well-established, but the text also implies that 'Sparse CNNs' are used to improve classification speed and reduce model size. These relationships are already present, but the text also mentions that 'Holistic SparseCNN' aims to apply sparse methods to both layers simultaneously. The relationship between 'Holistic SparseCNN' and 'Improving Classification Speed' and 'Reducing Model Size' are missing.
+loop_required: True
+
+[2025-09-23 21:28:24,646][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between 'Convolution layers' and 'Improving Classification Speed' and 'Fully connected layers' and 'Reducing Model Size' are well-established, but the text also implies that 'Sparse CNNs' are used to improve classification speed and reduce model size. These relationships are already present, but the text also mentions that 'Holistic SparseCNN' aims to apply sparse methods to both layers simultaneously. The relationship between 'Holistic SparseCNN' and 'Improving Classification Speed' and 'Reducing Model Size' are missing.
+[2025-09-23 21:28:24,646][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:24,646][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:24,999][heimdall.core][INFO] - Cleaned output : reason_to_loop: The text explicitly states that sparsity affects speedups, and that the proportion of non-zeros in filters directly affects the final speedup. This relationship is missing. Also, the text mentions that the arithmetic intensity of direct sparse convolution is higher than SpMV but lower than dense convolution. This relationship is missing.
+loop_required: true
+
+[2025-09-23 21:28:25,000][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The text explicitly states that sparsity affects speedups, and that the proportion of non-zeros in filters directly affects the final speedup. This relationship is missing. Also, the text mentions that the arithmetic intensity of direct sparse convolution is higher than SpMV but lower than dense convolution. This relationship is missing.
+[2025-09-23 21:28:25,000][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:25,000][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:25,614][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationship between 'Convolution Layers' and 'Speed' is underrepresented. The text states that compute-heavy parts lie in convolutions, implying a stronger relationship between convolution layers and inference speed. Also, the relationship between 'Sparsity' and 'Accuracy' is missing, although the text mentions accuracy loss.
+loop_required: true
+
+[2025-09-23 21:28:25,614][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationship between 'Convolution Layers' and 'Speed' is underrepresented. The text states that compute-heavy parts lie in convolutions, implying a stronger relationship between convolution layers and inference speed. Also, the relationship between 'Sparsity' and 'Accuracy' is missing, although the text mentions accuracy loss.
+[2025-09-23 21:28:25,615][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:25,615][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:25,920][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Holistic SparseCNN
+    target_entity: Improving Classification Speed
+    description: "Holistic SparseCNN aims to improve classification speed by applying sparse methods to both fully connected and convolution layers."
+    strength: 8.0
+  - source_entity: Holistic SparseCNN
+    target_entity: Reducing Model Size
+    description: "Holistic SparseCNN aims to reduce model size by applying sparse methods to both fully connected and convolution layers."
+    strength: 8.0
+
+[2025-09-23 21:28:25,921][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Fully connected layers', 'target_entity': 'Reducing Model Size', 'description': 'Sparsifying fully connected layers is a method for reducing model size.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs focus on convolution layers to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Reducing Model Size', 'description': 'Sparsity is used to reduce model size in CNNs.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Improving Classification Speed', 'description': 'Sparsity is used to accelerate classification speed in CNNs.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'CNNs', 'description': 'Fully connected layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'CNNs', 'description': 'Convolution layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Fully connected layers', 'description': 'AlexNet is a CNN architecture that contains fully connected layers.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Convolution layers', 'description': 'AlexNet is a CNN architecture that contains convolution layers.', 'strength': 6.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Convolution layers are targeted to improve classification speed.', 'strength': 7.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'Lower arithmetic intensity can lead to overhead in direct sparse convolution.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse convolution is used to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'AlexNet', 'description': 'The performance of sparse convolution is evaluated on AlexNet.', 'strength': 7.0}, {'source_entity': 'Tensor-to-Matrix Transformation Overhead', 'target_entity': 'Sparse Convolution', 'description': 'Transforming tensors to matrices adds overhead to sparse convolution.', 'strength': 7.0}, {'source_entity': 'Small Kernel Size Inapplicability', 'target_entity': 'Sparse Convolution', 'description': 'Some sparse convolution methods are not applicable to small kernel sizes.', 'strength': 7.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'Xeon processors', 'description': 'A 3.4x speedup was achieved on Xeon processors.', 'strength': 9.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'Atom processors', 'description': 'A 7.3x speedup was achieved on Atom processors.', 'strength': 9.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'AlexNet', 'description': 'A 3.4x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'AlexNet', 'description': 'A 7.3x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': 'Xeon', 'target_entity': '3.4x Speedup', 'description': 'Xeon processors achieved a 3.4x speedup.', 'strength': 9.0}, {'source_entity': 'Atom', 'target_entity': '7.3x Speedup', 'description': 'Atom processors achieved a 7.3x speedup.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Reducing Model Size', 'description': 'Sparse CNNs aim to reduce model size.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs aim to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Fully connected layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Convolution layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'AlexNet', 'description': 'The text mentions that direct sparse convolution is used in AlexNet.', 'strength': 7.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Improving Classification Speed', 'description': 'Holistic SparseCNN aims to improve classification speed by applying sparse methods to both fully connected and convolution layers.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Reducing Model Size', 'description': 'Holistic SparseCNN aims to reduce model size by applying sparse methods to both fully connected and convolution layers.', 'strength': 8.0}]
+
+[2025-09-23 21:28:25,921][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:28:26,639][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Weight decay
+    target_entity: Sparsity
+    description: Weight decay is used to control the level of sparsity in the model. Different weight decay values are used for different layers to achieve desired sparsity levels.
+    strength: 8
+  - source_entity: FC decay multiplier
+    target_entity: Sparsity
+    description: FC decay multiplier is used to control the level of sparsity in fully connected layers.
+    strength: 8
+  - source_entity: Convolution layers
+    target_entity: AlexNet
+    description: The paper discusses the application of Holistic SparseCNN to AlexNet, specifically focusing on the speedups achieved in convolution layers.
+    strength: 7
+  - source_entity: SGEMM
+    target_entity: Classification speed
+    description: SGEMM performance is used as a proxy for dense convolution performance, and Holistic SparseCNN aims to improve classification speed compared to dense implementations.
+    strength: 6
+  - source_entity: Holistic SparseCNN
+    target_entity: Classification speed
+    description: Holistic SparseCNN is designed to improve classification speed.
+    strength: 9
+
+[2025-09-23 21:28:26,640][Thread 3][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Accuracy', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Classification speed', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Accuracy', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'Model size', 'description': 'Sparsity in fully connected layers affects model size.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Sparsity in convolution layers impacts computation and speed.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Sparsity in convolution layers can lead to speedups.', 'strength': 7.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'AlexNet', 'description': 'Holistic SparseCNN was tested on AlexNet.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'BDW', 'description': 'Holistic SparseCNN achieved a classification speed on BDW.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV1', 'description': 'CONV1 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV2', 'description': 'CONV2 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'CONV1', 'target_entity': 'Sparsity', 'description': 'CONV1 is harder to sparsify.', 'strength': 7.0}, {'source_entity': 'CONV2', 'target_entity': 'Sparsity', 'description': 'CONV2 is easier to sparsify.', 'strength': 7.0}, {'source_entity': 'SGEMM', 'target_entity': 'Classification speed', 'description': 'SGEMM is used as a proxy for dense convolution performance.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN achieves speedups.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN demonstrated speedups of convolution layers.', 'strength': 8.0}, {'source_entity': 'SERVER PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on server platforms.', 'strength': 7.0}, {'source_entity': 'MOBILE PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on mobile platforms.', 'strength': 7.0}, {'source_entity': 'Weight decay', 'target_entity': 'Fully connected layers', 'description': 'Weight decay is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'Fully connected layers', 'description': 'FC decay multiplier is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'XEON', 'description': 'Holistic SparseCNN achieves speedups on XEON platforms.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'ATOM', 'description': 'Holistic SparseCNN achieves speedups on ATOM platforms.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Classification speed', 'description': 'Sparsity is used to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN optimizes for classification speed.', 'strength': 9.0}, {'source_entity': 'Weight decay', 'target_entity': 'Sparsity', 'description': 'Weight decay is used to control the level of sparsity in the model. Different weight decay values are used for different layers to achieve desired sparsity levels.', 'strength': 8.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'Sparsity', 'description': 'FC decay multiplier is used to control the level of sparsity in fully connected layers.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'AlexNet', 'description': 'The paper discusses the application of Holistic SparseCNN to AlexNet, specifically focusing on the speedups achieved in convolution layers.', 'strength': 7.0}, {'source_entity': 'SGEMM', 'target_entity': 'Classification speed', 'description': 'SGEMM performance is used as a proxy for dense convolution performance, and Holistic SparseCNN aims to improve classification speed compared to dense implementations.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN is designed to improve classification speed.', 'strength': 9.0}]
+
+[2025-09-23 21:28:26,641][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Sparsity
+    target_entity: Speedups
+    description: Sparsity in CNNs directly affects the speedups achieved. The proportion of non-zeros in filters influences the final speedup.
+    strength: 9
+  - source_entity: Direct sparse convolution
+    target_entity: Arithmetic intensity
+    description: The arithmetic intensity of direct sparse convolution is higher than SpMV but lower than dense convolution.
+    strength: 8
+  - source_entity: Arithmetic intensity
+    target_entity: SpMV
+    description: The arithmetic intensity of direct sparse convolution is higher than SpMV.
+    strength: 7
+  - source_entity: Arithmetic intensity
+    target_entity: Dense convolution
+    description: The arithmetic intensity of direct sparse convolution is lower than dense convolution.
+    strength: 7
+
+[2025-09-23 21:28:26,641][Thread 3][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:28:26,642][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Classification speed', 'target_entity': 'Convolution layers', 'description': 'The text mentions improving the classification speed of convolution layers.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Direct sparse convolution', 'description': 'The text presents a direct sparse convolution algorithm to speed up CNNs in convolution layers.', 'strength': 8.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Convolution layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with convolution layers affecting speed.', 'strength': 7.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Fully connected layers', 'description': 'The text discusses the optimization of speed and size in sparse CNNs, with fully connected layers affecting size.', 'strength': 7.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'Speedups', 'description': 'The direct sparse convolution algorithm is presented to advance the state-of-the-art in sparse convolution for speeding up CNNs.', 'strength': 9.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Speedups', 'description': 'Sparse convolution is used to achieve speedups in CNNs.', 'strength': 9.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'The arithmetic intensity of the direct sparse convolution algorithm is discussed.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Dense convolution', 'description': 'The text compares sparse convolution to dense convolution.', 'strength': 8.0}, {'source_entity': 'Atom processors', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution can outperform dense convolution in a wider range of sparsity on Atom processors.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers can leverage SpMDM to exploit sparsity.', 'strength': 7.0}, {'source_entity': 'Model size', 'target_entity': 'Fully connected layers', 'description': 'Fully connected layers mostly affect model size.', 'strength': 7.0}, {'source_entity': 'Speedups', 'target_entity': 'Sparse Convolution', 'description': 'Sparse convolution provides speedups.', 'strength': 9.0}, {'source_entity': 'Speedups', 'target_entity': 'Dense convolution', 'description': 'Sparse convolution provides speedups over dense convolution.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speedups', 'description': 'Sparsity affects the speedups of sparse convolution.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Model size', 'description': 'Convolution layers mostly affect speed.', 'strength': 7.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Fully connected layers', 'description': 'Sparse convolution optimizations can create bottlenecks in fully connected layers.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'SpMDM', 'description': 'Fully connected layers are implemented as GEMM and can leverage sparse matrix and dense matrix multiplication (SpMDM).', 'strength': 7.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Model size', 'description': 'Sparse convolution can be used to reduce model size.', 'strength': 8.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'Sparse CNNs', 'description': 'Fully connected layers can become a bottleneck after sparse convolution optimizations.', 'strength': 7.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speedups', 'description': 'Sparsity in CNNs directly affects the speedups achieved. The proportion of non-zeros in filters influences the final speedup.', 'strength': 9.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'Arithmetic intensity', 'description': 'The arithmetic intensity of direct sparse convolution is higher than SpMV but lower than dense convolution.', 'strength': 8.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'SpMV', 'description': 'The arithmetic intensity of direct sparse convolution is higher than SpMV.', 'strength': 7.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Dense convolution', 'description': 'The arithmetic intensity of direct sparse convolution is lower than dense convolution.', 'strength': 7.0}]
+
+[2025-09-23 21:28:26,643][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:28:26,843][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Convolution Layers
+    target_entity: Speed
+    description: The text states that compute-heavy parts lie in convolutions, implying a strong relationship between convolution layers and inference speed.
+    strength: 9.0
+  - source_entity: Sparsity
+    target_entity: Accuracy
+    description: The text mentions that exploiting sparsity can lead to accuracy loss.
+    strength: 6.0
+
+[2025-09-23 21:28:26,844][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Mobile Devices', 'description': 'CNNs are deployed on mobile devices.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Data Centers', 'description': 'CNNs are deployed in data centers.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Supercomputers', 'description': 'CNNs are deployed on supercomputers.', 'strength': 7.0}, {'source_entity': 'Fully Connected Layers', 'target_entity': 'Model Size', 'description': 'Pruning fully connected layers reduces model size.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Image Recognition', 'description': 'CNNs are used in image recognition.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Autonomous Driving', 'description': 'CNNs are used in autonomous driving.', 'strength': 9.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Speed', 'description': 'Pruning CNNs can improve inference speed.', 'strength': 7.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Model Size', 'description': 'Pruning CNNs can reduce model size.', 'strength': 8.0}, {'source_entity': 'Speed', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Model Size', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Accuracy', 'target_entity': 'golden trident', 'description': 'Accuracy is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Speed', 'target_entity': 'golden trident', 'description': 'Speed is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Model Size', 'target_entity': 'golden trident', 'description': 'Model Size is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SMARTPHONES', 'target_entity': 'Mobile Devices', 'description': 'Smartphones are a type of mobile device.', 'strength': 9.0}, {'source_entity': 'VIDEO ANALYTICS', 'target_entity': 'Convolutional Neural Networks (CNNs)', 'description': 'CNNs are used in video analytics.', 'strength': 9.0}, {'source_entity': 'ACCURACY', 'target_entity': 'golden trident', 'description': 'ACCURACY is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SPEED', 'target_entity': 'golden trident', 'description': 'SPEED is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'MODEL SIZE', 'target_entity': 'golden trident', 'description': 'MODEL SIZE is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Sparsity', 'target_entity': 'Model Size', 'description': 'Sparsity is used to reduce model size.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speed', 'description': 'Sparsity is used to accelerate classification speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Speed', 'description': 'The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Model Size', 'description': 'Pruning convolution layers can affect model size.', 'strength': 6.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Speed', 'description': 'The text states that compute-heavy parts lie in convolutions, implying a strong relationship between convolution layers and inference speed.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Accuracy', 'description': 'The text mentions that exploiting sparsity can lead to accuracy loss.', 'strength': 6.0}]
+
+[2025-09-23 21:28:26,844][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 21:28:27,457][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between 'Convolution layers' and 'Improving Classification Speed' and 'Fully connected layers' and 'Reducing Model Size' are well-represented. However, the text highlights that 'Sparse CNNs' target both 'Convolution layers' and 'Fully connected layers' for 'Improving Classification Speed' and 'Reducing Model Size'. The current relationships do not explicitly capture the connection between 'Sparse CNNs' and the impact on both layer types. Also, the text mentions that 'Direct sparse convolution' is used in AlexNet, but the relationship strength is low.
+loop_required: True
+
+[2025-09-23 21:28:27,459][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between 'Convolution layers' and 'Improving Classification Speed' and 'Fully connected layers' and 'Reducing Model Size' are well-represented. However, the text highlights that 'Sparse CNNs' target both 'Convolution layers' and 'Fully connected layers' for 'Improving Classification Speed' and 'Reducing Model Size'. The current relationships do not explicitly capture the connection between 'Sparse CNNs' and the impact on both layer types. Also, the text mentions that 'Direct sparse convolution' is used in AlexNet, but the relationship strength is low.
+[2025-09-23 21:28:27,460][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:27,460][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:27,970][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between Weight decay/FC decay multiplier and CONV1/CONV2, and also the impact of sparsity on AlexNet layers. The text explicitly states that different weight decay values are used for different layers (CONV1, CONV2) to achieve desired sparsity levels.
+loop_required: true
+
+[2025-09-23 21:28:27,972][Thread 3][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between Weight decay/FC decay multiplier and CONV1/CONV2, and also the impact of sparsity on AlexNet layers. The text explicitly states that different weight decay values are used for different layers (CONV1, CONV2) to achieve desired sparsity levels.
+[2025-09-23 21:28:27,973][Thread 3][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:27,973][Thread 3][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:27,987][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit (4) has been reached. While some relationships could still be added (e.g., CNNs improving classification speed, and the impact of sparsity on model size), the maximum iteration count prevents further extraction. The existing relationships cover the core concepts, and further iterations are not permitted.'
+loop_required: false
+
+[2025-09-23 21:28:27,989][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit (4) has been reached. While some relationships could still be added (e.g., CNNs improving classification speed, and the impact of sparsity on model size), the maximum iteration count prevents further extraction. The existing relationships cover the core concepts, and further iterations are not permitted.
+[2025-09-23 21:28:27,990][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:27,990][Thread 2][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:28:27,993][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationship between 'Pruning CNNs' and 'Accuracy' is missing. The text states that pruning can lead to accuracy loss, which is a crucial aspect of the paper's focus on the "golden trident". Also, the relationship between 'Convolutional Neural Networks (CNNs)' and 'Improve CNN performance' is missing.
+loop_required: true
+
+[2025-09-23 21:28:27,995][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationship between 'Pruning CNNs' and 'Accuracy' is missing. The text states that pruning can lead to accuracy loss, which is a crucial aspect of the paper's focus on the "golden trident". Also, the relationship between 'Convolutional Neural Networks (CNNs)' and 'Improve CNN performance' is missing.
+[2025-09-23 21:28:27,995][Thread 2][ERROR] - File doesn't exist: Bodhi/2032742/2/2032742_intermediate_data.yml. Creating file..
+[2025-09-23 21:28:27,997][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 21:28:28,002][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 21:28:28,040][Thread 2][INFO] - Nodes & relations saved to Bodhi/2032742/2/2032742_intermediate_data.yml
+[2025-09-23 21:28:28,040][Thread 2][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:28:28,041][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:28,042][Thread 2][INFO] - ===Thread-2===
+Total number of chunks processed : 1
+Total time taken for extraction : 26.66593074798584
+
+[2025-09-23 21:28:29,198][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Sparse CNNs
+    target_entity: Convolution layers
+    description: Sparse CNNs are applied to convolution layers to improve classification speed.
+    strength: 9
+  - source_entity: Sparse CNNs
+    target_entity: Fully connected layers
+    description: Sparse CNNs are applied to fully connected layers to reduce model size.
+    strength: 8
+  - source_entity: Direct sparse convolution
+    target_entity: AlexNet
+    description: Direct sparse convolution is used in AlexNet.
+    strength: 6
+  - source_entity: Sparse CNNs
+    target_entity: Improving Classification Speed
+    description: Sparse CNNs are used to improve classification speed.
+    strength: 9
+  - source_entity: Sparse CNNs
+    target_entity: Reducing Model Size
+    description: Sparse CNNs are used to reduce model size.
+    strength: 8
+
+[2025-09-23 21:28:29,202][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Fully connected layers', 'target_entity': 'Reducing Model Size', 'description': 'Sparsifying fully connected layers is a method for reducing model size.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs focus on convolution layers to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Reducing Model Size', 'description': 'Sparsity is used to reduce model size in CNNs.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Improving Classification Speed', 'description': 'Sparsity is used to accelerate classification speed in CNNs.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'CNNs', 'description': 'Fully connected layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'CNNs', 'description': 'Convolution layers are a component of CNNs.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'Fully connected layers', 'description': 'AlexNet is a CNN architecture that contains fully connected layers.', 'strength': 6.0}, {'source_entity': 'AlexNet', 'target_entity': 'Convolution layers', 'description': 'AlexNet is a CNN architecture that contains convolution layers.', 'strength': 6.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Convolution layers are targeted to improve classification speed.', 'strength': 7.0}, {'source_entity': 'Arithmetic intensity', 'target_entity': 'Direct sparse convolution', 'description': 'Lower arithmetic intensity can lead to overhead in direct sparse convolution.', 'strength': 6.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse convolution is used to improve classification speed.', 'strength': 8.0}, {'source_entity': 'Sparse Convolution', 'target_entity': 'AlexNet', 'description': 'The performance of sparse convolution is evaluated on AlexNet.', 'strength': 7.0}, {'source_entity': 'Tensor-to-Matrix Transformation Overhead', 'target_entity': 'Sparse Convolution', 'description': 'Transforming tensors to matrices adds overhead to sparse convolution.', 'strength': 7.0}, {'source_entity': 'Small Kernel Size Inapplicability', 'target_entity': 'Sparse Convolution', 'description': 'Some sparse convolution methods are not applicable to small kernel sizes.', 'strength': 7.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'Xeon processors', 'description': 'A 3.4x speedup was achieved on Xeon processors.', 'strength': 9.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'Atom processors', 'description': 'A 7.3x speedup was achieved on Atom processors.', 'strength': 9.0}, {'source_entity': '3.4x Speedup', 'target_entity': 'AlexNet', 'description': 'A 3.4x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': '7.3x Speedup', 'target_entity': 'AlexNet', 'description': 'A 7.3x speedup was achieved in AlexNet.', 'strength': 8.0}, {'source_entity': 'Xeon', 'target_entity': '3.4x Speedup', 'description': 'Xeon processors achieved a 3.4x speedup.', 'strength': 9.0}, {'source_entity': 'Atom', 'target_entity': '7.3x Speedup', 'description': 'Atom processors achieved a 7.3x speedup.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Reducing Model Size', 'description': 'Sparse CNNs aim to reduce model size.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs aim to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Fully connected layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Convolution layers', 'description': 'Holistic SparseCNN aims to apply sparse methods to both fully connected layers and convolution layers simultaneously.', 'strength': 8.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'AlexNet', 'description': 'The text mentions that direct sparse convolution is used in AlexNet.', 'strength': 7.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Improving Classification Speed', 'description': 'Holistic SparseCNN aims to improve classification speed by applying sparse methods to both fully connected and convolution layers.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Reducing Model Size', 'description': 'Holistic SparseCNN aims to reduce model size by applying sparse methods to both fully connected and convolution layers.', 'strength': 8.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Convolution layers', 'description': 'Sparse CNNs are applied to convolution layers to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Fully connected layers', 'description': 'Sparse CNNs are applied to fully connected layers to reduce model size.', 'strength': 8.0}, {'source_entity': 'Direct sparse convolution', 'target_entity': 'AlexNet', 'description': 'Direct sparse convolution is used in AlexNet.', 'strength': 6.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Improving Classification Speed', 'description': 'Sparse CNNs are used to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Sparse CNNs', 'target_entity': 'Reducing Model Size', 'description': 'Sparse CNNs are used to reduce model size.', 'strength': 8.0}]
+
+[2025-09-23 21:28:29,203][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:28:29,403][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Convolutional Neural Networks (CNNs)
+    target_entity: Improve CNN performance
+    description: The paper aims to improve CNN performance by addressing aspects like speed, size, and accuracy.
+    strength: 10.0
+  - source_entity: Pruning CNNs
+    target_entity: Accuracy
+    description: Pruning CNNs can potentially lead to a loss in accuracy, which is a key consideration in the paper.
+    strength: 8.0
+
+[2025-09-23 21:28:29,405][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Mobile Devices', 'description': 'CNNs are deployed on mobile devices.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Data Centers', 'description': 'CNNs are deployed in data centers.', 'strength': 8.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Supercomputers', 'description': 'CNNs are deployed on supercomputers.', 'strength': 7.0}, {'source_entity': 'Fully Connected Layers', 'target_entity': 'Model Size', 'description': 'Pruning fully connected layers reduces model size.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Image Recognition', 'description': 'CNNs are used in image recognition.', 'strength': 9.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Autonomous Driving', 'description': 'CNNs are used in autonomous driving.', 'strength': 9.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Speed', 'description': 'Pruning CNNs can improve inference speed.', 'strength': 7.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Model Size', 'description': 'Pruning CNNs can reduce model size.', 'strength': 8.0}, {'source_entity': 'Speed', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Model Size', 'target_entity': 'Accuracy', 'description': 'Accuracy, speed, and model size are key requirements.', 'strength': 7.0}, {'source_entity': 'Accuracy', 'target_entity': 'golden trident', 'description': 'Accuracy is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Speed', 'target_entity': 'golden trident', 'description': 'Speed is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Model Size', 'target_entity': 'golden trident', 'description': 'Model Size is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SMARTPHONES', 'target_entity': 'Mobile Devices', 'description': 'Smartphones are a type of mobile device.', 'strength': 9.0}, {'source_entity': 'VIDEO ANALYTICS', 'target_entity': 'Convolutional Neural Networks (CNNs)', 'description': 'CNNs are used in video analytics.', 'strength': 9.0}, {'source_entity': 'ACCURACY', 'target_entity': 'golden trident', 'description': 'ACCURACY is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'SPEED', 'target_entity': 'golden trident', 'description': 'SPEED is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'MODEL SIZE', 'target_entity': 'golden trident', 'description': 'MODEL SIZE is part of the "golden trident".', 'strength': 10.0}, {'source_entity': 'Sparsity', 'target_entity': 'Model Size', 'description': 'Sparsity is used to reduce model size.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Speed', 'description': 'Sparsity is used to accelerate classification speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Speed', 'description': 'The text states that compute-heavy parts lie in convolutions, implying a relationship between convolution layers and inference speed.', 'strength': 8.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Model Size', 'description': 'Pruning convolution layers can affect model size.', 'strength': 6.0}, {'source_entity': 'Convolution Layers', 'target_entity': 'Speed', 'description': 'The text states that compute-heavy parts lie in convolutions, implying a strong relationship between convolution layers and inference speed.', 'strength': 9.0}, {'source_entity': 'Sparsity', 'target_entity': 'Accuracy', 'description': 'The text mentions that exploiting sparsity can lead to accuracy loss.', 'strength': 6.0}, {'source_entity': 'Convolutional Neural Networks (CNNs)', 'target_entity': 'Improve CNN performance', 'description': 'The paper aims to improve CNN performance by addressing aspects like speed, size, and accuracy.', 'strength': 10.0}, {'source_entity': 'Pruning CNNs', 'target_entity': 'Accuracy', 'description': 'Pruning CNNs can potentially lead to a loss in accuracy, which is a key consideration in the paper.', 'strength': 8.0}]
+
+[2025-09-23 21:28:29,406][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:28:30,324][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Weight decay
+    target_entity: CONV1
+    description: Different weight decay values are used for CONV1 to achieve desired sparsity levels.
+    strength: 9
+  - source_entity: Weight decay
+    target_entity: CONV2
+    description: Different weight decay values are used for CONV2 to achieve desired sparsity levels.
+    strength: 9
+  - source_entity: FC decay multiplier
+    target_entity: CONV1
+    description: FC decay multiplier is related to weight decay, which is used to control sparsity in CONV1.
+    strength: 7
+  - source_entity: FC decay multiplier
+    target_entity: CONV2
+    description: FC decay multiplier is related to weight decay, which is used to control sparsity in CONV2.
+    strength: 7
+  - source_entity: ALEXNET
+    target_entity: CONV1
+    description: CONV1 is a layer within the AlexNet architecture.
+    strength: 10
+  - source_entity: ALEXNET
+    target_entity: CONV2
+    description: CONV2 is a layer within the AlexNet architecture.
+    strength: 10
+  - source_entity: Sparsity
+    target_entity: ALEXNET
+    description: The paper discusses the impact of sparsity on layers within AlexNet.
+    strength: 8
+
+[2025-09-23 21:28:30,329][Thread 3][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Accuracy', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Classification speed', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Accuracy', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Model size', 'description': 'Holistic SparseCNN aims to optimize accuracy, classification speed, and model size.', 'strength': 9.0}, {'source_entity': 'Fully connected layers', 'target_entity': 'Model size', 'description': 'Sparsity in fully connected layers affects model size.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Classification speed', 'description': 'Sparsity in convolution layers impacts computation and speed.', 'strength': 7.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Sparsity in convolution layers can lead to speedups.', 'strength': 7.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'AlexNet', 'description': 'Holistic SparseCNN was tested on AlexNet.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'BDW', 'description': 'Holistic SparseCNN achieved a classification speed on BDW.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV1', 'description': 'CONV1 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'AlexNet', 'target_entity': 'CONV2', 'description': 'CONV2 is a layer in the AlexNet architecture.', 'strength': 7.0}, {'source_entity': 'CONV1', 'target_entity': 'Sparsity', 'description': 'CONV1 is harder to sparsify.', 'strength': 7.0}, {'source_entity': 'CONV2', 'target_entity': 'Sparsity', 'description': 'CONV2 is easier to sparsify.', 'strength': 7.0}, {'source_entity': 'SGEMM', 'target_entity': 'Classification speed', 'description': 'SGEMM is used as a proxy for dense convolution performance.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN achieves speedups.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'Speedups', 'description': 'Holistic SparseCNN demonstrated speedups of convolution layers.', 'strength': 8.0}, {'source_entity': 'SERVER PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on server platforms.', 'strength': 7.0}, {'source_entity': 'MOBILE PLATFORMS', 'target_entity': 'Speedups', 'description': 'Speedups of convolution layers were demonstrated on mobile platforms.', 'strength': 7.0}, {'source_entity': 'Weight decay', 'target_entity': 'Fully connected layers', 'description': 'Weight decay is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'Fully connected layers', 'description': 'FC decay multiplier is used to control sparsity in fully connected layers.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'XEON', 'description': 'Holistic SparseCNN achieves speedups on XEON platforms.', 'strength': 8.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'ATOM', 'description': 'Holistic SparseCNN achieves speedups on ATOM platforms.', 'strength': 8.0}, {'source_entity': 'Sparsity', 'target_entity': 'Classification speed', 'description': 'Sparsity is used to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN optimizes for classification speed.', 'strength': 9.0}, {'source_entity': 'Weight decay', 'target_entity': 'Sparsity', 'description': 'Weight decay is used to control the level of sparsity in the model. Different weight decay values are used for different layers to achieve desired sparsity levels.', 'strength': 8.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'Sparsity', 'description': 'FC decay multiplier is used to control the level of sparsity in fully connected layers.', 'strength': 8.0}, {'source_entity': 'Convolution layers', 'target_entity': 'AlexNet', 'description': 'The paper discusses the application of Holistic SparseCNN to AlexNet, specifically focusing on the speedups achieved in convolution layers.', 'strength': 7.0}, {'source_entity': 'SGEMM', 'target_entity': 'Classification speed', 'description': 'SGEMM performance is used as a proxy for dense convolution performance, and Holistic SparseCNN aims to improve classification speed compared to dense implementations.', 'strength': 6.0}, {'source_entity': 'Holistic SparseCNN', 'target_entity': 'Classification speed', 'description': 'Holistic SparseCNN is designed to improve classification speed.', 'strength': 9.0}, {'source_entity': 'Weight decay', 'target_entity': 'CONV1', 'description': 'Different weight decay values are used for CONV1 to achieve desired sparsity levels.', 'strength': 9.0}, {'source_entity': 'Weight decay', 'target_entity': 'CONV2', 'description': 'Different weight decay values are used for CONV2 to achieve desired sparsity levels.', 'strength': 9.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'CONV1', 'description': 'FC decay multiplier is related to weight decay, which is used to control sparsity in CONV1.', 'strength': 7.0}, {'source_entity': 'FC decay multiplier', 'target_entity': 'CONV2', 'description': 'FC decay multiplier is related to weight decay, which is used to control sparsity in CONV2.', 'strength': 7.0}, {'source_entity': 'ALEXNET', 'target_entity': 'CONV1', 'description': 'CONV1 is a layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'ALEXNET', 'target_entity': 'CONV2', 'description': 'CONV2 is a layer within the AlexNet architecture.', 'strength': 10.0}, {'source_entity': 'Sparsity', 'target_entity': 'ALEXNET', 'description': 'The paper discusses the impact of sparsity on layers within AlexNet.', 'strength': 8.0}]
+
+[2025-09-23 21:28:30,330][heimdall.core][INFO] - Cleaned output : reason_to_loop: The iteration limit has been reached. No further relationships will be extracted. The existing relationships cover the core concepts, including the impact of sparsity on model size and classification speed, the role of fully connected and convolution layers, and the performance on Xeon and Atom processors.
+loop_required: false
+
+[2025-09-23 21:28:30,331][Thread 3][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 21:28:30,333][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further relationships will be extracted. The existing relationships cover the core concepts, including the impact of sparsity on model size and classification speed, the role of fully connected and convolution layers, and the performance on Xeon and Atom processors.
+[2025-09-23 21:28:30,336][heimdall.core][INFO] - Cleaned output : reason_to_loop: The iteration limit has been reached. No further relationships will be extracted, even if some could be added.
+loop_required: false
+
+[2025-09-23 21:28:30,337][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:30,339][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further relationships will be extracted, even if some could be added.
+[2025-09-23 21:28:30,339][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:28:30,340][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:30,344][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:28:30,346][Thread 1][ERROR] - File doesn't exist: Bodhi/2032742/1/2032742_intermediate_data.yml. Creating file..
+[2025-09-23 21:28:30,352][Thread 0][ERROR] - File doesn't exist: Bodhi/2032742/0/2032742_intermediate_data.yml. Creating file..
+[2025-09-23 21:28:30,390][Thread 1][INFO] - Nodes & relations saved to Bodhi/2032742/1/2032742_intermediate_data.yml
+[2025-09-23 21:28:30,390][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:28:30,390][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:30,391][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 29.015692234039307
+
+[2025-09-23 21:28:30,391][Thread 0][INFO] - Nodes & relations saved to Bodhi/2032742/0/2032742_intermediate_data.yml
+[2025-09-23 21:28:30,391][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:28:30,391][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:30,392][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 29.017590522766113
+
+[2025-09-23 21:28:31,862][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit has been reached. While some relationships could still be added (e.g., relationships between weight decay/FC decay multiplier and CONV1/CONV2), the maximum iteration count is 4, so no further extraction is permitted. The existing relationships cover the core concepts and their interactions within the context of the priming summary.'
+loop_required: false
+
+[2025-09-23 21:28:31,864][Thread 3][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. While some relationships could still be added (e.g., relationships between weight decay/FC decay multiplier and CONV1/CONV2), the maximum iteration count is 4, so no further extraction is permitted. The existing relationships cover the core concepts and their interactions within the context of the priming summary.
+[2025-09-23 21:28:31,865][Thread 3][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:28:31,865][Thread 3][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 21:28:31,865][Thread 3][ERROR] - File doesn't exist: Bodhi/2032742/3/2032742_intermediate_data.yml. Creating file..
+[2025-09-23 21:28:31,886][Thread 3][INFO] - Nodes & relations saved to Bodhi/2032742/3/2032742_intermediate_data.yml
+[2025-09-23 21:28:31,886][Thread 3][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 21:28:31,886][Thread 3][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:28:31,887][Thread 3][INFO] - ===Thread-3===
+Total number of chunks processed : 1
+Total time taken for extraction : 30.510117769241333
+
+[2025-09-23 21:28:31,887][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 21:28:31,913][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 21:28:31,939][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 21:28:31,957][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 2 with offset 2
+[2025-09-23 21:28:31,983][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 3 with offset 3
+[2025-09-23 21:28:32,058][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 4 intermediate files into Bodhi/2032742/2032742_combined_intermediate_data.yml
+[2025-09-23 21:28:32,059][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 2032742
+Total Chunks Processed: 4
+Threads Used: 4
+Chunks per Thread: [1, 1, 1, 1]
+Entities Extracted: 89
+Relationships Extracted: 118
+Combined Intermediate File: Bodhi/2032742/2032742_combined_intermediate_data.yml
+Total Time Taken: 36.99 seconds
+==========================================
+[2025-09-23 21:28:32,060][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 21:28:32,060][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 21:28:32,060][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 21:28:32,060][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 21:28:32,063][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:28:32,063][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 21:28:32,308][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 21:28:32,308][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 21:28:32,308][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['Accuracy', 'Speed', 'Model Size', 'Sparsity']...
+Number of elements: 59
+[2025-09-23 21:28:32,840][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 2032742 
+******************************
+ - Total number of entities before resolution: 59
+ - Total number of entities after resolution: 49
+ - Total number of descriptions in all resolved nodes before resolution: 45
+ - Total number of descriptions in all resolved nodes after resolution: 42
+******************************
+
+[2025-09-23 21:28:32,841][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'Sparsity': {'type': ['GENERIC', 'GENERIC', 'GENERIC', 'GENERIC'], 'description': ['A technique used to reduce model size and/or accelerate classification speed.', 'A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of parameters or computations.', 'The proportion of zero-valued elements in a tensor, used to reduce model size and/or accelerate computation.', 'A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of active parameters.'], 'source_chunk_index': [0, 1, 2, 3]}, 'Image Recognition': {'type': ['GENERIC'], 'description': ['An application area where CNNs are widely used.'], 'source_chunk_index': [0]}, 'Autonomous Driving': {'type': ['GENERIC'], 'description': ['An application area where CNNs are widely used.'], 'source_chunk_index': [0]}, 'Mobile Devices': {'type': ['GENERIC'], 'description': ['Platforms where CNNs are deployed.'], 'source_chunk_index': [0]}, 'Data Centers': {'type': ['GENERIC'], 'description': ['Platforms where CNNs are deployed.'], 'source_chunk_index': [0]}, 'golden trident': {'type': ['GENERIC'], 'description': ['The three key requirements for CNN performance: accuracy, speed, and model size.'], 'source_chunk_index': [0]}, 'Convolutional Neural Networks (CNNs)': {'type': ['method', 'method', 'method'], 'description': ['Widely used in applications like image recognition and autonomous driving, deployed on various platforms.', 'Deep learning models widely used in image recognition and other applications; the paper focuses on optimizing their speed and size.', 'Deep learning models widely used in image recognition and other applications, with a focus on optimizing their speed, size, and accuracy.'], 'source_chunk_index': [0, 2, 3]}, 'Improve CNN performance': {'type': ['task'], 'description': ['The overall objective of the paper, which is to enhance the performance of Convolutional Neural Networks.'], 'source_chunk_index': [0]}, 'Pruning CNNs': {'type': ['method'], 'description': ['A method used to reduce model size and/or accelerate classification speed.'], 'source_chunk_index': [0]}, 'Supercomputers': {'type': ['generic'], 'description': ['Platforms where convolutional neural networks (CNNs) are deployed.'], 'source_chunk_index': [0]}, 'SMARTPHONES': {'type': ['GENERIC'], 'description': ['Mobile platforms, such as smartphones, where CNN models are deployed for classification.'], 'source_chunk_index': [0]}, 'VIDEO ANALYTICS': {'type': ['GENERIC'], 'description': ['A critical application area where deep neural networks, especially CNNs, are used.'], 'source_chunk_index': [0]}, 'Classification speed': {'type': ['GENERIC', 'GENERIC', 'GENERIC'], 'description': ['The speed at which a CNN can classify inputs, a key performance metric targeted for improvement through sparsity.', 'The speed at which a CNN can classify data, a key performance metric.', 'The speed at which a CNN can classify images, a critical factor in real-world applications.'], 'source_chunk_index': [1, 2, 3]}, 'Arithmetic intensity': {'type': ['GENERIC', 'GENERIC'], 'description': ['A factor that affects the efficiency of sparse convolution, with lower arithmetic intensity potentially leading to overhead.', 'A measure of the ratio of computation to memory access, relevant to the performance of sparse convolution.'], 'source_chunk_index': [1, 2]}, 'Xeon processors': {'type': ['GENERIC'], 'description': ['A type of processor on which the performance of sparse CNN implementations is evaluated.'], 'source_chunk_index': [1]}, 'Atom processors': {'type': ['GENERIC', 'GENERIC'], 'description': ['A type of processor on which the performance of sparse CNN implementations is evaluated.', 'A type of processor where sparse convolution can outperform dense convolution in a wider range of sparsity.'], 'source_chunk_index': [1, 2]}, 'CNNs': {'type': ['method'], 'description': ['Convolutional Neural Networks, widely used in applications like image recognition, and the focus of optimization efforts for speed and size.'], 'source_chunk_index': [1]}, 'Sparse CNNs': {'type': ['method', 'method'], 'description': ['CNNs that incorporate sparsity to reduce model size and/or improve classification speed.', 'CNNs that utilize sparsity to reduce model size and/or accelerate classification speed.'], 'source_chunk_index': [1, 2]}, 'Holistic SparseCNN': {'type': ['method', 'GENERIC', 'GENERIC', 'METHOD'], 'description': ['An approach that aims for simultaneous optimization of speed, size, and accuracy across both fully connected and convolution layers in CNNs.', 'An approach aiming for simultaneous optimization of speed, size, and accuracy across both convolution and fully connected layers in sparse CNNs.', 'An approach aiming for simultaneous optimization of speed, size, and accuracy across both fully connected and convolutional layers in CNNs.', "The paper's proposed approach, which simultaneously optimizes accuracy, speed, and model size across both fully connected and convolutional layers."], 'source_chunk_index': [1, 2, 3, 3]}, 'Improving Classification Speed': {'type': ['task'], 'description': ['The objective of sparse CNNs to accelerate the process of image classification, making it faster.'], 'source_chunk_index': [1]}, '3.4x Speedup': {'type': ['generic'], 'description': ['The speedup achieved in convolution layers of AlexNet on Xeon processors using a highly-optimized sparse CNN implementation.'], 'source_chunk_index': [1]}, '7.3x Speedup': {'type': ['generic'], 'description': ['The speedup achieved in convolution layers of AlexNet on Atom processors using a highly-optimized sparse CNN implementation.'], 'source_chunk_index': [1]}, 'Sparse Convolution': {'type': ['method', 'METHOD'], 'description': ['A method used to reduce the computational requirements and improve classification speed in CNNs by applying sparsity to the convolution layers.', 'A method to accelerate CNNs by reducing computations in convolution layers, leveraging sparsity in the weight tensors.'], 'source_chunk_index': [1, 2]}, 'Tensor-to-Matrix Transformation Overhead': {'type': ['generic'], 'description': ['The computational overhead associated with transforming tensors to matrices, a challenge in sparse convolution methods.'], 'source_chunk_index': [1]}, 'Small Kernel Size Inapplicability': {'type': ['generic'], 'description': ['The limitation of some sparse convolution methods, which are not applicable to small kernel sizes (e.g., 3x3), restricting their use in modern CNNs.'], 'source_chunk_index': [1]}, 'Speedups': {'type': ['GENERIC', 'TASK', 'TASK', 'GENERIC'], 'description': ['The improvement in speed achieved by using sparse convolution compared to dense convolution.', 'The objective of achieving improved classification speed in CNNs, particularly through the use of sparse convolution methods.', 'The objective of achieving faster computation in CNNs, specifically through the use of sparse methods and algorithms like direct sparse convolution.', 'Improvements in classification speed achieved through techniques like sparsity.'], 'source_chunk_index': [2, 2, 2, 3]}, 'Dense convolution': {'type': ['GENERIC'], 'description': ['Standard convolution operations without sparsity applied.'], 'source_chunk_index': [2]}, 'SpMV': {'type': ['method'], 'description': ['Sparse Matrix-Vector Multiplication, a computational method relevant to sparse matrix operations.'], 'source_chunk_index': [2]}, 'SpMDM': {'type': ['method'], 'description': ['Sparse Matrix and Dense Matrix Multiplication, a method used in fully connected layers to exploit sparsity.'], 'source_chunk_index': [2]}, 'BDW': {'type': ['GENERIC', 'GENERIC'], 'description': ['A platform where the Holistic SparseCNN was tested.', 'A platform where the Holistic SparseCNN achieved a classification speed of 2,371 images per second.'], 'source_chunk_index': [3, 3]}, 'SGEMM': {'type': ['GENERIC'], 'description': ['Highly optimized performance used as a proxy of dense convolution performance.'], 'source_chunk_index': [3]}, 'Weight decay': {'type': ['METHOD'], 'description': ['A regularization technique used to prevent overfitting in machine learning models. The paper uses specific weight decay values for different layers to control sparsity.'], 'source_chunk_index': [3]}, 'FC decay multiplier': {'type': ['METHOD'], 'description': ['A parameter used in conjunction with weight decay to control the level of regularization applied to fully connected (FC) layers. Different multipliers are used to achieve varying levels of sparsity.'], 'source_chunk_index': [3]}, 'CONV1': {'type': ['GENERIC'], 'description': ['The first convolutional layer in a CNN architecture, such as AlexNet. It is often more difficult to sparsify than higher layers.'], 'source_chunk_index': [3]}, 'CONV2': {'type': ['GENERIC'], 'description': ['A convolutional layer in a CNN architecture, typically following CONV1. It is often easier to sparsify than CONV1.'], 'source_chunk_index': [3]}, 'SERVER PLATFORMS': {'type': ['GENERIC'], 'description': ['Representative server platforms where speedups of convolution layers were demonstrated.'], 'source_chunk_index': [3]}, 'MOBILE PLATFORMS': {'type': ['GENERIC'], 'description': ['Representative mobile platforms where speedups of convolution layers were demonstrated.'], 'source_chunk_index': [3]}, 'Accuracy': {'description': ['A key requirement for CNN models, especially on resource-constrained platforms.', "A key performance metric for CNNs, representing the correctness of the model's predictions.", 'One of the three key requirements, along with speed and model size, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 3]}, 'Speed': {'description': ['A key requirement for CNN models, especially on resource-constrained platforms.', 'The objective of improving the inference speed of CNNs.', 'One of the three key requirements, along with accuracy and model size, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.'], 'type': ['task', 'GENERIC'], 'source_chunk_index': [0]}, 'Model Size': {'description': ['A key requirement for CNN models, especially on resource-constrained platforms.', 'The objective of reducing the size of CNN models.', 'The amount of memory required to store a CNN model, a key performance metric targeted for reduction through sparsity.', 'The number of parameters in a neural network, a key factor in deployment and efficiency.', 'The amount of memory required to store a CNN, a factor in deployment on resource-constrained platforms.'], 'type': ['task', 'GENERIC'], 'source_chunk_index': [0, 1, 2, 3]}, 'Fully Connected Layers': {'description': ["Pruning these layers reduces a CNN's size but may not improve inference speed significantly.", 'Layers within a CNN that are often targeted for sparsification to reduce model size. They contain most of the parameters in a CNN.', 'Layers in a neural network that connect all neurons from the previous layer to all neurons in the current layer; their size impacts model size.', 'Layers in a CNN that are fully connected, and whose sparsity affects model size.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2, 3]}, 'Convolution Layers': {'description': ['The compute-heavy parts of CNNs, where pruning impacts computation and speed.', 'Layers within a CNN that perform the majority of the computation (FLOPS) and are targeted for sparsification to improve classification speed.', 'Layers in a CNN that perform convolution operations; their computational complexity impacts speed.', 'Layers in a CNN that perform convolutional operations, and whose sparsity impacts computation and speed.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2, 3]}, 'MODEL SIZE': {'description': ['One of the three key requirements, along with accuracy and speed, that form the "golden trident" for CNN performance, especially on resource-constrained platforms.', 'The amount of memory required to store a CNN model, a key performance metric targeted for reduction through sparsity.', 'The number of parameters in a neural network, a key factor in deployment and efficiency.', 'The amount of memory required to store a CNN, a factor in deployment on resource-constrained platforms.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2, 3]}, 'Direct sparse convolution': {'description': ['A key algorithm presented in the paper.', 'A specific algorithm presented in the paper to speed up sparse convolution operations.', 'A key algorithm presented in the paper, likely used for efficient computation in sparse CNNs.'], 'type': ['method', 'GENERIC'], 'source_chunk_index': [1, 2, 3]}, 'AlexNet': {'description': ['A specific CNN architecture used as a test case in the paper, where the performance of sparse convolution is evaluated.', 'A specific CNN architecture used as a test case in the paper.'], 'type': ['method', 'GENERIC'], 'source_chunk_index': [1, 3]}, 'Xeon': {'description': ['A type of processor on which the paper aims to achieve speedups.', 'A type of processor mentioned as a platform for achieving speedups.'], 'type': ['generic'], 'source_chunk_index': [1, 3]}, 'Atom': {'description': ['A type of processor on which the paper aims to achieve speedups.', 'A type of processor mentioned as a platform for achieving speedups.'], 'type': ['generic'], 'source_chunk_index': [1, 3]}, 'Reducing Model Size': {'description': ['The objective of sparse CNNs to decrease the number of parameters in the model, leading to a smaller model footprint.', 'The objective of decreasing the size of CNN models, often achieved through techniques like pruning and sparsity, particularly in fully connected layers.'], 'type': ['TASK', 'task'], 'source_chunk_index': [1, 2]}, 'Direct Sparse Convolution Algorithm': {'description': ['A specific algorithm presented in the paper to speed up CNNs by eliminating redundant computations in convolution layers.', 'A specific algorithm presented in the paper to speed up CNNs by directly performing sparse convolution operations.'], 'type': ['METHOD', 'method'], 'source_chunk_index': [2, 3]}}
+[2025-09-23 21:28:32,841][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 21:28:32,842][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 21:28:32,901][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 21:28:32,902][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:2032742...
+[2025-09-23 21:28:32,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:28:32,964][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--convolutional neural networks:
+Total number of sentences: 7722
+Sources:[106]
+[2025-09-23 21:28:32,964][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--CNN:
+Total number of sentences: 7722
+Sources:[141]
+[2025-09-23 21:28:32,964][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--fully connected layers:
+Total number of sentences: 7722
+Sources:[150]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--convolutions:
+Total number of sentences: 7722
+Sources:[107]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--Pruning CNNs:
+Total number of sentences: 7722
+Sources:[108]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--pruning CNNs:
+Total number of sentences: 7722
+Sources:[108]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--Deep neural networks:
+Total number of sentences: 7722
+Sources:[109]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--CNNs:
+Total number of sentences: 7722
+Sources:[148]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--computer vision:
+Total number of sentences: 7722
+Sources:[109]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--image recognition:
+Total number of sentences: 7722
+Sources:[109]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--video analytics:
+Total number of sentences: 7722
+Sources:[109]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--autonomous driving:
+Total number of sentences: 7722
+Sources:[109]
+[2025-09-23 21:28:32,965][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--classification:
+Total number of sentences: 7722
+Sources:[151]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--autonomous - driving:
+Total number of sentences: 7722
+Sources:[110]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--sparse CNN:
+Total number of sentences: 7722
+Sources:[123]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--convolution layers:
+Total number of sentences: 7722
+Sources:[151]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--AlexNet:
+Total number of sentences: 7722
+Sources:[151]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--sparse convolution:
+Total number of sentences: 7722
+Sources:[146]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--Perforated - CNN:
+Total number of sentences: 7722
+Sources:[125]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--dense convolution:
+Total number of sentences: 7722
+Sources:[151]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--SpMV:
+Total number of sentences: 7722
+Sources:[131]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--GEMM:
+Total number of sentences: 7722
+Sources:[138]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--sparse matrix and dense matrix multiplication:
+Total number of sentences: 7722
+Sources:[138]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--SpMDM:
+Total number of sentences: 7722
+Sources:[138]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--convolution:
+Total number of sentences: 7722
+Sources:[139]
+[2025-09-23 21:28:32,966][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--fully connected:
+Total number of sentences: 7722
+Sources:[140]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--fc:
+Total number of sentences: 7722
+Sources:[140]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--sparse convolutions:
+Total number of sentences: 7722
+Sources:[140]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--conv 1:
+Total number of sentences: 7722
+Sources:[142]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--conv 2:
+Total number of sentences: 7722
+Sources:[142]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--weight decay:
+Total number of sentences: 7722
+Sources:[143]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--FC:
+Total number of sentences: 7722
+Sources:[143]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--Holistic SparseCNN:
+Total number of sentences: 7722
+Sources:[149]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--dense CNN:
+Total number of sentences: 7722
+Sources:[145]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--conv layers:
+Total number of sentences: 7722
+Sources:[146]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--SGEMM:
+Total number of sentences: 7722
+Sources:[147]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--deep learning:
+Total number of sentences: 7722
+Sources:[148]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--evaluation/classification:
+Total number of sentences: 7722
+Sources:[148]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--2032742--sparse CNNs:
+Total number of sentences: 7722
+Sources:[149]
+[2025-09-23 21:28:32,967][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 21:28:32,974][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_2032742.yml, skipping classification.
+[2025-09-23 21:28:32,974][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_2032742.yml
+[2025-09-23 21:28:32,977][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/21-14-29/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=500/seed=2/storage/Bodhi/2032742/2032742_graph.yml']
+[2025-09-23 21:28:33,041][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/21-14-29/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=500/seed=2/storage/Bodhi/2032742/2032742_graph.yml
+[2025-09-23 21:28:33,095][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:28:33,096][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 2032742
+[2025-09-23 21:28:33,220][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 21:28:33,936][root][INFO] - Token count: 1893
+[2025-09-23 21:28:35,057][root][INFO] - Batch token estimation (hf) complete for 48 strings.
+[2025-09-23 21:28:35,090][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:SPARSITY\nDescription:A technique used to reduce model size and/or accelerate classification speed. ; A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of parameters or computations. ; The proportion of zero-valued elements in a tensor, used to reduce model size and/or accelerate computation. ; A technique used to reduce model size and/or accelerate classification speed in CNNs by reducing the number of active parameters.\n', 'Name:IMAGE RECOGNITION\nDescription:An application area where CNNs are widely used.\n', 'Name:AUTONOMOUS DRIVING\nDescription:An application area where CNNs are widely used.\n', 'Name:MOBILE DEVICES\nDescription:Platforms where CNNs are deployed.\n', 'Name:DATA CENTERS\nDescription:Platforms where CNNs are deployed.\n']split_entities: text_tokens=1893, instructions_tokens=500, budget_for_entities=7607, number_of_entities=48, avg_entity_tokens=43, max_entities=176, num_groups=1, entities_per_group=[48]
+[2025-09-23 21:29:06,062][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: SPARSITY
+    type: METHOD
+  - entity: IMAGE RECOGNITION
+    type: METHOD
+  - entity: AUTONOMOUS DRIVING
+    type: METHOD
+  - entity: MOBILE DEVICES
+    type: METHOD
+  - entity: DATA CENTERS
+    type: METHOD
+  - entity: GOLDEN TRIDENT
+    type: DOMAIN
+  - entity: CONVOLUTIONAL NEURAL NETWORKS (CNNS)
+    type: METHOD
+  - entity: IMPROVE CNN PERFORMANCE
+    type: METHOD
+  - entity: PRUNING CNNS
+    type: METHOD
+  - entity: SUPERCOMPUTERS
+    type: METHOD
+  - entity: SMARTPHONES
+    type: METHOD
+  - entity: VIDEO ANALYTICS
+    type: METHOD
+  - entity: CLASSIFICATION SPEED
+    type: METHOD
+  - entity: ARITHMETIC INTENSITY
+    type: METHOD
+  - entity: XEON PROCESSORS
+    type: METHOD
+  - entity: ATOM PROCESSORS
+    type: METHOD
+  - entity: CNNS
+    type: METHOD
+  - entity: SPARSE CNNS
+    type: METHOD
+  - entity: HOLISTIC SPARSECNN
+    type: DOMAIN
+  - entity: IMPROVING CLASSIFICATION SPEED
+    type: METHOD
+  - entity: 3.4X SPEEDUP
+    type: DOMAIN
+  - entity: 7.3X SPEEDUP
+    type: DOMAIN
+  - entity: SPARSE CONVOLUTION
+    type: METHOD
+  - entity: TENSOR-TO-MATRIX TRANSFORMATION OVERHEAD
+    type: METHOD
+  - entity: SMALL KERNEL SIZE INAPPLICABILITY
+    type: METHOD
+  - entity: SPEEDUPS
+    type: METHOD
+  - entity: DENSE CONVOLUTION
+    type: METHOD
+  - entity: SPMV
+    type: METHOD
+  - entity: SPMDM
+    type: METHOD
+  - entity: BDW
+    type: METHOD
+  - entity: SGEMM
+    type: METHOD
+  - entity: WEIGHT DECAY
+    type: METHOD
+  - entity: FC DECAY MULTIPLIER
+    type: DOMAIN
+  - entity: CONV1
+    type: METHOD
+  - entity: CONV2
+    type: METHOD
+  - entity: SERVER PLATFORMS
+    type: METHOD
+  - entity: MOBILE PLATFORMS
+    type: METHOD
+  - entity: ACCURACY
+    type: METHOD
+  - entity: SPEED
+    type: METHOD
+  - entity: MODEL SIZE
+    type: METHOD
+  - entity: FULLY CONNECTED LAYERS
+    type: METHOD
+  - entity: CONVOLUTION LAYERS
+    type: METHOD
+  - entity: DIRECT SPARSE CONVOLUTION
+    type: DOMAIN
+  - entity: ALEXNET
+    type: METHOD
+  - entity: XEON
+    type: METHOD
+  - entity: ATOM
+    type: METHOD
+  - entity: REDUCING MODEL SIZE
+    type: METHOD
+  - entity: DIRECT SPARSE CONVOLUTION ALGORITHM
+    type: DOMAIN
+
+[2025-09-23 21:29:06,072][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 21:29:06,076][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/21-14-29/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=500/seed=2/2032742/eval_results/classification_results.yml
+[2025-09-23 21:29:06,080][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 21:29:06,080][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 21:29:06,080][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 21:29:06,081][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 16 exact matches, 32 unmatched bodhi entities.
+[2025-09-23 21:29:06,081][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 21:29:06,134][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 3 fuzzy matches, 29 unmatched bodhi entities remain.
+[2025-09-23 21:29:06,136][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 21:29:06,765][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 21:29:07,261][root][INFO] - Batch token estimation (hf) complete for 39 strings.
+[2025-09-23 21:29:07,287][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'convolutional neural networks': 5, 'CNN': 1, 'fully connected layers': 3, 'convolutions': 2, 'Pruning CNNs': 4, 'pruning CNNs': 4, 'Deep neural networks': 3, 'CNNs': 2, 'computer vision': 2, 'image recognition': 2, 'video analytics': 2, 'autonomous driving': 3, 'classification': 1, 'autonomous - driving': 4, 'sparse CNN': 2, 'convolution layers': 3, 'AlexNet': 2, 'sparse convolution': 2, 'Perforated - CNN': 5, 'dense convolution': 2, 'SpMV': 2, 'GEMM': 3, 'sparse matrix and dense matrix multiplication': 6, 'SpMDM': 3, 'convolution': 2, 'fully connected': 2, 'fc': 1, 'sparse convolutions': 3, 'conv 1': 3, 'conv 2': 3, 'weight decay': 2, 'FC': 1, 'dense CNN': 2, 'conv layers': 2, 'SGEMM': 3, 'deep learning': 2, 'evaluation/classification': 3, 'sparse CNNs': 3, 'Holistic SparseCNN': 4}
+[2025-09-23 21:29:07,782][root][INFO] - Batch token estimation (hf) complete for 29 strings.
+[2025-09-23 21:29:07,797][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_271cefc31d03e84c7b2ca45531ccca82a58d49f19f9fc67ca12bd391431c0621.pkl
+[2025-09-23 21:29:10,461][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 29 entities.
+[2025-09-23 21:29:11,139][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 21:29:11,850][root][INFO] - Batch token estimation (hf) complete for 27 strings.
+[2025-09-23 21:29:11,895][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'SPARSITY': 3, 'MOBILE DEVICES': 4, 'DATA CENTERS': 3, 'IMPROVE CNN PERFORMANCE': 5, 'SUPERCOMPUTERS': 4, 'SMARTPHONES': 3, 'CLASSIFICATION SPEED': 3, 'ARITHMETIC INTENSITY': 6, 'XEON PROCESSORS': 4, 'ATOM PROCESSORS': 3, 'IMPROVING CLASSIFICATION SPEED': 7, 'TENSOR-TO-MATRIX TRANSFORMATION OVERHEAD': 10, 'SMALL KERNEL SIZE INAPPLICABILITY': 8, 'SPEEDUPS': 3, 'BDW': 2, 'SERVER PLATFORMS': 3, 'MOBILE PLATFORMS': 4, 'ACCURACY': 3, 'SPEED': 2, 'MODEL SIZE': 2, 'XEON': 2, 'ATOM': 1, 'REDUCING MODEL SIZE': 5, 'GOLDEN TRIDENT': 5, '3.4X SPEEDUP': 6, '7.3X SPEEDUP': 6, 'FC DECAY MULTIPLIER': 5}
+[2025-09-23 21:29:11,895][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for novel entity assessment chunk: novel_assess_67d08b34df7794bd3916c96b36029b75bbece6be0a9bce5eda0a61cbc829a6a7.pkl
+[2025-09-23 21:29:19,166][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Novel entity assessment completed for 27 entities.
+[2025-09-23 21:29:19,167][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 21:29:19,167][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 1.0, 'method_coverage': 0.47368421052631576, 'precision': 0.2878787878787879, 'recall': 0.3333333333333333, 'f1': 0.3089430894308943, 'domain_precision': 0.125, 'domain_recall': 0.5, 'domain_f1': 0.2, 'method_precision': 0.3103448275862069, 'method_recall': 0.32727272727272727, 'method_f1': 0.3185840707964602, 'adjusted_domain_precision': 0.5, 'adjusted_domain_recall': 1.0, 'adjusted_domain_f1': 0.6666666666666666, 'adjusted_method_precision': 0.5172413793103449, 'adjusted_method_recall': 0.6, 'adjusted_method_f1': 0.5555555555555556, 'adjusted_precision': 0.5151515151515151, 'adjusted_recall': 0.6296296296296297, 'adjusted_f1': 0.5666666666666667}
+[2025-09-23 21:29:19,175][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/21-14-29/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=500/seed=2/2032742/eval_results/eval_output.yml
+[2025-09-23 21:29:19,177][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/21-14-29/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=500/seed=2/2032742/eval_results/eval_metrics.yml

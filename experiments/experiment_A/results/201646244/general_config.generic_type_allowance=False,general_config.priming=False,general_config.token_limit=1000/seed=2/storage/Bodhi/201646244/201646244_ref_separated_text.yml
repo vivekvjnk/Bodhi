@@ -1,0 +1,159 @@
+references: ''
+text: "We introduce FinBERT , a language model based on BERT , to tackle NLP tasks\
+  \ in the financial domain .Hence , automated sentiment or polarity analysis of texts\
+  \ produced by financial actors using natural language processing ( NLP ) methods\
+  \ has gained popularity during the last decade [ 4 ] .It requires to address two\
+  \ challenges : 1 ) The most sophisticated classification methods that make use of\
+  \ neural nets require vast amounts of labeled data and labeling financial text snippets\
+  \ requires costly expertise . 2 ) The sentiment analysis models trained on general\
+  \ corpora are not suited to the task , because financial texts have a specialized\
+  \ language with unique vocabulary and have a tendency to use vague expressions instead\
+  \ of easilyidentified negative/positive words .NLP transfer learning methods look\
+  \ like a promising solution to both of the challenges mentioned above , and are\
+  \ the focus of this thesis .For that , sentiment of a sentence from a financial\
+  \ news article towards the financial actor depicted in the sentence will be tried\
+  \ to be predicted , using the Financial PhraseBank created by Malo et al. ( 2 0\
+  \ 1 4 ) [ 1 7 ] and FiQA Task 1 sentiment scoring dataset [ 1 5 ] .The main contributions\
+  \ of this thesis are the following : \u2022 We introduce FinBERT , which is a language\
+  \ model based on BERT for financial NLP tasks .We evaluate FinBERT on two financial\
+  \ sentiment analysis datasets . \u2022 We achieve the state - of - the - art on\
+  \ FiQA sentiment scoring and Financial PhraseBank . \u2022 We implement two other\
+  \ pre - trained language models , ULMFit and ELMo for financial sentiment analysis\
+  \ and compare these with FinBERT . \u2022 We conduct experiments to investigate\
+  \ several aspects of the model , including : effects of further pre - training on\
+  \ financial corpus , training strategies to prevent catastrophic forgetting and\
+  \ fine - tuning only a small subset of model layers for decreasing training time\
+  \ without a significant drop in performance .This section describes previous research\
+  \ conducted on sentiment analysis in finance ( 2. 1 ) and text classification using\
+  \ pre - trained language models ( 2. 2 ) .Financial sentiment analysis differs from\
+  \ general sentiment analysis not only in domain , but also the purpose .Sohangir\
+  \ et al. ( 2 0 1 8) [ 2 6 ] apply several generic neural network architectures to\
+  \ a StockTwits dataset , finding CNN as the best performing neural network architecture\
+  \ .Lutz et al. 2 0 1 8 [ 1 3 ] take the approach of using doc 2 vec to generate\
+  \ sentence embeddings in a particular company ad - hoc announcement and utilize\
+  \ multi - instance learning to predict stock market outcomes . [ 1 4 ] use a combination\
+  \ of text simplification and LSTM network to classify a set of sentences from financial\
+  \ news according to their sentiment and achieve stateof - the - art results for\
+  \ the Financial PhraseBank , which is used in thesis as well .One of the most important\
+  \ recent developments in natural language processing is the realization that a model\
+  \ trained for language modeling can be successfully fine - tuned for most down -\
+  \ stream NLP tasks with small modifications .Using the pre - trained weights of\
+  \ ELMo , contextualized word embeddings can be calculated for any piece of text\
+  \ .Initializing embeddings for down - stream tasks with those were shown to improve\
+  \ performance on most tasks compared to static word embeddings such as word 2 vec\
+  \ or GloVe .For text classification tasks like SST - 5 , it achieved state - of\
+  \ - the - art performance when used together with a bi - attentive classification\
+  \ network [ 2 0 ] .ULMFit ( Universal Language Model Fine - tuning ) [ 5 ] was the\
+  \ first paper to achieve true transfer learning for NLP , as using novel techniques\
+  \ such as discriminative fine - tuning , slanted triangular learning rates and gradual\
+  \ unfreezing .ULMFit 's main idea of efficiently fine - tuning a pre - trained a\
+  \ language model for down - stream tasks was brought to another level with Bidirectional\
+  \ Encoder Representations from Transformers ( BERT ) [ 3 ] , which is also the main\
+  \ focus of this paper .These two factors enabled in to achieve state - of - the\
+  \ - art results in multiple NLP tasks such as , natural language inference or question\
+  \ answering .The specifics of fine - tuning BERT for text classification has not\
+  \ been researched thoroughly .They conduct a series of experiments regarding different\
+  \ configurations of BERT for text classification .In this section , we will present\
+  \ our BERT implementation for financial domain named as FinBERT , after giving a\
+  \ brief background on relevant neural architectures . 3. 1 . 1 LSTM .Long short\
+  \ - term memory ( LSTM ) is a type of recurrent neural network that allows long\
+  \ - term dependencies in a sequence to persist in the network by using \" forget\
+  \ \" and \" update \" gates .Since a text is a sequence of tokens , the first choice\
+  \ for any LSTM natural language processing model is determining how to initially\
+  \ represent a single token .One such pre - training algorithm is GLoVe ( Global\
+  \ Vectors for Word Representation ) [ 2 2 ] .In the center of ELMo , there is a\
+  \ bidirectional language model with multiple LSTM layers .Once the contextualized\
+  \ representations are extracted , these can be used to initialize any down - stream\
+  \ NLP task 2 . 3. 1 . 3 ULMFit .ULMFit is a transfer learning model for down - stream\
+  \ NLP tasks , that make use of language model pre - training [ 5 ] .Unlike ELMo\
+  \ , with ULMFit , the whole language model is fine - tuned together with the task\
+  \ - specific layers .The underlying language model used in ULMFit is AWD - LSTM\
+  \ , which uses sophisticated dropout tuning strategies to better regularize its\
+  \ LSTM model [ 2 1 ] .For classification using ULMFit two linear layers are added\
+  \ to the pre - trained AWD - LSTM , first of which takes the pooled last hidden\
+  \ states as input .We implement these strategies with FinBERT as explained in section\
+  \ 3. 2 . 1 The pre - trained weights for GLoVE can be found here : https://nlp.stanford.edu/projects/glove/\
+  \ 2 The pre - trained ELMo models can be found here : https://allennlp.org/elmo\
+  \ 3. 1 . 4 Transformer .The Transformer is an attention - based architecture for\
+  \ modeling sequential information , that is an alternative to recurrent neural networks\
+  \ [ 2 9 ] .As it was argued by Vaswani 2 0 1 7 [ 2 9 ] , Transformer architecture\
+  \ has several advantages over the RNN - based approaches .Because of RNNs ' sequential\
+  \ nature , they are much harder to parallelize on GPUs and too many steps between\
+  \ far away elements in a sequence make it hard for information to persist . 3. 1\
+  \ . 5 BERT .BERT [ 3 ] is in essence a language model that consists of a set of\
+  \ Transformer encoders stacked on top of each other .However it defines the language\
+  \ modeling task differently from ELMo and AWD - LSTM .A second task BERT is trained\
+  \ on is \" next sentence prediction \" .For all classification tasks , including\
+  \ the next sentence prediction , [ CLS ] token is used .BERT has two versions :\
+  \ BERT - base , with 1 2 encoder layers , hidden size of 7 6 8 , 1 2 multi - head\
+  \ attention heads and 1 1 0 M parameters in total and BERT - large , with 2 4 encoder\
+  \ layers , hidden size of 1 0 2 4 , 1 6 multi - head attention heads and 3 4 0 M\
+  \ parameters .Both of these models have been trained on BookCorpus [ 3 3 ] and English\
+  \ Wikipedia , which have in total more than 3, 5 0 0 M words 3 .In this subsection\
+  \ we will describe our implementation of BERT : 1 ) how further pre - training on\
+  \ domain corpus is done , 2 - 3 ) how we implemented BERT for classification and\
+  \ regression tasks , 4 ) training strategies we used during fine - tuning to prevent\
+  \ catastrophic forgetting .FinBERT for text classification .This is the recommended\
+  \ practice for using BERT for any classification task [ 3 ] .In order to deal with\
+  \ this phenomenon , we apply three techniques as it was proposed by Howard and Ruder\
+  \ ( 2 0 1 8) : slanted triangular learning rates , discriminative fine - tuning\
+  \ and gradual unfreezing .We aim to answer the following research questions : (\
+  \ RQ 1 ) What is the performance of FinBERT in short sentence classification compared\
+  \ with the other transfer learning methods like ELMo and ULMFit ? [ 1 5 ] is a dataset\
+  \ that was created for WWW ' 1 8 conference financial opinion mining and question\
+  \ answering challenge 6 .For contrastive experiments , we consider baselines with\
+  \ three different methods : LSTM classifier with GLoVe embeddings , LSTM classifier\
+  \ with ELMo embeddings and ULMFit classifier .The difference between two models\
+  \ is that one uses GLoVe embeddings , while the other uses ELMo embeddings .As it\
+  \ was explained in section 3. 1 . 3 , classification with ULMFit consists of three\
+  \ steps .We first further pre - train AWD - LSTM language model on TRC 2 - financial\
+  \ corpus for 3 epochs .After that , we fine - tune the model for classification\
+  \ on Financial 6 Data can be found here : https://sites.google.com/view/fiqa/home\
+  \ PhraseBank dataset , by adding a fully - connected layer to the output of pre\
+  \ - trained language model .Since our data , Financial PhraseBank suffers from label\
+  \ imbalance ( almost 6 0 % of all sentences are neutral ) , this gives another good\
+  \ measure of the classification performance .For our implementation BERT , we use\
+  \ a dropout probability of p = 0. 1 , warm - up proportion of 0. 2 , maximum sequence\
+  \ length of 6 4 tokens , a learning rate of 2e \u2212 5 and a mini - batch size\
+  \ of 6 4 .The results of FinBERT , the baseline methods and state - of - the - art\
+  \ on Financial PhraseBank dataset classification task can be seen on table 2 .For\
+  \ all of the measured metrics , FinBERT performs clearly the best among both the\
+  \ methods we implemented ourselves ( LSTM and ULMFit ) and the models reported by\
+  \ other papers ( LPS [ 1 7 ] , HSC [ 8 ] , FinSSLX [ 1 4 ] ) .In terms of accuracy\
+  \ , it is close to LPS and HSC , ( even better than LPS for examples with full agreement\
+  \ ) , however it produces a low F 1 - score .LSTM classifier with ELMo embeddings\
+  \ improves upon LSTM with static embeddings in all of the measured metrics .But\
+  \ it 's performance is comparable with LPS and HSC , besting them in accuracy .It\
+  \ also handily beats the machine learning based models LPS and HSC .ULMFit also\
+  \ outperforms FinSSLX , which has a text simplification step as well as pre - training\
+  \ of word embeddings on a large financial corpus with sentiment labels .FinBERT\
+  \ outperforms ULMFit , and consequently all of the other methods in all metrics\
+  \ .In order to measure the performance of the models on different sizes of labeled\
+  \ training datasets , we ran LSTM classifiers , ULMFit and FinBERT on 5 different\
+  \ configurations .However , once the training size becomes 2 5 0 , ULMFit and FinBERT\
+  \ starts to successfully differentiate between labels , with an accuracy as high\
+  \ as 8 0 % for FinBERT .All of the methods consistently get better with more data\
+  \ , but ULMFit and FinBERT does better with 2 5 0 examples than LSTM classifiers\
+  \ do with the whole dataset .We compare three models : 1 ) No further pre - training\
+  \ ( denoted by Vanilla BERT ) , 2 ) Further pre - training on classification training\
+  \ set ( denoted by FinBERT - task ) , 3 ) Further pre - training on domain corpus\
+  \ , TRC 2 - financial ( denoted by FinBERT - domain ) .We think that the last explanation\
+  \ is the likeliest , because for the subset of Financial Phrasebank that all of\
+  \ the annotators agree on the result , accuracy of Vanilla BERT is already 0. 9\
+  \ 6 .For measuring the performance of the techniques against catastrophic forgetting\
+  \ , we try four different settings : No adjustment ( NA ) , only with slanted triangular\
+  \ learning rate ( STL ) , slanted triangular learning rate and gradual unfreezing\
+  \ ( STL+GU ) and the techniques in the previous one , together with discriminative\
+  \ finetuning .We see from table 5 that using only discriminative fine - tuning with\
+  \ slanted triangular learning rates performs worse than using the slanted triangular\
+  \ learning rates alone .BERT has 1 2 Transformer encoder layers .In this paper ,\
+  \ we implemented BERT for the financial domain by further pre - training it on a\
+  \ financial corpus and fine - tuning it for sentiment analysis ( FinBERT ) .In addition\
+  \ to BERT , we also implemented other pre - training language models like ELMo and\
+  \ ULMFit for comparison purposes .ULMFit , further pre - trained on a financial\
+  \ corpus , beat the previous state - of - the art for the classification task ,\
+  \ only to a smaller degree than BERT .Another possible extension can be using FinBERT\
+  \ for other natural language processing tasks such as named entity recognition or\
+  \ question answering in financial domain .I am grateful to NIST , for sharing Reuters\
+  \ TRC - 2 corpus with me and to Malo et al. for making the excellent Financial PhraseBank\
+  \ publicly available ."

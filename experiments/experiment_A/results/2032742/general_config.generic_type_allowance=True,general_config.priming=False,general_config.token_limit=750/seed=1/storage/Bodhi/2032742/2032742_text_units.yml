@@ -1,0 +1,145 @@
+summary: 'This paper focuses on improving Convolutional Neural Networks (CNNs) for
+  practical inference, particularly addressing the trade-offs between model size,
+  classification speed, and accuracy. Key concepts include: **CNNs**, **fully connected
+  layers**, and **convolution layers**. The paper explores **sparsity** as a technique
+  to reduce model size and accelerate classification.  It introduces **Holistic SparseCNN**,
+  a method that simultaneously optimizes both convolution and fully connected layers.  The
+  core challenge is balancing the computational demands of convolution layers (where
+  most computation occurs) with the parameter count of fully connected layers.  The
+  paper defines **sparse convolution**, its advantages and limitations (e.g., lower
+  arithmetic intensity, overhead from tensor transformations).  It also discusses
+  the impact of **sparsity levels** on speedup, the use of **weight decay**, and the
+  importance of holistic optimization across layers to achieve optimal performance.  The
+  goal is to achieve significant speedups (e.g., 3.4x, 7.3x) in convolution layers
+  and improve classification throughput.  The paper uses AlexNet as a case study.
+
+  '
+text_units:
+  0:
+    summary: null
+    text_unit: "Phenomenally successful in practical inference problems , convolutional\
+      \ neural networks ( CNN ) are widely deployed in mobile devices , data centers\
+      \ , and even supercomputers .While pruning the fully connected layers reduces\
+      \ a CNN 's size considerably , it does not improve inference speed noticeably\
+      \ as the compute heavy parts lie in convolutions .Pruning CNNs in a way that\
+      \ increase inference speed often imposes specific sparsity structures , thus\
+      \ limiting the achievable sparsity levels . We present a method to realize simultaneously\
+      \ size economy and speed improvement while pruning CNNs .Deep neural networks\
+      \ , especially CNNs , have been pervasive in computer vision recently and served\
+      \ as a foundation for many critical applications ranging from image recognition\
+      \ [ 1 7 ] and video analytics [ 2 1 ] to autonomous driving [ 1 ] .The trained\
+      \ CNN models are deployed broadly for classification on a large variety of platforms\
+      \ , covering the spectrum of data center servers to mobile clients such as smart\
+      \ phones and autonomous - driving cars .When the trained CNN models perform\
+      \ classification on these platforms , especially on resource constraint mobile\
+      \ platforms , accuracy , ( classification ) speed , and model size are the three\
+      \ key requirements that together form the threepronged \" golden trident \"\
+      \ .Exploiting or imposing sparsity in CNNs [ 1 2 , 1 1 , 7 , 1 9 , 8 , 1 4 ]\
+      \ have been recently studied to reduce model size and/or accelerate classification\
+      \ speed with minimal or zero accuracy loss .One research thrust [ 1 2 , 1 1\
+      \ , 7 ] of sparse CNN has been focusing on reducing model size by sparsifying/compressing\
+      \ fully connected layers that have most of the parameters of the entire CNN\
+      \ model .However , such designs provide limited benefits to the classification\
+      \ speed of CNN , because the majority of the computation , i.e. , FLOPS , are\
+      \ within the convolution layers instead .For example , in AlexNet , while fully\
+      \ connected layers comprise more than 9 0 % of the total model size , it is\
+      \ the convolution layers that comprise more than 9 0 % of the total computation\
+      \ .Therefore , another research thrust [ 1 9 , 8 , 1 4 ] of sparse CNN focuses\
+      \ on convolution layers to reduce compute requirements and thus to improve classification\
+      \ speed .However , there are challenges for sparse CNN to achieve its full potential\
+      \ , including 1 ) sparse convolution has lower arithmetic intensity , thus additional\
+      \ data transfers involved in lowering tensors to matrices used in [ 1 9 , 8\
+      \ , 1 4 ] add higher overhead , 2 ) some prior sparse convolution methods [\
+      \ 8 , 1 4 ] are only applicable to large filters ( e.g. , 9 \xD7 9 ) , which\
+      \ limits their usage for modern CNNs where small filters ( e.g. , 3 \xD7 3 )\
+      \ are popular .Moreover , while current sparse CNN methods focus mostly on either\
+      \ fully connected layers or convolution layers , it is desirable to apply sparse\
+      \ methods to both layers simultaneously .We also provide guidelines for the\
+      \ range of sparsity that should be targeted during training . \u2022 A highly\
+      \ - optimized sparse CNN implementation that provides 3. 4 \xD7 and 7. 3 \xD7\
+      \ speedups of convolution layers in AlexNet over the best dense direct convolution\
+      \ performance on Xeon and Atom processors , respectively , with no accuracy\
+      \ drop .We also show 2, 3 7 1 and 1 2 0 images per second AlexNet classification\
+      \ throughput , which are significantly higher than the best published performance\
+      \ on respective platforms .Sparse methods have been popular to reduce model\
+      \ size and accelerate classification speed of CNNs with minimal or zero accuracy\
+      \ loss .However , the speedup of end - to - end performance is limited , because\
+      \ the fully connected layers only account for less than 1 0 % total computation\
+      \ in most CNNs such as AlexNet [ 1 7 ] .Another research thrust [ 1 9 , 8 ,\
+      \ 1 4 ] of sparse CNN focuses on convolution layers , mostly targeting the classification\
+      \ speed .However , prior work on sparse convolution involves the overhead of\
+      \ transforming tensors to matrices , and some are inapplicable to small kernel\
+      \ size and thus can not exploit the full potential of the sparse convolution\
+      \ .While"
+  1:
+    summary: null
+    text_unit: 'Perforated - CNN [ 9 ] also improves the classification speed of convolution
+      layers by eliminating redundant computations , it relies on interpolating redundant
+      convolution computation instead of using sparse methods .Therefore , the acceleration
+      due to sparse methods on classification speed of CNNs is not as good as the
+      sparse - method - enabled reduction of model size .Thesecond challenge is the
+      lack of holistical optimization of speed and size of sparse CNNs ( convolution
+      layers and fully connected layers mostly affect speed and size , respectively
+      ) .This section first presents our direct sparse convolution algorithm to advance
+      the stateof - the - art in sparse convolution for speeding up CNNs .Finally
+      , we discuss the synergies between sparse convolution and sparse methods on
+      fully connected layers .Figure 3 : Ideal speedups of sparse convolution over
+      dense convolution . conv 2 / 4 _direct : direct sparse convolution , conv 2
+      / 4 _lowered : sparse convolution on tensors lowered to matrices ( see Section
+      3. 1 . 2 for details ) .In convolution layers of CNN , an input channel is reused
+      against multiple output channels and vice versa , thus the arithmetic intensity
+      of our direct sparse convolution algorithm is higher than SpMV that is memory
+      bandwidth bound but lower than dense convolution that is compute - bound .The
+      potential acceleration of sparse convolution over dense convolution can be expressed
+      by where x is the proportion of non - zeros in filters ( lower the x , higher
+      the sparsity of weight tensor W ) , and this proportion directly affects the
+      final speedup .Therefore , sparse convolution ''s actual FLOP/s is lower than
+      that of dense convolution .Hence , there is a lower bound of useful sparsity
+      such that , with a sparsity lower than that , sparse convolution provides no
+      speedup over dense convolution .Therefore , in Atom processors , sparse convolution
+      outperform dense convolution in a wider range of sparsity and the speedups are
+      higher as will be shown in Section 5 .The lowering and lifting process has demonstrated
+      overhead for dense convolution [ 1 0 ] , and it is particularly problematic
+      for sparse convolution with intensity already much lower than its dense counter
+      part .Even though a bulk of computation belongs to convolution layers , fully
+      connected layers can become a bottleneck after sparse convolution optimizations
+      .Exploiting sparsity in fully connected layers is actually simpler than convolution
+      layers , because fully connected layers are implemented as GEMM and we can leverage
+      work done before on sparse matrix and dense matrix multiplication ( SpMDM )
+      .Simultaneously learning the sparsity of convolution and fully connected layers
+      is beneficial in amortizing the training cost and in performing holistic trade
+      - off among accuracy , classification speed , and model size .However , when
+      targeting no accuracy loss from sparse models , we find that using the same
+      regularization parameters across all layers tends to provide a high sparsity
+      on fully connected ( fc ) layers but not enough sparsity on convolution layers
+      to obtain speedups from sparse convolutions .Therefore , trading off a small
+      increase in model size of fc layers for a large speedup of convolution layers
+      can be often beneficial for holistically optimizing the accuracy - speed - size
+      of CNN .The lower convolution layers such as conv 1 in AlexNet are much harder
+      to sparsify than higher layers such as conv 2 and above unless we can tolerate
+      a large accuracy drop .Specifically , we use weight decay 1e - 5 , 5e - 5 ,
+      and 6e - 5 , for FC decay multiplier 1 , 0. 1 , and 0.0 1 , respectively . among
+      accuracy , speed , and model size .Our Holistic SparseCNN achieves a classification
+      speed of 2, 3 7 1 images per second on BDW , without accuracy drop compared
+      to the reference Caffe model .With'
+  2:
+    summary: null
+    text_unit: "no accuracy loss , our Holistic SparseCNN achieves a classification\
+      \ speed of 1 2 0 images per second , about 2. 8 \xD7 higher than a best case\
+      \ dense CNN implementation where all conv and fc layers would perform at the\
+      \ speed of SGEMM .This provides high sparsity on fc layers but sparsity on conv\
+      \ layers is so low that sparse convolution is slower than dense convolution\
+      \ on BDW .We use highly optimized SGEMM performance as a proxy of dense convolution\
+      \ performance to quantify layer - wise speedups of our Holistic SparseCNN .As\
+      \ a centerpiece of deep learning , CNNs are under relentless pressure to be\
+      \ smaller , faster , and with higher evaluation/classification accuracy .In\
+      \ this paper , we present Holistic SparseCNN , a collection of techniques that\
+      \ pave the road to unleash the full potential of sparse CNNs .Secondly , unlike\
+      \ prior research focusing on using sparse methods on convolution layers or fully\
+      \ connected layers in isolation , our new cross - layer holistic methodology\
+      \ not only exploits the synergies of sparse methods on convolution layers and\
+      \ fully connected layers but also enables optimizing accuracy , speed , and\
+      \ size together .Ourresults on AlexNet demonstrated 3. 4 \xD7 and 7. 3 \xD7\
+      \ speedups of convolution layers over the best dense convolution on representative\
+      \ server and mobile platforms as well as the best classification throughputs\
+      \ on these platforms ."

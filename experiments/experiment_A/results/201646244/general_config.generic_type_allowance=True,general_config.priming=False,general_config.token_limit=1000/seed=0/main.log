@@ -1,0 +1,1659 @@
+[2025-09-23 15:28:46,950][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 15:28:46,950][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 15:28:47,071][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 15:28:47,072][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 201646244
+[2025-09-23 15:28:47,073][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 15:28:47,073][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 15:28:47,637][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 15:28:48,461][root][INFO] - Token count: 1071
+[2025-09-23 15:28:48,523][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 15:28:49,142][root][INFO] - Token count: 2288
+[2025-09-23 15:28:49,232][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 15:28:50,136][root][INFO] - Token count: 2805
+[2025-09-23 15:28:52,753][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper introduces FinBERT, a BERT-based language model tailored for financial NLP tasks, specifically sentiment analysis. The core focus is on addressing challenges in financial text analysis, including the need for specialized vocabulary and limited labeled data. The study leverages transfer learning, comparing FinBERT's performance against other pre-trained models like ULMFit and ELMo. Key concepts include: **BERT**, a Transformer-based language model; **FinBERT**, the proposed financial domain adaptation; **ULMFit**, a transfer learning approach; **ELMo**, a contextualized word embedding model; **Financial PhraseBank** and **FiQA** datasets for evaluation; and techniques like discriminative fine-tuning, slanted triangular learning rates, and gradual unfreezing to optimize model training and prevent catastrophic forgetting. The research explores further pre-training on financial corpora and various fine-tuning strategies. The goal is to achieve state-of-the-art results in financial sentiment analysis, comparing FinBERT's performance against baseline methods (LSTM with GLoVe/ELMo) and existing models. The paper also discusses the architecture of LSTM, Transformer, and BERT.
+
+
+[2025-09-23 15:28:52,753][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 15:28:52,814][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 3 text units to Bodhi/201646244/201646244_text_units.yml
+[2025-09-23 15:28:52,843][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 3, Threads: 3. Distribution: 0 threads get 2 chunks, and 3 threads get 1 chunks. Chunks per thread: [1, 1, 1]
+[2025-09-23 15:28:52,844][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:28:52,846][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:28:52,846][Thread 0][INFO] - source chunk:
+We introduce FinBERT , a language model based on BERT , to tackle NLP tasks in the financial domain .Hence , automated sentiment or polarity analysis of texts produced by financial actors using natural language processing ( NLP ) methods has gained popularity during the last decade [ 4 ] .It requires to address two challenges : 1 ) The most sophisticated classification methods that make use of neural nets require vast amounts of labeled data and labeling financial text snippets requires costly expertise . 2 ) The sentiment analysis models trained on general corpora are not suited to the task , because financial texts have a specialized language with unique vocabulary and have a tendency to use vague expressions instead of easilyidentified negative/positive words .NLP transfer learning methods look like a promising solution to both of the challenges mentioned above , and are the focus of this thesis .For that , sentiment of a sentence from a financial news article towards the financial actor depicted in the sentence will be tried to be predicted , using the Financial PhraseBank created by Malo et al. ( 2 0 1 4 ) [ 1 7 ] and FiQA Task 1 sentiment scoring dataset [ 1 5 ] .The main contributions of this thesis are the following : • We introduce FinBERT , which is a language model based on BERT for financial NLP tasks .We evaluate FinBERT on two financial sentiment analysis datasets . • We achieve the state - of - the - art on FiQA sentiment scoring and Financial PhraseBank . • We implement two other pre - trained language models , ULMFit and ELMo for financial sentiment analysis and compare these with FinBERT . • We conduct experiments to investigate several aspects of the model , including : effects of further pre - training on financial corpus , training strategies to prevent catastrophic forgetting and fine - tuning only a small subset of model layers for decreasing training time without a significant drop in performance .This section describes previous research conducted on sentiment analysis in finance ( 2. 1 ) and text classification using pre - trained language models ( 2. 2 ) .Financial sentiment analysis differs from general sentiment analysis not only in domain , but also the purpose .Sohangir et al. ( 2 0 1 8) [ 2 6 ] apply several generic neural network architectures to a StockTwits dataset , finding CNN as the best performing neural network architecture .Lutz et al. 2 0 1 8 [ 1 3 ] take the approach of using doc 2 vec to generate sentence embeddings in a particular company ad - hoc announcement and utilize multi - instance learning to predict stock market outcomes . [ 1 4 ] use a combination of text simplification and LSTM network to classify a set of sentences from financial news according to their sentiment and achieve stateof - the - art results for the Financial PhraseBank , which is used in thesis as well .One of the most important recent developments in natural language processing is the realization that a model trained for language modeling can be successfully fine - tuned for most down - stream NLP tasks with small modifications .Using the pre - trained weights of ELMo , contextualized word embeddings can be calculated for any piece of text .Initializing embeddings for down - stream tasks with those were shown to improve performance on most tasks compared to static word embeddings such as word 2 vec or GloVe .For text classification tasks like SST - 5 , it achieved state - of - the - art performance when used together with a bi - attentive classification network [ 2 0 ] .ULMFit ( Universal Language Model Fine - tuning ) [ 5 ] was the first paper to achieve true transfer learning for NLP , as using novel techniques such as discriminative fine - tuning , slanted triangular learning rates and gradual unfreezing .ULMFit 's main idea of efficiently fine - tuning a pre - trained a language model for down - stream tasks was brought to another level with Bidirectional Encoder Representations from Transformers ( BERT ) [ 3 ] , which is also the main focus of this paper .These two factors enabled in to achieve state - of - the - art results in multiple NLP tasks such as , natural language inference or question answering .The specifics of fine - tuning BERT for text classification has not been researched thoroughly .They conduct a series of experiments regarding different configurations of BERT for text classification .In this section , we will present our BERT implementation for financial domain named as FinBERT , after giving a brief background on relevant neural architectures . 3. 1 . 1 LSTM .Long short - term memory ( LSTM ) is a type of recurrent neural network that allows long - term dependencies in a sequence to persist in the network by using " forget " and " update " gates .Since a text is a sequence of tokens , the first choice for any LSTM natural language processing model is determining how to initially represent a single token .One such pre - training algorithm is GLoVe ( Global Vectors for Word Representation ) [ 2 2 ] .In the center of ELMo , there is a bidirectional language model with multiple LSTM layers .Once the contextualized representations are extracted , these can be used to initialize any down - stream NLP task 2 . 3. 1 . 3
+[2025-09-23 15:28:52,847][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:28:52,847][Thread 1][INFO] - source chunk:
+ULMFit .ULMFit is a transfer learning model for down - stream NLP tasks , that make use of language model pre - training [ 5 ] .Unlike ELMo , with ULMFit , the whole language model is fine - tuned together with the task - specific layers .The underlying language model used in ULMFit is AWD - LSTM , which uses sophisticated dropout tuning strategies to better regularize its LSTM model [ 2 1 ] .Forclassification using ULMFit two linear layers are added to the pre - trained AWD - LSTM , first of which takes the pooled last hidden states as input .We implement these strategies with FinBERT as explained in section 3. 2 . 1 The pre - trained weights for GLoVE can be found here : https://nlp.stanford.edu/projects/glove/ 2 The pre - trained ELMo models can be found here : https://allennlp.org/elmo 3. 1 . 4 Transformer .The Transformer is an attention - based architecture for modeling sequential information , that is an alternative to recurrent neural networks [ 2 9 ] .As it was argued by Vaswani 2 0 1 7 [ 2 9 ] , Transformer architecture has several advantages over the RNN - based approaches .Because of RNNs ' sequential nature , they are much harder to parallelize on GPUs and too many steps between far away elements in a sequence make it hard for information to persist . 3. 1 . 5 BERT .BERT [ 3 ] is in essence a language model that consists of a set of Transformer encoders stacked on top of each other .However it defines the language modeling task differently from ELMo and AWD - LSTM .A second task BERT is trained on is " next sentence prediction " .For all classification tasks , including the next sentence prediction , [ CLS ] token is used .BERT has two versions : BERT - base , with 1 2 encoder layers , hidden size of 7 6 8 , 1 2 multi - head attention heads and 1 1 0 M parameters in total and BERT - large , with 2 4 encoder layers , hidden size of 1 0 2 4 , 1 6 multi - head attention heads and 3 4 0 M parameters .Both of these models have been trained on BookCorpus [ 3 3 ] and English Wikipedia , which have in total more than 3, 5 0 0 M words 3 .In this subsection we will describe our implementation of BERT : 1 ) how further pre - training on domain corpus is done , 2 - 3 ) how we implemented BERT for classification and regression tasks , 4 ) training strategies we used during fine - tuning to prevent catastrophic forgetting .FinBERT for text classification .This is the recommended practice for using BERT for any classification task [ 3 ] .In order to deal with this phenomenon , we apply three techniques as it was proposed by Howard and Ruder ( 2 0 1 8) : slanted triangular learning rates , discriminative fine - tuning and gradual unfreezing .We aim to answer the following research questions : ( RQ 1 ) What is the performance of FinBERT in short sentence classification compared with the other transfer learning methods like ELMo and ULMFit ? [ 1 5 ] is a dataset that was created for WWW ' 1 8 conference financial opinion mining and question answering challenge 6 .For contrastive experiments , we consider baselines with three different methods : LSTM classifier with GLoVe embeddings , LSTM classifier with ELMo embeddings and ULMFit classifier .The difference between two models is that one uses GLoVe embeddings , while the other uses ELMo embeddings .As it was explained in section 3. 1 . 3 , classification with ULMFit consists of three steps .We first further pre - train AWD - LSTM language model on TRC 2 - financial corpus for 3 epochs .After that , we fine - tune the model for classification on Financial 6 Data can be found here : https://sites.google.com/view/fiqa/home PhraseBank dataset , by adding a fully - connected layer to the output of pre - trained language model .Since our data , Financial PhraseBank suffers from label imbalance ( almost 6 0 % of all sentences are neutral ) , this gives another good measure of the classification performance .For our implementation BERT , we use a dropout probability of p = 0. 1 , warm - up proportion of 0. 2 , maximum sequence length of 6 4 tokens , a learning rate of 2e − 5 and a mini - batch size of 6 4 .The results of FinBERT , the baseline methods and state - of - the - art on Financial PhraseBank dataset classification task can be seen on table 2 .For all of the measured metrics , FinBERT performs clearly the best among both the methods we implemented ourselves ( LSTM and ULMFit ) and the models reported by other papers ( LPS [ 1 7 ] , HSC [ 8 ] , FinSSLX [ 1 4 ] ) .In terms of accuracy , it is close to LPS and HSC , ( even better than LPS for examples with full agreement ) , however it produces a low F 1 - score .LSTM classifier with ELMo embeddings improves upon LSTM with static embeddings in all of the measured metrics .But it 's performance is comparable with LPS and HSC , besting them in accuracy .It also handily beats the machine learning based models LPS and HSC .ULMFit also outperforms FinSSLX , which has a text simplification step as well as pre - training of word embeddings on a large financial corpus with sentiment labels
+[2025-09-23 15:28:52,848][Thread 2][INFO] - source chunk:
+.FinBERT outperforms ULMFit , and consequently all of the other methods in all metrics .In order to measure the performance of the models on different sizes of labeled training datasets , we ran LSTM classifiers , ULMFit and FinBERT on 5 different configurations .However , once the training size becomes 2 5 0 , ULMFit and FinBERT starts to successfully differentiate between labels , with an accuracy as high as 8 0 % for FinBERT .Allof the methods consistently get better with more data , but ULMFit and FinBERT does better with 2 5 0 examples than LSTM classifiers do with the whole dataset .We compare three models : 1 ) No further pre - training ( denoted by Vanilla BERT ) , 2 ) Further pre - training on classification training set ( denoted by FinBERT - task ) , 3 ) Further pre - training on domain corpus , TRC 2 - financial ( denoted by FinBERT - domain ) .We think that the last explanation is the likeliest , because for the subset of Financial Phrasebank that all of the annotators agree on the result , accuracy of Vanilla BERT is already 0. 9 6 .For measuring the performance of the techniques against catastrophic forgetting , we try four different settings : No adjustment ( NA ) , only with slanted triangular learning rate ( STL ) , slanted triangular learning rate and gradual unfreezing ( STL+GU ) and the techniques in the previous one , together with discriminative finetuning .We see from table 5 that using only discriminative fine - tuning with slanted triangular learning rates performs worse than using the slanted triangular learning rates alone .BERT has 1 2 Transformer encoder layers .In this paper , we implemented BERT for the financial domain by further pre - training it on a financial corpus and fine - tuning it for sentiment analysis ( FinBERT ) .In addition to BERT , we also implemented other pre - training language models like ELMo and ULMFit for comparison purposes .ULMFit , further pre - trained on a financial corpus , beat the previous state - of - the art for the classification task , only to a smaller degree than BERT .Another possible extension can be using FinBERT for other natural language processing tasks such as named entity recognition or question answering in financial domain .I am grateful to NIST , for sharing Reuters TRC - 2 corpus with me and to Malo et al. for making the excellent Financial PhraseBank publicly available .
+[2025-09-23 15:28:52,848][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:28:52,849][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:52,849][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:28:52,849][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:28:52,849][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 15:28:52,850][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:52,850][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:52,856][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 15:28:52,862][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 15:28:55,976][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FinBERT
+    type: method
+    description: A method implemented for the financial domain by further pre-training BERT on a financial corpus and fine-tuning it for sentiment analysis.
+  - name: ULMFit
+    type: method
+    description: A pre-trained language model used for comparison, further pre-trained on a financial corpus.
+  - name: BERT
+    type: method
+    description: A Transformer-based model used as a base for FinBERT, with 12 Transformer encoder layers.
+  - name: LSTM classifiers
+    type: method
+    description: A type of neural network used for classification tasks, compared with ULMFit and FinBERT.
+  - name: Sentiment analysis
+    type: task
+    description: The task for which FinBERT was fine-tuned.
+  - name: Financial Phrasebank
+    type: dataset
+    description: A dataset used for sentiment analysis in the financial domain.
+  - name: Reuters TRC-2 corpus
+    type: dataset
+    description: A financial corpus used for pre-training FinBERT.
+  - name: Named entity recognition
+    type: task
+    description: A potential application for FinBERT in the financial domain.
+  - name: Question answering
+    type: task
+    description: Another potential application for FinBERT in the financial domain.
+  - name: Slanted triangular learning rate (STL)
+    type: method
+    description: A learning rate strategy used in the experiments.
+  - name: Gradual unfreezing (GU)
+    type: method
+    description: A technique used in conjunction with STL.
+  - name: Discriminative fine-tuning
+    type: method
+    description: A fine-tuning technique used in the experiments.
+  - name: ELMo
+    type: method
+    description: A pre-training language model implemented for comparison purposes.
+
+[2025-09-23 15:28:55,981][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:56,260][heimdall.core][INFO] - Cleaned output : entities:
+  - name: ULMFit
+    type: method
+    description: A transfer learning model for down-stream NLP tasks, utilizing language model pre-training.
+  - name: AWD-LSTM
+    type: method
+    description: The underlying language model used in ULMFit, employing dropout tuning strategies for regularization.
+  - name: Transformer
+    type: method
+    description: An attention-based architecture for modeling sequential information, offering an alternative to recurrent neural networks.
+  - name: BERT
+    type: method
+    description: A language model consisting of Transformer encoders, used for various NLP tasks, including classification.
+  - name: FinBERT
+    type: method
+    description: An implementation of BERT for text classification, incorporating techniques like slanted triangular learning rates and discriminative fine-tuning.
+  - name: ELMo
+    type: method
+    description: A language model that ULMFit is compared against.
+  - name: GLoVE
+    type: method
+    description: Word embeddings used as a baseline for comparison.
+  - name: LSTM classifier
+    type: method
+    description: A recurrent neural network-based classifier used as a baseline.
+  - name: Financial PhraseBank dataset
+    type: dataset
+    description: A dataset used for fine-tuning and evaluating the performance of FinBERT and other methods in a classification task.
+  - name: TRC financial corpus
+    type: dataset
+    description: A financial corpus used for pre-training the AWD-LSTM language model.
+  - name: BookCorpus
+    type: dataset
+    description: A dataset used for training BERT.
+  - name: English Wikipedia
+    type: dataset
+    description: A dataset used for training BERT.
+  - name: Text classification
+    type: task
+    description: The task of categorizing text into predefined classes, a primary application of FinBERT.
+  - name: Next sentence prediction
+    type: task
+    description: A task that BERT is trained on.
+
+[2025-09-23 15:28:56,267][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:56,445][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FinBERT
+    type: method
+    description: A language model based on BERT, designed for NLP tasks in the financial domain.
+  - name: BERT
+    type: method
+    description: Bidirectional Encoder Representations from Transformers, a transformer-based language model.
+  - name: NLP (Natural Language Processing)
+    type: generic
+    description: The field of computer science concerned with enabling computers to understand and process human language.
+  - name: Financial sentiment analysis
+    type: task
+    description: The task of automatically determining the sentiment or emotional tone expressed in financial texts.
+  - name: Financial PhraseBank
+    type: dataset
+    description: A dataset used for financial sentiment analysis, created by Malo et al. (2014).
+  - name: FiQA Task 1 sentiment scoring dataset
+    type: dataset
+    description: A dataset used for financial sentiment analysis.
+  - name: ULMFit
+    type: method
+    description: Universal Language Model Fine-tuning, a transfer learning method for NLP.
+  - name: ELMo
+    type: method
+    description: Embeddings from Language Models, a method for generating contextualized word embeddings.
+  - name: LSTM (Long short-term memory)
+    type: method
+    description: A type of recurrent neural network that allows long-term dependencies in a sequence to persist in the network.
+  - name: Text classification
+    type: task
+    description: The task of categorizing text into predefined classes or categories.
+  - name: Transfer learning
+    type: generic
+    description: A machine learning technique where a model trained on one task is reused on a second related task.
+  - name: Sentiment analysis
+    type: task
+    description: The process of computationally identifying and categorizing opinions expressed in a piece of text, especially to determine a writer's attitude with respect to a particular topic or document.
+  - name: GLoVe (Global Vectors for Word Representation)
+    type: method
+    description: An unsupervised learning algorithm for obtaining vector representations for words.
+  - name: CNN
+    type: method
+    description: Convolutional Neural Network, a type of neural network architecture.
+
+[2025-09-23 15:28:56,452][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:57,090][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including the specific configurations of FinBERT (FinBERT-task, FinBERT-domain) and Vanilla BERT.
+loop_required: true
+
+[2025-09-23 15:28:57,092][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:57,092][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:28:57,385][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are missing some key datasets and methods mentioned in the text. Specifically, the datasets used for comparison and the methods used for baselines are missing.
+loop_required: true
+
+[2025-09-23 15:28:57,387][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:57,387][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:28:57,535][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets mentioned in the text. Specifically, doc2vec, and the StockTwits dataset are missing.
+loop_required: true
+
+[2025-09-23 15:28:57,537][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:57,537][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:28:58,380][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FinBERT-task
+    type: method
+    description: A specific configuration of FinBERT, further pre-trained on the classification training set.
+  - name: FinBERT-domain
+    type: method
+    description: A specific configuration of FinBERT, further pre-trained on the domain corpus, TRC 2-financial.
+  - name: Vanilla BERT
+    type: method
+    description: The BERT model without any further pre-training.
+
+[2025-09-23 15:28:58,381][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:58,818][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Doc2vec
+    type: method
+    description: A method used to generate sentence embeddings.
+  - name: StockTwits dataset
+    type: dataset
+    description: A dataset used for sentiment analysis, specifically with generic neural network architectures like CNN.
+
+[2025-09-23 15:28:58,819][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:59,418][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Financial PhraseBank dataset
+    type: dataset
+    description: A dataset used for financial sentiment analysis, specifically for classification tasks. It is used to evaluate the performance of FinBERT and other methods.
+  - name: LSTM classifier with GLoVe embeddings
+    type: method
+    description: A baseline method for text classification, using Long Short-Term Memory (LSTM) networks with GloVe word embeddings.
+  - name: LSTM classifier with ELMo embeddings
+    type: method
+    description: A baseline method for text classification, using Long Short-Term Memory (LSTM) networks with ELMo word embeddings.
+  - name: ULMFit classifier
+    type: method
+    description: A baseline method for text classification, using the ULMFit transfer learning model.
+  - name: TRC 2-financial corpus
+    type: dataset
+    description: A financial corpus used for further pre-training the AWD-LSTM language model in the ULMFit classifier.
+  - name: FinBERT
+    type: method
+    description: A method for text classification based on BERT, fine-tuned for financial text.
+
+[2025-09-23 15:28:59,419][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:28:59,492][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but the paper discusses different configurations and settings for the methods. Adding the specific settings used in the experiments would improve the understanding of the results.
+loop_required: true
+
+[2025-09-23 15:28:59,494][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:28:59,494][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:29:00,074][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key datasets and methods discussed in the context of transfer learning and model comparison. Specifically, the paper mentions the use of a bi-attentive classification network and SST-5 dataset, which are relevant to the evaluation of ELMo.
+loop_required: true
+
+[2025-09-23 15:29:00,075][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:29:00,075][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:29:00,513][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including the specific datasets used for evaluation of the baselines.
+loop_required: true
+
+[2025-09-23 15:29:00,513][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:29:00,513][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:29:01,396][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Bi-attentive classification network
+    type: method
+    description: A specific neural network architecture used in conjunction with ELMo for text classification tasks, as mentioned in the context of achieving state-of-the-art performance on tasks like SST-5.
+  - name: SST-5
+    type: dataset
+    description: A dataset used for text classification tasks, specifically mentioned in the context of evaluating the performance of ELMo when used with a bi-attentive classification network.
+
+[2025-09-23 15:29:01,398][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:29:02,169][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Financial PhraseBank
+    type: dataset
+    description: The dataset used for classification tasks, specifically for evaluating the performance of FinBERT and comparing it with baseline methods like LSTM and ULMFit. It suffers from label imbalance, with almost 60% of sentences being neutral.
+  - name: TRC 2-financial corpus
+    type: dataset
+    description: The dataset used for pre-training the AWD-LSTM language model in the ULMFit classifier.
+  - name: Financial PhraseBank dataset
+    type: dataset
+    description: The dataset used for fine-tuning the ULMFit model for classification.
+
+[2025-09-23 15:29:02,170][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:29:02,289][heimdall.core][INFO] - Cleaned output : entities:
+  - name: LSTM classifiers
+    type: method
+    description: The LSTM classifiers were run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.
+  - name: ULMFit
+    type: method
+    description: The ULMFit method was run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.
+  - name: FinBERT
+    type: method
+    description: The FinBERT method was run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.
+  - name: No adjustment (NA)
+    type: method
+    description: One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.
+  - name: only with slanted triangular learning rate (STL)
+    type: method
+    description: One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.
+  - name: slanted triangular learning rate and gradual unfreezing (STL+GU)
+    type: method
+    description: One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.
+  - name: discriminative finetuning
+    type: method
+    description: One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting, used in conjunction with the other settings.
+  - name: Vanilla BERT
+    type: method
+    description: BERT model without further pre-training.
+  - name: FinBERT - task
+    type: method
+    description: BERT model with further pre-training on classification training set.
+  - name: FinBERT - domain
+    type: method
+    description: BERT model with further pre-training on domain corpus, TRC 2 - financial.
+
+[2025-09-23 15:29:02,291][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:29:02,503][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are missing some key methods and datasets mentioned in the text, specifically those related to the experiments and comparisons conducted in the research.
+loop_required: true
+
+[2025-09-23 15:29:02,505][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:29:02,506][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:29:03,454][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are comprehensive, covering the key methods, datasets, and tasks discussed in the text. No significant omissions are apparent that would warrant another extraction pass. The iteration counter is approaching the maximum, so further iterations are not advisable.
+loop_required: false
+
+[2025-09-23 15:29:03,455][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:03,455][Thread 2][INFO] - 
+--extract_relationships--
+
+[2025-09-23 15:29:03,644][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from including the specific techniques used in BERT implementation, such as "slanted triangular learning rates", "discriminative fine-tuning", and "gradual unfreezing". These are key aspects of the FinBERT implementation and would improve the knowledge graph.
+loop_required: true
+
+[2025-09-23 15:29:03,644][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 15:29:03,644][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 15:29:03,985][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FiQA Task 1 sentiment scoring dataset
+    type: dataset
+    description: A dataset used for sentiment scoring in the financial domain, utilized in the experiments to evaluate FinBERT.
+  - name: Financial PhraseBank
+    type: dataset
+    description: A dataset of financial phrases used for sentiment analysis, used to evaluate FinBERT and compare it with other models.
+  - name: ULMFit
+    type: method
+    description: A pre-trained language model used for financial sentiment analysis and compared with FinBERT.
+  - name: ELMo
+    type: method
+    description: A pre-trained language model used for financial sentiment analysis and compared with FinBERT.
+
+[2025-09-23 15:29:03,987][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:29:04,921][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iterations reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 15:29:04,921][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:04,921][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 15:29:05,689][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Slanted Triangular Learning Rates
+    type: method
+    description: A technique used in the FinBERT implementation to adjust the learning rate during training, starting with a small rate, increasing it linearly, and then decreasing it. This helps to stabilize training and improve performance.
+  - name: Discriminative Fine-tuning
+    type: method
+    description: A technique used in FinBERT where different layers of the model are fine-tuned with different learning rates. This allows for more nuanced adjustments to the model's parameters, improving performance.
+  - name: Gradual Unfreezing
+    type: method
+    description: A technique used in FinBERT where layers of the pre-trained model are unfrozen sequentially during fine-tuning. This prevents catastrophic forgetting and allows the model to adapt to the new task more effectively.
+
+[2025-09-23 15:29:05,690][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 15:29:06,970][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iteration count reached. No further extraction loops are permitted.
+loop_required: false
+
+[2025-09-23 15:29:06,972][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:06,972][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 15:29:08,357][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: ULMFit
+    description: FinBERT outperforms ULMFit.
+    strength: 9.0
+  - source_entity: FinBERT
+    target_entity: Sentiment analysis
+    description: FinBERT was fine-tuned for sentiment analysis.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: BERT
+    description: FinBERT is implemented based on BERT.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: Financial Phrasebank
+    description: FinBERT was evaluated on the Financial Phrasebank dataset.
+    strength: 7.0
+  - source_entity: FinBERT
+    target_entity: Reuters TRC-2 corpus
+    description: Reuters TRC-2 corpus was used for pre-training FinBERT.
+    strength: 7.0
+  - source_entity: FinBERT
+    target_entity: Named entity recognition
+    description: Named entity recognition is a potential application for FinBERT.
+    strength: 6.0
+  - source_entity: FinBERT
+    target_entity: Question answering
+    description: Question answering is a potential application for FinBERT.
+    strength: 6.0
+  - source_entity: ULMFit
+    target_entity: Sentiment analysis
+    description: ULMFit was used for the classification task.
+    strength: 7.0
+  - source_entity: BERT
+    target_entity: FinBERT
+    description: FinBERT is based on BERT.
+    strength: 8.0
+  - source_entity: LSTM classifiers
+    target_entity: ULMFit
+    description: LSTM classifiers were compared with ULMFit.
+    strength: 7.0
+  - source_entity: LSTM classifiers
+    target_entity: FinBERT
+    description: LSTM classifiers were compared with FinBERT.
+    strength: 7.0
+  - source_entity: Vanilla BERT
+    target_entity: FinBERT - task
+    description: Vanilla BERT was compared with FinBERT - task.
+    strength: 7.0
+  - source_entity: Vanilla BERT
+    target_entity: FinBERT - domain
+    description: Vanilla BERT was compared with FinBERT - domain.
+    strength: 7.0
+  - source_entity: FinBERT - task
+    target_entity: FinBERT - domain
+    description: FinBERT - task was compared with FinBERT - domain.
+    strength: 7.0
+  - source_entity: Slanted triangular learning rate (STL)
+    target_entity: Gradual unfreezing (GU)
+    description: Gradual unfreezing (GU) was used in conjunction with Slanted triangular learning rate (STL).
+    strength: 7.0
+  - source_entity: discriminative finetuning
+    target_entity: Slanted triangular learning rate (STL)
+    description: Discriminative fine-tuning was used with Slanted triangular learning rate (STL).
+    strength: 7.0
+  - source_entity: ELMo
+    target_entity: ULMFit
+    description: ELMo and ULMFit were implemented for comparison purposes.
+    strength: 7.0
+
+[2025-09-23 15:29:08,364][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 15:29:09,406][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing the comparison of FinBERT, ULMFit, and LSTM classifiers on different training dataset sizes. Also, the relationship between BERT and the financial domain is missing.
+loop_required: true
+
+[2025-09-23 15:29:09,408][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing the comparison of FinBERT, ULMFit, and LSTM classifiers on different training dataset sizes. Also, the relationship between BERT and the financial domain is missing.
+[2025-09-23 15:29:09,408][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:09,408][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:10,658][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: BERT
+    description: FinBERT is a language model based on BERT.
+    strength: 10.0
+  - source_entity: FinBERT
+    target_entity: NLP (Natural Language Processing)
+    description: FinBERT is designed for NLP tasks in the financial domain.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: Financial sentiment analysis
+    description: FinBERT is used for financial sentiment analysis.
+    strength: 9.0
+  - source_entity: FinBERT
+    target_entity: FiQA Task 1 sentiment scoring dataset
+    description: FinBERT is evaluated on the FiQA Task 1 sentiment scoring dataset.
+    strength: 7.0
+  - source_entity: FinBERT
+    target_entity: Financial PhraseBank
+    description: FinBERT is evaluated on the Financial PhraseBank dataset.
+    strength: 7.0
+  - source_entity: FinBERT
+    target_entity: ULMFit
+    description: FinBERT is compared with ULMFit for financial sentiment analysis.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: ELMo
+    description: FinBERT is compared with ELMo for financial sentiment analysis.
+    strength: 8.0
+  - source_entity: BERT
+    target_entity: NLP (Natural Language Processing)
+    description: BERT is used for NLP tasks.
+    strength: 7.0
+  - source_entity: ULMFit
+    target_entity: NLP (Natural Language Processing)
+    description: ULMFit is a transfer learning method for NLP.
+    strength: 7.0
+  - source_entity: ELMo
+    target_entity: NLP (Natural Language Processing)
+    description: ELMo is a method for generating contextualized word embeddings for NLP.
+    strength: 7.0
+  - source_entity: Financial sentiment analysis
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for financial sentiment analysis.
+    strength: 8.0
+  - source_entity: Financial sentiment analysis
+    target_entity: FiQA Task 1 sentiment scoring dataset
+    description: FiQA Task 1 sentiment scoring dataset is used for financial sentiment analysis.
+    strength: 8.0
+  - source_entity: Text classification
+    target_entity: SST-5
+    description: SST-5 is a dataset used for text classification.
+    strength: 7.0
+  - source_entity: ELMo
+    target_entity: Bi-attentive classification network
+    description: ELMo is used with a bi-attentive classification network for text classification.
+    strength: 8.0
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: NLP (Natural Language Processing)
+    description: LSTM is a type of recurrent neural network used in NLP.
+    strength: 6.0
+  - source_entity: CNN
+    target_entity: StockTwits dataset
+    description: CNN is applied to the StockTwits dataset.
+    strength: 7.0
+  - source_entity: Doc2vec
+    target_entity: NLP (Natural Language Processing)
+    description: Doc2vec is used to generate sentence embeddings for NLP tasks.
+    strength: 6.0
+  - source_entity: Transfer learning
+    target_entity: NLP (Natural Language Processing)
+    description: Transfer learning is a technique used in NLP.
+    strength: 7.0
+  - source_entity: Sentiment analysis
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for sentiment analysis.
+    strength: 7.0
+  - source_entity: ELMo
+    target_entity: Text classification
+    description: ELMo is used for text classification.
+    strength: 7.0
+  - source_entity: ULMFit
+    target_entity: Transfer learning
+    description: ULMFit is a transfer learning method.
+    strength: 8.0
+  - source_entity: BERT
+    target_entity: Text classification
+    description: BERT is used for text classification.
+    strength: 7.0
+
+[2025-09-23 15:29:10,669][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 15:29:11,830][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between CNN and StockTwits dataset, and LSTM and Financial PhraseBank. Also, the relationship between Doc2vec and Financial PhraseBank is missing.
+loop_required: true
+
+[2025-09-23 15:29:11,831][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between CNN and StockTwits dataset, and LSTM and Financial PhraseBank. Also, the relationship between Doc2vec and Financial PhraseBank is missing.
+[2025-09-23 15:29:11,831][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:11,831][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:12,918][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: ULMFit
+    target_entity: AWD-LSTM
+    description: AWD-LSTM is the underlying language model used in ULMFit.
+    strength: 10.0
+  - source_entity: ULMFit
+    target_entity: ELMo
+    description: ULMFit is compared against ELMo.
+    strength: 7.0
+  - source_entity: FinBERT
+    target_entity: Text classification
+    description: FinBERT is used for text classification.
+    strength: 10.0
+  - source_entity: BERT
+    target_entity: Next sentence prediction
+    description: BERT is trained on the next sentence prediction task.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: Financial PhraseBank dataset
+    description: FinBERT is evaluated on the Financial PhraseBank dataset.
+    strength: 10.0
+  - source_entity: LSTM classifier with GLoVe embeddings
+    target_entity: GLoVE
+    description: LSTM classifier with GLoVe embeddings uses GLoVe word embeddings.
+    strength: 10.0
+  - source_entity: LSTM classifier with ELMo embeddings
+    target_entity: ELMo
+    description: LSTM classifier with ELMo embeddings uses ELMo embeddings.
+    strength: 10.0
+  - source_entity: ULMFit classifier
+    target_entity: AWD-LSTM
+    description: ULMFit classifier uses AWD-LSTM.
+    strength: 9.0
+  - source_entity: ULMFit classifier
+    target_entity: TRC 2-financial corpus
+    description: TRC 2-financial corpus is used for pre-training the AWD-LSTM language model in the ULMFit classifier.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: Slanted Triangular Learning Rates
+    description: Slanted Triangular Learning Rates is a technique used in FinBERT.
+    strength: 9.0
+  - source_entity: FinBERT
+    target_entity: Discriminative Fine-tuning
+    description: Discriminative Fine-tuning is a technique used in FinBERT.
+    strength: 9.0
+  - source_entity: FinBERT
+    target_entity: Gradual Unfreezing
+    description: Gradual Unfreezing is a technique used in FinBERT.
+    strength: 9.0
+  - source_entity: BERT
+    target_entity: BookCorpus
+    description: BERT was trained on BookCorpus.
+    strength: 9.0
+  - source_entity: BERT
+    target_entity: English Wikipedia
+    description: BERT was trained on English Wikipedia.
+    strength: 9.0
+  - source_entity: ULMFit
+    target_entity: Financial PhraseBank dataset
+    description: Financial PhraseBank dataset is used for fine-tuning the ULMFit model for classification.
+    strength: 9.0
+  - source_entity: AWD-LSTM
+    target_entity: TRC 2-financial corpus
+    description: TRC 2-financial corpus is used for pre-training the AWD-LSTM language model.
+    strength: 8.0
+  - source_entity: FinBERT
+    target_entity: BERT
+    description: FinBERT is based on BERT.
+    strength: 10.0
+  - source_entity: FinBERT
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for evaluating FinBERT.
+    strength: 10.0
+  - source_entity: LSTM classifier with ELMo embeddings
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for evaluating LSTM classifier with ELMo embeddings.
+    strength: 7.0
+  - source_entity: LSTM classifier with GLoVe embeddings
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for evaluating LSTM classifier with GLoVe embeddings.
+    strength: 7.0
+  - source_entity: ULMFit classifier
+    target_entity: Financial PhraseBank
+    description: Financial PhraseBank is used for evaluating ULMFit classifier.
+    strength: 7.0
+
+[2025-09-23 15:29:12,923][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 15:29:13,536][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: CNN
+    target_entity: StockTwits dataset
+    description: CNN is applied to the StockTwits dataset.
+    strength: 8
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: Financial PhraseBank
+    description: LSTM is used to classify sentences from financial news and achieves state-of-the-art results for the Financial PhraseBank.
+    strength: 9
+  - source_entity: Doc2vec
+    target_entity: Financial PhraseBank
+    description: Doc2vec is used to generate sentence embeddings, which are then used to predict stock market outcomes.
+    strength: 7
+
+[2025-09-23 15:29:13,537][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is a language model based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'FinBERT is designed for NLP tasks in the financial domain.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial sentiment analysis', 'description': 'FinBERT is used for financial sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FinBERT is evaluated on the FiQA Task 1 sentiment scoring dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'ELMo', 'description': 'FinBERT is compared with ELMo for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'BERT is used for NLP tasks.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ULMFit is a transfer learning method for NLP.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ELMo is a method for generating contextualized word embeddings for NLP.', 'strength': 7.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FiQA Task 1 sentiment scoring dataset is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Text classification', 'target_entity': 'SST-5', 'description': 'SST-5 is a dataset used for text classification.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Bi-attentive classification network', 'description': 'ELMo is used with a bi-attentive classification network for text classification.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'LSTM is a type of recurrent neural network used in NLP.', 'strength': 6.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 7.0}, {'source_entity': 'Doc2vec', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Doc2vec is used to generate sentence embeddings for NLP tasks.', 'strength': 6.0}, {'source_entity': 'Transfer learning', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Transfer learning is a technique used in NLP.', 'strength': 7.0}, {'source_entity': 'Sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Text classification', 'description': 'ELMo is used for text classification.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'Transfer learning', 'description': 'ULMFit is a transfer learning method.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification.', 'strength': 7.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'Financial PhraseBank', 'description': 'LSTM is used to classify sentences from financial news and achieves state-of-the-art results for the Financial PhraseBank.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'Financial PhraseBank', 'description': 'Doc2vec is used to generate sentence embeddings, which are then used to predict stock market outcomes.', 'strength': 7.0}]
+
+[2025-09-23 15:29:13,538][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 15:29:13,543][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: ULMFit
+    description: FinBERT is compared with ULMFit in terms of performance.
+    strength: 9
+  - source_entity: FinBERT
+    target_entity: LSTM classifiers
+    description: FinBERT is compared with LSTM classifiers in terms of performance.
+    strength: 8
+  - source_entity: ULMFit
+    target_entity: LSTM classifiers
+    description: ULMFit is compared with LSTM classifiers in terms of performance.
+    strength: 7
+  - source_entity: BERT
+    target_entity: Financial Phrasebank
+    description: BERT is used in the financial domain by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.
+    strength: 7
+  - source_entity: BERT
+    target_entity: FinBERT
+    description: BERT is implemented for the financial domain and is referred to as FinBERT.
+    strength: 10
+  - source_entity: FinBERT
+    target_entity: Sentiment analysis
+    description: FinBERT is fine-tuned for sentiment analysis.
+    strength: 9
+  - source_entity: FinBERT
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT is further pre-trained on a financial corpus, such as Reuters TRC-2 corpus.
+    strength: 7
+  - source_entity: FinBERT
+    target_entity: Named entity recognition
+    description: FinBERT can be used for named entity recognition in the financial domain.
+    strength: 6
+  - source_entity: FinBERT
+    target_entity: Question answering
+    description: FinBERT can be used for question answering in the financial domain.
+    strength: 6
+  - source_entity: FinBERT
+    target_entity: FinBERT-domain
+    description: FinBERT is further pre-trained on a domain corpus, TRC 2 - financial (denoted by FinBERT - domain).
+    strength: 9
+  - source_entity: FinBERT
+    target_entity: FinBERT-task
+    description: FinBERT is further pre-trained on classification training set (denoted by FinBERT - task).
+    strength: 9
+  - source_entity: FinBERT-domain
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT-domain is pre-trained on the Reuters TRC-2 corpus.
+    strength: 9
+  - source_entity: FinBERT-task
+    target_entity: Financial Phrasebank
+    description: FinBERT-task is pre-trained on the Financial Phrasebank.
+    strength: 9
+
+[2025-09-23 15:29:13,545][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT outperforms ULMFit.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT was fine-tuned for sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is implemented based on BERT.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT was evaluated on the Financial Phrasebank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'Reuters TRC-2 corpus was used for pre-training FinBERT.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'Named entity recognition is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'Question answering is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'ULMFit', 'target_entity': 'Sentiment analysis', 'description': 'ULMFit was used for the classification task.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'FinBERT is based on BERT.', 'strength': 8.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'ULMFit', 'description': 'LSTM classifiers were compared with ULMFit.', 'strength': 7.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'FinBERT', 'description': 'LSTM classifiers were compared with FinBERT.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - task', 'description': 'Vanilla BERT was compared with FinBERT - task.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - domain', 'description': 'Vanilla BERT was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'FinBERT - task', 'target_entity': 'FinBERT - domain', 'description': 'FinBERT - task was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'Slanted triangular learning rate (STL)', 'target_entity': 'Gradual unfreezing (GU)', 'description': 'Gradual unfreezing (GU) was used in conjunction with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'discriminative finetuning', 'target_entity': 'Slanted triangular learning rate (STL)', 'description': 'Discriminative fine-tuning was used with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'ULMFit', 'description': 'ELMo and ULMFit were implemented for comparison purposes.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit in terms of performance.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'LSTM classifiers', 'description': 'FinBERT is compared with LSTM classifiers in terms of performance.', 'strength': 8.0}, {'source_entity': 'ULMFit', 'target_entity': 'LSTM classifiers', 'description': 'ULMFit is compared with LSTM classifiers in terms of performance.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'Financial Phrasebank', 'description': 'BERT is used in the financial domain by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'BERT is implemented for the financial domain and is referred to as FinBERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT is fine-tuned for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT is further pre-trained on a financial corpus, such as Reuters TRC-2 corpus.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'FinBERT can be used for named entity recognition in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'FinBERT can be used for question answering in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-domain', 'description': 'FinBERT is further pre-trained on a domain corpus, TRC 2 - financial (denoted by FinBERT - domain).', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-task', 'description': 'FinBERT is further pre-trained on classification training set (denoted by FinBERT - task).', 'strength': 9.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain is pre-trained on the Reuters TRC-2 corpus.', 'strength': 9.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT-task is pre-trained on the Financial Phrasebank.', 'strength': 9.0}]
+
+[2025-09-23 15:29:13,545][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 15:29:14,328][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between 'Transformer' and 'BERT', and also the relationship between 'BERT' and 'Text classification'. The content explicitly states that BERT is based on Transformer architecture and is used for text classification.
+loop_required: true
+
+[2025-09-23 15:29:14,328][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between 'Transformer' and 'BERT', and also the relationship between 'BERT' and 'Text classification'. The content explicitly states that BERT is based on Transformer architecture and is used for text classification.
+[2025-09-23 15:29:14,328][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:14,329][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:14,694][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between CNN and NLP, LSTM and NLP, and Doc2vec and NLP. Also, the relationship between FinBERT and BERT could be more specific.
+loop_required: true
+
+[2025-09-23 15:29:14,694][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between CNN and NLP, LSTM and NLP, and Doc2vec and NLP. Also, the relationship between FinBERT and BERT could be more specific.
+[2025-09-23 15:29:14,695][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:14,695][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:15,128][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between the different pre-training strategies (Vanilla BERT, FinBERT-task, FinBERT-domain) and the datasets/tasks they were applied to. Also, the relationship between 'No adjustment (NA)', 'only with slanted triangular learning rate (STL)', 'slanted triangular learning rate and gradual unfreezing (STL+GU)' and 'discriminative finetuning' and the performance is missing.
+loop_required: true
+
+[2025-09-23 15:29:15,129][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between the different pre-training strategies (Vanilla BERT, FinBERT-task, FinBERT-domain) and the datasets/tasks they were applied to. Also, the relationship between 'No adjustment (NA)', 'only with slanted triangular learning rate (STL)', 'slanted triangular learning rate and gradual unfreezing (STL+GU)' and 'discriminative finetuning' and the performance is missing.
+[2025-09-23 15:29:15,129][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:15,129][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:15,353][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Transformer
+    target_entity: BERT
+    description: BERT is based on the Transformer architecture.
+    strength: 10
+  - source_entity: BERT
+    target_entity: Text classification
+    description: BERT is used for text classification tasks.
+    strength: 10
+
+[2025-09-23 15:29:15,355][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ULMFit', 'target_entity': 'AWD-LSTM', 'description': 'AWD-LSTM is the underlying language model used in ULMFit.', 'strength': 10.0}, {'source_entity': 'ULMFit', 'target_entity': 'ELMo', 'description': 'ULMFit is compared against ELMo.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Text classification', 'description': 'FinBERT is used for text classification.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Next sentence prediction', 'description': 'BERT is trained on the next sentence prediction task.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank dataset', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'GLoVE', 'description': 'LSTM classifier with GLoVe embeddings uses GLoVe word embeddings.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'ELMo', 'description': 'LSTM classifier with ELMo embeddings uses ELMo embeddings.', 'strength': 10.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'AWD-LSTM', 'description': 'ULMFit classifier uses AWD-LSTM.', 'strength': 9.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model in the ULMFit classifier.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Slanted Triangular Learning Rates', 'description': 'Slanted Triangular Learning Rates is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Discriminative Fine-tuning', 'description': 'Discriminative Fine-tuning is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Gradual Unfreezing', 'description': 'Gradual Unfreezing is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'BookCorpus', 'description': 'BERT was trained on BookCorpus.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'English Wikipedia', 'description': 'BERT was trained on English Wikipedia.', 'strength': 9.0}, {'source_entity': 'ULMFit', 'target_entity': 'Financial PhraseBank dataset', 'description': 'Financial PhraseBank dataset is used for fine-tuning the ULMFit model for classification.', 'strength': 9.0}, {'source_entity': 'AWD-LSTM', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating FinBERT.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with ELMo embeddings.', 'strength': 7.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with GLoVe embeddings.', 'strength': 7.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating ULMFit classifier.', 'strength': 7.0}, {'source_entity': 'Transformer', 'target_entity': 'BERT', 'description': 'BERT is based on the Transformer architecture.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification tasks.', 'strength': 10.0}]
+
+[2025-09-23 15:29:15,356][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 15:29:16,682][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are mostly complete, but there are a few missing relationships. Specifically, the content mentions that BERT has two versions: BERT-base and BERT-large. Also, the content mentions that FinBERT is used for classification and regression tasks.
+loop_required: true
+
+[2025-09-23 15:29:16,683][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 1, column 160:
+     ... tions that BERT has two versions: BERT-base and BERT-large. Also ... 
+                                         ^
+[2025-09-23 15:29:16,689][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: CNN
+    target_entity: NLP (Natural Language Processing)
+    description: CNN (Convolutional Neural Networks) is used for NLP tasks, as demonstrated by Sohangir et al. (2018) who applied CNN architectures to the StockTwits dataset.
+    strength: 8
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: NLP (Natural Language Processing)
+    description: LSTM networks are a type of recurrent neural network used in NLP, as mentioned in the context of text classification and sentence sentiment analysis.
+    strength: 9
+  - source_entity: Doc2vec
+    target_entity: NLP (Natural Language Processing)
+    description: Doc2vec is used for generating sentence embeddings, which is a technique within the field of NLP.
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: BERT
+    description: FinBERT is a language model based on BERT, specifically designed for financial NLP tasks.
+    strength: 10
+
+[2025-09-23 15:29:16,692][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is a language model based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'FinBERT is designed for NLP tasks in the financial domain.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial sentiment analysis', 'description': 'FinBERT is used for financial sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FinBERT is evaluated on the FiQA Task 1 sentiment scoring dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'ELMo', 'description': 'FinBERT is compared with ELMo for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'BERT is used for NLP tasks.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ULMFit is a transfer learning method for NLP.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ELMo is a method for generating contextualized word embeddings for NLP.', 'strength': 7.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FiQA Task 1 sentiment scoring dataset is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Text classification', 'target_entity': 'SST-5', 'description': 'SST-5 is a dataset used for text classification.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Bi-attentive classification network', 'description': 'ELMo is used with a bi-attentive classification network for text classification.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'LSTM is a type of recurrent neural network used in NLP.', 'strength': 6.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 7.0}, {'source_entity': 'Doc2vec', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Doc2vec is used to generate sentence embeddings for NLP tasks.', 'strength': 6.0}, {'source_entity': 'Transfer learning', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Transfer learning is a technique used in NLP.', 'strength': 7.0}, {'source_entity': 'Sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Text classification', 'description': 'ELMo is used for text classification.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'Transfer learning', 'description': 'ULMFit is a transfer learning method.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification.', 'strength': 7.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'Financial PhraseBank', 'description': 'LSTM is used to classify sentences from financial news and achieves state-of-the-art results for the Financial PhraseBank.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'Financial PhraseBank', 'description': 'Doc2vec is used to generate sentence embeddings, which are then used to predict stock market outcomes.', 'strength': 7.0}, {'source_entity': 'CNN', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'CNN (Convolutional Neural Networks) is used for NLP tasks, as demonstrated by Sohangir et al. (2018) who applied CNN architectures to the StockTwits dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'LSTM networks are a type of recurrent neural network used in NLP, as mentioned in the context of text classification and sentence sentiment analysis.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Doc2vec is used for generating sentence embeddings, which is a technique within the field of NLP.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is a language model based on BERT, specifically designed for financial NLP tasks.', 'strength': 10.0}]
+
+[2025-09-23 15:29:16,692][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 15:29:18,008][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted relationships are missing connections between LSTM, CNN, Doc2vec, and the datasets they are applied to (StockTwits, Financial PhraseBank). Also, the relationship between Transfer learning and ULMFit is missing.
+loop_required: True
+
+[2025-09-23 15:29:18,009][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The extracted relationships are missing connections between LSTM, CNN, Doc2vec, and the datasets they are applied to (StockTwits, Financial PhraseBank). Also, the relationship between Transfer learning and ULMFit is missing.
+[2025-09-23 15:29:18,010][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:18,010][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:18,656][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Vanilla BERT
+    target_entity: Financial Phrasebank
+    description: Vanilla BERT's performance was measured on a subset of the Financial Phrasebank.
+    strength: 7
+  - source_entity: FinBERT-task
+    target_entity: Sentiment analysis
+    description: FinBERT-task was further pre-trained on a classification training set, which is related to sentiment analysis.
+    strength: 8
+  - source_entity: FinBERT-domain
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT-domain was further pre-trained on the Reuters TRC-2 corpus.
+    strength: 9
+  - source_entity: No adjustment (NA)
+    target_entity: only with slanted triangular learning rate (STL)
+    description: 'No adjustment (NA)' was compared with 'only with slanted triangular learning rate (STL)' to measure the performance of the techniques against catastrophic forgetting.
+    strength: 8
+  - source_entity: only with slanted triangular learning rate (STL)
+    target_entity: slanted triangular learning rate and gradual unfreezing (STL+GU)
+    description: 'only with slanted triangular learning rate (STL)' was compared with 'slanted triangular learning rate and gradual unfreezing (STL+GU)' to measure the performance of the techniques against catastrophic forgetting.
+    strength: 8
+  - source_entity: slanted triangular learning rate and gradual unfreezing (STL+GU)
+    target_entity: discriminative finetuning
+    description: 'slanted triangular learning rate and gradual unfreezing (STL+GU)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.
+    strength: 8
+  - source_entity: only with slanted triangular learning rate (STL)
+    target_entity: discriminative finetuning
+    description: 'only with slanted triangular learning rate (STL)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.
+    strength: 6
+  - source_entity: FinBERT
+    target_entity: Sentiment analysis
+    description: FinBERT was fine-tuned for sentiment analysis.
+    strength: 9
+
+[2025-09-23 15:29:18,658][heimdall.core][WARNING] - Validation failed: while parsing a block mapping
+  in "<unicode string>", line 14, column 5:
+      - source_entity: No adjustment (NA)
+        ^
+expected <block end>, but found '<scalar>'
+  in "<unicode string>", line 16, column 39:
+     ... scription: 'No adjustment (NA)' was compared with 'only with sla ... 
+                                         ^
+[2025-09-23 15:29:19,451][heimdall.core][INFO] - Cleaned output : reason_to_loop: "The relationships are mostly complete, but there are a few missing relationships. Specifically, the content mentions that BERT has two versions: BERT-base and BERT-large. Also, the content mentions that FinBERT is used for classification and regression tasks."
+loop_required: true
+
+[2025-09-23 15:29:19,452][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are mostly complete, but there are a few missing relationships. Specifically, the content mentions that BERT has two versions: BERT-base and BERT-large. Also, the content mentions that FinBERT is used for classification and regression tasks.
+[2025-09-23 15:29:19,453][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:19,453][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:21,692][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: BERT
+    target_entity: BERT-base
+    description: BERT has two versions, BERT-base and BERT-large.
+    strength: 10
+  - source_entity: BERT
+    target_entity: BERT-large
+    description: BERT has two versions, BERT-base and BERT-large.
+    strength: 10
+  - source_entity: FinBERT
+    target_entity: Text classification
+    description: FinBERT is used for text classification tasks.
+    strength: 10
+  - source_entity: FinBERT
+    target_entity: Financial PhraseBank dataset
+    description: FinBERT is used for classification tasks on the Financial PhraseBank dataset.
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: TRC 2-financial corpus
+    description: FinBERT is used for classification tasks on the TRC 2-financial corpus.
+    strength: 6
+
+[2025-09-23 15:29:21,695][Thread 1][WARNING] - Found false extractions in relationships: [{'source_entity': 'BERT', 'target_entity': 'BERT-base', 'description': 'BERT has two versions, BERT-base and BERT-large.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'BERT-large', 'description': 'BERT has two versions, BERT-base and BERT-large.', 'strength': 10.0}]
+[2025-09-23 15:29:21,695][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ULMFit', 'target_entity': 'AWD-LSTM', 'description': 'AWD-LSTM is the underlying language model used in ULMFit.', 'strength': 10.0}, {'source_entity': 'ULMFit', 'target_entity': 'ELMo', 'description': 'ULMFit is compared against ELMo.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Text classification', 'description': 'FinBERT is used for text classification.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Next sentence prediction', 'description': 'BERT is trained on the next sentence prediction task.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank dataset', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'GLoVE', 'description': 'LSTM classifier with GLoVe embeddings uses GLoVe word embeddings.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'ELMo', 'description': 'LSTM classifier with ELMo embeddings uses ELMo embeddings.', 'strength': 10.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'AWD-LSTM', 'description': 'ULMFit classifier uses AWD-LSTM.', 'strength': 9.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model in the ULMFit classifier.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Slanted Triangular Learning Rates', 'description': 'Slanted Triangular Learning Rates is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Discriminative Fine-tuning', 'description': 'Discriminative Fine-tuning is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Gradual Unfreezing', 'description': 'Gradual Unfreezing is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'BookCorpus', 'description': 'BERT was trained on BookCorpus.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'English Wikipedia', 'description': 'BERT was trained on English Wikipedia.', 'strength': 9.0}, {'source_entity': 'ULMFit', 'target_entity': 'Financial PhraseBank dataset', 'description': 'Financial PhraseBank dataset is used for fine-tuning the ULMFit model for classification.', 'strength': 9.0}, {'source_entity': 'AWD-LSTM', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating FinBERT.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with ELMo embeddings.', 'strength': 7.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with GLoVe embeddings.', 'strength': 7.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating ULMFit classifier.', 'strength': 7.0}, {'source_entity': 'Transformer', 'target_entity': 'BERT', 'description': 'BERT is based on the Transformer architecture.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification tasks.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Text classification', 'description': 'FinBERT is used for text classification tasks.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank dataset', 'description': 'FinBERT is used for classification tasks on the Financial PhraseBank dataset.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'TRC 2-financial corpus', 'description': 'FinBERT is used for classification tasks on the TRC 2-financial corpus.', 'strength': 6.0}]
+
+[2025-09-23 15:29:21,696][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 15:29:21,970][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: Financial PhraseBank
+    description: LSTM is used for classifying sentences from financial news, achieving state-of-the-art results on the Financial PhraseBank dataset.
+    strength: 8
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: StockTwits dataset
+    description: The text mentions that Sohangir et al. (2018) applied several generic neural network architectures to a StockTwits dataset, finding CNN as the best performing neural network architecture. Although LSTM is not explicitly mentioned in the context of StockTwits, it is a type of neural network architecture, and the feedback requests connections between LSTM and datasets.
+    strength: 3
+  - source_entity: CNN
+    target_entity: StockTwits dataset
+    description: CNN is applied to the StockTwits dataset.
+    strength: 9
+  - source_entity: Doc2vec
+    target_entity: StockTwits dataset
+    description: Doc2vec is used to generate sentence embeddings in a particular company ad-hoc announcement and utilize multi - instance learning to predict stock market outcomes.
+    strength: 7
+  - source_entity: Transfer learning
+    target_entity: ULMFit
+    description: ULMFit is a transfer learning method.
+    strength: 10
+  - source_entity: LSTM (Long short-term memory)
+    target_entity: FiQA Task 1 sentiment scoring dataset
+    description: Although not explicitly stated in the provided text, the feedback requests connections between LSTM and datasets. LSTM is a type of neural network architecture, and the FiQA Task 1 sentiment scoring dataset is a financial sentiment analysis dataset.
+    strength: 2
+  - source_entity: Doc2vec
+    target_entity: Financial PhraseBank
+    description: Although not explicitly stated in the provided text, the feedback requests connections between Doc2vec and datasets. Doc2vec is a method for generating sentence embeddings, and the Financial PhraseBank is a financial sentiment analysis dataset.
+    strength: 2
+  - source_entity: CNN
+    target_entity: Financial PhraseBank
+    description: Although not explicitly stated in the provided text, the feedback requests connections between CNN and datasets. CNN is a type of neural network architecture, and the Financial PhraseBank is a financial sentiment analysis dataset.
+    strength: 2
+
+[2025-09-23 15:29:21,979][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is a language model based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'FinBERT is designed for NLP tasks in the financial domain.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial sentiment analysis', 'description': 'FinBERT is used for financial sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FinBERT is evaluated on the FiQA Task 1 sentiment scoring dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'ELMo', 'description': 'FinBERT is compared with ELMo for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'BERT is used for NLP tasks.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ULMFit is a transfer learning method for NLP.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'ELMo is a method for generating contextualized word embeddings for NLP.', 'strength': 7.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Financial sentiment analysis', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'FiQA Task 1 sentiment scoring dataset is used for financial sentiment analysis.', 'strength': 8.0}, {'source_entity': 'Text classification', 'target_entity': 'SST-5', 'description': 'SST-5 is a dataset used for text classification.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Bi-attentive classification network', 'description': 'ELMo is used with a bi-attentive classification network for text classification.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'LSTM is a type of recurrent neural network used in NLP.', 'strength': 6.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 7.0}, {'source_entity': 'Doc2vec', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Doc2vec is used to generate sentence embeddings for NLP tasks.', 'strength': 6.0}, {'source_entity': 'Transfer learning', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Transfer learning is a technique used in NLP.', 'strength': 7.0}, {'source_entity': 'Sentiment analysis', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'Text classification', 'description': 'ELMo is used for text classification.', 'strength': 7.0}, {'source_entity': 'ULMFit', 'target_entity': 'Transfer learning', 'description': 'ULMFit is a transfer learning method.', 'strength': 8.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification.', 'strength': 7.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'Financial PhraseBank', 'description': 'LSTM is used to classify sentences from financial news and achieves state-of-the-art results for the Financial PhraseBank.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'Financial PhraseBank', 'description': 'Doc2vec is used to generate sentence embeddings, which are then used to predict stock market outcomes.', 'strength': 7.0}, {'source_entity': 'CNN', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'CNN (Convolutional Neural Networks) is used for NLP tasks, as demonstrated by Sohangir et al. (2018) who applied CNN architectures to the StockTwits dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'LSTM networks are a type of recurrent neural network used in NLP, as mentioned in the context of text classification and sentence sentiment analysis.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'NLP (Natural Language Processing)', 'description': 'Doc2vec is used for generating sentence embeddings, which is a technique within the field of NLP.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is a language model based on BERT, specifically designed for financial NLP tasks.', 'strength': 10.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'Financial PhraseBank', 'description': 'LSTM is used for classifying sentences from financial news, achieving state-of-the-art results on the Financial PhraseBank dataset.', 'strength': 8.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'StockTwits dataset', 'description': 'The text mentions that Sohangir et al. (2018) applied several generic neural network architectures to a StockTwits dataset, finding CNN as the best performing neural network architecture. Although LSTM is not explicitly mentioned in the context of StockTwits, it is a type of neural network architecture, and the feedback requests connections between LSTM and datasets.', 'strength': 3.0}, {'source_entity': 'CNN', 'target_entity': 'StockTwits dataset', 'description': 'CNN is applied to the StockTwits dataset.', 'strength': 9.0}, {'source_entity': 'Doc2vec', 'target_entity': 'StockTwits dataset', 'description': 'Doc2vec is used to generate sentence embeddings in a particular company ad-hoc announcement and utilize multi - instance learning to predict stock market outcomes.', 'strength': 7.0}, {'source_entity': 'Transfer learning', 'target_entity': 'ULMFit', 'description': 'ULMFit is a transfer learning method.', 'strength': 10.0}, {'source_entity': 'LSTM (Long short-term memory)', 'target_entity': 'FiQA Task 1 sentiment scoring dataset', 'description': 'Although not explicitly stated in the provided text, the feedback requests connections between LSTM and datasets. LSTM is a type of neural network architecture, and the FiQA Task 1 sentiment scoring dataset is a financial sentiment analysis dataset.', 'strength': 2.0}, {'source_entity': 'Doc2vec', 'target_entity': 'Financial PhraseBank', 'description': 'Although not explicitly stated in the provided text, the feedback requests connections between Doc2vec and datasets. Doc2vec is a method for generating sentence embeddings, and the Financial PhraseBank is a financial sentiment analysis dataset.', 'strength': 2.0}, {'source_entity': 'CNN', 'target_entity': 'Financial PhraseBank', 'description': 'Although not explicitly stated in the provided text, the feedback requests connections between CNN and datasets. CNN is a type of neural network architecture, and the Financial PhraseBank is a financial sentiment analysis dataset.', 'strength': 2.0}]
+
+[2025-09-23 15:29:21,980][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 15:29:23,167][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit has been reached. No further iterations are permitted, even if additional relationships could be extracted. The current relationships are considered complete for this iteration.'
+loop_required: false
+
+[2025-09-23 15:29:23,169][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further iterations are permitted, even if additional relationships could be extracted. The current relationships are considered complete for this iteration.
+[2025-09-23 15:29:23,169][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:29:23,170][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 15:29:23,170][Thread 0][ERROR] - File doesn't exist: Bodhi/201646244/0/201646244_intermediate_data.yml. Creating file..
+[2025-09-23 15:29:23,190][Thread 0][INFO] - Nodes & relations saved to Bodhi/201646244/0/201646244_intermediate_data.yml
+[2025-09-23 15:29:23,190][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 15:29:23,190][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:29:23,191][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 30.34745717048645
+
+[2025-09-23 15:29:23,430][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between FinBERT and the techniques (Slanted Triangular Learning Rates, Discriminative Fine-tuning, Gradual Unfreezing) are present, but the content also mentions that these techniques are used to address the problem of "catastrophic forgetting". This relationship is missing. Also, the relationship between BERT and "Transformer" architecture is present, but the content also mentions that BERT has two versions: BERT-base and BERT-large. This relationship is missing.
+loop_required: true
+
+[2025-09-23 15:29:23,432][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 1, column 446:
+     ... tions that BERT has two versions: BERT-base and BERT-large. This ... 
+                                         ^
+[2025-09-23 15:29:23,461][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Vanilla BERT
+    target_entity: Financial Phrasebank
+    description: Vanilla BERT's performance was measured on a subset of the Financial Phrasebank.
+    strength: 7
+  - source_entity: FinBERT-task
+    target_entity: Sentiment analysis
+    description: FinBERT-task was further pre-trained on a classification training set, which is related to sentiment analysis.
+    strength: 8
+  - source_entity: FinBERT-domain
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT-domain was further pre-trained on the Reuters TRC-2 corpus.
+    strength: 9
+  - source_entity: 'No adjustment (NA)'
+    target_entity: 'only with slanted triangular learning rate (STL)'
+    description: "'No adjustment (NA)' was compared with 'only with slanted triangular learning rate (STL)' to measure the performance of the techniques against catastrophic forgetting."
+    strength: 8
+  - source_entity: 'only with slanted triangular learning rate (STL)'
+    target_entity: 'slanted triangular learning rate and gradual unfreezing (STL+GU)'
+    description: "'only with slanted triangular learning rate (STL)' was compared with 'slanted triangular learning rate and gradual unfreezing (STL+GU)' to measure the performance of the techniques against catastrophic forgetting."
+    strength: 8
+  - source_entity: 'slanted triangular learning rate and gradual unfreezing (STL+GU)'
+    target_entity: discriminative finetuning
+    description: "'slanted triangular learning rate and gradual unfreezing (STL+GU)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting."
+    strength: 8
+  - source_entity: 'only with slanted triangular learning rate (STL)'
+    target_entity: discriminative finetuning
+    description: "'only with slanted triangular learning rate (STL)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting."
+    strength: 6
+  - source_entity: FinBERT
+    target_entity: Sentiment analysis
+    description: FinBERT was fine-tuned for sentiment analysis.
+    strength: 9
+
+[2025-09-23 15:29:23,468][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT outperforms ULMFit.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT was fine-tuned for sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is implemented based on BERT.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT was evaluated on the Financial Phrasebank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'Reuters TRC-2 corpus was used for pre-training FinBERT.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'Named entity recognition is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'Question answering is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'ULMFit', 'target_entity': 'Sentiment analysis', 'description': 'ULMFit was used for the classification task.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'FinBERT is based on BERT.', 'strength': 8.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'ULMFit', 'description': 'LSTM classifiers were compared with ULMFit.', 'strength': 7.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'FinBERT', 'description': 'LSTM classifiers were compared with FinBERT.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - task', 'description': 'Vanilla BERT was compared with FinBERT - task.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - domain', 'description': 'Vanilla BERT was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'FinBERT - task', 'target_entity': 'FinBERT - domain', 'description': 'FinBERT - task was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'Slanted triangular learning rate (STL)', 'target_entity': 'Gradual unfreezing (GU)', 'description': 'Gradual unfreezing (GU) was used in conjunction with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'discriminative finetuning', 'target_entity': 'Slanted triangular learning rate (STL)', 'description': 'Discriminative fine-tuning was used with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'ULMFit', 'description': 'ELMo and ULMFit were implemented for comparison purposes.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit in terms of performance.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'LSTM classifiers', 'description': 'FinBERT is compared with LSTM classifiers in terms of performance.', 'strength': 8.0}, {'source_entity': 'ULMFit', 'target_entity': 'LSTM classifiers', 'description': 'ULMFit is compared with LSTM classifiers in terms of performance.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'Financial Phrasebank', 'description': 'BERT is used in the financial domain by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'BERT is implemented for the financial domain and is referred to as FinBERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT is fine-tuned for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT is further pre-trained on a financial corpus, such as Reuters TRC-2 corpus.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'FinBERT can be used for named entity recognition in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'FinBERT can be used for question answering in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-domain', 'description': 'FinBERT is further pre-trained on a domain corpus, TRC 2 - financial (denoted by FinBERT - domain).', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-task', 'description': 'FinBERT is further pre-trained on classification training set (denoted by FinBERT - task).', 'strength': 9.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain is pre-trained on the Reuters TRC-2 corpus.', 'strength': 9.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT-task is pre-trained on the Financial Phrasebank.', 'strength': 9.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'Financial Phrasebank', 'description': "Vanilla BERT's performance was measured on a subset of the Financial Phrasebank.", 'strength': 7.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT-task was further pre-trained on a classification training set, which is related to sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain was further pre-trained on the Reuters TRC-2 corpus.', 'strength': 9.0}, {'source_entity': 'No adjustment (NA)', 'target_entity': 'only with slanted triangular learning rate (STL)', 'description': "'No adjustment (NA)' was compared with 'only with slanted triangular learning rate (STL)' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'only with slanted triangular learning rate (STL)', 'target_entity': 'slanted triangular learning rate and gradual unfreezing (STL+GU)', 'description': "'only with slanted triangular learning rate (STL)' was compared with 'slanted triangular learning rate and gradual unfreezing (STL+GU)' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'slanted triangular learning rate and gradual unfreezing (STL+GU)', 'target_entity': 'discriminative finetuning', 'description': "'slanted triangular learning rate and gradual unfreezing (STL+GU)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'only with slanted triangular learning rate (STL)', 'target_entity': 'discriminative finetuning', 'description': "'only with slanted triangular learning rate (STL)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT was fine-tuned for sentiment analysis.', 'strength': 9.0}]
+
+[2025-09-23 15:29:23,469][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 15:29:24,795][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between 'FinBERT', 'FinBERT-task', 'FinBERT-domain', 'Vanilla BERT', 'Financial Phrasebank', and 'Sentiment analysis' could be expanded to include more specific details about their performance and the datasets used. Also, the relationship between 'BERT' and 'FinBERT' can be expanded to include the pre-training process.
+loop_required: True
+
+[2025-09-23 15:29:24,796][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between 'FinBERT', 'FinBERT-task', 'FinBERT-domain', 'Vanilla BERT', 'Financial Phrasebank', and 'Sentiment analysis' could be expanded to include more specific details about their performance and the datasets used. Also, the relationship between 'BERT' and 'FinBERT' can be expanded to include the pre-training process.
+[2025-09-23 15:29:24,796][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:24,796][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:26,486][heimdall.core][INFO] - Cleaned output : reason_to_loop: "The relationships between FinBERT and the techniques (Slanted Triangular Learning Rates, Discriminative Fine-tuning, Gradual Unfreezing) are present, but the content also mentions that these techniques are used to address the problem of \"catastrophic forgetting\". This relationship is missing. Also, the relationship between BERT and \"Transformer\" architecture is present, but the content also mentions that BERT has two versions: BERT-base and BERT-large. This relationship is missing."
+loop_required: true
+
+[2025-09-23 15:29:26,486][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between FinBERT and the techniques (Slanted Triangular Learning Rates, Discriminative Fine-tuning, Gradual Unfreezing) are present, but the content also mentions that these techniques are used to address the problem of "catastrophic forgetting". This relationship is missing. Also, the relationship between BERT and "Transformer" architecture is present, but the content also mentions that BERT has two versions: BERT-base and BERT-large. This relationship is missing.
+[2025-09-23 15:29:26,486][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 15:29:26,486][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 15:29:28,426][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: Sentiment analysis
+    description: FinBERT is fine-tuned for sentiment analysis.
+    strength: 10
+  - source_entity: FinBERT
+    target_entity: Financial Phrasebank
+    description: FinBERT's performance is evaluated on the Financial Phrasebank dataset.
+    strength: 8
+  - source_entity: FinBERT-task
+    target_entity: Sentiment analysis
+    description: FinBERT-task is a variant of FinBERT pre-trained on a classification training set and used for sentiment analysis.
+    strength: 9
+  - source_entity: FinBERT-domain
+    target_entity: Sentiment analysis
+    description: FinBERT-domain is a variant of FinBERT pre-trained on a financial corpus and used for sentiment analysis.
+    strength: 9
+  - source_entity: Vanilla BERT
+    target_entity: Sentiment analysis
+    description: Vanilla BERT is used as a baseline model for sentiment analysis.
+    strength: 7
+  - source_entity: BERT
+    target_entity: FinBERT
+    description: FinBERT is built upon BERT by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.
+    strength: 10
+  - source_entity: BERT
+    target_entity: FinBERT-domain
+    description: FinBERT-domain is a version of BERT pre-trained on a financial corpus.
+    strength: 9
+  - source_entity: BERT
+    target_entity: FinBERT-task
+    description: FinBERT-task is a version of BERT pre-trained on a classification training set.
+    strength: 9
+  - source_entity: FinBERT
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT is pre-trained on a financial corpus, which could include Reuters TRC-2 corpus.
+    strength: 7
+  - source_entity: FinBERT-domain
+    target_entity: Reuters TRC-2 corpus
+    description: FinBERT-domain is pre-trained on a financial corpus, which could include Reuters TRC-2 corpus.
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: Named entity recognition
+    description: FinBERT can be extended for other natural language processing tasks such as named entity recognition.
+    strength: 5
+  - source_entity: FinBERT
+    target_entity: Question answering
+    description: FinBERT can be extended for other natural language processing tasks such as question answering.
+    strength: 5
+
+[2025-09-23 15:29:28,430][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT outperforms ULMFit.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT was fine-tuned for sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is implemented based on BERT.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT was evaluated on the Financial Phrasebank dataset.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'Reuters TRC-2 corpus was used for pre-training FinBERT.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'Named entity recognition is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'Question answering is a potential application for FinBERT.', 'strength': 6.0}, {'source_entity': 'ULMFit', 'target_entity': 'Sentiment analysis', 'description': 'ULMFit was used for the classification task.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'FinBERT is based on BERT.', 'strength': 8.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'ULMFit', 'description': 'LSTM classifiers were compared with ULMFit.', 'strength': 7.0}, {'source_entity': 'LSTM classifiers', 'target_entity': 'FinBERT', 'description': 'LSTM classifiers were compared with FinBERT.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - task', 'description': 'Vanilla BERT was compared with FinBERT - task.', 'strength': 7.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'FinBERT - domain', 'description': 'Vanilla BERT was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'FinBERT - task', 'target_entity': 'FinBERT - domain', 'description': 'FinBERT - task was compared with FinBERT - domain.', 'strength': 7.0}, {'source_entity': 'Slanted triangular learning rate (STL)', 'target_entity': 'Gradual unfreezing (GU)', 'description': 'Gradual unfreezing (GU) was used in conjunction with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'discriminative finetuning', 'target_entity': 'Slanted triangular learning rate (STL)', 'description': 'Discriminative fine-tuning was used with Slanted triangular learning rate (STL).', 'strength': 7.0}, {'source_entity': 'ELMo', 'target_entity': 'ULMFit', 'description': 'ELMo and ULMFit were implemented for comparison purposes.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'ULMFit', 'description': 'FinBERT is compared with ULMFit in terms of performance.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'LSTM classifiers', 'description': 'FinBERT is compared with LSTM classifiers in terms of performance.', 'strength': 8.0}, {'source_entity': 'ULMFit', 'target_entity': 'LSTM classifiers', 'description': 'ULMFit is compared with LSTM classifiers in terms of performance.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'Financial Phrasebank', 'description': 'BERT is used in the financial domain by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'BERT is implemented for the financial domain and is referred to as FinBERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT is fine-tuned for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT is further pre-trained on a financial corpus, such as Reuters TRC-2 corpus.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'FinBERT can be used for named entity recognition in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'FinBERT can be used for question answering in the financial domain.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-domain', 'description': 'FinBERT is further pre-trained on a domain corpus, TRC 2 - financial (denoted by FinBERT - domain).', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'FinBERT-task', 'description': 'FinBERT is further pre-trained on classification training set (denoted by FinBERT - task).', 'strength': 9.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain is pre-trained on the Reuters TRC-2 corpus.', 'strength': 9.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Financial Phrasebank', 'description': 'FinBERT-task is pre-trained on the Financial Phrasebank.', 'strength': 9.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'Financial Phrasebank', 'description': "Vanilla BERT's performance was measured on a subset of the Financial Phrasebank.", 'strength': 7.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT-task was further pre-trained on a classification training set, which is related to sentiment analysis.', 'strength': 8.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain was further pre-trained on the Reuters TRC-2 corpus.', 'strength': 9.0}, {'source_entity': 'No adjustment (NA)', 'target_entity': 'only with slanted triangular learning rate (STL)', 'description': "'No adjustment (NA)' was compared with 'only with slanted triangular learning rate (STL)' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'only with slanted triangular learning rate (STL)', 'target_entity': 'slanted triangular learning rate and gradual unfreezing (STL+GU)', 'description': "'only with slanted triangular learning rate (STL)' was compared with 'slanted triangular learning rate and gradual unfreezing (STL+GU)' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'slanted triangular learning rate and gradual unfreezing (STL+GU)', 'target_entity': 'discriminative finetuning', 'description': "'slanted triangular learning rate and gradual unfreezing (STL+GU)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 8.0}, {'source_entity': 'only with slanted triangular learning rate (STL)', 'target_entity': 'discriminative finetuning', 'description': "'only with slanted triangular learning rate (STL)' was compared with 'discriminative finetuning' to measure the performance of the techniques against catastrophic forgetting.", 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT was fine-tuned for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT is fine-tuned for sentiment analysis.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial Phrasebank', 'description': "FinBERT's performance is evaluated on the Financial Phrasebank dataset.", 'strength': 8.0}, {'source_entity': 'FinBERT-task', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT-task is a variant of FinBERT pre-trained on a classification training set and used for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Sentiment analysis', 'description': 'FinBERT-domain is a variant of FinBERT pre-trained on a financial corpus and used for sentiment analysis.', 'strength': 9.0}, {'source_entity': 'Vanilla BERT', 'target_entity': 'Sentiment analysis', 'description': 'Vanilla BERT is used as a baseline model for sentiment analysis.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT', 'description': 'FinBERT is built upon BERT by further pre-training it on a financial corpus and fine-tuning it for sentiment analysis.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT-domain', 'description': 'FinBERT-domain is a version of BERT pre-trained on a financial corpus.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'FinBERT-task', 'description': 'FinBERT-task is a version of BERT pre-trained on a classification training set.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT is pre-trained on a financial corpus, which could include Reuters TRC-2 corpus.', 'strength': 7.0}, {'source_entity': 'FinBERT-domain', 'target_entity': 'Reuters TRC-2 corpus', 'description': 'FinBERT-domain is pre-trained on a financial corpus, which could include Reuters TRC-2 corpus.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Named entity recognition', 'description': 'FinBERT can be extended for other natural language processing tasks such as named entity recognition.', 'strength': 5.0}, {'source_entity': 'FinBERT', 'target_entity': 'Question answering', 'description': 'FinBERT can be extended for other natural language processing tasks such as question answering.', 'strength': 5.0}]
+
+[2025-09-23 15:29:28,431][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 15:29:29,207][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: Slanted Triangular Learning Rates
+    description: FinBERT uses Slanted Triangular Learning Rates as a technique.
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: Discriminative Fine-tuning
+    description: FinBERT uses Discriminative Fine-tuning as a technique.
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: Gradual Unfreezing
+    description: FinBERT uses Gradual Unfreezing as a technique.
+    strength: 8
+  - source_entity: Slanted Triangular Learning Rates
+    target_entity: catastrophic forgetting
+    description: Slanted Triangular Learning Rates is used to address the problem of catastrophic forgetting.
+    strength: 7
+  - source_entity: Discriminative Fine-tuning
+    target_entity: catastrophic forgetting
+    description: Discriminative Fine-tuning is used to address the problem of catastrophic forgetting.
+    strength: 7
+  - source_entity: Gradual Unfreezing
+    target_entity: catastrophic forgetting
+    description: Gradual Unfreezing is used to address the problem of catastrophic forgetting.
+    strength: 7
+  - source_entity: BERT
+    target_entity: BERT-base
+    description: BERT has two versions: BERT-base.
+    strength: 9
+  - source_entity: BERT
+    target_entity: BERT-large
+    description: BERT has two versions: BERT-large.
+    strength: 9
+
+[2025-09-23 15:29:29,211][heimdall.core][WARNING] - Validation failed: mapping values are not allowed here
+  in "<unicode string>", line 28, column 39:
+     ... scription: BERT has two versions: BERT-base.
+                                         ^
+[2025-09-23 15:29:29,630][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration limit (4) has been reached. No further iterations are allowed, even if some relationships could still be added.
+loop_required: false
+
+[2025-09-23 15:29:29,631][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The maximum iteration limit (4) has been reached. No further iterations are allowed, even if some relationships could still be added.
+[2025-09-23 15:29:29,632][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:29:29,632][Thread 2][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 15:29:29,633][Thread 2][ERROR] - File doesn't exist: Bodhi/201646244/2/201646244_intermediate_data.yml. Creating file..
+[2025-09-23 15:29:29,652][Thread 2][INFO] - Nodes & relations saved to Bodhi/201646244/2/201646244_intermediate_data.yml
+[2025-09-23 15:29:29,652][Thread 2][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 15:29:29,652][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:29:29,653][Thread 2][INFO] - ===Thread-2===
+Total number of chunks processed : 1
+Total time taken for extraction : 36.806519508361816
+
+[2025-09-23 15:29:32,852][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FinBERT
+    target_entity: Slanted Triangular Learning Rates
+    description: "FinBERT uses Slanted Triangular Learning Rates as a technique."
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: Discriminative Fine-tuning
+    description: "FinBERT uses Discriminative Fine-tuning as a technique."
+    strength: 8
+  - source_entity: FinBERT
+    target_entity: Gradual Unfreezing
+    description: "FinBERT uses Gradual Unfreezing as a technique."
+    strength: 8
+  - source_entity: Slanted Triangular Learning Rates
+    target_entity: catastrophic forgetting
+    description: "Slanted Triangular Learning Rates is used to address the problem of catastrophic forgetting."
+    strength: 7
+  - source_entity: Discriminative Fine-tuning
+    target_entity: catastrophic forgetting
+    description: "Discriminative Fine-tuning is used to address the problem of catastrophic forgetting."
+    strength: 7
+  - source_entity: Gradual Unfreezing
+    target_entity: catastrophic forgetting
+    description: "Gradual Unfreezing is used to address the problem of catastrophic forgetting."
+    strength: 7
+  - source_entity: BERT
+    target_entity: BERT-base
+    description: "BERT has two versions: BERT-base."
+    strength: 9
+  - source_entity: BERT
+    target_entity: BERT-large
+    description: "BERT has two versions: BERT-large."
+    strength: 9
+
+[2025-09-23 15:29:32,854][Thread 1][WARNING] - Found false extractions in relationships: [{'source_entity': 'Slanted Triangular Learning Rates', 'target_entity': 'catastrophic forgetting', 'description': 'Slanted Triangular Learning Rates is used to address the problem of catastrophic forgetting.', 'strength': 7.0}, {'source_entity': 'Discriminative Fine-tuning', 'target_entity': 'catastrophic forgetting', 'description': 'Discriminative Fine-tuning is used to address the problem of catastrophic forgetting.', 'strength': 7.0}, {'source_entity': 'Gradual Unfreezing', 'target_entity': 'catastrophic forgetting', 'description': 'Gradual Unfreezing is used to address the problem of catastrophic forgetting.', 'strength': 7.0}, {'source_entity': 'BERT', 'target_entity': 'BERT-base', 'description': 'BERT has two versions: BERT-base.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'BERT-large', 'description': 'BERT has two versions: BERT-large.', 'strength': 9.0}]
+[2025-09-23 15:29:32,854][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'ULMFit', 'target_entity': 'AWD-LSTM', 'description': 'AWD-LSTM is the underlying language model used in ULMFit.', 'strength': 10.0}, {'source_entity': 'ULMFit', 'target_entity': 'ELMo', 'description': 'ULMFit is compared against ELMo.', 'strength': 7.0}, {'source_entity': 'FinBERT', 'target_entity': 'Text classification', 'description': 'FinBERT is used for text classification.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Next sentence prediction', 'description': 'BERT is trained on the next sentence prediction task.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank dataset', 'description': 'FinBERT is evaluated on the Financial PhraseBank dataset.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'GLoVE', 'description': 'LSTM classifier with GLoVe embeddings uses GLoVe word embeddings.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'ELMo', 'description': 'LSTM classifier with ELMo embeddings uses ELMo embeddings.', 'strength': 10.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'AWD-LSTM', 'description': 'ULMFit classifier uses AWD-LSTM.', 'strength': 9.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model in the ULMFit classifier.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Slanted Triangular Learning Rates', 'description': 'Slanted Triangular Learning Rates is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Discriminative Fine-tuning', 'description': 'Discriminative Fine-tuning is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'FinBERT', 'target_entity': 'Gradual Unfreezing', 'description': 'Gradual Unfreezing is a technique used in FinBERT.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'BookCorpus', 'description': 'BERT was trained on BookCorpus.', 'strength': 9.0}, {'source_entity': 'BERT', 'target_entity': 'English Wikipedia', 'description': 'BERT was trained on English Wikipedia.', 'strength': 9.0}, {'source_entity': 'ULMFit', 'target_entity': 'Financial PhraseBank dataset', 'description': 'Financial PhraseBank dataset is used for fine-tuning the ULMFit model for classification.', 'strength': 9.0}, {'source_entity': 'AWD-LSTM', 'target_entity': 'TRC 2-financial corpus', 'description': 'TRC 2-financial corpus is used for pre-training the AWD-LSTM language model.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'BERT', 'description': 'FinBERT is based on BERT.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating FinBERT.', 'strength': 10.0}, {'source_entity': 'LSTM classifier with ELMo embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with ELMo embeddings.', 'strength': 7.0}, {'source_entity': 'LSTM classifier with GLoVe embeddings', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating LSTM classifier with GLoVe embeddings.', 'strength': 7.0}, {'source_entity': 'ULMFit classifier', 'target_entity': 'Financial PhraseBank', 'description': 'Financial PhraseBank is used for evaluating ULMFit classifier.', 'strength': 7.0}, {'source_entity': 'Transformer', 'target_entity': 'BERT', 'description': 'BERT is based on the Transformer architecture.', 'strength': 10.0}, {'source_entity': 'BERT', 'target_entity': 'Text classification', 'description': 'BERT is used for text classification tasks.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Text classification', 'description': 'FinBERT is used for text classification tasks.', 'strength': 10.0}, {'source_entity': 'FinBERT', 'target_entity': 'Financial PhraseBank dataset', 'description': 'FinBERT is used for classification tasks on the Financial PhraseBank dataset.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'TRC 2-financial corpus', 'description': 'FinBERT is used for classification tasks on the TRC 2-financial corpus.', 'strength': 6.0}, {'source_entity': 'FinBERT', 'target_entity': 'Slanted Triangular Learning Rates', 'description': 'FinBERT uses Slanted Triangular Learning Rates as a technique.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Discriminative Fine-tuning', 'description': 'FinBERT uses Discriminative Fine-tuning as a technique.', 'strength': 8.0}, {'source_entity': 'FinBERT', 'target_entity': 'Gradual Unfreezing', 'description': 'FinBERT uses Gradual Unfreezing as a technique.', 'strength': 8.0}]
+
+[2025-09-23 15:29:32,854][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 15:29:34,164][heimdall.core][INFO] - Cleaned output : reason_to_loop: 'The iteration limit has been reached. No further extraction is permitted, even if some relationships could still be added. The current relationships are considered complete for this iteration.'
+loop_required: false
+
+[2025-09-23 15:29:34,165][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further extraction is permitted, even if some relationships could still be added. The current relationships are considered complete for this iteration.
+[2025-09-23 15:29:34,165][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 15:29:34,165][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 15:29:34,165][Thread 1][ERROR] - File doesn't exist: Bodhi/201646244/1/201646244_intermediate_data.yml. Creating file..
+[2025-09-23 15:29:34,171][Thread 1][INFO] - Nodes & relations saved to Bodhi/201646244/1/201646244_intermediate_data.yml
+[2025-09-23 15:29:34,172][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 15:29:34,172][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 15:29:34,172][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 41.327083349227905
+
+[2025-09-23 15:29:34,172][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 15:29:34,189][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 15:29:34,201][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 15:29:34,221][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 2 with offset 2
+[2025-09-23 15:29:34,256][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 3 intermediate files into Bodhi/201646244/201646244_combined_intermediate_data.yml
+[2025-09-23 15:29:34,256][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 201646244
+Total Chunks Processed: 3
+Threads Used: 3
+Chunks per Thread: [1, 1, 1]
+Entities Extracted: 74
+Relationships Extracted: 116
+Combined Intermediate File: Bodhi/201646244/201646244_combined_intermediate_data.yml
+Total Time Taken: 47.18 seconds
+==========================================
+[2025-09-23 15:29:34,256][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 15:29:34,256][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 15:29:34,257][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 15:29:34,257][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 15:29:34,259][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 15:29:34,259][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 15:29:34,421][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 15:29:34,421][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 15:29:34,422][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['FinBERT', 'BERT', 'NLP (Natural Language Processing)', 'Financial sentiment analysis']...
+Number of elements: 51
+[2025-09-23 15:29:34,660][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 201646244 
+******************************
+ - Total number of entities before resolution: 51
+ - Total number of entities after resolution: 43
+ - Total number of descriptions in all resolved nodes before resolution: 24
+ - Total number of descriptions in all resolved nodes after resolution: 22
+******************************
+
+[2025-09-23 15:29:34,661][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'FinBERT': {'type': ['method', 'method', 'method', 'method', 'method'], 'description': ['A language model based on BERT, designed for NLP tasks in the financial domain.', 'An implementation of BERT for text classification, incorporating techniques like slanted triangular learning rates and discriminative fine-tuning.', 'A method for text classification based on BERT, fine-tuned for financial text.', 'A method implemented for the financial domain by further pre-training BERT on a financial corpus and fine-tuning it for sentiment analysis.', 'The FinBERT method was run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.'], 'source_chunk_index': [0, 1, 1, 2, 2]}, 'BERT': {'type': ['method', 'method', 'method'], 'description': ['Bidirectional Encoder Representations from Transformers, a transformer-based language model.', 'A language model consisting of Transformer encoders, used for various NLP tasks, including classification.', 'A Transformer-based model used as a base for FinBERT, with 12 Transformer encoder layers.'], 'source_chunk_index': [0, 1, 2]}, 'NLP (Natural Language Processing)': {'type': ['generic'], 'description': ['The field of computer science concerned with enabling computers to understand and process human language.'], 'source_chunk_index': [0]}, 'Financial sentiment analysis': {'type': ['task'], 'description': ['The task of automatically determining the sentiment or emotional tone expressed in financial texts.'], 'source_chunk_index': [0]}, 'FiQA Task 1 sentiment scoring dataset': {'type': ['dataset', 'dataset'], 'description': ['A dataset used for financial sentiment analysis.', 'A dataset used for sentiment scoring in the financial domain, utilized in the experiments to evaluate FinBERT.'], 'source_chunk_index': [0, 0]}, 'ULMFit': {'type': ['method', 'method', 'method', 'method', 'method'], 'description': ['Universal Language Model Fine-tuning, a transfer learning method for NLP.', 'A pre-trained language model used for financial sentiment analysis and compared with FinBERT.', 'A transfer learning model for down-stream NLP tasks, utilizing language model pre-training.', 'A pre-trained language model used for comparison, further pre-trained on a financial corpus.', 'The ULMFit method was run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.'], 'source_chunk_index': [0, 0, 1, 2, 2]}, 'ELMo': {'type': ['method', 'method', 'method', 'method'], 'description': ['Embeddings from Language Models, a method for generating contextualized word embeddings.', 'A pre-trained language model used for financial sentiment analysis and compared with FinBERT.', 'A language model that ULMFit is compared against.', 'A pre-training language model implemented for comparison purposes.'], 'source_chunk_index': [0, 0, 1, 2]}, 'LSTM (Long short-term memory)': {'type': ['method'], 'description': ['A type of recurrent neural network that allows long-term dependencies in a sequence to persist in the network.'], 'source_chunk_index': [0]}, 'Text classification': {'type': ['task', 'task'], 'description': ['The task of categorizing text into predefined classes or categories.', 'The task of categorizing text into predefined classes, a primary application of FinBERT.'], 'source_chunk_index': [0, 1]}, 'Transfer learning': {'type': ['generic'], 'description': ['A machine learning technique where a model trained on one task is reused on a second related task.'], 'source_chunk_index': [0]}, 'Sentiment analysis': {'type': ['task', 'task'], 'description': ["The process of computationally identifying and categorizing opinions expressed in a piece of text, especially to determine a writer's attitude with respect to a particular topic or document.", 'The task for which FinBERT was fine-tuned.'], 'source_chunk_index': [0, 2]}, 'GLoVe (Global Vectors for Word Representation)': {'type': ['method'], 'description': ['An unsupervised learning algorithm for obtaining vector representations for words.'], 'source_chunk_index': [0]}, 'CNN': {'type': ['method'], 'description': ['Convolutional Neural Network, a type of neural network architecture.'], 'source_chunk_index': [0]}, 'Doc2vec': {'type': ['method'], 'description': ['A method used to generate sentence embeddings.'], 'source_chunk_index': [0]}, 'StockTwits dataset': {'type': ['dataset'], 'description': ['A dataset used for sentiment analysis, specifically with generic neural network architectures like CNN.'], 'source_chunk_index': [0]}, 'Bi-attentive classification network': {'type': ['method'], 'description': ['A specific neural network architecture used in conjunction with ELMo for text classification tasks, as mentioned in the context of achieving state-of-the-art performance on tasks like SST-5.'], 'source_chunk_index': [0]}, 'SST-5': {'type': ['dataset'], 'description': ['A dataset used for text classification tasks, specifically mentioned in the context of evaluating the performance of ELMo when used with a bi-attentive classification network.'], 'source_chunk_index': [0]}, 'AWD-LSTM': {'type': ['method'], 'description': ['The underlying language model used in ULMFit, employing dropout tuning strategies for regularization.'], 'source_chunk_index': [1]}, 'Transformer': {'type': ['method'], 'description': ['An attention-based architecture for modeling sequential information, offering an alternative to recurrent neural networks.'], 'source_chunk_index': [1]}, 'GLoVE': {'type': ['method'], 'description': ['Word embeddings used as a baseline for comparison.'], 'source_chunk_index': [1]}, 'Financial PhraseBank dataset': {'type': ['dataset', 'dataset', 'dataset'], 'description': ['A dataset used for fine-tuning and evaluating the performance of FinBERT and other methods in a classification task.', 'A dataset used for financial sentiment analysis, specifically for classification tasks. It is used to evaluate the performance of FinBERT and other methods.', 'The dataset used for fine-tuning the ULMFit model for classification.'], 'source_chunk_index': [1, 1, 1]}, 'BookCorpus': {'type': ['dataset'], 'description': ['A dataset used for training BERT.'], 'source_chunk_index': [1]}, 'English Wikipedia': {'type': ['dataset'], 'description': ['A dataset used for training BERT.'], 'source_chunk_index': [1]}, 'Next sentence prediction': {'type': ['task'], 'description': ['A task that BERT is trained on.'], 'source_chunk_index': [1]}, 'LSTM classifier with GLoVe embeddings': {'type': ['method'], 'description': ['A baseline method for text classification, using Long Short-Term Memory (LSTM) networks with GloVe word embeddings.'], 'source_chunk_index': [1]}, 'LSTM classifier with ELMo embeddings': {'type': ['method'], 'description': ['A baseline method for text classification, using Long Short-Term Memory (LSTM) networks with ELMo word embeddings.'], 'source_chunk_index': [1]}, 'ULMFit classifier': {'type': ['method'], 'description': ['A baseline method for text classification, using the ULMFit transfer learning model.'], 'source_chunk_index': [1]}, 'Slanted Triangular Learning Rates': {'type': ['method'], 'description': ['A technique used in the FinBERT implementation to adjust the learning rate during training, starting with a small rate, increasing it linearly, and then decreasing it. This helps to stabilize training and improve performance.'], 'source_chunk_index': [1]}, 'Reuters TRC-2 corpus': {'type': ['dataset'], 'description': ['A financial corpus used for pre-training FinBERT.'], 'source_chunk_index': [2]}, 'Named entity recognition': {'type': ['task'], 'description': ['A potential application for FinBERT in the financial domain.'], 'source_chunk_index': [2]}, 'Question answering': {'type': ['task'], 'description': ['Another potential application for FinBERT in the financial domain.'], 'source_chunk_index': [2]}, 'Vanilla BERT': {'type': ['method', 'method'], 'description': ['The BERT model without any further pre-training.', 'BERT model without further pre-training.'], 'source_chunk_index': [2, 2]}, 'No adjustment (NA)': {'type': ['method'], 'description': ['One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.'], 'source_chunk_index': [2]}, 'slanted triangular learning rate and gradual unfreezing (STL+GU)': {'type': ['method'], 'description': ['One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.'], 'source_chunk_index': [2]}, 'Financial PhraseBank': {'description': ['A dataset used for financial sentiment analysis, created by Malo et al. (2014).', 'A dataset of financial phrases used for sentiment analysis, used to evaluate FinBERT and compare it with other models.', 'The dataset used for classification tasks, specifically for evaluating the performance of FinBERT and comparing it with baseline methods like LSTM and ULMFit. It suffers from label imbalance, with almost 60% of sentences being neutral.'], 'type': ['dataset'], 'source_chunk_index': [0, 1, 2]}, 'LSTM classifier': {'description': ['A recurrent neural network-based classifier used as a baseline.', 'A type of neural network used for classification tasks, compared with ULMFit and FinBERT.', 'The LSTM classifiers were run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.'], 'type': ['method'], 'source_chunk_index': [1, 2]}, 'TRC financial corpus': {'description': ['A financial corpus used for pre-training the AWD-LSTM language model.', 'The dataset used for pre-training the AWD-LSTM language model in the ULMFit classifier.'], 'type': ['dataset'], 'source_chunk_index': [1]}, 'Discriminative Fine-tuning': {'description': ["A technique used in FinBERT where different layers of the model are fine-tuned with different learning rates. This allows for more nuanced adjustments to the model's parameters, improving performance.", 'One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting, used in conjunction with the other settings.'], 'type': ['method'], 'source_chunk_index': [1, 2]}, 'Gradual Unfreezing': {'description': ['A technique used in FinBERT where layers of the pre-trained model are unfrozen sequentially during fine-tuning. This prevents catastrophic forgetting and allows the model to adapt to the new task more effectively.', 'A technique used in conjunction with STL.'], 'type': ['method'], 'source_chunk_index': [1, 2]}, 'Slanted triangular learning rate (STL)': {'description': ['A learning rate strategy used in the experiments.', 'One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting.'], 'type': ['method'], 'source_chunk_index': [2]}, 'Discriminative fine-tuning': {'description': ['A fine-tuning technique used in the experiments.', 'One of the four different settings used for measuring the performance of the techniques against catastrophic forgetting, used in conjunction with the other settings.'], 'type': ['method'], 'source_chunk_index': [2]}, 'FinBERT-task': {'description': ['A specific configuration of FinBERT, further pre-trained on the classification training set.', 'BERT model with further pre-training on classification training set.'], 'type': ['method'], 'source_chunk_index': [2]}, 'FinBERT-domain': {'description': ['A specific configuration of FinBERT, further pre-trained on the domain corpus, TRC 2-financial.', 'BERT model with further pre-training on domain corpus, TRC 2 - financial.'], 'type': ['method'], 'source_chunk_index': [2]}}
+[2025-09-23 15:29:34,661][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 15:29:34,661][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 15:29:34,701][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 15:29:34,701][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:201646244...
+[2025-09-23 15:29:34,743][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 15:29:34,752][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FinBERT:
+Total number of sentences: 7722
+Sources:[298]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--BERT:
+Total number of sentences: 7722
+Sources:[297]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--NLP:
+Total number of sentences: 7722
+Sources:[253]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--natural language processing:
+Total number of sentences: 7722
+Sources:[298]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--neural nets:
+Total number of sentences: 7722
+Sources:[229]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--sentiment analysis:
+Total number of sentences: 7722
+Sources:[295]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--NLP transfer learning:
+Total number of sentences: 7722
+Sources:[230]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Financial PhraseBank:
+Total number of sentences: 7722
+Sources:[299]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FiQA Task 1 sentiment scoring:
+Total number of sentences: 7722
+Sources:[231]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--financial NLP:
+Total number of sentences: 7722
+Sources:[232]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--financial sentiment analysis:
+Total number of sentences: 7722
+Sources:[233]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FiQA sentiment scoring:
+Total number of sentences: 7722
+Sources:[233]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--ULMFit:
+Total number of sentences: 7722
+Sources:[297]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--ELMo:
+Total number of sentences: 7722
+Sources:[296]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--text classification:
+Total number of sentences: 7722
+Sources:[268]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Financial sentiment analysis:
+Total number of sentences: 7722
+Sources:[235]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--neural network:
+Total number of sentences: 7722
+Sources:[236]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--StockTwits:
+Total number of sentences: 7722
+Sources:[236]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--CNN:
+Total number of sentences: 7722
+Sources:[236]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--doc 2 vec:
+Total number of sentences: 7722
+Sources:[237]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--sentence embeddings:
+Total number of sentences: 7722
+Sources:[237]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--text simplification:
+Total number of sentences: 7722
+Sources:[285]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--LSTM:
+Total number of sentences: 7722
+Sources:[289]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--contextualized word embeddings:
+Total number of sentences: 7722
+Sources:[239]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--word embeddings:
+Total number of sentences: 7722
+Sources:[285]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--word 2 vec:
+Total number of sentences: 7722
+Sources:[240]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--GloVe:
+Total number of sentences: 7722
+Sources:[240]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--SST - 5:
+Total number of sentences: 7722
+Sources:[241]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Universal Language Model Fine - tuning:
+Total number of sentences: 7722
+Sources:[242]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--transfer learning:
+Total number of sentences: 7722
+Sources:[271]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--discriminative fine - tuning:
+Total number of sentences: 7722
+Sources:[270]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--slanted triangular learning rates:
+Total number of sentences: 7722
+Sources:[293]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--gradual unfreezing:
+Total number of sentences: 7722
+Sources:[270]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Bidirectional Encoder Representations from Transformers:
+Total number of sentences: 7722
+Sources:[243]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--natural language inference:
+Total number of sentences: 7722
+Sources:[244]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--question answering:
+Total number of sentences: 7722
+Sources:[298]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Long short - term memory:
+Total number of sentences: 7722
+Sources:[248]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--GLoVe:
+Total number of sentences: 7722
+Sources:[250]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Global Vectors for Word Representation:
+Total number of sentences: 7722
+Sources:[250]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--AWD - LSTM:
+Total number of sentences: 7722
+Sources:[275]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--dropout tuning strategies:
+Total number of sentences: 7722
+Sources:[255]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--classification:
+Total number of sentences: 7722
+Sources:[297]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--linear layers:
+Total number of sentences: 7722
+Sources:[256]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--GLoVE:
+Total number of sentences: 7722
+Sources:[257]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Transformer:
+Total number of sentences: 7722
+Sources:[259]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--recurrent neural networks:
+Total number of sentences: 7722
+Sources:[258]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--RNN:
+Total number of sentences: 7722
+Sources:[259]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--RNNs:
+Total number of sentences: 7722
+Sources:[260]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Transformer encoders:
+Total number of sentences: 7722
+Sources:[261]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--next sentence prediction:
+Total number of sentences: 7722
+Sources:[264]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--BERT - base:
+Total number of sentences: 7722
+Sources:[265]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--multi - head attention heads:
+Total number of sentences: 7722
+Sources:[265]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--BERT - large:
+Total number of sentences: 7722
+Sources:[265]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--multi - head attention:
+Total number of sentences: 7722
+Sources:[265]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--BookCorpus:
+Total number of sentences: 7722
+Sources:[266]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--English Wikipedia:
+Total number of sentences: 7722
+Sources:[266]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--regression:
+Total number of sentences: 7722
+Sources:[267]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--GLoVe embeddings:
+Total number of sentences: 7722
+Sources:[273]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--ELMo embeddings:
+Total number of sentences: 7722
+Sources:[273]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--TRC 2 - financial corpus:
+Total number of sentences: 7722
+Sources:[275]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--PhraseBank:
+Total number of sentences: 7722
+Sources:[276]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--fully - connected layer:
+Total number of sentences: 7722
+Sources:[276]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--dropout:
+Total number of sentences: 7722
+Sources:[278]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--warm - up:
+Total number of sentences: 7722
+Sources:[278]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--LPS:
+Total number of sentences: 7722
+Sources:[284]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--HSC:
+Total number of sentences: 7722
+Sources:[284]
+[2025-09-23 15:29:34,753][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FinSSLX:
+Total number of sentences: 7722
+Sources:[285]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--LSTM classifier with ELMo embeddings:
+Total number of sentences: 7722
+Sources:[282]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--machine learning based models:
+Total number of sentences: 7722
+Sources:[284]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Vanilla BERT:
+Total number of sentences: 7722
+Sources:[291]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FinBERT - task:
+Total number of sentences: 7722
+Sources:[290]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--TRC 2 - financial:
+Total number of sentences: 7722
+Sources:[290]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--FinBERT - domain:
+Total number of sentences: 7722
+Sources:[290]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Financial Phrasebank:
+Total number of sentences: 7722
+Sources:[291]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--slanted triangular learning rate:
+Total number of sentences: 7722
+Sources:[292]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--STL:
+Total number of sentences: 7722
+Sources:[292]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--slanted triangular learning rate and gradual unfreezing:
+Total number of sentences: 7722
+Sources:[292]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--STL+GU:
+Total number of sentences: 7722
+Sources:[292]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--discriminative finetuning:
+Total number of sentences: 7722
+Sources:[292]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--discriminative fine - tuning with slanted triangular learning rates:
+Total number of sentences: 7722
+Sources:[293]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Transformer encoder:
+Total number of sentences: 7722
+Sources:[294]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--named entity recognition:
+Total number of sentences: 7722
+Sources:[298]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--201646244--Reuters TRC - 2:
+Total number of sentences: 7722
+Sources:[299]
+[2025-09-23 15:29:34,754][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 15:29:34,758][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_201646244.yml, skipping classification.
+[2025-09-23 15:29:34,758][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_201646244.yml
+[2025-09-23 15:29:34,760][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/14-54-36/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=0/storage/Bodhi/201646244/201646244_graph.yml']
+[2025-09-23 15:29:34,807][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/14-54-36/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=0/storage/Bodhi/201646244/201646244_graph.yml
+[2025-09-23 15:29:34,849][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 15:29:34,849][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 201646244
+[2025-09-23 15:29:34,915][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 15:29:35,575][root][INFO] - Token count: 2804
+[2025-09-23 15:29:36,675][root][INFO] - Batch token estimation (hf) complete for 42 strings.
+[2025-09-23 15:29:36,692][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:FINBERT\nDescription:A language model based on BERT, designed for NLP tasks in the financial domain. ; An implementation of BERT for text classification, incorporating techniques like slanted triangular learning rates and discriminative fine-tuning. ; A method for text classification based on BERT, fine-tuned for financial text. ; A method implemented for the financial domain by further pre-training BERT on a financial corpus and fine-tuning it for sentiment analysis. ; The FinBERT method was run on 5 different configurations to measure the performance of the models on different sizes of labeled training datasets.\n', 'Name:BERT\nDescription:Bidirectional Encoder Representations from Transformers, a transformer-based language model. ; A language model consisting of Transformer encoders, used for various NLP tasks, including classification. ; A Transformer-based model used as a base for FinBERT, with 12 Transformer encoder layers.\n', 'Name:NLP (NATURAL LANGUAGE PROCESSING)\nDescription:The field of computer science concerned with enabling computers to understand and process human language.\n', 'Name:FINANCIAL SENTIMENT ANALYSIS\nDescription:The task of automatically determining the sentiment or emotional tone expressed in financial texts.\n', 'Name:FIQA TASK 1 SENTIMENT SCORING DATASET\nDescription:A dataset used for financial sentiment analysis. ; A dataset used for sentiment scoring in the financial domain, utilized in the experiments to evaluate FinBERT.\n']split_entities: text_tokens=2804, instructions_tokens=500, budget_for_entities=6696, number_of_entities=42, avg_entity_tokens=41, max_entities=163, num_groups=1, entities_per_group=[42]
+[2025-09-23 15:30:32,918][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: FINBERT
+    type: DOMAIN
+  - entity: BERT
+    type: METHOD
+  - entity: NLP (NATURAL LANGUAGE PROCESSING)
+    type: METHOD
+  - entity: FINANCIAL SENTIMENT ANALYSIS
+    type: DOMAIN
+  - entity: FIQA TASK 1 SENTIMENT SCORING DATASET
+    type: DOMAIN
+  - entity: ULMFIT
+    type: METHOD
+  - entity: ELMO
+    type: METHOD
+  - entity: LSTM (LONG SHORT-TERM MEMORY)
+    type: METHOD
+  - entity: TEXT CLASSIFICATION
+    type: METHOD
+  - entity: TRANSFER LEARNING
+    type: METHOD
+  - entity: SENTIMENT ANALYSIS
+    type: METHOD
+  - entity: GLOVE (GLOBAL VECTORS FOR WORD REPRESENTATION)
+    type: METHOD
+  - entity: CNN
+    type: METHOD
+  - entity: DOC2VEC
+    type: METHOD
+  - entity: STOCKTWITS DATASET
+    type: DOMAIN
+  - entity: BI-ATTENTIVE CLASSIFICATION NETWORK
+    type: METHOD
+  - entity: SST-5
+    type: METHOD
+  - entity: AWD-LSTM
+    type: METHOD
+  - entity: TRANSFORMER
+    type: METHOD
+  - entity: GLOVE
+    type: METHOD
+  - entity: FINANCIAL PHRASEBANK DATASET
+    type: DOMAIN
+  - entity: BOOKCORPUS
+    type: METHOD
+  - entity: ENGLISH WIKIPEDIA
+    type: METHOD
+  - entity: NEXT SENTENCE PREDICTION
+    type: METHOD
+  - entity: LSTM CLASSIFIER WITH GLOVE EMBEDDINGS
+    type: METHOD
+  - entity: LSTM CLASSIFIER WITH ELMO EMBEDDINGS
+    type: METHOD
+  - entity: ULMFIT CLASSIFIER
+    type: METHOD
+  - entity: SLANTED TRIANGULAR LEARNING RATES
+    type: METHOD
+  - entity: REUTERS TRC-2 CORPUS
+    type: DOMAIN
+  - entity: NAMED ENTITY RECOGNITION
+    type: METHOD
+  - entity: QUESTION ANSWERING
+    type: METHOD
+  - entity: VANILLA BERT
+    type: DOMAIN
+  - entity: NO ADJUSTMENT (NA)
+    type: DOMAIN
+  - entity: SLANTED TRIANGULAR LEARNING RATE AND GRADUAL UNFREEZING (STL+GU)
+    type: DOMAIN
+  - entity: FINANCIAL PHRASEBANK
+    type: DOMAIN
+  - entity: LSTM CLASSIFIER
+    type: METHOD
+  - entity: TRC FINANCIAL CORPUS
+    type: DOMAIN
+  - entity: DISCRIMINATIVE FINE-TUNING
+    type: METHOD
+  - entity: GRADUAL UNFREEZING
+    type: METHOD
+  - entity: SLANTED TRIANGULAR LEARNING RATE (STL)
+    type: DOMAIN
+  - entity: FINBERT-TASK
+    type: DOMAIN
+  - entity: FINBERT-DOMAIN
+    type: DOMAIN
+
+[2025-09-23 15:30:32,921][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 15:30:32,922][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/14-54-36/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=0/201646244/eval_results/classification_results.yml
+[2025-09-23 15:30:32,924][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 15:30:32,924][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 15:30:32,924][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 15:30:32,924][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 22 exact matches, 20 unmatched bodhi entities.
+[2025-09-23 15:30:32,924][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 15:30:32,974][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 11 fuzzy matches, 9 unmatched bodhi entities remain.
+[2025-09-23 15:30:32,975][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 15:30:33,536][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 15:30:34,308][root][INFO] - Batch token estimation (hf) complete for 83 strings.
+[2025-09-23 15:30:34,325][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'BERT': 1, 'NLP': 2, 'natural language processing': 3, 'neural nets': 3, 'sentiment analysis': 3, 'NLP transfer learning': 4, 'ULMFit': 3, 'ELMo': 2, 'text classification': 2, 'neural network': 3, 'CNN': 1, 'doc 2 vec': 4, 'sentence embeddings': 2, 'text simplification': 3, 'LSTM': 2, 'contextualized word embeddings': 5, 'word embeddings': 2, 'word 2 vec': 4, 'GloVe': 3, 'SST - 5': 5, 'Universal Language Model Fine - tuning': 6, 'transfer learning': 2, 'discriminative fine - tuning': 7, 'slanted triangular learning rates': 5, 'gradual unfreezing': 5, 'Bidirectional Encoder Representations from Transformers': 7, 'natural language inference': 3, 'question answering': 2, 'Long short - term memory': 5, 'GLoVe': 3, 'Global Vectors for Word Representation': 6, 'AWD - LSTM': 4, 'dropout tuning strategies': 3, 'classification': 1, 'linear layers': 2, 'GLoVE': 3, 'Transformer': 1, 'recurrent neural networks': 4, 'RNN': 2, 'RNNs': 3, 'Transformer encoders': 3, 'next sentence prediction': 3, 'BERT - base': 3, 'multi - head attention heads': 5, 'BERT - large': 3, 'multi - head attention': 4, 'BookCorpus': 3, 'English Wikipedia': 2, 'regression': 2, 'GLoVe embeddings': 4, 'ELMo embeddings': 3, 'fully - connected layer': 4, 'dropout': 1, 'warm - up': 3, 'LSTM classifier with ELMo embeddings': 8, 'machine learning based models': 4, 'slanted triangular learning rate': 5, 'STL': 2, 'slanted triangular learning rate and gradual unfreezing': 10, 'STL+GU': 4, 'discriminative finetuning': 7, 'discriminative fine - tuning with slanted triangular learning rates': 13, 'Transformer encoder': 2, 'named entity recognition': 3, 'FinBERT': 2, 'Financial PhraseBank': 3, 'FiQA Task 1 sentiment scoring': 7, 'financial NLP': 3, 'financial sentiment analysis': 3, 'FiQA sentiment scoring': 4, 'Financial sentiment analysis': 3, 'StockTwits': 3, 'TRC 2 - financial corpus': 7, 'PhraseBank': 2, 'LPS': 2, 'HSC': 2, 'FinSSLX': 3, 'Vanilla BERT': 4, 'FinBERT - task': 4, 'TRC 2 - financial': 6, 'FinBERT - domain': 4, 'Financial Phrasebank': 3, 'Reuters TRC - 2': 6}
+[2025-09-23 15:30:35,001][root][INFO] - Batch token estimation (hf) complete for 9 strings.
+[2025-09-23 15:30:35,029][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_ab6c61f1bce248ce95f62a4ce2b1f7adcce2238a8974acf13157eccb80a25f1c.pkl
+[2025-09-23 15:30:36,532][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 9 entities.
+[2025-09-23 15:30:37,367][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 15:30:38,128][root][INFO] - Batch token estimation (hf) complete for 2 strings.
+[2025-09-23 15:30:38,157][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'BI-ATTENTIVE CLASSIFICATION NETWORK': 8, 'NO ADJUSTMENT (NA)': 7}
+[2025-09-23 15:30:38,157][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for novel entity assessment chunk: novel_assess_ac105ddc68485385e72631b3368f8f632aae2106c4d2a73c5d41a0b60293f0e6.pkl
+[2025-09-23 15:30:39,638][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Novel entity assessment completed for 2 entities.
+[2025-09-23 15:30:39,639][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 15:30:39,639][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 0.3684210526315789, 'method_coverage': 0.375, 'precision': 0.43661971830985913, 'recall': 0.2767857142857143, 'f1': 0.33879781420765026, 'domain_precision': 0.3333333333333333, 'domain_recall': 0.2692307692307692, 'domain_f1': 0.2978723404255319, 'method_precision': 0.48, 'method_recall': 0.27906976744186046, 'method_f1': 0.35294117647058815, 'adjusted_domain_precision': 0.38095238095238093, 'adjusted_domain_recall': 0.4, 'adjusted_domain_f1': 0.3902439024390244, 'adjusted_method_precision': 0.5, 'adjusted_method_recall': 0.38461538461538464, 'adjusted_method_f1': 0.4347826086956522, 'adjusted_precision': 0.4647887323943662, 'adjusted_recall': 0.38823529411764707, 'adjusted_f1': 0.4230769230769231}
+[2025-09-23 15:30:39,641][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/14-54-36/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=0/201646244/eval_results/eval_output.yml
+[2025-09-23 15:30:39,641][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/14-54-36/general_config.generic_type_allowance=True,general_config.priming=False,general_config.token_limit=1000/seed=0/201646244/eval_results/eval_metrics.yml

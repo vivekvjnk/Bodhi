@@ -1,0 +1,136 @@
+summary: 'This paper focuses on **concurrent activity recognition** in videos, moving
+  beyond single-activity recognition. Key concepts include: **feature extraction**,
+  **temporal modeling**, and **multi-label prediction**. The authors propose a novel
+  model employing a **feature-to-activity attention** mechanism to preserve temporal
+  ordering and a **tri-axial self-attention encoder-decoder** to capture activity
+  associations. This contrasts with existing methods that often modify single-activity
+  models or use parallel softmax layers, which may ignore relationships between activities.
+
+
+  The research utilizes deep learning, building upon pre-trained models like **VGG
+  Net** for initial feature extraction. The architecture incorporates techniques like
+  **CNN-LSTM**, **spatial attention**, and **temporal attention**. The model is evaluated
+  on datasets like **Hockey**, **Volleyball**, and **Charades**, comparing performance
+  against baselines such as **AlexNet**, **CNN-LSTM with sigmoid**, and others. The
+  paper highlights the importance of addressing the associations between activities,
+  using an **activity association mask** to improve the decoder''s ability to capture
+  these relationships. The authors also discuss the use of **VLAD descriptors** and
+  the impact of techniques like **batch normalization** and **dropout**. The core
+  contributions are a novel feature extraction strategy, the tri-axial self-attention,
+  and the use of a self-attention decoder.
+
+  '
+text_units:
+  0:
+    summary: null
+    text_unit: Beyond single - image activity recognition , a new temporal feature
+      extractor was proposed to achieve video - based activity recognition [ 1 6 ]
+      .Existing research simply modifies single - activity recognition models with
+      a sigmoid output layer or uses multiple single - activity recognizers for concurrent
+      activity recognition ; these have failed to achieve satisfactory performance
+      [ 1 8 ] .Firstly , single - activity recognition focuses on selecting the most
+      representative features associated with a certain activity ; many attentionbased
+      methods were proposed to improve this feature extraction .Lastly , both types
+      of activity recognition use probabilistic inference ( softmax ) for decision
+      making .However , simply applying softmax with a threshold or using a parallel
+      softmax layer for concurrent activity recognition would ignore the associations
+      between activities .To address these challenges , we introduce a concurrent
+      activity recognition model with a feature - to - activity attention for feature
+      extraction and a tri - axial self - attention encoder - decoder for multi -
+      label prediction .The proposed feature - to - activity attention maintains unaggregated
+      temporal information to preserve temporal ordering ; different activities may
+      occur at different times and require different temporal attentions , which would
+      be Tri - axial Self - Attention for Concurrent Activity Recognition
+  1:
+    summary: null
+    text_unit: "An overview of proposed concurrent activity recognition system that\
+      \ generates separated spatial - temporal features for independent activities\
+      \ . ignored by simple aggregation .We tested our system with published datasets\
+      \ : the hockey dataset [ 5 ] ( 1 2 activities ) , the volleyball dataset [ 1\
+      \ 5 ] ( 9 activities ) , and the charades dataset [ 2 5 ] ( 1 5 7 activities\
+      \ ) .Ourcontributions are : \u2022 A three level feature extraction strategy\
+      \ with a novel feature - to - activity attention for concurrent activity recognition\
+      \ . \u2022 A triaxial self - attention that learns independent temporal associations\
+      \ for different activities and makes concurrent activity predictions while being\
+      \ aware of possible activity combinations . \u2022"
+  2:
+    summary: null
+    text_unit: An activity association mask that helps the self - attentionbased decoder
+      better capture the associations between activities .Traditional research was
+      mainly based on hand - crafted features such as Histogram of Oriented Gradients
+      ( HOG ) and Histogram of Optical Flow ( HOF ) [ 8 ] .Recently , deep learning
+      has been commonly applied to activity recognition , initially using image recognition
+      approaches with temporal feature fusion [ 1 6 ] .However , 2D CNNs originally
+      used for image classification do not properly model spatio - temporal associations
+      , which are critical for video - based activity recognition .CNN - LSTM strategies
+      benefited from LSTM temporal association modeling .Spatial attention ( or region
+      - based methods ) as well as temporal attention were proposed to help networks
+      better focus on activity - associated features [ 2 4 ] [ 1 9 ] .TheiDT [ 3 1
+      ] and TDD [ 3 4 ] works showed that manually - crafted ( as opposed to learned
+      ) spatio - temporal descriptors can achieve good activity recognition performance
+      .Most existing approaches simply modify single - activity recognition strategies
+      for concurrent activity recognition .A
+  3:
+    summary: null
+    text_unit: CNN - LSTM structure was tested for concurrent activity recognition
+      with limited success [ 1 8 ] .More effective feature extraction frameworks were
+      proposed in recent years , including a multi - stream network [ 1 4 ] , a 3D
+      convolution network [ 7 ] [ 3 7 ] , and a non - local neural network [ 3 2 ]
+      .The features of visual objects are first extracted by the pre - trained VGG
+      net on the ImageNet dataset .This is because unlike single - activity recognition
+      , multiple activities might be distributed through the entire video clip ; the
+      unspecific temporal attention will not be able to highlight the activityspecific
+      features in time .Previousresearch modeled temporal features with a 3D ConvNet
+      , LSTMs with attention , or 3D descriptors [ 1 8 ] [ 7 ] .Additionally , many
+      previous works simply used the top N results or a sigmoid layer for concurrent
+      activity recognition , which ignores the possible associations between activities
+      .Previous decoder based on fully - connected layers with sigmoid [ 1 0 ] [ 7
+      ] ignored the feature associations between different activities .Batch normalization
+      was used after each convolutional layer , and dropout ( rate= 0 . 5 ) was used
+      after each dense layer to avoid overfitting .We used the Keras built - in VGG
+      parameters for feature extraction , and set the last block as tunable .For
+  4:
+    summary: null
+    text_unit: 'the tunable VLAD descriptors , we made changes based on the action
+      VLAD source code [ 3 6 ] .We tested our system with three commonly used concurrent
+      activity recognition datasets : Hockey Dataset [ 5 ] : This was collected from
+      real university - level hockey matches using two fixed cameras positioned at
+      both ends of the rink on the spectator ''s side .We compared our proposed method
+      on the hockey and volleyball dataset with several baselines including : 1 .AlexNet
+      for framewise activity recognition . 2 .CNN - LSTM with sigmoid layer [ 1 8
+      ] .CNNs over time [ 2 8 ] , and various SVMs .We also compared our method on
+      the charades dataset ( Table 2 ) , the result shows our method outperformed
+      most of the researches except the i 3 D and non - local neural network [ 3 2
+      ] .These two methods have much better performance on charades dataset , but
+      they pre - trained their model on kinetics dataset ( 5 0 times larger ) and
+      the time complexity of their methods are 5 times larger than our proposed method
+      .Our'
+  5:
+    summary: null
+    text_unit: 'model achieved comparable performance with only 2 0 % time complexity
+      compared with i 3 D in charades .F 1 VGG Net [ 2 7 ] 9 1 System MAP complexity
+      ( MACC ) AlexNet [ 1 7 ] 1 1 . 2 1. 2 B C 3 D [ 2 5 ] 1 0 . 7 8 0 B * Two -
+      Stream + IDT [ 2 5 ] 1 8 . 6 / CoViAR [ 3 5 ] 2 1 . 9 / Asynchronous Temporal
+      Fields [ 2 6 ] 2 2 . 4 / i 3 D [ 7 ] 3 4 .4 1 6 5 B Action VLAD [ 1 0 ] 1 7
+      . 6 3 4 B Non - local Neural Network [ 3 2 ] 3 7 . 5 1 6 5 B+ Our Model 2 2
+      . 6 3 4 B Table 2 : Experiment results on charades .We tried to replace the
+      triaxial self - attention with a traditional LSTM encoder - decoder .Although
+      we only demonstrated our proposed system on concurrent activity recognition
+      , the core idea of feature - toactivity attention and tri - axial self - attention
+      can be extended to general multi - label classification .Many recent works have
+      demonstrated that non - local neural networks and i 3'
+  6:
+    summary: null
+    text_unit: "D have good performance on activity recognition .We designed a novel\
+      \ deep learning architecture for recognizing concurrent activities that outperformed\
+      \ stateof - the - art mechanisms in three published datasets ( charades , volleyball\
+      \ , and hockey ).We hope this paper delivers the following contribution to the\
+      \ society : \u2022 A modified VLAD feature extractor and novel activity mapping\
+      \ layer that extracts independent features for each activity while preserving\
+      \ the temporal information . \u2022 A novel triaxial self - attention that learns\
+      \ independent temporal associations for different activities and makes concurrent\
+      \ activity predictions aware of possible activity combinations . \u2022 A novel\
+      \ use of the self - attention decoder that helps extract hidden associations\
+      \ between activities and avoid redundant weights . \u2022 An implemented network\
+      \ architecture that can serve as a reference for any multi - label classification\
+      \ problem given sequential input ."

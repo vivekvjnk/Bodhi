@@ -1,0 +1,594 @@
+[2025-09-23 21:39:21,154][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:39:21,154][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 21:39:21,270][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 21:39:21,271][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 2032742
+[2025-09-23 21:39:21,272][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 21:39:21,272][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 21:39:21,797][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:39:22,383][root][INFO] - Token count: 858
+[2025-09-23 21:39:22,437][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:39:22,914][root][INFO] - Token count: 1619
+[2025-09-23 21:39:22,986][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 21:39:23,455][root][INFO] - Token count: 1891
+[2025-09-23 21:39:25,766][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper focuses on improving Convolutional Neural Networks (CNNs) for practical inference, particularly addressing the trade-offs between model size, classification speed, and accuracy. Key concepts include: **CNNs**, **fully connected layers**, and **convolution layers**. The paper explores **sparsity** as a technique to reduce model size and accelerate classification.  It introduces **Holistic SparseCNN**, a method that simultaneously optimizes both convolution and fully connected layers.  The core challenge is balancing the computational demands of convolution layers (where most computation occurs) with the parameter count of fully connected layers.  The paper defines **sparse convolution**, its advantages and limitations (e.g., lower arithmetic intensity, overhead from tensor transformations).  It also discusses the impact of **sparsity levels** on speedup, the use of **weight decay**, and the importance of holistic optimization across layers to achieve optimal performance.  The goal is to achieve significant speedups (e.g., 3.4x, 7.3x) in convolution layers and improve classification throughput.  The paper uses AlexNet as a case study.
+
+
+[2025-09-23 21:39:25,766][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 21:39:25,778][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 3 text units to Bodhi/2032742/2032742_text_units.yml
+[2025-09-23 21:39:25,788][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 3, Threads: 3. Distribution: 0 threads get 2 chunks, and 3 threads get 1 chunks. Chunks per thread: [1, 1, 1]
+[2025-09-23 21:39:25,789][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:39:25,790][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:39:25,790][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 21:39:25,790][Thread 0][INFO] - source chunk:
+Phenomenally successful in practical inference problems , convolutional neural networks ( CNN ) are widely deployed in mobile devices , data centers , and even supercomputers .While pruning the fully connected layers reduces a CNN 's size considerably , it does not improve inference speed noticeably as the compute heavy parts lie in convolutions .Pruning CNNs in a way that increase inference speed often imposes specific sparsity structures , thus limiting the achievable sparsity levels . We present a method to realize simultaneously size economy and speed improvement while pruning CNNs .Deep neural networks , especially CNNs , have been pervasive in computer vision recently and served as a foundation for many critical applications ranging from image recognition [ 1 7 ] and video analytics [ 2 1 ] to autonomous driving [ 1 ] .The trained CNN models are deployed broadly for classification on a large variety of platforms , covering the spectrum of data center servers to mobile clients such as smart phones and autonomous - driving cars .When the trained CNN models perform classification on these platforms , especially on resource constraint mobile platforms , accuracy , ( classification ) speed , and model size are the three key requirements that together form the threepronged " golden trident " .Exploiting or imposing sparsity in CNNs [ 1 2 , 1 1 , 7 , 1 9 , 8 , 1 4 ] have been recently studied to reduce model size and/or accelerate classification speed with minimal or zero accuracy loss .One research thrust [ 1 2 , 1 1 , 7 ] of sparse CNN has been focusing on reducing model size by sparsifying/compressing fully connected layers that have most of the parameters of the entire CNN model .However , such designs provide limited benefits to the classification speed of CNN , because the majority of the computation , i.e. , FLOPS , are within the convolution layers instead .For example , in AlexNet , while fully connected layers comprise more than 9 0 % of the total model size , it is the convolution layers that comprise more than 9 0 % of the total computation .Therefore , another research thrust [ 1 9 , 8 , 1 4 ] of sparse CNN focuses on convolution layers to reduce compute requirements and thus to improve classification speed .However , there are challenges for sparse CNN to achieve its full potential , including 1 ) sparse convolution has lower arithmetic intensity , thus additional data transfers involved in lowering tensors to matrices used in [ 1 9 , 8 , 1 4 ] add higher overhead , 2 ) some prior sparse convolution methods [ 8 , 1 4 ] are only applicable to large filters ( e.g. , 9 × 9 ) , which limits their usage for modern CNNs where small filters ( e.g. , 3 × 3 ) are popular .Moreover , while current sparse CNN methods focus mostly on either fully connected layers or convolution layers , it is desirable to apply sparse methods to both layers simultaneously .We also provide guidelines for the range of sparsity that should be targeted during training . • A highly - optimized sparse CNN implementation that provides 3. 4 × and 7. 3 × speedups of convolution layers in AlexNet over the best dense direct convolution performance on Xeon and Atom processors , respectively , with no accuracy drop .We also show 2, 3 7 1 and 1 2 0 images per second AlexNet classification throughput , which are significantly higher than the best published performance on respective platforms .Sparse methods have been popular to reduce model size and accelerate classification speed of CNNs with minimal or zero accuracy loss .However , the speedup of end - to - end performance is limited , because the fully connected layers only account for less than 1 0 % total computation in most CNNs such as AlexNet [ 1 7 ] .Another research thrust [ 1 9 , 8 , 1 4 ] of sparse CNN focuses on convolution layers , mostly targeting the classification speed .However , prior work on sparse convolution involves the overhead of transforming tensors to matrices , and some are inapplicable to small kernel size and thus can not exploit the full potential of the sparse convolution .While
+[2025-09-23 21:39:25,790][Thread 1][INFO] - source chunk:
+Perforated - CNN [ 9 ] also improves the classification speed of convolution layers by eliminating redundant computations , it relies on interpolating redundant convolution computation instead of using sparse methods .Therefore , the acceleration due to sparse methods on classification speed of CNNs is not as good as the sparse - method - enabled reduction of model size .Thesecond challenge is the lack of holistical optimization of speed and size of sparse CNNs ( convolution layers and fully connected layers mostly affect speed and size , respectively ) .This section first presents our direct sparse convolution algorithm to advance the stateof - the - art in sparse convolution for speeding up CNNs .Finally , we discuss the synergies between sparse convolution and sparse methods on fully connected layers .Figure 3 : Ideal speedups of sparse convolution over dense convolution . conv 2 / 4 _direct : direct sparse convolution , conv 2 / 4 _lowered : sparse convolution on tensors lowered to matrices ( see Section 3. 1 . 2 for details ) .In convolution layers of CNN , an input channel is reused against multiple output channels and vice versa , thus the arithmetic intensity of our direct sparse convolution algorithm is higher than SpMV that is memory bandwidth bound but lower than dense convolution that is compute - bound .The potential acceleration of sparse convolution over dense convolution can be expressed by where x is the proportion of non - zeros in filters ( lower the x , higher the sparsity of weight tensor W ) , and this proportion directly affects the final speedup .Therefore , sparse convolution 's actual FLOP/s is lower than that of dense convolution .Hence , there is a lower bound of useful sparsity such that , with a sparsity lower than that , sparse convolution provides no speedup over dense convolution .Therefore , in Atom processors , sparse convolution outperform dense convolution in a wider range of sparsity and the speedups are higher as will be shown in Section 5 .The lowering and lifting process has demonstrated overhead for dense convolution [ 1 0 ] , and it is particularly problematic for sparse convolution with intensity already much lower than its dense counter part .Even though a bulk of computation belongs to convolution layers , fully connected layers can become a bottleneck after sparse convolution optimizations .Exploiting sparsity in fully connected layers is actually simpler than convolution layers , because fully connected layers are implemented as GEMM and we can leverage work done before on sparse matrix and dense matrix multiplication ( SpMDM ) .Simultaneously learning the sparsity of convolution and fully connected layers is beneficial in amortizing the training cost and in performing holistic trade - off among accuracy , classification speed , and model size .However , when targeting no accuracy loss from sparse models , we find that using the same regularization parameters across all layers tends to provide a high sparsity on fully connected ( fc ) layers but not enough sparsity on convolution layers to obtain speedups from sparse convolutions .Therefore , trading off a small increase in model size of fc layers for a large speedup of convolution layers can be often beneficial for holistically optimizing the accuracy - speed - size of CNN .The lower convolution layers such as conv 1 in AlexNet are much harder to sparsify than higher layers such as conv 2 and above unless we can tolerate a large accuracy drop .Specifically , we use weight decay 1e - 5 , 5e - 5 , and 6e - 5 , for FC decay multiplier 1 , 0. 1 , and 0.0 1 , respectively . among accuracy , speed , and model size .Our Holistic SparseCNN achieves a classification speed of 2, 3 7 1 images per second on BDW , without accuracy drop compared to the reference Caffe model .With
+[2025-09-23 21:39:25,791][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:39:25,790][Thread 2][INFO] - source chunk:
+no accuracy loss , our Holistic SparseCNN achieves a classification speed of 1 2 0 images per second , about 2. 8 × higher than a best case dense CNN implementation where all conv and fc layers would perform at the speed of SGEMM .This provides high sparsity on fc layers but sparsity on conv layers is so low that sparse convolution is slower than dense convolution on BDW .We use highly optimized SGEMM performance as a proxy of dense convolution performance to quantify layer - wise speedups of our Holistic SparseCNN .As a centerpiece of deep learning , CNNs are under relentless pressure to be smaller , faster , and with higher evaluation/classification accuracy .In this paper , we present Holistic SparseCNN , a collection of techniques that pave the road to unleash the full potential of sparse CNNs .Secondly , unlike prior research focusing on using sparse methods on convolution layers or fully connected layers in isolation , our new cross - layer holistic methodology not only exploits the synergies of sparse methods on convolution layers and fully connected layers but also enables optimizing accuracy , speed , and size together .Ourresults on AlexNet demonstrated 3. 4 × and 7. 3 × speedups of convolution layers over the best dense convolution on representative server and mobile platforms as well as the best classification throughputs on these platforms .
+[2025-09-23 21:39:25,791][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:39:25,791][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:25,791][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 21:39:25,792][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:25,792][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:39:25,792][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:25,792][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:39:25,795][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 21:39:28,961][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Convolutional Neural Networks (CNNs)
+    type: method
+    description: Deep learning models widely used in various applications, including image recognition and autonomous driving.
+  - name: Pruning
+    type: method
+    description: A technique to reduce the size of CNNs by removing less important connections or weights.
+  - name: AlexNet
+    type: method
+    description: A specific CNN architecture used as a benchmark in the study.
+  - name: Sparse CNN
+    type: method
+    description: CNNs that incorporate sparsity to reduce model size and/or accelerate classification speed.
+  - name: Image recognition
+    type: task
+    description: A computer vision task where a model identifies objects within an image.
+  - name: Video analytics
+    type: task
+    description: The process of analyzing video data to extract meaningful insights.
+  - name: Autonomous driving
+    type: task
+    description: The development of self-driving vehicles.
+  - name: Classification
+    type: task
+    description: The process of categorizing data into predefined classes.
+  - name: Mobile devices
+    type: generic
+    description: Platforms where CNNs are deployed, such as smartphones.
+  - name: Data centers
+    type: generic
+    description: Infrastructure where CNNs are deployed.
+  - name: Inference speed
+    type: task
+    description: The speed at which a model can make predictions.
+  - name: Model size
+    type: generic
+    description: The amount of memory a model occupies.
+  - name: Xeon processors
+    type: generic
+    description: A type of processor used in the study.
+  - name: Atom processors
+    type: generic
+    description: A type of processor used in the study.
+
+[2025-09-23 21:39:28,967][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:28,968][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Holistic SparseCNN
+    type: method
+    description: A collection of techniques designed to unleash the full potential of sparse CNNs, achieving high classification speed.
+  - name: CNNs
+    type: generic
+    description: Convolutional Neural Networks, a centerpiece of deep learning, are under pressure to be smaller, faster, and more accurate.
+  - name: Sparse CNNs
+    type: generic
+    description: Convolutional Neural Networks with sparse layers, the focus of the Holistic SparseCNN approach.
+  - name: AlexNet
+    type: generic
+    description: A specific CNN architecture used to demonstrate the speedups achieved by Holistic SparseCNN.
+  - name: Classification speed
+    type: task
+    description: The objective of the Holistic SparseCNN, aiming for faster image classification.
+  - name: SGEMM
+    type: method
+    description: Highly optimized performance used as a proxy of dense convolution performance to quantify layer-wise speedups.
+  - name: Convolution layers
+    type: generic
+    description: Layers within a CNN that perform convolution operations, optimized for speedup in Holistic SparseCNN.
+  - name: Fully connected layers
+    type: generic
+    description: Layers within a CNN that are fully connected, also optimized for speedup in Holistic SparseCNN.
+  - name: Cross-layer holistic methodology
+    type: method
+    description: A new methodology that exploits the synergies of sparse methods on convolution layers and fully connected layers.
+  - name: Speed
+    type: task
+    description: One of the objectives optimized by the Holistic SparseCNN, along with accuracy and size.
+  - name: Accuracy
+    type: task
+    description: One of the objectives optimized by the Holistic SparseCNN, along with speed and size.
+  - name: Size
+    type: task
+    description: One of the objectives optimized by the Holistic SparseCNN, along with speed and accuracy.
+
+[2025-09-23 21:39:28,986][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:29,268][heimdall.core][INFO] - Cleaned output : entities:
+  - name: CNN
+    type: method
+    description: Convolutional Neural Network, a type of deep learning model.
+  - name: Sparse convolution
+    type: method
+    description: A method to speed up CNNs by reducing computations in convolution layers.
+  - name: Dense convolution
+    type: method
+    description: Standard convolution operation in CNNs, used for comparison with sparse convolution.
+  - name: Fully connected layers
+    type: method
+    description: Layers in a neural network that can become a bottleneck after sparse convolution optimizations.
+  - name: Direct sparse convolution algorithm
+    type: method
+    description: An algorithm presented to advance sparse convolution for speeding up CNNs.
+  - name: AlexNet
+    type: method
+    description: A specific CNN architecture.
+  - name: Holistic SparseCNN
+    type: method
+    description: A method that achieves a classification speed of 2,371 images per second on BDW.
+  - name: Classification speed
+    type: task
+    description: The speed at which a model can classify images, a key performance metric.
+  - name: Model size
+    type: task
+    description: The size of the model, a factor in optimization.
+  - name: Accuracy
+    type: task
+    description: The correctness of the model's predictions, a key performance metric.
+  - name: Convolution layers
+    type: generic
+    description: Layers in a CNN that perform convolution operations.
+  - name: Sparse methods
+    type: generic
+    description: Techniques used to reduce the size and computational complexity of models.
+  - name: Weight decay
+    type: generic
+    description: A regularization technique used to prevent overfitting.
+  - name: BDW
+    type: generic
+    description: A platform where the Holistic SparseCNN achieves a classification speed of 2,371 images per second.
+
+[2025-09-23 21:39:29,274][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:29,676][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:29,985][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from explicitly identifying the specific platforms where speedups were demonstrated (server and mobile).
+loop_required: true
+
+[2025-09-23 21:39:29,987][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:29,987][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:39:30,068][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are missing key methods and tasks related to sparse CNNs, such as the specific techniques used for pruning convolution layers and the performance metrics achieved.
+loop_required: true
+
+[2025-09-23 21:39:30,070][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:30,070][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:39:31,010][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Server Platform
+    type: generic
+    description: The specific hardware platform where the Holistic SparseCNN's speedups were demonstrated.
+  - name: Mobile Platform
+    type: generic
+    description: The specific hardware platform where the Holistic SparseCNN's speedups were demonstrated.
+
+[2025-09-23 21:39:31,012][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:32,134][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extracted entities are mostly complete, but could benefit from explicitly identifying the performance metrics achieved by Holistic SparseCNN, such as the speedup factors (3.4x and 7.3x) and the classification speed (120 images per second). These are key results.
+loop_required: true
+
+[2025-09-23 21:39:32,136][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 21:39:32,136][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 21:39:32,586][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Pruning Convolution Layers
+    type: method
+    description: The method of removing less important connections or weights within the convolutional layers of a CNN to reduce model size and potentially increase inference speed.
+  - name: Sparse Convolution Techniques
+    type: method
+    description: Specific techniques used to implement sparse convolution, such as those that exploit sparsity structures to reduce computational requirements.
+  - name: AlexNet Classification Throughput
+    type: task
+    description: The task of classifying images using the AlexNet CNN model, with the performance measured in images per second.
+  - name: Inference Speed
+    type: task
+    description: The speed at which a CNN model can perform classification, often measured in terms of images per second or the time taken to process an image.
+  - name: Model Size Reduction
+    type: task
+    description: The objective of decreasing the number of parameters in a CNN model, often achieved through pruning or other compression techniques.
+  - name: Performance Metrics
+    type: generic
+    description: The metrics used to evaluate the effectiveness of the methods, including speedups, accuracy, and model size reduction.
+
+[2025-09-23 21:39:32,591][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:32,952][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:33,395][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Classification Speed
+    type: generic
+    description: The speed at which the Holistic SparseCNN performs classification, measured as 120 images per second.
+  - name: Speedup Factors
+    type: generic
+    description: The speedup achieved by the Holistic SparseCNN on convolution layers, specifically 3.4x and 7.3x speedups over the best dense convolution on representative server and mobile platforms.
+
+[2025-09-23 21:39:33,396][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 21:39:33,711][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:34,079][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:37,356][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:38,074][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:38,468][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:41,760][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:42,473][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 4.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:42,801][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 8.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:46,265][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 8.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:46,810][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 8.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:51,181][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 10.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:54,662][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 10.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:39:55,174][langchain_google_vertexai._retry][WARNING] - Retrying langchain_google_vertexai.chat_models._completion_with_retry.<locals>._completion_with_retry_inner in 10.0 seconds as it raised PermissionDenied: 403 This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry. [reason: "BILLING_DISABLED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "aiplatform.googleapis.com"
+}
+metadata {
+  key: "containerInfo"
+  value: "basic-bank-463916-c2"
+}
+metadata {
+  key: "consumer"
+  value: "projects/basic-bank-463916-c2"
+}
+, locale: "en-US"
+message: "This API method requires billing to be enabled. Please enable billing on project #basic-bank-463916-c2 by visiting https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2 then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."
+, links {
+  description: "Google developers console billing"
+  url: "https://console.developers.google.com/billing/enable?project=basic-bank-463916-c2"
+}
+].
+[2025-09-23 21:40:05,522][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 21:40:05,522][Bodhi.src.Bodhi.parallel_kg_extractor][WARNING] - Intermediate file not found for thread 0: Bodhi/2032742/0/2032742_intermediate_data.yml
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.parallel_kg_extractor][WARNING] - Intermediate file not found for thread 1: Bodhi/2032742/1/2032742_intermediate_data.yml
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.parallel_kg_extractor][WARNING] - Intermediate file not found for thread 2: Bodhi/2032742/2/2032742_intermediate_data.yml
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 3 intermediate files into Bodhi/2032742/2032742_combined_intermediate_data.yml
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 2032742
+Total Chunks Processed: 3
+Threads Used: 3
+Chunks per Thread: [1, 1, 1]
+Entities Extracted: 0
+Relationships Extracted: 0
+Combined Intermediate File: Bodhi/2032742/2032742_combined_intermediate_data.yml
+Total Time Taken: 44.25 seconds
+==========================================
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 21:40:05,523][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 21:40:05,527][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 21:40:05,527][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 21:40:05,767][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 21:40:05,767][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+

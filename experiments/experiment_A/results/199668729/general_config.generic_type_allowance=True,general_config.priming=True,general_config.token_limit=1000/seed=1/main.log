@@ -1,0 +1,1824 @@
+[2025-09-23 13:34:34,185][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 13:34:34,185][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+[2025-09-23 13:34:34,400][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 13:34:34,401][Bodhi.src.Bodhi.core][INFO] - Generating graph for source: 199668729
+[2025-09-23 13:34:34,402][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Starting parallel graph extraction for source: None
+[2025-09-23 13:34:34,402][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - No pre-existing text units found. Extracting from source document.
+[2025-09-23 13:34:35,565][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 13:34:36,343][root][INFO] - Token count: 1156
+[2025-09-23 13:34:36,429][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 13:34:37,236][root][INFO] - Token count: 2090
+[2025-09-23 13:34:37,374][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/src/Bodhi/parallel_kg_extractor.py:274:Estimating tokens using hf method.
+[2025-09-23 13:34:38,178][root][INFO] - Token count: 3177
+[2025-09-23 13:34:40,828][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Concise summary: 
+This paper introduces FastPose, a real-time pose estimation and tracking framework. The core is a **Multi-Task Network (MTN)** that simultaneously performs **human detection**, **pose estimation**, and **person Re-ID (re-identification)**. A key contribution is the **Scale-normalized Image and Feature Pyramid (SIFP)** paradigm, designed to address the **scale variation problem**, a performance bottleneck in unified pose estimation. SIFP leverages **Feature Pyramid Networks (FPN)** to enhance scale invariance. The MTN outputs are used by an **occlusion-aware strategy** for articulated multi-person pose tracking. The framework utilizes different **backbone networks** (e.g., ResNet, MobileNet-v2) and is evaluated on datasets like COCO, PoseTrack, and SSM. Key concepts include **keypoint detection**, **bounding box regression**, **Region Proposal Network (RPN)**, **RoIAlign**, and metrics like mAP and MOTA. The paper compares FastPose with state-of-the-art methods, highlighting its speed and performance.
+
+
+[2025-09-23 13:34:40,828][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - outlier indices : []
+[2025-09-23 13:34:40,867][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Extracted and saved 3 text units to Bodhi/199668729/199668729_text_units.yml
+[2025-09-23 13:34:40,895][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Total chunks: 3, Threads: 3. Distribution: 0 threads get 2 chunks, and 3 threads get 1 chunks. Chunks per thread: [1, 1, 1]
+[2025-09-23 13:34:40,900][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:34:40,901][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:34:40,904][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:34:40,904][Thread 1][INFO] - source chunk:
+- task learning [ 9 , 6 0 , 2 0 , 3 2 ] has been used successfully in applications of natural language processing [ 1 3 , 4 2 ] , speech recognition [ 1 5 ] , computer vision [ 2 2 , 6 1 , 5 2 ] .Especiallyin many computer vision tasks , the effectiveness of multi - task learning has been proved .Fast R - CNN [ 2 2 ] and Faster R - CNN [ 4 0 ] jointly predict the class and the coordinates of objects in an image .Mask R - CNN [ 2 4 ] can efficiently detect objects in an image while simultaneously generating a high - quality segmentation mask for each instance .Large scale variation is one of major factors to influence the performance of many computer vision tasks like face detection , object detection and pose estimation .To address the problem that large strides of deep CNNs make small object detection very difficult , object detector [ 1 0 , 1 4 ] use dilated/atrous convolutions to increase the resolution of the feature map .SDP [ 5 4 ] , SSH [ 3 5 ] and MS - CNN [ 7 ] make predictions of small objects on the lower layer and big objects on the higher layers respectively .Furthermore , methods like FPN [ 3 3 ] and Mask - RCNN [ 2 4 ] propose a pyramidal representation and fuse adjacent scale feature maps to combine features which have semantic and detail informations .Besides , some methods , like SNIP [ 4 4 ] and SNIPER [ 4 5 ] , propose advanced and efficient data argumentation methods to illustrate the scale variation problem .Given an original image as input , the multi - task network ( MTN ) can predict the bounding boxes , keypoint coordinates and Re - ID features in the scene .A scale - normalized image pyramid and feature pyramid ( SIFP ) paradigm is exploited to alleviate the scale variation problem of MTN .The MTN adopts the similar unified procedure as Mask R - CNN .A fully convolutional network , called a Region Proposal Network ( RPN ) , is built upon these feature maps to propose candidate human bounding boxes .Based on the candidate boxes and their corresponding features extracted from the sharing feature maps , Mask R - CNN has two branches , one branch performs classification and bounding - box regression .Network Architecture : Similar with Mask R - CNN , our proposed network can be instantiated with multiple architectures : ( i ) the backbone network used for feature extraction over an entire image , and ( ii ) the head networks for human detection ( bounding - box classification and regression ) , pose estimation and person Re - ID that are applied separately to each RoI. For the backbone network , deeper architecture gains the effectiveness of extracted features , but brings longer training and inference time .To provide a trade - off between accuracy and speed when MTN is adopted in practical applications , we evaluate MobileNet - v 2 [ 4 3 ] and ResNet [ 2 5 ] with FPN [ 3 3 ] of depth 1 8 , 5 0 and 1 0 1 layers .For the pose estimation head network , Mask R - CNN adopts a straightforward structure , which limits the precision of keypoints localization .In Mask R - CNN , 1 4 × 1 4 feature maps of 5 1 2 channels are extracted by RoIAlign for each proposal .In MTN , we utilize a padding operation to maintaining the ratio of the person in the 2 2 × 1 6 feature maps extracted by RoIAlign .As this head network is based upon the backbone and RPN , so it need the training data composed by images within multi - person and corresponding ID annotation , like some person search datasets [ 5 1 , 6 2 ] .The MTN can provide necessary informations to the occlusion - aware strategy introduced in Sec. 3. 3 to perform pose tracking .As described above , MTN performs human detection , pose estimation and person Re - ID simultaneously .However , MTN , a unified network , builds all the head networks upon the RoIs generated by RPN .So inspired by [ 4 4 ] , we develop a scalenormalized paradigm exploiting both image pyramid and feature pyramid ( SIFP ) to achieve enhanced scale invariance capability of MTN .To maxmize the inference speed without reducing performance , SIFP exploits FPN to tackle this dilemma .Due
+[2025-09-23 13:34:40,905][Thread 0][INFO] - source chunk:
+An end - to - end multi - task network ( MTN ) is designed to perform human detection , pose estimation , and person re - identification ( Re - ID ) tasks simultaneously .To alleviate the performance bottleneck caused by scale variation problem , a paradigm which exploits scale - normalized image and feature pyramids ( SIFP ) is proposed to boost both performance and speed .Given the results of MTN , we adopt an occlusion - aware Re - ID feature strategy in the pose tracking module , where pose information is utilized to infer the occlusion state to make better use of Re - ID feature .In experiments , we demonstrate that the pose estimation and tracking performance improves steadily utilizing SIFP through different backbones .Using ResNet - 1 8 and ResNet - 5 0 as backbones , the overall pose tracking framework achieves competitive performance with 2 9 . 4 FPS and 1 2 . 2 FPS , respectively .Methods involved are PoseTrack [ 2 8 ] , JointFlow [ 1 6 ] , PoseFlow [ 5 3 ] , Detect - and - Track [ 2 1 ] , FlowTrack [ 5 0 ] , and our FastPose framework with various backbones .Previous pose estimation systems address single prelocated person , which exploit pictorial structures model [ 4 , 1 8 ] and following deep convolutional neural networks ( DC - NNs ) approaches [ 4 7 , 4 6 , 4 8 , 3 6 , 5 6 ] .Motivated by practical applications in video surveillance , human - computer interaction and action recognition , researchers now focus on the multi - person pose estimation in unconstrained environment .Generally , two - stages methods achieve the state - of - theart results both on pose estimation and pose tracking tasks , beyond the performance of unified approach .Based on the detection result of the first stage , the second stage only focuses on the task of keypoint detection on a fixed scale .Despite the leading performance , these methods ca n't perform real - time inference as their complex procedures , including human detection , cropping and scaling images , and pose estimation .Although many methods [ 3 3 , 2 3 ] have been proposed to alleviate scale variation problem in face detection or object detection area , there are few researches focusing on dealing with the scale variation in unified multi - person pose estimation .Different from multiple object tracking that focuses on instance identification assignment , pose tracking aims to address a more complex problem of articulated multi - person pose tracking in videos .Based on the top - down pose estimation methods , [ 5 0 ] exploits flow - based pose similarity as metric and solves the matching problem in a greedy fashion . [ 2 1 ] proposes a 3D extension of Mask R - CNN , which predicts the location of person tubes and corresponding poses simultaneously .Based on the above analyses , this paper develops FastPose , a pose tracking framework which can perform pose estimation and tracking towards real - time speed .Specifically , we first build a multi - task network ( MTN ) which jointly optimizes three tasks simultaneously , including human detection , pose estimation , and person Re - ID .The main contributions of this paper can be described as follows : ( 1 ) Taking the person Re - ID features into account , we design an end - to - end multi - task network which performs human detection , pose estimation , and person Re - ID simultaneously .The network 's outputs provide the necessary informations for the following pose tracking strategy . ( 2 ) We propose a paradigm named scale - normalized image and feature pyramid ( SIFP ) for alleviating scale variation problem which is the performance bottleneck of unified top - down pose estimation methods .Combining feature pyramid networks ( FPN ) with the scale distribution can help the network to avoid multi - scale testing . ( 3 ) Utilizing the outputs of our multi - task network , an occlusion - aware strategy is exploited to perform articulated multi - person pose tracking in videos .Specifically , the pose information is utilized to infer occlusion state and achieve the occlusion - aware Re - ID strategy which dramatically reduce the identification ( ID ) switches during tracking . Pose estimation has underwent a long way as a basic research topic of computer vision .CPN [ 1 2 ] is the leading method on COCO 2 0 1 7 keypoint challenge .It involves skip layer feature concatenation and an online hard keypoint mining step . [ 5 0 ] adopts FPN - DCN as the human detector and adds a few deconvolutional layers on single - person pose estimation network to improve the performance .Based on the multi - person pose estimation approaches described above , it is natural to extend them to multiperson pose tracking in video .In [ 2 8 , 2 6 ] , authors firstly estimate human pose with a bottom - up method , and then transform the problem into solving an energy minimizing function over a spatiotemporal graph constructed on the detected joints . [ 1 6 ] proposes a model to predict Temporal Flow Fields ( TTF ) to formulate a similarity measure of detected joints .Based on the top - down pose estimation methods , [ 2 1 ] proposes an extended Mask R - CNN and solves the bipartite graph matching problem based on IoU. [ 5 0 ] exploits flow - based pose similarity as metric and solves the matching problem in a greedy fashion .Based on the obtained pose of single person , [ 5 3 ] proposes to construct pose flow and perform pose flow non maximum suppression ( NMS ) to eliminate issues like ID switches .Multi
+[2025-09-23 13:34:40,906][Thread 2][INFO] - source chunk:
+to FPN , MTN enhances scale invariance capability to alleviate the domain - shift brought by single scale testing .In conclusion , SIFP is a modified version of SNIP .Combining with FPN helps SNIP to avoid slower inference speed brought by multi - scale testing .Based on the detection box , keypoints and Re - ID feature provided by MTN , pose tracking is performed by an occlusion - aware strategy .As described in Sec. 3. 1 , using a deeper backbone network ( ResNet - 5 0 or ResNet - 1 0 1 ) , the numbers of convolutional layers in pose estimation head and Re - ID head are 8 and 4 respectively .When using a smaller backbone ( ResNet - 1 8 or MobileNet - v 2 ) , they are changed to 4 and 2 .MPII [ 3 ] and PoseTrack [ 2 ] datasets are utilized for training pose estimation task .Person search datasets including SSM [ 5 1 ] and PRW [ 6 2 ] datasets are for training person Re - ID task .Utilizing non - maximum suppression , the highest scoring 1 0 0 detection boxes are fed into pose estimation and person Re - ID branches to obtain the heat maps of K keypoints and 1 2 8 - d Re - ID feature for each human boxes .In this section , we perform thorough ablation experiments for both pose estimation and pose tracking tasks , and compare our FastPose framework with the state - of - theart methods on PoseTrack [ 2 ] dataset .Pose estimation task is evaluated on 5k validation images ( minival ) of COCO [ 3 4 ] dataset and PoseTrack [ 2 ] dataset .BackboneArchitecture and SIFP for FastPose : As shown in Table 1 ( b ) , our proposed FastPose also shows steady improvement by using deeper backbone models . mAP and MOTA are two main metrics on PoseTrack dataset .Using MobileNet - v 2 or ResNet 1 8 as the backbone , FastPose can achieve real - time pose tracking .Although FastPose - MobileNet - v 2 has lower metric ( 6 2 . 1 on mAP and 5 5 . 6 on MOTA ) than FastPose - 1 8 ( 6 3 . 1 and 5 6 . 8) , its properties make it particularly suitable for mobile applications .It proves SIFP can stably improve the performance of pose estimation and tracking on PoseTrack dataset .Pose estimation performance of FastPose on COCO dataset is reported in the supplementary material due to the page limit .Besides , we evaluate MTN on the person Re - ID dataset SSM and the mAP on SSM test is 8 9 . 3 8 , which suggests that it is feasible to extract Re - ID features in MTN .More complex designs have the potential to improve performance but are not the focus of this work . we compare our FastPose framework with the state - ofthe - art methods on PoseTrack Dataset [ 2 ] , including PoseTrack [ 2 ] , JointFlow [ 1 6 ] , PoseFlow [ 5 3 ] , Detect - and - Track [ 2 1 ] and FlowTrack [ 5 0 ] . top - down or bottom - up approach , are all have lower mAP and slower speed than FastPose - 5 0 or FastPose - 1 0 1 .On PoseTrack val , Only FlowTrack - 1 5 2 with Flow has 6 5 . 4 MOTA higher than 6 3 . 2 of our FastPose - 1 0 1 .But its slower detector FPN - DCN and the optical flow estimation take much inference time , which causes the speed of FlowTrack - 1 5 2 is only 0. 2 FPS .Although using Flow and adopting FPN - DCN as human detector , FlowTrack - 5 0 achieves MOTA of 6 2 . 9 which is still caught up by our FastPose - 5 0 with MOTA of 6 2 . 8 .On PoseTrack test , FastPose - 5 0 and FastPose - 1 0 1 achieve MOTA of 5 6 . 6 and 5 7 . 4 , which are close to the state - of - the - art performance .The inference time of FastPose comes from two aspects : MTN and tracking strategy .In this paper , we present FastPose , a fast and unified pose estimation and tracking framework , which utilizes a multi - task network ( MTN ) to integrates three tasks together .An occlusion - aware strategy following MTN performs pose tracking .Besides , a paradigm named Scale - normalized Image and Feature Pyramid ( SIFP ) is designed to deal with severe scale variation widely existed in unified pose approaches .In ablation studies , we prove the stable improvements brought by MTN , SIFP and occlusion - aware strategy .Moreover , with different configurations , FastPose can achieve real - time inference or competitive performance , which is helpful to adopt pose tracking in actual scenarios .
+[2025-09-23 13:34:40,908][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:34:40,909][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:34:40,909][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:34:40,910][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:40,911][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:40,912][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:40,912][Thread 1][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 13:34:40,912][Thread 2][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 13:34:40,913][Thread 0][INFO] - 
+--entity_extraction--
+chunk index = 1
+[2025-09-23 13:34:44,926][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FastPose
+    type: GENERIC
+    description: A real-time pose estimation and tracking framework.
+  - name: Multi-Task Network (MTN)
+    type: GENERIC
+    description: The core component of FastPose, designed to perform human detection, pose estimation, and person re-identification simultaneously.
+  - name: human detection
+    type: GENERIC
+    description: The process of identifying and locating humans within an image or video.
+  - name: pose estimation
+    type: GENERIC
+    description: The process of estimating the positions of keypoints (e.g., joints) on a human body.
+  - name: person Re-ID (re-identification)
+    type: GENERIC
+    description: The task of re-identifying a person across different camera views or over time.
+  - name: Scale-normalized Image and Feature Pyramid (SIFP)
+    type: GENERIC
+    description: A paradigm designed to address the scale variation problem in pose estimation, enhancing both performance and speed.
+  - name: scale variation problem
+    type: GENERIC
+    description: A performance bottleneck in unified pose estimation, caused by variations in the size of objects in an image.
+  - name: Feature Pyramid Networks (FPN)
+    type: GENERIC
+    description: A network architecture used in SIFP to enhance scale invariance.
+  - name: occlusion-aware strategy
+    type: GENERIC
+    description: A strategy used in the pose tracking module to handle occlusions, improving tracking accuracy.
+  - name: backbone networks
+    type: GENERIC
+    description: The base convolutional neural networks used in FastPose, such as ResNet and MobileNet-v2.
+  - name: ResNet-18
+    type: GENERIC
+    description: A specific type of backbone network used in FastPose.
+  - name: ResNet-50
+    type: GENERIC
+    description: A specific type of backbone network used in FastPose.
+  - name: articulated multi-person pose tracking
+    type: GENERIC
+    description: The task of tracking the poses of multiple people in a video, considering the articulation of their bodies.
+
+[2025-09-23 13:34:44,932][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:45,003][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FastPose
+    type: GENERIC
+    description: A real-time pose estimation and tracking framework.
+  - name: Multi-Task Network (MTN)
+    type: GENERIC
+    description: The core of FastPose, simultaneously performing human detection, pose estimation, and person Re-ID.
+  - name: human detection
+    type: GENERIC
+    description: A task performed by the MTN to identify humans in images.
+  - name: pose estimation
+    type: GENERIC
+    description: A task performed by the MTN to estimate human pose.
+  - name: person Re-ID (re-identification)
+    type: GENERIC
+    description: A task performed by the MTN to re-identify individuals across different frames or views.
+  - name: Scale-normalized Image and Feature Pyramid (SIFP)
+    type: GENERIC
+    description: A paradigm designed to address the scale variation problem in unified pose estimation, leveraging Feature Pyramid Networks (FPN).
+  - name: Feature Pyramid Networks (FPN)
+    type: GENERIC
+    description: Used within SIFP to enhance scale invariance.
+  - name: occlusion-aware strategy
+    type: GENERIC
+    description: Used for articulated multi-person pose tracking, utilizing the outputs of the MTN.
+  - name: backbone networks
+    type: GENERIC
+    description: Different network architectures (e.g., ResNet, MobileNet-v2) used in FastPose.
+  - name: ResNet
+    type: GENERIC
+    description: A type of backbone network used in FastPose.
+  - name: MobileNet-v2
+    type: GENERIC
+    description: A type of backbone network used in FastPose.
+  - name: COCO dataset
+    type: GENERIC
+    description: A dataset used for evaluating pose estimation performance.
+  - name: PoseTrack dataset
+    type: GENERIC
+    description: A dataset used for evaluating pose estimation and tracking performance.
+  - name: keypoint detection
+    type: GENERIC
+    description: A component of pose estimation, identifying key points on the human body.
+  - name: mAP
+    type: GENERIC
+    description: A metric used for evaluating the performance of pose estimation.
+  - name: MOTA
+    type: GENERIC
+    description: A metric used for evaluating the performance of pose tracking.
+
+[2025-09-23 13:34:45,011][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:45,799][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Multi-Task Network (MTN)
+    type: GENERIC
+    description: A unified network that simultaneously performs human detection, pose estimation, and person Re-ID.
+  - name: Human detection
+    type: GENERIC
+    description: The process of identifying and locating humans within an image, including bounding box regression and classification.
+  - name: Pose estimation
+    type: GENERIC
+    description: The process of identifying and locating keypoints (e.g., joints) on a human figure within an image.
+  - name: Person Re-ID (re-identification)
+    type: GENERIC
+    description: The process of identifying and tracking individuals across different camera views or within a video sequence.
+  - name: Scale variation problem
+    type: GENERIC
+    description: A performance bottleneck in unified pose estimation, caused by the varying sizes of objects in an image.
+  - name: Scale-normalized Image and Feature Pyramid (SIFP)
+    type: GENERIC
+    description: A paradigm designed to address the scale variation problem, leveraging Feature Pyramid Networks (FPN) to enhance scale invariance.
+  - name: Feature Pyramid Networks (FPN)
+    type: GENERIC
+    description: A network architecture used to enhance scale invariance by creating a pyramidal representation of features and fusing adjacent scale feature maps.
+  - name: Backbone network
+    type: GENERIC
+    description: The base network used for feature extraction over an entire image, with deeper architectures potentially improving feature extraction effectiveness.
+  - name: Region Proposal Network (RPN)
+    type: GENERIC
+    description: A fully convolutional network built upon feature maps to propose candidate human bounding boxes.
+  - name: RoIAlign
+    type: GENERIC
+    description: A method used to extract features from regions of interest (RoIs) for further processing, such as classification and bounding box regression.
+  - name: Bounding box regression
+    type: GENERIC
+    description: The process of refining the coordinates of bounding boxes to accurately locate objects in an image.
+  - name: MobileNet-v2
+    type: GENERIC
+    description: A lightweight backbone network used for feature extraction.
+  - name: ResNet
+    type: GENERIC
+    description: A deep residual network used as a backbone for feature extraction.
+  - name: Mask R-CNN
+    type: GENERIC
+    description: A network that can efficiently detect objects in an image while simultaneously generating a high-quality segmentation mask for each instance.
+  - name: Keypoint detection
+    type: GENERIC
+    description: The process of identifying and locating specific points (keypoints) on an object, such as joints on a human body.
+
+[2025-09-23 13:34:45,809][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:45,933][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing some key datasets and methods mentioned in the text.
+loop_required: true
+
+[2025-09-23 13:34:45,935][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:45,935][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:45,994][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets mentioned in the text. Adding these will improve the completeness of the knowledge graph.
+loop_required: true
+
+[2025-09-23 13:34:45,996][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:45,997][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:47,114][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the method FastPose, which is the core of the paper. Also, the datasets used for evaluation are missing.
+loop_required: true
+
+[2025-09-23 13:34:47,116][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:47,116][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:47,569][heimdall.core][INFO] - Cleaned output : entities:
+  - name: PoseTrack
+    type: dataset
+    description: A dataset used for pose estimation and tracking, mentioned in the context of evaluating the FastPose framework.
+  - name: ResNet-18
+    type: method
+    description: A specific backbone network (ResNet with 18 layers) used in the FastPose framework, used for pose estimation and tracking.
+  - name: ResNet-50
+    type: method
+    description: A specific backbone network (ResNet with 50 layers) used in the FastPose framework, used for pose estimation and tracking.
+
+[2025-09-23 13:34:47,572][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:47,740][heimdall.core][INFO] - Cleaned output : entities:
+  - name: MPII
+    type: dataset
+    description: A dataset utilized for training the pose estimation task.
+  - name: PRW
+    type: dataset
+    description: A person search dataset used for training the person Re-ID task.
+  - name: JointFlow
+    type: method
+    description: A state-of-the-art method compared with FastPose on PoseTrack dataset.
+  - name: PoseFlow
+    type: method
+    description: A state-of-the-art method compared with FastPose on PoseTrack dataset.
+  - name: Detect-and-Track
+    type: method
+    description: A state-of-the-art method compared with FastPose on PoseTrack dataset.
+  - name: FlowTrack
+    type: method
+    description: A state-of-the-art method compared with FastPose on PoseTrack dataset.
+
+[2025-09-23 13:34:47,745][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:48,383][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FastPose
+    type: method
+    description: The real-time pose estimation and tracking framework introduced in the paper.
+  - name: COCO
+    type: dataset
+    description: A dataset used for evaluating the FastPose framework.
+  - name: PoseTrack
+    type: dataset
+    description: A dataset used for evaluating the FastPose framework.
+  - name: SSM
+    type: dataset
+    description: A dataset used for evaluating the FastPose framework.
+
+[2025-09-23 13:34:48,387][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:48,651][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key datasets and metrics directly related to the evaluation of the FastPose framework.
+loop_required: true
+
+[2025-09-23 13:34:48,653][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:48,654][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:48,679][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets mentioned in the text, such as JointFlow, PoseFlow, Detect-and-Track, FlowTrack, and CPN. Adding these will improve the completeness of the knowledge graph.
+loop_required: true
+
+[2025-09-23 13:34:48,681][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:48,681][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:49,514][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the specific methods and datasets mentioned in the text that are used to address the scale variation problem and evaluate the framework.
+loop_required: true
+
+[2025-09-23 13:34:49,517][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:49,517][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:50,132][heimdall.core][INFO] - Cleaned output : entities:
+  - name: JointFlow
+    type: method
+    description: A method for pose tracking.
+  - name: PoseFlow
+    type: method
+    description: A method for pose tracking.
+  - name: Detect-and-Track
+    type: method
+    description: A method for pose tracking.
+  - name: FlowTrack
+    type: method
+    description: A method for pose tracking.
+  - name: CPN
+    type: method
+    description: A leading method on COCO 2017 keypoint challenge.
+
+[2025-09-23 13:34:50,136][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:50,451][heimdall.core][INFO] - Cleaned output : entities:
+  - name: COCO
+    type: dataset
+    description: A dataset used for evaluating the pose estimation task, specifically the 5k validation images (minival).
+  - name: PoseTrack
+    type: dataset
+    description: A dataset used for training and evaluating the pose estimation and tracking tasks.
+  - name: SSM
+    type: dataset
+    description: A person search dataset used for training the person Re-ID task.
+  - name: mAP
+    type: method
+    description: A metric used to evaluate the performance of the pose estimation and person Re-ID tasks.
+  - name: MOTA
+    type: method
+    description: A metric used to evaluate the performance of the pose tracking task.
+
+[2025-09-23 13:34:50,455][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:51,154][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key metrics and datasets used for evaluation, as well as the specific tasks the MTN is designed to perform.
+loop_required: true
+
+[2025-09-23 13:34:51,156][Thread 0][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:51,157][Thread 0][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:51,421][heimdall.core][INFO] - Cleaned output : entities:
+  - name: FPN
+    type: method
+    description: "Feature Pyramid Networks, a method used to create a pyramidal representation and fuse adjacent scale feature maps to combine features which have semantic and detail informations, addressing the scale variation problem."
+  - name: Mask R-CNN
+    type: method
+    description: "A method that can efficiently detect objects in an image while simultaneously generating a high-quality segmentation mask for each instance. The MTN adopts a similar unified procedure as Mask R-CNN."
+  - name: MobileNet-v2
+    type: method
+    description: "A backbone network architecture used for feature extraction, evaluated to provide a trade-off between accuracy and speed when MTN is adopted in practical applications."
+  - name: ResNet
+    type: method
+    description: "A backbone network architecture used for feature extraction, evaluated to provide a trade-off between accuracy and speed when MTN is adopted in practical applications."
+
+[2025-09-23 13:34:51,425][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:51,620][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets directly related to the evaluation and training of the FastPose framework, as well as specific details about the backbone networks used.
+loop_required: true
+
+[2025-09-23 13:34:51,622][Thread 2][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:51,622][Thread 2][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:52,573][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing the explicit mention of the task that the MTN is designed to accomplish, which is pose estimation and tracking. Also, the paper mentions the use of an occlusion-aware strategy, which is a key component of the framework.
+loop_required: true
+
+[2025-09-23 13:34:52,576][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:52,577][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:53,590][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Human Detection
+    type: task
+    description: The task of identifying and locating human figures within an image or video frame.
+  - name: Pose Estimation
+    type: task
+    description: The task of determining the spatial configuration of keypoints (e.g., joints) on a human body within an image or video.
+  - name: Person Re-ID
+    type: task
+    description: The task of re-identifying a specific person across different camera views or video frames.
+  - name: COCO
+    type: dataset
+    description: A dataset used for object detection, keypoint detection, and image segmentation.
+  - name: PoseTrack
+    type: dataset
+    description: A dataset for human pose estimation and tracking in videos.
+  - name: mAP
+    type: generic
+    description: A metric used to evaluate the performance of object detection and pose estimation models.
+  - name: MOTA
+    type: generic
+    description: A metric used to evaluate the performance of multi-object tracking algorithms, measuring the accuracy of tracking.
+
+[2025-09-23 13:34:53,599][Thread 0][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:53,855][heimdall.core][INFO] - Cleaned output : entities:
+  - name: ResNet-50
+    type: method
+    description: A specific backbone network used in the FastPose framework, with 50 layers.
+  - name: ResNet-101
+    type: method
+    description: A specific backbone network used in the FastPose framework, with 101 layers.
+  - name: ResNet-18
+    type: method
+    description: A specific backbone network used in the FastPose framework, with 18 layers.
+  - name: MobileNet-v2
+    type: method
+    description: A specific backbone network used in the FastPose framework, known for its efficiency.
+  - name: COCO
+    type: dataset
+    description: A dataset used for training and evaluating the pose estimation task.
+  - name: PoseTrack
+    type: dataset
+    description: A dataset used for training and evaluating the pose estimation and tracking tasks.
+  - name: SSM
+    type: dataset
+    description: A dataset used for training the person Re-ID task.
+  - name: PRW
+    type: dataset
+    description: A dataset used for training the person Re-ID task.
+
+[2025-09-23 13:34:53,861][Thread 2][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:53,939][heimdall.core][INFO] - Cleaned output : entities:
+  - name: Pose Estimation and Tracking
+    type: task
+    description: The primary objective of the FastPose framework, involving the localization of human keypoints and tracking their movements across video frames.
+  - name: Occlusion-aware strategy
+    type: method
+    description: A strategy employed by the framework to handle occlusions in multi-person pose tracking, enabling the system to maintain accurate pose estimation even when body parts are obscured.
+
+[2025-09-23 13:34:53,942][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:54,738][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 13:34:54,740][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:34:54,741][Thread 2][INFO] - 
+--extract_relationships--
+
+[2025-09-23 13:34:54,971][heimdall.core][INFO] - Cleaned output : reason_to_loop: The maximum iteration count has been reached. No further loops are permitted.
+loop_required: false
+
+[2025-09-23 13:34:54,973][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:34:54,973][Thread 0][INFO] - 
+--extract_relationships--
+
+[2025-09-23 13:34:55,264][heimdall.core][INFO] - Cleaned output : reason_to_loop: The extraction is missing key methods and datasets directly related to the FastPose framework and its evaluation. Specifically, the text mentions methods like SNIP and SNIPER, which are relevant to the scale variation problem, and the paper's evaluation on COCO, PoseTrack, and SSM datasets.
+loop_required: true
+
+[2025-09-23 13:34:55,266][Thread 1][INFO] - 
+---NODE: extract_entities---
+[2025-09-23 13:34:55,267][Thread 1][INFO] - 
+--entity_validation_feedback--
+
+[2025-09-23 13:34:57,011][heimdall.core][INFO] - Cleaned output : entities:
+  - name: SNIP
+    type: method
+    description: A method that proposes advanced and efficient data argumentation methods to illustrate the scale variation problem.
+  - name: SNIPER
+    type: method
+    description: A method that proposes advanced and efficient data argumentation methods to illustrate the scale variation problem.
+  - name: COCO
+    type: dataset
+    description: A dataset used for evaluation of the FastPose framework.
+  - name: PoseTrack
+    type: dataset
+    description: A dataset used for evaluation of the FastPose framework.
+  - name: SSM
+    type: dataset
+    description: A dataset used for evaluation of the FastPose framework.
+
+[2025-09-23 13:34:57,018][Thread 1][INFO] - 
+---NODE: validate_entities---
+[2025-09-23 13:34:58,014][heimdall.core][INFO] - Cleaned output : reason_to_loop: Maximum iterations reached. No further loops are allowed.
+loop_required: false
+
+[2025-09-23 13:34:58,017][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:34:58,017][Thread 1][INFO] - 
+--extract_relationships--
+
+[2025-09-23 13:35:03,736][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: Multi-Task Network (MTN)
+    description: FastPose utilizes a Multi-Task Network (MTN) as a core component.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: human detection
+    description: The Multi-Task Network (MTN) performs human detection.
+    strength: 9.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: pose estimation
+    description: The Multi-Task Network (MTN) performs pose estimation.
+    strength: 9.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: person Re-ID (re-identification)
+    description: The Multi-Task Network (MTN) performs person Re-ID (re-identification).
+    strength: 9.0
+  - source_entity: FastPose
+    target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    description: FastPose uses Scale-normalized Image and Feature Pyramid (SIFP) to improve performance.
+    strength: 8.0
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: scale variation problem
+    description: Scale-normalized Image and Feature Pyramid (SIFP) is designed to address the scale variation problem.
+    strength: 9.0
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Feature Pyramid Networks (FPN)
+    description: Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: occlusion-aware strategy
+    description: FastPose uses an occlusion-aware strategy.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: backbone networks
+    description: FastPose utilizes different backbone networks.
+    strength: 8.0
+  - source_entity: ResNet-18
+    target_entity: backbone networks
+    description: ResNet-18 is a type of backbone network used in FastPose.
+    strength: 9.0
+  - source_entity: ResNet-50
+    target_entity: backbone networks
+    description: ResNet-50 is a type of backbone network used in FastPose.
+    strength: 9.0
+  - source_entity: FastPose
+    target_entity: articulated multi-person pose tracking
+    description: FastPose is a framework for articulated multi-person pose tracking.
+    strength: 7.0
+  - source_entity: PoseTrack
+    target_entity: articulated multi-person pose tracking
+    description: PoseTrack is related to articulated multi-person pose tracking.
+    strength: 6.0
+  - source_entity: ResNet-18
+    target_entity: FastPose
+    description: ResNet-18 is used as a backbone in FastPose.
+    strength: 8.0
+  - source_entity: ResNet-50
+    target_entity: FastPose
+    description: ResNet-50 is used as a backbone in FastPose.
+    strength: 8.0
+  - source_entity: human detection
+    target_entity: pose estimation
+    description: Human detection and pose estimation are performed together in the MTN.
+    strength: 8.0
+  - source_entity: pose estimation
+    target_entity: person Re-ID (re-identification)
+    description: Pose estimation and person re-identification are performed together in the MTN.
+    strength: 8.0
+  - source_entity: human detection
+    target_entity: person Re-ID (re-identification)
+    description: Human detection and person re-identification are performed together in the MTN.
+    strength: 8.0
+  - source_entity: Feature Pyramid Networks (FPN)
+    target_entity: scale variation problem
+    description: Feature Pyramid Networks (FPN) is used to address the scale variation problem.
+    strength: 7.0
+  - source_entity: occlusion-aware strategy
+    target_entity: person Re-ID (re-identification)
+    description: The occlusion-aware strategy utilizes Re-ID features.
+    strength: 7.0
+  - source_entity: COCO
+    target_entity: pose estimation
+    description: COCO is a dataset used for pose estimation.
+    strength: 5.0
+  - source_entity: PoseTrack
+    target_entity: pose estimation
+    description: PoseTrack is a dataset used for pose estimation.
+    strength: 6.0
+  - source_entity: PoseTrack
+    target_entity: FastPose
+    description: FastPose is evaluated on PoseTrack.
+    strength: 6.0
+  - source_entity: COCO
+    target_entity: FastPose
+    description: FastPose is evaluated on COCO.
+    strength: 5.0
+  - source_entity: mAP
+    target_entity: pose estimation
+    description: mAP is a metric used to evaluate pose estimation.
+    strength: 5.0
+  - source_entity: MOTA
+    target_entity: articulated multi-person pose tracking
+    description: MOTA is a metric used to evaluate articulated multi-person pose tracking.
+    strength: 5.0
+  - source_entity: human detection
+    target_entity: FastPose
+    description: FastPose performs human detection.
+    strength: 9.0
+  - source_entity: pose estimation
+    target_entity: FastPose
+    description: FastPose performs pose estimation.
+    strength: 9.0
+  - source_entity: person Re-ID (re-identification)
+    target_entity: FastPose
+    description: FastPose performs person Re-ID.
+    strength: 9.0
+
+[2025-09-23 13:35:03,750][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 13:35:05,134][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between 'MTN' and 'FastPose' regarding the tasks it performs. Also, the relationship between 'occlusion-aware strategy' and 'FastPose' is missing. The relationship between 'SIFP' and 'FastPose' is missing.
+loop_required: true
+
+[2025-09-23 13:35:05,136][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between 'MTN' and 'FastPose' regarding the tasks it performs. Also, the relationship between 'occlusion-aware strategy' and 'FastPose' is missing. The relationship between 'SIFP' and 'FastPose' is missing.
+[2025-09-23 13:35:05,136][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:05,137][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:05,686][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: Multi-Task Network (MTN)
+    description: FastPose utilizes the Multi-Task Network (MTN).
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: human detection
+    description: The Multi-Task Network (MTN) performs human detection.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: pose estimation
+    description: The Multi-Task Network (MTN) performs pose estimation.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: person Re-ID (re-identification)
+    description: The Multi-Task Network (MTN) performs person Re-ID (re-identification).
+    strength: 10.0
+  - source_entity: FastPose
+    target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    description: FastPose uses Scale-normalized Image and Feature Pyramid (SIFP).
+    strength: 10.0
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Feature Pyramid Networks (FPN)
+    description: Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: occlusion-aware strategy
+    description: The outputs of the Multi-Task Network (MTN) are used by an occlusion-aware strategy.
+    strength: 9.0
+  - source_entity: FastPose
+    target_entity: backbone networks
+    description: FastPose utilizes different backbone networks.
+    strength: 9.0
+  - source_entity: backbone networks
+    target_entity: ResNet
+    description: ResNet is a type of backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: backbone networks
+    target_entity: MobileNet-v2
+    description: MobileNet-v2 is a type of backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: COCO dataset
+    description: COCO dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: PoseTrack dataset
+    description: PoseTrack dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: pose estimation
+    target_entity: keypoint detection
+    description: Keypoint detection is a component of pose estimation.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: mAP
+    description: mAP is a metric used to evaluate FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: MOTA
+    description: MOTA is a metric used to evaluate FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: ResNet-50
+    description: ResNet-50 is a specific backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: ResNet-101
+    description: ResNet-101 is a specific backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: ResNet-18
+    description: ResNet-18 is a specific backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: MobileNet-v2
+    description: MobileNet-v2 is a specific backbone network used in FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: COCO
+    description: COCO dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: PoseTrack
+    description: PoseTrack dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: SSM
+    description: SSM dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: PRW
+    description: PRW dataset is used for evaluating FastPose.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: JointFlow
+    description: FastPose is compared with JointFlow.
+    strength: 6.0
+  - source_entity: FastPose
+    target_entity: PoseFlow
+    description: FastPose is compared with PoseFlow.
+    strength: 6.0
+  - source_entity: FastPose
+    target_entity: Detect-and-Track
+    description: FastPose is compared with Detect-and-Track.
+    strength: 6.0
+  - source_entity: FastPose
+    target_entity: FlowTrack
+    description: FastPose is compared with FlowTrack.
+    strength: 6.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: mAP
+    description: mAP is used to evaluate the performance of the MTN.
+    strength: 7.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: MOTA
+    description: MOTA is used to evaluate the performance of the MTN.
+    strength: 7.0
+  - source_entity: ResNet-50
+    target_entity: FastPose
+    description: ResNet-50 is used in the FastPose framework.
+    strength: 8.0
+  - source_entity: ResNet-101
+    target_entity: FastPose
+    description: ResNet-101 is used in the FastPose framework.
+    strength: 8.0
+  - source_entity: ResNet-18
+    target_entity: FastPose
+    description: ResNet-18 is used in the FastPose framework.
+    strength: 8.0
+  - source_entity: MobileNet-v2
+    target_entity: FastPose
+    description: MobileNet-v2 is used in the FastPose framework.
+    strength: 8.0
+  - source_entity: COCO
+    target_entity: pose estimation
+    description: COCO is used for evaluating the pose estimation task.
+    strength: 7.0
+  - source_entity: PoseTrack
+    target_entity: pose estimation
+    description: PoseTrack is used for training and evaluating the pose estimation task.
+    strength: 7.0
+  - source_entity: PoseTrack
+    target_entity: pose tracking
+    description: PoseTrack is used for training and evaluating the pose tracking tasks.
+    strength: 7.0
+  - source_entity: SSM
+    target_entity: person Re-ID (re-identification)
+    description: SSM is used for training the person Re-ID task.
+    strength: 7.0
+  - source_entity: PRW
+    target_entity: person Re-ID (re-identification)
+    description: PRW is used for training the person Re-ID task.
+    strength: 7.0
+
+[2025-09-23 13:35:05,705][Thread 2][WARNING] - Found false extractions in relationships: [{'source_entity': 'PoseTrack', 'target_entity': 'pose tracking', 'description': 'PoseTrack is used for training and evaluating the pose tracking tasks.', 'strength': 7.0}]
+[2025-09-23 13:35:05,705][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 13:35:06,228][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Human detection
+    description: The MTN performs human detection.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Pose estimation
+    description: The MTN performs pose estimation.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Person Re-ID (re-identification)
+    description: The MTN performs person Re-ID.
+    strength: 10.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Scale variation problem
+    description: The MTN is designed to address the scale variation problem.
+    strength: 7.0
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Scale variation problem
+    description: SIFP is designed to alleviate the scale variation problem.
+    strength: 10.0
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Multi-Task Network (MTN)
+    description: SIFP is used by the MTN.
+    strength: 8.0
+  - source_entity: Feature Pyramid Networks (FPN)
+    target_entity: Scale variation problem
+    description: FPN is used to address the scale variation problem.
+    strength: 8.0
+  - source_entity: Feature Pyramid Networks (FPN)
+    target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    description: SIFP exploits FPN.
+    strength: 9.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Bounding box regression
+    description: The MTN predicts bounding boxes.
+    strength: 8.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Keypoint detection
+    description: The MTN predicts keypoint coordinates.
+    strength: 8.0
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Region Proposal Network (RPN)
+    description: The MTN builds all the head networks upon the RoIs generated by RPN.
+    strength: 7.0
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: Human detection
+    description: RPN proposes candidate human bounding boxes, which is part of human detection.
+    strength: 7.0
+  - source_entity: Backbone network
+    target_entity: Multi-Task Network (MTN)
+    description: The MTN uses a backbone network for feature extraction.
+    strength: 8.0
+  - source_entity: MobileNet-v2
+    target_entity: Backbone network
+    description: MobileNet-v2 is a backbone network.
+    strength: 9.0
+  - source_entity: ResNet
+    target_entity: Backbone network
+    description: ResNet is a backbone network.
+    strength: 9.0
+  - source_entity: MobileNet-v2
+    target_entity: FPN
+    description: MobileNet-v2 is evaluated with FPN.
+    strength: 7.0
+  - source_entity: ResNet
+    target_entity: FPN
+    description: ResNet is evaluated with FPN.
+    strength: 7.0
+  - source_entity: Mask R-CNN
+    target_entity: Multi-Task Network (MTN)
+    description: The MTN adopts a similar unified procedure as Mask R-CNN.
+    strength: 9.0
+  - source_entity: RoIAlign
+    target_entity: Multi-Task Network (MTN)
+    description: MTN utilizes RoIAlign.
+    strength: 7.0
+  - source_entity: Pose Estimation and Tracking
+    target_entity: Multi-Task Network (MTN)
+    description: MTN is used for Pose Estimation and Tracking.
+    strength: 9.0
+  - source_entity: Occlusion-aware strategy
+    target_entity: Multi-Task Network (MTN)
+    description: The MTN can provide necessary informations to the occlusion-aware strategy.
+    strength: 7.0
+  - source_entity: FastPose
+    target_entity: COCO
+    description: COCO is used for evaluating FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: PoseTrack
+    description: PoseTrack is used for evaluating FastPose.
+    strength: 8.0
+  - source_entity: FastPose
+    target_entity: SSM
+    description: SSM is used for evaluating FastPose.
+    strength: 8.0
+  - source_entity: FPN
+    target_entity: Multi-Task Network (MTN)
+    description: FPN is used by MTN.
+    strength: 8.0
+  - source_entity: SNIP
+    target_entity: Scale variation problem
+    description: SNIP illustrates the scale variation problem.
+    strength: 6.0
+  - source_entity: SNIPER
+    target_entity: Scale variation problem
+    description: SNIPER illustrates the scale variation problem.
+    strength: 6.0
+
+[2025-09-23 13:35:06,243][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=0---
+[2025-09-23 13:35:07,152][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are mostly complete, but some could be strengthened. Specifically, the relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) could be more specific about their use (training or evaluation). Also, the text mentions that MTN extracts Re-ID features, which is not explicitly captured.
+loop_required: true
+
+[2025-09-23 13:35:07,154][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are mostly complete, but some could be strengthened. Specifically, the relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) could be more specific about their use (training or evaluation). Also, the text mentions that MTN extracts Re-ID features, which is not explicitly captured.
+[2025-09-23 13:35:07,155][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:07,155][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:07,637][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between MTN and Pose Estimation and Tracking, and also between FastPose and the Occlusion-aware strategy. The text explicitly states that MTN is used for Pose Estimation and Tracking and that the MTN can provide information to the occlusion-aware strategy.
+loop_required: true
+
+[2025-09-23 13:35:07,639][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between MTN and Pose Estimation and Tracking, and also between FastPose and the Occlusion-aware strategy. The text explicitly states that MTN is used for Pose Estimation and Tracking and that the MTN can provide information to the occlusion-aware strategy.
+[2025-09-23 13:35:07,640][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:07,640][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:07,926][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: Multi-Task Network (MTN)
+    description: FastPose utilizes a Multi-Task Network (MTN) as a core component.
+    strength: 10
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: human detection
+    description: The Multi-Task Network (MTN) performs human detection.
+    strength: 10
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: pose estimation
+    description: The Multi-Task Network (MTN) performs pose estimation.
+    strength: 10
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: person Re-ID (re-identification)
+    description: The Multi-Task Network (MTN) performs person re-identification.
+    strength: 10
+  - source_entity: FastPose
+    target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    description: FastPose incorporates the Scale-normalized Image and Feature Pyramid (SIFP) paradigm.
+    strength: 9
+  - source_entity: FastPose
+    target_entity: occlusion-aware strategy
+    description: FastPose employs an occlusion-aware strategy for articulated multi-person pose tracking.
+    strength: 9
+
+[2025-09-23 13:35:07,931][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes a Multi-Task Network (MTN) as a core component.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP) to improve performance.', 'strength': 8.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'scale variation problem', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) is designed to address the scale variation problem.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose uses an occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'backbone networks', 'description': 'ResNet-18 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'ResNet-50', 'target_entity': 'backbone networks', 'description': 'ResNet-50 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'articulated multi-person pose tracking', 'description': 'FastPose is a framework for articulated multi-person pose tracking.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'articulated multi-person pose tracking', 'description': 'PoseTrack is related to articulated multi-person pose tracking.', 'strength': 6.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'pose estimation', 'description': 'Human detection and pose estimation are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Pose estimation and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Human detection and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'scale variation problem', 'description': 'Feature Pyramid Networks (FPN) is used to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'occlusion-aware strategy', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The occlusion-aware strategy utilizes Re-ID features.', 'strength': 7.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is a dataset used for pose estimation.', 'strength': 5.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is a dataset used for pose estimation.', 'strength': 6.0}, {'source_entity': 'PoseTrack', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on PoseTrack.', 'strength': 6.0}, {'source_entity': 'COCO', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on COCO.', 'strength': 5.0}, {'source_entity': 'mAP', 'target_entity': 'pose estimation', 'description': 'mAP is a metric used to evaluate pose estimation.', 'strength': 5.0}, {'source_entity': 'MOTA', 'target_entity': 'articulated multi-person pose tracking', 'description': 'MOTA is a metric used to evaluate articulated multi-person pose tracking.', 'strength': 5.0}, {'source_entity': 'human detection', 'target_entity': 'FastPose', 'description': 'FastPose performs human detection.', 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'FastPose', 'description': 'FastPose performs pose estimation.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'FastPose', 'description': 'FastPose performs person Re-ID.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person re-identification.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose incorporates the Scale-normalized Image and Feature Pyramid (SIFP) paradigm.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose employs an occlusion-aware strategy for articulated multi-person pose tracking.', 'strength': 9.0}]
+
+[2025-09-23 13:35:07,931][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 13:35:09,189][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: COCO dataset
+    description: FastPose is evaluated on the COCO dataset for pose estimation.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: PoseTrack dataset
+    description: FastPose is evaluated on the PoseTrack dataset for pose estimation and tracking.
+    strength: 9
+  - source_entity: FastPose
+    target_entity: SSM
+    description: FastPose is evaluated on the SSM dataset for person Re-ID.
+    strength: 7
+  - source_entity: FastPose
+    target_entity: PRW
+    description: FastPose is evaluated on the PRW dataset for person Re-ID.
+    strength: 6
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: person Re-ID (re-identification)
+    description: The MTN extracts Re-ID features.
+    strength: 9
+
+[2025-09-23 13:35:09,192][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Pose Estimation and Tracking
+    description: The MTN performs pose estimation, which is a core component of pose estimation and tracking.
+    strength: 10
+  - source_entity: FastPose
+    target_entity: Occlusion-aware strategy
+    description: The MTN, which is a core component of FastPose, provides information to the occlusion-aware strategy.
+    strength: 8
+
+[2025-09-23 13:35:09,199][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between FastPose and the datasets (COCO, PoseTrack) are present, but the relationships between the datasets and metrics (mAP, MOTA) are missing. Also, the relationship between SIFP and FPN is underrepresented.
+loop_required: True
+
+[2025-09-23 13:35:09,200][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes the Multi-Task Network (MTN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP).', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'occlusion-aware strategy', 'description': 'The outputs of the Multi-Task Network (MTN) are used by an occlusion-aware strategy.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 9.0}, {'source_entity': 'backbone networks', 'target_entity': 'ResNet', 'description': 'ResNet is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'backbone networks', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'pose estimation', 'target_entity': 'keypoint detection', 'description': 'Keypoint detection is a component of pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': 'mAP is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': 'MOTA is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-50', 'description': 'ResNet-50 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-101', 'description': 'ResNet-101 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-18', 'description': 'ResNet-18 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'PRW dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'JointFlow', 'description': 'FastPose is compared with JointFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseFlow', 'description': 'FastPose is compared with PoseFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'Detect-and-Track', 'description': 'FastPose is compared with Detect-and-Track.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'FlowTrack', 'description': 'FastPose is compared with FlowTrack.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'mAP', 'description': 'mAP is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'MOTA', 'description': 'MOTA is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-101', 'target_entity': 'FastPose', 'description': 'ResNet-101 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FastPose', 'description': 'MobileNet-v2 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is used for evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is used for training and evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'SSM', 'target_entity': 'person Re-ID (re-identification)', 'description': 'SSM is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'PRW', 'target_entity': 'person Re-ID (re-identification)', 'description': 'PRW is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'FastPose is evaluated on the COCO dataset for pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'FastPose is evaluated on the PoseTrack dataset for pose estimation and tracking.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'FastPose is evaluated on the SSM dataset for person Re-ID.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'FastPose is evaluated on the PRW dataset for person Re-ID.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The MTN extracts Re-ID features.', 'strength': 9.0}]
+
+[2025-09-23 13:35:09,202][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Human detection', 'description': 'The MTN performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose estimation', 'description': 'The MTN performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Person Re-ID (re-identification)', 'description': 'The MTN performs person Re-ID.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Scale variation problem', 'description': 'The MTN is designed to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Scale variation problem', 'description': 'SIFP is designed to alleviate the scale variation problem.', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'SIFP is used by the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale variation problem', 'description': 'FPN is used to address the scale variation problem.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'SIFP exploits FPN.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Bounding box regression', 'description': 'The MTN predicts bounding boxes.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Keypoint detection', 'description': 'The MTN predicts keypoint coordinates.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The MTN builds all the head networks upon the RoIs generated by RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Human detection', 'description': 'RPN proposes candidate human bounding boxes, which is part of human detection.', 'strength': 7.0}, {'source_entity': 'Backbone network', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN uses a backbone network for feature extraction.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'Backbone network', 'description': 'MobileNet-v2 is a backbone network.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'Backbone network', 'description': 'ResNet is a backbone network.', 'strength': 9.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FPN', 'description': 'MobileNet-v2 is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'ResNet', 'target_entity': 'FPN', 'description': 'ResNet is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN adopts a similar unified procedure as Mask R-CNN.', 'strength': 9.0}, {'source_entity': 'RoIAlign', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN utilizes RoIAlign.', 'strength': 7.0}, {'source_entity': 'Pose Estimation and Tracking', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN is used for Pose Estimation and Tracking.', 'strength': 9.0}, {'source_entity': 'Occlusion-aware strategy', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN can provide necessary informations to the occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FPN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FPN is used by MTN.', 'strength': 8.0}, {'source_entity': 'SNIP', 'target_entity': 'Scale variation problem', 'description': 'SNIP illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'SNIPER', 'target_entity': 'Scale variation problem', 'description': 'SNIPER illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose Estimation and Tracking', 'description': 'The MTN performs pose estimation, which is a core component of pose estimation and tracking.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Occlusion-aware strategy', 'description': 'The MTN, which is a core component of FastPose, provides information to the occlusion-aware strategy.', 'strength': 8.0}]
+
+[2025-09-23 13:35:09,203][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between FastPose and the datasets (COCO, PoseTrack) are present, but the relationships between the datasets and metrics (mAP, MOTA) are missing. Also, the relationship between SIFP and FPN is underrepresented.
+[2025-09-23 13:35:09,205][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 13:35:09,206][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=1---
+[2025-09-23 13:35:09,207][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:09,223][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:10,372][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are missing connections between Mask R-CNN and other entities, and the role of RPN in MTN. Also, the relationship between SIFP and FPN is underrepresented.
+loop_required: true
+
+[2025-09-23 13:35:10,374][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships are missing connections between Mask R-CNN and other entities, and the role of RPN in MTN. Also, the relationship between SIFP and FPN is underrepresented.
+[2025-09-23 13:35:10,375][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:10,375][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:10,611][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between FastPose and the datasets used for evaluation (COCO, PoseTrack, SSM, PRW) are underrepresented. The text explicitly states the datasets used for training and evaluation of different tasks (pose estimation and Re-ID). More specific relationships detailing the evaluation tasks and datasets are needed.
+loop_required: true
+
+[2025-09-23 13:35:10,614][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between FastPose and the datasets used for evaluation (COCO, PoseTrack, SSM, PRW) are underrepresented. The text explicitly states the datasets used for training and evaluation of different tasks (pose estimation and Re-ID). More specific relationships detailing the evaluation tasks and datasets are needed.
+[2025-09-23 13:35:10,614][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:10,615][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:10,935][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Feature Pyramid Networks (FPN)
+    description: SIFP leverages Feature Pyramid Networks (FPN) to enhance scale invariance.
+    strength: 9
+  - source_entity: COCO
+    target_entity: mAP
+    description: COCO is a dataset used for evaluating the performance of FastPose, and mAP is a metric used for evaluation.
+    strength: 8
+  - source_entity: PoseTrack
+    target_entity: MOTA
+    description: PoseTrack is a dataset used for evaluating the performance of FastPose, and MOTA is a metric used for evaluation.
+    strength: 8
+
+[2025-09-23 13:35:10,938][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes a Multi-Task Network (MTN) as a core component.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP) to improve performance.', 'strength': 8.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'scale variation problem', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) is designed to address the scale variation problem.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose uses an occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'backbone networks', 'description': 'ResNet-18 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'ResNet-50', 'target_entity': 'backbone networks', 'description': 'ResNet-50 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'articulated multi-person pose tracking', 'description': 'FastPose is a framework for articulated multi-person pose tracking.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'articulated multi-person pose tracking', 'description': 'PoseTrack is related to articulated multi-person pose tracking.', 'strength': 6.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'pose estimation', 'description': 'Human detection and pose estimation are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Pose estimation and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Human detection and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'scale variation problem', 'description': 'Feature Pyramid Networks (FPN) is used to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'occlusion-aware strategy', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The occlusion-aware strategy utilizes Re-ID features.', 'strength': 7.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is a dataset used for pose estimation.', 'strength': 5.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is a dataset used for pose estimation.', 'strength': 6.0}, {'source_entity': 'PoseTrack', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on PoseTrack.', 'strength': 6.0}, {'source_entity': 'COCO', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on COCO.', 'strength': 5.0}, {'source_entity': 'mAP', 'target_entity': 'pose estimation', 'description': 'mAP is a metric used to evaluate pose estimation.', 'strength': 5.0}, {'source_entity': 'MOTA', 'target_entity': 'articulated multi-person pose tracking', 'description': 'MOTA is a metric used to evaluate articulated multi-person pose tracking.', 'strength': 5.0}, {'source_entity': 'human detection', 'target_entity': 'FastPose', 'description': 'FastPose performs human detection.', 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'FastPose', 'description': 'FastPose performs pose estimation.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'FastPose', 'description': 'FastPose performs person Re-ID.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person re-identification.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose incorporates the Scale-normalized Image and Feature Pyramid (SIFP) paradigm.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose employs an occlusion-aware strategy for articulated multi-person pose tracking.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'SIFP leverages Feature Pyramid Networks (FPN) to enhance scale invariance.', 'strength': 9.0}, {'source_entity': 'COCO', 'target_entity': 'mAP', 'description': 'COCO is a dataset used for evaluating the performance of FastPose, and mAP is a metric used for evaluation.', 'strength': 8.0}, {'source_entity': 'PoseTrack', 'target_entity': 'MOTA', 'description': 'PoseTrack is a dataset used for evaluating the performance of FastPose, and MOTA is a metric used for evaluation.', 'strength': 8.0}]
+
+[2025-09-23 13:35:10,939][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 13:35:12,552][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between 'FastPose' and 'COCO', and 'FastPose' and 'PoseTrack' are underrepresented. The text mentions that FastPose is evaluated on these datasets, but the existing relationships only state this fact without providing context. Also, the relationship between 'occlusion-aware strategy' and 'articulated multi-person pose tracking' is missing.
+loop_required: true
+
+[2025-09-23 13:35:12,555][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between 'FastPose' and 'COCO', and 'FastPose' and 'PoseTrack' are underrepresented. The text mentions that FastPose is evaluated on these datasets, but the existing relationships only state this fact without providing context. Also, the relationship between 'occlusion-aware strategy' and 'articulated multi-person pose tracking' is missing.
+[2025-09-23 13:35:12,556][Thread 0][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:12,556][Thread 0][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:13,477][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Mask R-CNN
+    target_entity: Human detection
+    description: Mask R-CNN is used for human detection.
+    strength: 8
+  - source_entity: Mask R-CNN
+    target_entity: Pose estimation
+    description: Mask R-CNN is used for pose estimation.
+    strength: 7
+  - source_entity: Mask R-CNN
+    target_entity: Bounding box regression
+    description: Mask R-CNN performs bounding box regression.
+    strength: 7
+  - source_entity: Multi-Task Network (MTN)
+    target_entity: Region Proposal Network (RPN)
+    description: The MTN builds head networks upon the RoIs generated by RPN.
+    strength: 9
+  - source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+    target_entity: Feature Pyramid Networks (FPN)
+    description: SIFP exploits FPN to achieve enhanced scale invariance capability.
+    strength: 10
+  - source_entity: Feature Pyramid Networks (FPN)
+    target_entity: Mask R-CNN
+    description: Mask R-CNN uses FPN.
+    strength: 6
+  - source_entity: Region Proposal Network (RPN)
+    target_entity: Bounding box regression
+    description: RPN is used to generate candidate boxes, which are then refined by bounding box regression.
+    strength: 8
+
+[2025-09-23 13:35:13,481][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Human detection', 'description': 'The MTN performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose estimation', 'description': 'The MTN performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Person Re-ID (re-identification)', 'description': 'The MTN performs person Re-ID.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Scale variation problem', 'description': 'The MTN is designed to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Scale variation problem', 'description': 'SIFP is designed to alleviate the scale variation problem.', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'SIFP is used by the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale variation problem', 'description': 'FPN is used to address the scale variation problem.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'SIFP exploits FPN.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Bounding box regression', 'description': 'The MTN predicts bounding boxes.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Keypoint detection', 'description': 'The MTN predicts keypoint coordinates.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The MTN builds all the head networks upon the RoIs generated by RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Human detection', 'description': 'RPN proposes candidate human bounding boxes, which is part of human detection.', 'strength': 7.0}, {'source_entity': 'Backbone network', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN uses a backbone network for feature extraction.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'Backbone network', 'description': 'MobileNet-v2 is a backbone network.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'Backbone network', 'description': 'ResNet is a backbone network.', 'strength': 9.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FPN', 'description': 'MobileNet-v2 is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'ResNet', 'target_entity': 'FPN', 'description': 'ResNet is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN adopts a similar unified procedure as Mask R-CNN.', 'strength': 9.0}, {'source_entity': 'RoIAlign', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN utilizes RoIAlign.', 'strength': 7.0}, {'source_entity': 'Pose Estimation and Tracking', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN is used for Pose Estimation and Tracking.', 'strength': 9.0}, {'source_entity': 'Occlusion-aware strategy', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN can provide necessary informations to the occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FPN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FPN is used by MTN.', 'strength': 8.0}, {'source_entity': 'SNIP', 'target_entity': 'Scale variation problem', 'description': 'SNIP illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'SNIPER', 'target_entity': 'Scale variation problem', 'description': 'SNIPER illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose Estimation and Tracking', 'description': 'The MTN performs pose estimation, which is a core component of pose estimation and tracking.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Occlusion-aware strategy', 'description': 'The MTN, which is a core component of FastPose, provides information to the occlusion-aware strategy.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Human detection', 'description': 'Mask R-CNN is used for human detection.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Pose estimation', 'description': 'Mask R-CNN is used for pose estimation.', 'strength': 7.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Bounding box regression', 'description': 'Mask R-CNN performs bounding box regression.', 'strength': 7.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The MTN builds head networks upon the RoIs generated by RPN.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'SIFP exploits FPN to achieve enhanced scale invariance capability.', 'strength': 10.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Mask R-CNN', 'description': 'Mask R-CNN uses FPN.', 'strength': 6.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Bounding box regression', 'description': 'RPN is used to generate candidate boxes, which are then refined by bounding box regression.', 'strength': 8.0}]
+
+[2025-09-23 13:35:13,482][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 13:35:14,028][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: COCO dataset
+    description: FastPose is evaluated on the COCO dataset for pose estimation.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: PoseTrack dataset
+    description: FastPose is evaluated on the PoseTrack dataset for pose estimation and pose tracking.
+    strength: 9
+  - source_entity: FastPose
+    target_entity: SSM
+    description: FastPose is evaluated on the SSM dataset for person Re-ID.
+    strength: 7
+  - source_entity: FastPose
+    target_entity: PRW
+    description: FastPose is evaluated on the PRW dataset for person Re-ID.
+    strength: 6
+  - source_entity: pose estimation
+    target_entity: COCO dataset
+    description: The pose estimation task is evaluated on the COCO dataset.
+    strength: 8
+  - source_entity: pose estimation
+    target_entity: PoseTrack dataset
+    description: The pose estimation task is evaluated on the PoseTrack dataset.
+    strength: 9
+  - source_entity: person Re-ID (re-identification)
+    target_entity: SSM
+    description: The person Re-ID task is evaluated on the SSM dataset.
+    strength: 7
+  - source_entity: person Re-ID (re-identification)
+    target_entity: PRW
+    description: The person Re-ID task is evaluated on the PRW dataset.
+    strength: 6
+  - source_entity: FastPose
+    target_entity: mAP
+    description: mAP is a metric used to evaluate FastPose's performance on the COCO, PoseTrack, and SSM datasets.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: MOTA
+    description: MOTA is a metric used to evaluate FastPose's performance on the PoseTrack dataset.
+    strength: 9
+
+[2025-09-23 13:35:14,035][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes the Multi-Task Network (MTN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP).', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'occlusion-aware strategy', 'description': 'The outputs of the Multi-Task Network (MTN) are used by an occlusion-aware strategy.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 9.0}, {'source_entity': 'backbone networks', 'target_entity': 'ResNet', 'description': 'ResNet is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'backbone networks', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'pose estimation', 'target_entity': 'keypoint detection', 'description': 'Keypoint detection is a component of pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': 'mAP is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': 'MOTA is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-50', 'description': 'ResNet-50 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-101', 'description': 'ResNet-101 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-18', 'description': 'ResNet-18 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'PRW dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'JointFlow', 'description': 'FastPose is compared with JointFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseFlow', 'description': 'FastPose is compared with PoseFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'Detect-and-Track', 'description': 'FastPose is compared with Detect-and-Track.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'FlowTrack', 'description': 'FastPose is compared with FlowTrack.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'mAP', 'description': 'mAP is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'MOTA', 'description': 'MOTA is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-101', 'target_entity': 'FastPose', 'description': 'ResNet-101 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FastPose', 'description': 'MobileNet-v2 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is used for evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is used for training and evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'SSM', 'target_entity': 'person Re-ID (re-identification)', 'description': 'SSM is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'PRW', 'target_entity': 'person Re-ID (re-identification)', 'description': 'PRW is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'FastPose is evaluated on the COCO dataset for pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'FastPose is evaluated on the PoseTrack dataset for pose estimation and tracking.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'FastPose is evaluated on the SSM dataset for person Re-ID.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'FastPose is evaluated on the PRW dataset for person Re-ID.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The MTN extracts Re-ID features.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'FastPose is evaluated on the PoseTrack dataset for pose estimation and pose tracking.', 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'COCO dataset', 'description': 'The pose estimation task is evaluated on the COCO dataset.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'PoseTrack dataset', 'description': 'The pose estimation task is evaluated on the PoseTrack dataset.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'SSM', 'description': 'The person Re-ID task is evaluated on the SSM dataset.', 'strength': 7.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'PRW', 'description': 'The person Re-ID task is evaluated on the PRW dataset.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': "mAP is a metric used to evaluate FastPose's performance on the COCO, PoseTrack, and SSM datasets.", 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': "MOTA is a metric used to evaluate FastPose's performance on the PoseTrack dataset.", 'strength': 9.0}]
+
+[2025-09-23 13:35:14,035][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=2---
+[2025-09-23 13:35:14,056][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: COCO
+    description: FastPose is evaluated on the COCO dataset.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: PoseTrack
+    description: FastPose is evaluated on the PoseTrack dataset.
+    strength: 8
+  - source_entity: occlusion-aware strategy
+    target_entity: articulated multi-person pose tracking
+    description: The occlusion-aware strategy is used to perform articulated multi-person pose tracking.
+    strength: 9
+
+[2025-09-23 13:35:14,060][Thread 0][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes a Multi-Task Network (MTN) as a core component.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP) to improve performance.', 'strength': 8.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'scale variation problem', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) is designed to address the scale variation problem.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose uses an occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'backbone networks', 'description': 'ResNet-18 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'ResNet-50', 'target_entity': 'backbone networks', 'description': 'ResNet-50 is a type of backbone network used in FastPose.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'articulated multi-person pose tracking', 'description': 'FastPose is a framework for articulated multi-person pose tracking.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'articulated multi-person pose tracking', 'description': 'PoseTrack is related to articulated multi-person pose tracking.', 'strength': 6.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used as a backbone in FastPose.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'pose estimation', 'description': 'Human detection and pose estimation are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Pose estimation and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'human detection', 'target_entity': 'person Re-ID (re-identification)', 'description': 'Human detection and person re-identification are performed together in the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'scale variation problem', 'description': 'Feature Pyramid Networks (FPN) is used to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'occlusion-aware strategy', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The occlusion-aware strategy utilizes Re-ID features.', 'strength': 7.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is a dataset used for pose estimation.', 'strength': 5.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is a dataset used for pose estimation.', 'strength': 6.0}, {'source_entity': 'PoseTrack', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on PoseTrack.', 'strength': 6.0}, {'source_entity': 'COCO', 'target_entity': 'FastPose', 'description': 'FastPose is evaluated on COCO.', 'strength': 5.0}, {'source_entity': 'mAP', 'target_entity': 'pose estimation', 'description': 'mAP is a metric used to evaluate pose estimation.', 'strength': 5.0}, {'source_entity': 'MOTA', 'target_entity': 'articulated multi-person pose tracking', 'description': 'MOTA is a metric used to evaluate articulated multi-person pose tracking.', 'strength': 5.0}, {'source_entity': 'human detection', 'target_entity': 'FastPose', 'description': 'FastPose performs human detection.', 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'FastPose', 'description': 'FastPose performs pose estimation.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'FastPose', 'description': 'FastPose performs person Re-ID.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person re-identification.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose incorporates the Scale-normalized Image and Feature Pyramid (SIFP) paradigm.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'occlusion-aware strategy', 'description': 'FastPose employs an occlusion-aware strategy for articulated multi-person pose tracking.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'SIFP leverages Feature Pyramid Networks (FPN) to enhance scale invariance.', 'strength': 9.0}, {'source_entity': 'COCO', 'target_entity': 'mAP', 'description': 'COCO is a dataset used for evaluating the performance of FastPose, and mAP is a metric used for evaluation.', 'strength': 8.0}, {'source_entity': 'PoseTrack', 'target_entity': 'MOTA', 'description': 'PoseTrack is a dataset used for evaluating the performance of FastPose, and MOTA is a metric used for evaluation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'FastPose is evaluated on the COCO dataset.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'FastPose is evaluated on the PoseTrack dataset.', 'strength': 8.0}, {'source_entity': 'occlusion-aware strategy', 'target_entity': 'articulated multi-person pose tracking', 'description': 'The occlusion-aware strategy is used to perform articulated multi-person pose tracking.', 'strength': 9.0}]
+
+[2025-09-23 13:35:14,062][Thread 0][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 13:35:14,713][heimdall.core][INFO] - Cleaned output : reason_to_loop: The current relationships are missing connections between Mask R-CNN and other entities, specifically regarding its role in human detection, pose estimation, and bounding box regression. Also, the relationship between FPN and Mask R-CNN is underrepresented.
+loop_required: true
+
+[2025-09-23 13:35:14,716][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The current relationships are missing connections between Mask R-CNN and other entities, specifically regarding its role in human detection, pose estimation, and bounding box regression. Also, the relationship between FPN and Mask R-CNN is underrepresented.
+[2025-09-23 13:35:14,716][Thread 1][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:14,717][Thread 1][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:15,214][heimdall.core][INFO] - Cleaned output : reason_to_loop: The iteration limit has been reached. No further extraction is permitted, even if some relationships could be added.
+loop_required: false
+
+[2025-09-23 13:35:15,216][Thread 0][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The iteration limit has been reached. No further extraction is permitted, even if some relationships could be added.
+[2025-09-23 13:35:15,217][Thread 0][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:35:15,217][Thread 0][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 13:35:15,217][Thread 0][ERROR] - File doesn't exist: Bodhi/199668729/0/199668729_intermediate_data.yml. Creating file..
+[2025-09-23 13:35:15,239][Thread 0][INFO] - Nodes & relations saved to Bodhi/199668729/0/199668729_intermediate_data.yml
+[2025-09-23 13:35:15,239][Thread 0][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 13:35:15,239][Thread 0][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:35:15,240][Thread 0][INFO] - ===Thread-0===
+Total number of chunks processed : 1
+Total time taken for extraction : 34.3436758518219
+
+[2025-09-23 13:35:15,338][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) are underrepresented. The text describes how these datasets are used for evaluation of different tasks (pose estimation, person Re-ID). More specific relationships are needed to capture this nuance.
+loop_required: true
+
+[2025-09-23 13:35:15,340][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Looping back to extract relationships again---
+Reason: The relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) are underrepresented. The text describes how these datasets are used for evaluation of different tasks (pose estimation, person Re-ID). More specific relationships are needed to capture this nuance.
+[2025-09-23 13:35:15,341][Thread 2][INFO] - 
+---NODE: extract_relationships---
+[2025-09-23 13:35:15,341][Thread 2][INFO] - 
+--relations_validation_feedback--
+
+[2025-09-23 13:35:16,547][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: Mask R-CNN
+    target_entity: Human detection
+    description: Mask R-CNN is used for human detection.
+    strength: 9
+  - source_entity: Mask R-CNN
+    target_entity: Pose estimation
+    description: Mask R-CNN is used for pose estimation.
+    strength: 8
+  - source_entity: Mask R-CNN
+    target_entity: Bounding box regression
+    description: Mask R-CNN performs bounding box regression.
+    strength: 9
+  - source_entity: FPN
+    target_entity: Mask R-CNN
+    description: Mask R-CNN utilizes FPN.
+    strength: 7
+
+[2025-09-23 13:35:16,550][Thread 1][INFO] - 
+--final relationships after update--
+[{'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Human detection', 'description': 'The MTN performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose estimation', 'description': 'The MTN performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Person Re-ID (re-identification)', 'description': 'The MTN performs person Re-ID.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Scale variation problem', 'description': 'The MTN is designed to address the scale variation problem.', 'strength': 7.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Scale variation problem', 'description': 'SIFP is designed to alleviate the scale variation problem.', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'SIFP is used by the MTN.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale variation problem', 'description': 'FPN is used to address the scale variation problem.', 'strength': 8.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'SIFP exploits FPN.', 'strength': 9.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Bounding box regression', 'description': 'The MTN predicts bounding boxes.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Keypoint detection', 'description': 'The MTN predicts keypoint coordinates.', 'strength': 8.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The MTN builds all the head networks upon the RoIs generated by RPN.', 'strength': 7.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Human detection', 'description': 'RPN proposes candidate human bounding boxes, which is part of human detection.', 'strength': 7.0}, {'source_entity': 'Backbone network', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN uses a backbone network for feature extraction.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'Backbone network', 'description': 'MobileNet-v2 is a backbone network.', 'strength': 9.0}, {'source_entity': 'ResNet', 'target_entity': 'Backbone network', 'description': 'ResNet is a backbone network.', 'strength': 9.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FPN', 'description': 'MobileNet-v2 is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'ResNet', 'target_entity': 'FPN', 'description': 'ResNet is evaluated with FPN.', 'strength': 7.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN adopts a similar unified procedure as Mask R-CNN.', 'strength': 9.0}, {'source_entity': 'RoIAlign', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN utilizes RoIAlign.', 'strength': 7.0}, {'source_entity': 'Pose Estimation and Tracking', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'MTN is used for Pose Estimation and Tracking.', 'strength': 9.0}, {'source_entity': 'Occlusion-aware strategy', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'The MTN can provide necessary informations to the occlusion-aware strategy.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM is used for evaluating FastPose.', 'strength': 8.0}, {'source_entity': 'FPN', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FPN is used by MTN.', 'strength': 8.0}, {'source_entity': 'SNIP', 'target_entity': 'Scale variation problem', 'description': 'SNIP illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'SNIPER', 'target_entity': 'Scale variation problem', 'description': 'SNIPER illustrates the scale variation problem.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Pose Estimation and Tracking', 'description': 'The MTN performs pose estimation, which is a core component of pose estimation and tracking.', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Occlusion-aware strategy', 'description': 'The MTN, which is a core component of FastPose, provides information to the occlusion-aware strategy.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Human detection', 'description': 'Mask R-CNN is used for human detection.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Pose estimation', 'description': 'Mask R-CNN is used for pose estimation.', 'strength': 7.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Bounding box regression', 'description': 'Mask R-CNN performs bounding box regression.', 'strength': 7.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'Region Proposal Network (RPN)', 'description': 'The MTN builds head networks upon the RoIs generated by RPN.', 'strength': 9.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'SIFP exploits FPN to achieve enhanced scale invariance capability.', 'strength': 10.0}, {'source_entity': 'Feature Pyramid Networks (FPN)', 'target_entity': 'Mask R-CNN', 'description': 'Mask R-CNN uses FPN.', 'strength': 6.0}, {'source_entity': 'Region Proposal Network (RPN)', 'target_entity': 'Bounding box regression', 'description': 'RPN is used to generate candidate boxes, which are then refined by bounding box regression.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Human detection', 'description': 'Mask R-CNN is used for human detection.', 'strength': 9.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Pose estimation', 'description': 'Mask R-CNN is used for pose estimation.', 'strength': 8.0}, {'source_entity': 'Mask R-CNN', 'target_entity': 'Bounding box regression', 'description': 'Mask R-CNN performs bounding box regression.', 'strength': 9.0}, {'source_entity': 'FPN', 'target_entity': 'Mask R-CNN', 'description': 'Mask R-CNN utilizes FPN.', 'strength': 7.0}]
+
+[2025-09-23 13:35:16,551][Thread 1][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 13:35:17,903][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are considered complete given the iteration limit. No further relationships are explicitly and strongly supported by the text that were missed. The iteration limit has been reached.
+loop_required: false
+
+[2025-09-23 13:35:17,905][Thread 1][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The relationships are considered complete given the iteration limit. No further relationships are explicitly and strongly supported by the text that were missed. The iteration limit has been reached.
+[2025-09-23 13:35:17,906][Thread 1][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:35:17,906][Thread 1][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 13:35:17,906][Thread 1][ERROR] - File doesn't exist: Bodhi/199668729/1/199668729_intermediate_data.yml. Creating file..
+[2025-09-23 13:35:17,927][Thread 1][INFO] - Nodes & relations saved to Bodhi/199668729/1/199668729_intermediate_data.yml
+[2025-09-23 13:35:17,927][Thread 1][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 13:35:17,927][Thread 1][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:35:17,928][Thread 1][INFO] - ===Thread-1===
+Total number of chunks processed : 1
+Total time taken for extraction : 37.030839681625366
+
+[2025-09-23 13:35:18,955][heimdall.core][INFO] - Cleaned output : relationships:
+  - source_entity: FastPose
+    target_entity: COCO dataset
+    description: FastPose is evaluated on the COCO dataset for pose estimation.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: PoseTrack dataset
+    description: FastPose is evaluated on the PoseTrack dataset for pose estimation and pose tracking.
+    strength: 9
+  - source_entity: FastPose
+    target_entity: SSM
+    description: FastPose is evaluated on the SSM dataset for person Re-ID.
+    strength: 7
+  - source_entity: FastPose
+    target_entity: PRW
+    description: FastPose is evaluated on the PRW dataset for person Re-ID.
+    strength: 6
+  - source_entity: pose estimation
+    target_entity: COCO dataset
+    description: The COCO dataset is utilized for training and evaluating the pose estimation task.
+    strength: 8
+  - source_entity: pose estimation
+    target_entity: PoseTrack dataset
+    description: The PoseTrack dataset is utilized for training and evaluating the pose estimation task.
+    strength: 9
+  - source_entity: person Re-ID (re-identification)
+    target_entity: SSM
+    description: The SSM dataset is used for training and evaluating the person Re-ID task.
+    strength: 7
+  - source_entity: person Re-ID (re-identification)
+    target_entity: PRW
+    description: The PRW dataset is used for training and evaluating the person Re-ID task.
+    strength: 6
+  - source_entity: FastPose
+    target_entity: mAP
+    description: mAP is a metric used to evaluate the performance of FastPose on the COCO, PoseTrack, and SSM datasets.
+    strength: 8
+  - source_entity: FastPose
+    target_entity: MOTA
+    description: MOTA is a metric used to evaluate the performance of FastPose on the PoseTrack dataset.
+    strength: 8
+
+[2025-09-23 13:35:18,961][Thread 2][INFO] - 
+--final relationships after update--
+[{'source_entity': 'FastPose', 'target_entity': 'Multi-Task Network (MTN)', 'description': 'FastPose utilizes the Multi-Task Network (MTN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'human detection', 'description': 'The Multi-Task Network (MTN) performs human detection.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'pose estimation', 'description': 'The Multi-Task Network (MTN) performs pose estimation.', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The Multi-Task Network (MTN) performs person Re-ID (re-identification).', 'strength': 10.0}, {'source_entity': 'FastPose', 'target_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'description': 'FastPose uses Scale-normalized Image and Feature Pyramid (SIFP).', 'strength': 10.0}, {'source_entity': 'Scale-normalized Image and Feature Pyramid (SIFP)', 'target_entity': 'Feature Pyramid Networks (FPN)', 'description': 'Scale-normalized Image and Feature Pyramid (SIFP) leverages Feature Pyramid Networks (FPN).', 'strength': 10.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'occlusion-aware strategy', 'description': 'The outputs of the Multi-Task Network (MTN) are used by an occlusion-aware strategy.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'backbone networks', 'description': 'FastPose utilizes different backbone networks.', 'strength': 9.0}, {'source_entity': 'backbone networks', 'target_entity': 'ResNet', 'description': 'ResNet is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'backbone networks', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a type of backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'pose estimation', 'target_entity': 'keypoint detection', 'description': 'Keypoint detection is a component of pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': 'mAP is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': 'MOTA is a metric used to evaluate FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-50', 'description': 'ResNet-50 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-101', 'description': 'ResNet-101 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'ResNet-18', 'description': 'ResNet-18 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MobileNet-v2', 'description': 'MobileNet-v2 is a specific backbone network used in FastPose.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO', 'description': 'COCO dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack', 'description': 'PoseTrack dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'SSM dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'PRW dataset is used for evaluating FastPose.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'JointFlow', 'description': 'FastPose is compared with JointFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseFlow', 'description': 'FastPose is compared with PoseFlow.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'Detect-and-Track', 'description': 'FastPose is compared with Detect-and-Track.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'FlowTrack', 'description': 'FastPose is compared with FlowTrack.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'mAP', 'description': 'mAP is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'MOTA', 'description': 'MOTA is used to evaluate the performance of the MTN.', 'strength': 7.0}, {'source_entity': 'ResNet-50', 'target_entity': 'FastPose', 'description': 'ResNet-50 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-101', 'target_entity': 'FastPose', 'description': 'ResNet-101 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'ResNet-18', 'target_entity': 'FastPose', 'description': 'ResNet-18 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'MobileNet-v2', 'target_entity': 'FastPose', 'description': 'MobileNet-v2 is used in the FastPose framework.', 'strength': 8.0}, {'source_entity': 'COCO', 'target_entity': 'pose estimation', 'description': 'COCO is used for evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'PoseTrack', 'target_entity': 'pose estimation', 'description': 'PoseTrack is used for training and evaluating the pose estimation task.', 'strength': 7.0}, {'source_entity': 'SSM', 'target_entity': 'person Re-ID (re-identification)', 'description': 'SSM is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'PRW', 'target_entity': 'person Re-ID (re-identification)', 'description': 'PRW is used for training the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'COCO dataset', 'description': 'FastPose is evaluated on the COCO dataset for pose estimation.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'FastPose is evaluated on the PoseTrack dataset for pose estimation and tracking.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'SSM', 'description': 'FastPose is evaluated on the SSM dataset for person Re-ID.', 'strength': 7.0}, {'source_entity': 'FastPose', 'target_entity': 'PRW', 'description': 'FastPose is evaluated on the PRW dataset for person Re-ID.', 'strength': 6.0}, {'source_entity': 'Multi-Task Network (MTN)', 'target_entity': 'person Re-ID (re-identification)', 'description': 'The MTN extracts Re-ID features.', 'strength': 9.0}, {'source_entity': 'FastPose', 'target_entity': 'PoseTrack dataset', 'description': 'FastPose is evaluated on the PoseTrack dataset for pose estimation and pose tracking.', 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'COCO dataset', 'description': 'The pose estimation task is evaluated on the COCO dataset.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'PoseTrack dataset', 'description': 'The pose estimation task is evaluated on the PoseTrack dataset.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'SSM', 'description': 'The person Re-ID task is evaluated on the SSM dataset.', 'strength': 7.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'PRW', 'description': 'The person Re-ID task is evaluated on the PRW dataset.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': "mAP is a metric used to evaluate FastPose's performance on the COCO, PoseTrack, and SSM datasets.", 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': "MOTA is a metric used to evaluate FastPose's performance on the PoseTrack dataset.", 'strength': 9.0}, {'source_entity': 'pose estimation', 'target_entity': 'COCO dataset', 'description': 'The COCO dataset is utilized for training and evaluating the pose estimation task.', 'strength': 8.0}, {'source_entity': 'pose estimation', 'target_entity': 'PoseTrack dataset', 'description': 'The PoseTrack dataset is utilized for training and evaluating the pose estimation task.', 'strength': 9.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'SSM', 'description': 'The SSM dataset is used for training and evaluating the person Re-ID task.', 'strength': 7.0}, {'source_entity': 'person Re-ID (re-identification)', 'target_entity': 'PRW', 'description': 'The PRW dataset is used for training and evaluating the person Re-ID task.', 'strength': 6.0}, {'source_entity': 'FastPose', 'target_entity': 'mAP', 'description': 'mAP is a metric used to evaluate the performance of FastPose on the COCO, PoseTrack, and SSM datasets.', 'strength': 8.0}, {'source_entity': 'FastPose', 'target_entity': 'MOTA', 'description': 'MOTA is a metric used to evaluate the performance of FastPose on the PoseTrack dataset.', 'strength': 8.0}]
+
+[2025-09-23 13:35:18,962][Thread 2][INFO] - 
+---NODE: validate_relationships---iteration=3---
+[2025-09-23 13:35:20,744][heimdall.core][INFO] - Cleaned output : reason_to_loop: The relationships are mostly complete, but some could be strengthened. Specifically, the relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) could be more specific about the tasks for which they are used (e.g., training, evaluation). Also, the relationship between MTN and Re-ID features could be more specific. However, since the iteration counter is at its maximum, no further extraction is allowed.
+loop_required: false
+
+[2025-09-23 13:35:20,746][Thread 2][INFO] - 
+---NODE: validate_relationships---INFO: Going to graph final graph building---
+Reason: The relationships are mostly complete, but some could be strengthened. Specifically, the relationships between FastPose and the datasets (COCO, PoseTrack, SSM, PRW) could be more specific about the tasks for which they are used (e.g., training, evaluation). Also, the relationship between MTN and Re-ID features could be more specific. However, since the iteration counter is at its maximum, no further extraction is allowed.
+[2025-09-23 13:35:20,747][Thread 2][INFO] - 
+---NODE: extract_graph---
+[2025-09-23 13:35:20,747][Thread 2][INFO] - ---NODE: extract_graph---INFO: Reached last chunk. Going to END---
+[2025-09-23 13:35:20,747][Thread 2][ERROR] - File doesn't exist: Bodhi/199668729/2/199668729_intermediate_data.yml. Creating file..
+[2025-09-23 13:35:20,791][Thread 2][INFO] - Nodes & relations saved to Bodhi/199668729/2/199668729_intermediate_data.yml
+[2025-09-23 13:35:20,791][Thread 2][INFO] - ---NODE: extract_graph---INFO: All the text units are processed and saved. Going to END---
+[2025-09-23 13:35:20,791][Thread 2][INFO] - 
+---NODE: extract_graph---INFO: Chunk Index=1/1---
+
+[2025-09-23 13:35:20,792][Thread 2][INFO] - ===Thread-2===
+Total number of chunks processed : 1
+Total time taken for extraction : 39.890705823898315
+
+[2025-09-23 13:35:20,793][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - All mapping threads have finished processing. Now combining intermediate files...
+[2025-09-23 13:35:20,820][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 0 with offset 0
+[2025-09-23 13:35:20,850][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 1 with offset 1
+[2025-09-23 13:35:20,884][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Processing thread 2 with offset 2
+[2025-09-23 13:35:20,947][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - Successfully combined 3 intermediate files into Bodhi/199668729/199668729_combined_intermediate_data.yml
+[2025-09-23 13:35:20,948][Bodhi.src.Bodhi.parallel_kg_extractor][INFO] - 
+==== Knowledge Graph Extraction Report (extract_knowledge_graph_parallel) ====
+Source: 199668729
+Total Chunks Processed: 3
+Threads Used: 3
+Chunks per Thread: [1, 1, 1]
+Entities Extracted: 93
+Relationships Extracted: 135
+Combined Intermediate File: Bodhi/199668729/199668729_combined_intermediate_data.yml
+Total Time Taken: 46.55 seconds
+==========================================
+[2025-09-23 13:35:20,948][Bodhi.src.Bodhi.core][INFO] - 
+---NODE: resolve_graph---
+[2025-09-23 13:35:20,948][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline started
+[2025-09-23 13:35:20,948][Bodhi.src.Bodhi.core][INFO] - Converting intermediate graph to entities and relationships
+[2025-09-23 13:35:20,948][Bodhi.src.Bodhi.core][INFO] - Using provided entities and relationships.
+[2025-09-23 13:35:20,952][sentence_transformers.SentenceTransformer][INFO] - Use pytorch device_name: cuda:0
+[2025-09-23 13:35:20,952][sentence_transformers.SentenceTransformer][INFO] - Load pretrained SentenceTransformer: all-mpnet-base-v2
+[2025-09-23 13:35:21,249][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - Rule-based resolver initialized with 1 rules.
+[2025-09-23 13:35:21,250][Bodhi.src.Bodhi.resolution.entity_resolution][INFO] - 
+Starting hybrid entity resolution with pluggable rules...
+
+[2025-09-23 13:35:21,250][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - Entity name list:
+******************************
+['FastPose', 'Multi-Task Network (MTN)', 'human detection', 'pose estimation']...
+Number of elements: 49
+[2025-09-23 13:35:21,801][Bodhi.src.Bodhi.resolution.resolution_rules][INFO] - NameAndDescriptionRule Resolution Metrics --- 199668729 
+******************************
+ - Total number of entities before resolution: 49
+ - Total number of entities after resolution: 42
+ - Total number of descriptions in all resolved nodes before resolution: 34
+ - Total number of descriptions in all resolved nodes after resolution: 28
+******************************
+
+[2025-09-23 13:35:21,802][Bodhi.src.Bodhi.core][INFO] - Deduplicated entities:
+ {'FastPose': {'type': ['GENERIC', 'method', 'GENERIC'], 'description': ['A real-time pose estimation and tracking framework.', 'The real-time pose estimation and tracking framework introduced in the paper.', 'A real-time pose estimation and tracking framework.'], 'source_chunk_index': [0, 1, 2]}, 'Multi-Task Network (MTN)': {'type': ['GENERIC', 'GENERIC', 'GENERIC'], 'description': ['The core component of FastPose, designed to perform human detection, pose estimation, and person re-identification simultaneously.', 'A unified network that simultaneously performs human detection, pose estimation, and person Re-ID.', 'The core of FastPose, simultaneously performing human detection, pose estimation, and person Re-ID.'], 'source_chunk_index': [0, 1, 2]}, 'Scale-normalized Image and Feature Pyramid (SIFP)': {'type': ['GENERIC', 'GENERIC', 'GENERIC'], 'description': ['A paradigm designed to address the scale variation problem in pose estimation, enhancing both performance and speed.', 'A paradigm designed to address the scale variation problem, leveraging Feature Pyramid Networks (FPN) to enhance scale invariance.', 'A paradigm designed to address the scale variation problem in unified pose estimation, leveraging Feature Pyramid Networks (FPN).'], 'source_chunk_index': [0, 1, 2]}, 'Feature Pyramid Networks (FPN)': {'type': ['GENERIC', 'GENERIC', 'GENERIC'], 'description': ['A network architecture used in SIFP to enhance scale invariance.', 'A network architecture used to enhance scale invariance by creating a pyramidal representation of features and fusing adjacent scale feature maps.', 'Used within SIFP to enhance scale invariance.'], 'source_chunk_index': [0, 1, 2]}, 'ResNet-18': {'type': ['GENERIC', 'method', 'method'], 'description': ['A specific type of backbone network used in FastPose.', 'A specific backbone network (ResNet with 18 layers) used in the FastPose framework, used for pose estimation and tracking.', 'A specific backbone network used in the FastPose framework, with 18 layers.'], 'source_chunk_index': [0, 0, 2]}, 'ResNet-50': {'type': ['GENERIC', 'method', 'method'], 'description': ['A specific type of backbone network used in FastPose.', 'A specific backbone network (ResNet with 50 layers) used in the FastPose framework, used for pose estimation and tracking.', 'A specific backbone network used in the FastPose framework, with 50 layers.'], 'source_chunk_index': [0, 0, 2]}, 'articulated multi-person pose tracking': {'type': ['GENERIC'], 'description': ['The task of tracking the poses of multiple people in a video, considering the articulation of their bodies.'], 'source_chunk_index': [0]}, 'PoseTrack': {'type': ['dataset', 'dataset', 'dataset', 'dataset', 'dataset', 'dataset'], 'description': ['A dataset used for pose estimation and tracking, mentioned in the context of evaluating the FastPose framework.', 'A dataset for human pose estimation and tracking in videos.', 'A dataset used for evaluating the FastPose framework.', 'A dataset used for evaluation of the FastPose framework.', 'A dataset used for training and evaluating the pose estimation and tracking tasks.', 'A dataset used for training and evaluating the pose estimation and tracking tasks.'], 'source_chunk_index': [0, 0, 1, 1, 2, 2]}, 'JointFlow': {'type': ['method', 'method'], 'description': ['A method for pose tracking.', 'A state-of-the-art method compared with FastPose on PoseTrack dataset.'], 'source_chunk_index': [0, 2]}, 'PoseFlow': {'type': ['method', 'method'], 'description': ['A method for pose tracking.', 'A state-of-the-art method compared with FastPose on PoseTrack dataset.'], 'source_chunk_index': [0, 2]}, 'Detect-and-Track': {'type': ['method', 'method'], 'description': ['A method for pose tracking.', 'A state-of-the-art method compared with FastPose on PoseTrack dataset.'], 'source_chunk_index': [0, 2]}, 'FlowTrack': {'type': ['method', 'method'], 'description': ['A method for pose tracking.', 'A state-of-the-art method compared with FastPose on PoseTrack dataset.'], 'source_chunk_index': [0, 2]}, 'CPN': {'type': ['method'], 'description': ['A leading method on COCO 2017 keypoint challenge.'], 'source_chunk_index': [0]}, 'COCO': {'type': ['dataset', 'dataset', 'dataset', 'dataset', 'dataset'], 'description': ['A dataset used for object detection, keypoint detection, and image segmentation.', 'A dataset used for evaluating the FastPose framework.', 'A dataset used for evaluation of the FastPose framework.', 'A dataset used for evaluating the pose estimation task, specifically the 5k validation images (minival).', 'A dataset used for training and evaluating the pose estimation task.'], 'source_chunk_index': [0, 1, 1, 2, 2]}, 'mAP': {'type': ['generic', 'GENERIC', 'method'], 'description': ['A metric used to evaluate the performance of object detection and pose estimation models.', 'A metric used for evaluating the performance of pose estimation.', 'A metric used to evaluate the performance of the pose estimation and person Re-ID tasks.'], 'source_chunk_index': [0, 2, 2]}, 'MOTA': {'type': ['generic', 'GENERIC', 'method'], 'description': ['A metric used to evaluate the performance of multi-object tracking algorithms, measuring the accuracy of tracking.', 'A metric used for evaluating the performance of pose tracking.', 'A metric used to evaluate the performance of the pose tracking task.'], 'source_chunk_index': [0, 2, 2]}, 'Region Proposal Network (RPN)': {'type': ['GENERIC'], 'description': ['A fully convolutional network built upon feature maps to propose candidate human bounding boxes.'], 'source_chunk_index': [1]}, 'RoIAlign': {'type': ['GENERIC'], 'description': ['A method used to extract features from regions of interest (RoIs) for further processing, such as classification and bounding box regression.'], 'source_chunk_index': [1]}, 'Bounding box regression': {'type': ['GENERIC'], 'description': ['The process of refining the coordinates of bounding boxes to accurately locate objects in an image.'], 'source_chunk_index': [1]}, 'MobileNet-v2': {'type': ['GENERIC', 'method', 'GENERIC', 'method'], 'description': ['A lightweight backbone network used for feature extraction.', 'A backbone network architecture used for feature extraction, evaluated to provide a trade-off between accuracy and speed when MTN is adopted in practical applications.', 'A type of backbone network used in FastPose.', 'A specific backbone network used in the FastPose framework, known for its efficiency.'], 'source_chunk_index': [1, 1, 2, 2]}, 'ResNet': {'type': ['GENERIC', 'method', 'GENERIC'], 'description': ['A deep residual network used as a backbone for feature extraction.', 'A backbone network architecture used for feature extraction, evaluated to provide a trade-off between accuracy and speed when MTN is adopted in practical applications.', 'A type of backbone network used in FastPose.'], 'source_chunk_index': [1, 1, 2]}, 'Mask R-CNN': {'type': ['GENERIC', 'method'], 'description': ['A network that can efficiently detect objects in an image while simultaneously generating a high-quality segmentation mask for each instance.', 'A method that can efficiently detect objects in an image while simultaneously generating a high-quality segmentation mask for each instance. The MTN adopts a similar unified procedure as Mask R-CNN.'], 'source_chunk_index': [1, 1]}, 'SSM': {'type': ['dataset', 'dataset', 'dataset', 'dataset'], 'description': ['A dataset used for evaluating the FastPose framework.', 'A dataset used for evaluation of the FastPose framework.', 'A person search dataset used for training the person Re-ID task.', 'A dataset used for training the person Re-ID task.'], 'source_chunk_index': [1, 1, 2, 2]}, 'FPN': {'type': ['method'], 'description': ['Feature Pyramid Networks, a method used to create a pyramidal representation and fuse adjacent scale feature maps to combine features which have semantic and detail informations, addressing the scale variation problem.'], 'source_chunk_index': [1]}, 'Pose Estimation and Tracking': {'type': ['task'], 'description': ['The primary objective of the FastPose framework, involving the localization of human keypoints and tracking their movements across video frames.'], 'source_chunk_index': [1]}, 'SNIP': {'type': ['method'], 'description': ['A method that proposes advanced and efficient data argumentation methods to illustrate the scale variation problem.'], 'source_chunk_index': [1]}, 'SNIPER': {'type': ['method'], 'description': ['A method that proposes advanced and efficient data argumentation methods to illustrate the scale variation problem.'], 'source_chunk_index': [1]}, 'COCO dataset': {'type': ['GENERIC'], 'description': ['A dataset used for evaluating pose estimation performance.'], 'source_chunk_index': [2]}, 'PoseTrack dataset': {'type': ['GENERIC'], 'description': ['A dataset used for evaluating pose estimation and tracking performance.'], 'source_chunk_index': [2]}, 'MPII': {'type': ['dataset'], 'description': ['A dataset utilized for training the pose estimation task.'], 'source_chunk_index': [2]}, 'PRW': {'type': ['dataset', 'dataset'], 'description': ['A person search dataset used for training the person Re-ID task.', 'A dataset used for training the person Re-ID task.'], 'source_chunk_index': [2, 2]}, 'ResNet-101': {'type': ['method'], 'description': ['A specific backbone network used in the FastPose framework, with 101 layers.'], 'source_chunk_index': [2]}, 'human detection': {'description': ['The process of identifying and locating humans within an image or video.', 'A task performed by the MTN to identify humans in images.', 'The process of identifying and locating humans within an image, including bounding box regression and classification.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2]}, 'pose estimation': {'description': ['The process of estimating the positions of keypoints (e.g., joints) on a human body.', 'A task performed by the MTN to estimate human pose.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2]}, 'person Re-ID (re-identification)': {'description': ['The task of re-identifying a person across different camera views or over time.', 'A task performed by the MTN to re-identify individuals across different frames or views.', 'The process of identifying and tracking individuals across different camera views or within a video sequence.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2]}, 'scale variation problem': {'description': ['A performance bottleneck in unified pose estimation, caused by variations in the size of objects in an image.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1]}, 'occlusion-aware strategy': {'description': ['A strategy used in the pose tracking module to handle occlusions, improving tracking accuracy.', 'Used for articulated multi-person pose tracking, utilizing the outputs of the MTN.', 'A strategy employed by the framework to handle occlusions in multi-person pose tracking, enabling the system to maintain accurate pose estimation even when body parts are obscured.'], 'type': ['method', 'GENERIC'], 'source_chunk_index': [0, 1, 2]}, 'backbone networks': {'description': ['The base convolutional neural networks used in FastPose, such as ResNet and MobileNet-v2.', 'Different network architectures (e.g., ResNet, MobileNet-v2) used in FastPose.', 'The base network used for feature extraction over an entire image, with deeper architectures potentially improving feature extraction effectiveness.'], 'type': ['GENERIC'], 'source_chunk_index': [0, 1, 2]}, 'Human Detection': {'description': ['The task of identifying and locating human figures within an image or video frame.', 'The process of identifying and locating humans within an image, including bounding box regression and classification.'], 'type': ['task', 'GENERIC'], 'source_chunk_index': [0, 1]}, 'Pose Estimation': {'description': ['The task of determining the spatial configuration of keypoints (e.g., joints) on a human body within an image or video.'], 'type': ['task', 'GENERIC'], 'source_chunk_index': [0, 1]}, 'Person Re-ID': {'description': ['The task of re-identifying a specific person across different camera views or video frames.', 'The process of identifying and tracking individuals across different camera views or within a video sequence.'], 'type': ['task', 'GENERIC'], 'source_chunk_index': [0, 1]}, 'Keypoint detection': {'description': ['The process of identifying and locating specific points (keypoints) on an object, such as joints on a human body.', 'A component of pose estimation, identifying key points on the human body.'], 'type': ['GENERIC'], 'source_chunk_index': [1, 2]}}
+[2025-09-23 13:35:21,802][Bodhi.src.Bodhi.core][ERROR] - An error occurred while saving data: join() argument must be str, bytes, or os.PathLike object, not 'NoneType'
+[2025-09-23 13:35:21,802][Bodhi.src.Bodhi.core][INFO] - Deduplication pipeline end. Saved to intermediate file.
+[2025-09-23 13:35:21,840][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Starting evaluation pipeline...
+[2025-09-23 13:35:21,841][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading SciER dataset source:199668729...
+[2025-09-23 13:35:21,913][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded SciER dataset from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 13:35:21,948][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multi - task network:
+Total number of sentences: 7722
+Sources:[571]
+[2025-09-23 13:35:21,948][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--MTN:
+Total number of sentences: 7722
+Sources:[574]
+[2025-09-23 13:35:21,948][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--human detection:
+Total number of sentences: 7722
+Sources:[544]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose estimation:
+Total number of sentences: 7722
+Sources:[571]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--person re - identification:
+Total number of sentences: 7722
+Sources:[497]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Re - ID:
+Total number of sentences: 7722
+Sources:[564]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--scale - normalized image and feature pyramids:
+Total number of sentences: 7722
+Sources:[498]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SIFP:
+Total number of sentences: 7722
+Sources:[574]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose tracking module:
+Total number of sentences: 7722
+Sources:[499]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--tracking:
+Total number of sentences: 7722
+Sources:[571]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--ResNet - 1 8:
+Total number of sentences: 7722
+Sources:[553]
+[2025-09-23 13:35:21,949][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--ResNet - 5 0:
+Total number of sentences: 7722
+Sources:[552]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose tracking:
+Total number of sentences: 7722
+Sources:[575]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--PoseTrack:
+Total number of sentences: 7722
+Sources:[569]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--JointFlow:
+Total number of sentences: 7722
+Sources:[565]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--PoseFlow:
+Total number of sentences: 7722
+Sources:[565]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Detect - and - Track:
+Total number of sentences: 7722
+Sources:[565]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FlowTrack:
+Total number of sentences: 7722
+Sources:[565]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FastPose:
+Total number of sentences: 7722
+Sources:[575]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--deep convolutional neural networks:
+Total number of sentences: 7722
+Sources:[503]
+[2025-09-23 13:35:21,950][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--DC - NNs:
+Total number of sentences: 7722
+Sources:[503]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--video surveillance:
+Total number of sentences: 7722
+Sources:[504]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--human - computer interaction:
+Total number of sentences: 7722
+Sources:[504]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--action recognition:
+Total number of sentences: 7722
+Sources:[504]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multi - person pose estimation:
+Total number of sentences: 7722
+Sources:[508]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--detection:
+Total number of sentences: 7722
+Sources:[506]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--keypoint detection:
+Total number of sentences: 7722
+Sources:[506]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--cropping and scaling images:
+Total number of sentences: 7722
+Sources:[507]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--face detection:
+Total number of sentences: 7722
+Sources:[527]
+[2025-09-23 13:35:21,951][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--object detection:
+Total number of sentences: 7722
+Sources:[527]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multiple object tracking:
+Total number of sentences: 7722
+Sources:[509]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--instance identification:
+Total number of sentences: 7722
+Sources:[509]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multi - person pose tracking:
+Total number of sentences: 7722
+Sources:[515]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose estimation methods:
+Total number of sentences: 7722
+Sources:[510]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Mask R - CNN:
+Total number of sentences: 7722
+Sources:[540]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose tracking framework:
+Total number of sentences: 7722
+Sources:[511]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--tracking towards real - time speed:
+Total number of sentences: 7722
+Sources:[511]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--person Re - ID:
+Total number of sentences: 7722
+Sources:[564]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--scale - normalized image and feature pyramid:
+Total number of sentences: 7722
+Sources:[514]
+[2025-09-23 13:35:21,952][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--feature pyramid networks:
+Total number of sentences: 7722
+Sources:[515]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FPN:
+Total number of sentences: 7722
+Sources:[550]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--occlusion - aware strategy:
+Total number of sentences: 7722
+Sources:[574]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Pose estimation:
+Total number of sentences: 7722
+Sources:[563]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--computer vision:
+Total number of sentences: 7722
+Sources:[527]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--CPN:
+Total number of sentences: 7722
+Sources:[517]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--COCO 2 0 1 7:
+Total number of sentences: 7722
+Sources:[517]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FPN - DCN:
+Total number of sentences: 7722
+Sources:[568]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--human detector:
+Total number of sentences: 7722
+Sources:[568]
+[2025-09-23 13:35:21,953][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--deconvolutional layers:
+Total number of sentences: 7722
+Sources:[518]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--single - person pose estimation network:
+Total number of sentences: 7722
+Sources:[518]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multi - person pose estimation approaches:
+Total number of sentences: 7722
+Sources:[519]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multiperson pose tracking:
+Total number of sentences: 7722
+Sources:[519]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Temporal Flow Fields:
+Total number of sentences: 7722
+Sources:[520]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--TTF:
+Total number of sentences: 7722
+Sources:[520]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--non maximum suppression:
+Total number of sentences: 7722
+Sources:[522]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--NMS:
+Total number of sentences: 7722
+Sources:[522]
+[2025-09-23 13:35:21,954][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Multi - task learning:
+Total number of sentences: 7722
+Sources:[523]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--natural language processing:
+Total number of sentences: 7722
+Sources:[523]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--speech recognition:
+Total number of sentences: 7722
+Sources:[523]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--multi - task learning:
+Total number of sentences: 7722
+Sources:[524]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Fast R - CNN:
+Total number of sentences: 7722
+Sources:[525]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Faster R - CNN:
+Total number of sentences: 7722
+Sources:[525]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--detect objects:
+Total number of sentences: 7722
+Sources:[526]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--CNNs:
+Total number of sentences: 7722
+Sources:[528]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--small object detection:
+Total number of sentences: 7722
+Sources:[528]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--object detector:
+Total number of sentences: 7722
+Sources:[528]
+[2025-09-23 13:35:21,955][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--dilated/atrous convolutions:
+Total number of sentences: 7722
+Sources:[528]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SDP:
+Total number of sentences: 7722
+Sources:[529]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SSH:
+Total number of sentences: 7722
+Sources:[529]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--MS - CNN:
+Total number of sentences: 7722
+Sources:[529]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Mask - RCNN:
+Total number of sentences: 7722
+Sources:[530]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SNIP:
+Total number of sentences: 7722
+Sources:[550]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SNIPER:
+Total number of sentences: 7722
+Sources:[531]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--predict the bounding boxes:
+Total number of sentences: 7722
+Sources:[532]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--keypoint coordinates:
+Total number of sentences: 7722
+Sources:[532]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--scale - normalized image pyramid and feature pyramid:
+Total number of sentences: 7722
+Sources:[533]
+[2025-09-23 13:35:21,956][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--fully convolutional network:
+Total number of sentences: 7722
+Sources:[535]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Region Proposal Network:
+Total number of sentences: 7722
+Sources:[535]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--RPN:
+Total number of sentences: 7722
+Sources:[545]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--classification:
+Total number of sentences: 7722
+Sources:[536]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--bounding - box regression:
+Total number of sentences: 7722
+Sources:[536]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--head networks:
+Total number of sentences: 7722
+Sources:[545]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--bounding - box classification and regression:
+Total number of sentences: 7722
+Sources:[537]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--MobileNet - v 2:
+Total number of sentences: 7722
+Sources:[560]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--ResNet:
+Total number of sentences: 7722
+Sources:[538]
+[2025-09-23 13:35:21,957][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose estimation head network:
+Total number of sentences: 7722
+Sources:[539]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--RoIAlign:
+Total number of sentences: 7722
+Sources:[541]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--padding operation:
+Total number of sentences: 7722
+Sources:[541]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--head network:
+Total number of sentences: 7722
+Sources:[542]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--person search:
+Total number of sentences: 7722
+Sources:[542]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--scalenormalized paradigm exploiting both image pyramid and feature pyramid:
+Total number of sentences: 7722
+Sources:[546]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--detection box:
+Total number of sentences: 7722
+Sources:[551]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--keypoints:
+Total number of sentences: 7722
+Sources:[551]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--ResNet - 1 0 1:
+Total number of sentences: 7722
+Sources:[552]
+[2025-09-23 13:35:21,958][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--convolutional layers:
+Total number of sentences: 7722
+Sources:[552]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--pose estimation head:
+Total number of sentences: 7722
+Sources:[552]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Re - ID head:
+Total number of sentences: 7722
+Sources:[552]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--MPII:
+Total number of sentences: 7722
+Sources:[554]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Person search:
+Total number of sentences: 7722
+Sources:[555]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--SSM:
+Total number of sentences: 7722
+Sources:[564]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--PRW:
+Total number of sentences: 7722
+Sources:[555]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--non - maximum suppression:
+Total number of sentences: 7722
+Sources:[556]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--detection boxes:
+Total number of sentences: 7722
+Sources:[556]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--COCO:
+Total number of sentences: 7722
+Sources:[563]
+[2025-09-23 13:35:21,959][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--ResNet 1 8:
+Total number of sentences: 7722
+Sources:[560]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--real - time pose tracking:
+Total number of sentences: 7722
+Sources:[560]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FastPose - MobileNet - v 2:
+Total number of sentences: 7722
+Sources:[561]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FastPose - 1 8:
+Total number of sentences: 7722
+Sources:[561]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FastPose - 5 0:
+Total number of sentences: 7722
+Sources:[569]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FastPose - 1 0 1:
+Total number of sentences: 7722
+Sources:[569]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FlowTrack - 1 5 2 with Flow:
+Total number of sentences: 7722
+Sources:[566]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--optical flow estimation:
+Total number of sentences: 7722
+Sources:[567]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FlowTrack - 1 5 2:
+Total number of sentences: 7722
+Sources:[567]
+[2025-09-23 13:35:21,960][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Flow:
+Total number of sentences: 7722
+Sources:[568]
+[2025-09-23 13:35:21,961][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--FlowTrack - 5 0:
+Total number of sentences: 7722
+Sources:[568]
+[2025-09-23 13:35:21,961][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Doc_name--199668729--Scale - normalized Image and Feature Pyramid:
+Total number of sentences: 7722
+Sources:[573]
+[2025-09-23 13:35:21,961][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Dataset information
+****************************************
+Number of unique entities:6955
+****************************************
+Frequency of each entities
+****************************************
+[2025-09-23 13:35:21,980][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classification output already exists at /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_199668729.yml, skipping classification.
+[2025-09-23 13:35:21,980][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/test_data/scier_199668729.yml
+[2025-09-23 13:35:21,987][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading Bodhi dataset from paths: ['/home/pst/Documents/Prophet-private/multirun/2025-09-23/12-59-28/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/storage/Bodhi/199668729/199668729_graph.yml']
+[2025-09-23 13:35:22,044][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded Bodhi dataset from /home/pst/Documents/Prophet-private/multirun/2025-09-23/12-59-28/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/storage/Bodhi/199668729/199668729_graph.yml
+[2025-09-23 13:35:22,108][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loaded full texts from /home/pst/Documents/Prophet-private/Bodhi/experiments/Datasets/SciER/LLM/superset.jsonl
+[2025-09-23 13:35:22,108][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Classifying Bodhi entities for doc: 199668729
+[2025-09-23 13:35:22,242][root][INFO] - /home/pst/Documents/Prophet-private/Bodhi/experiments/prompt_engineering/experiment_A/validation/entity_classification.py:40:Estimating tokens using hf method.
+[2025-09-23 13:35:23,131][root][INFO] - Token count: 3179
+[2025-09-23 13:35:23,723][root][INFO] - Batch token estimation (hf) complete for 40 strings.
+[2025-09-23 13:35:23,765][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - first_5_entities: ['Name:FASTPOSE\nDescription:A real-time pose estimation and tracking framework. ; The real-time pose estimation and tracking framework introduced in the paper. ; A real-time pose estimation and tracking framework.\n', 'Name:MULTI-TASK NETWORK (MTN)\nDescription:The core component of FastPose, designed to perform human detection, pose estimation, and person re-identification simultaneously. ; A unified network that simultaneously performs human detection, pose estimation, and person Re-ID. ; The core of FastPose, simultaneously performing human detection, pose estimation, and person Re-ID.\n', 'Name:SCALE-NORMALIZED IMAGE AND FEATURE PYRAMID (SIFP)\nDescription:A paradigm designed to address the scale variation problem in pose estimation, enhancing both performance and speed. ; A paradigm designed to address the scale variation problem, leveraging Feature Pyramid Networks (FPN) to enhance scale invariance. ; A paradigm designed to address the scale variation problem in unified pose estimation, leveraging Feature Pyramid Networks (FPN).\n', 'Name:FEATURE PYRAMID NETWORKS (FPN)\nDescription:A network architecture used in SIFP to enhance scale invariance. ; A network architecture used to enhance scale invariance by creating a pyramidal representation of features and fusing adjacent scale feature maps. ; Used within SIFP to enhance scale invariance.\n', 'Name:RESNET-18\nDescription:A specific type of backbone network used in FastPose. ; A specific backbone network (ResNet with 18 layers) used in the FastPose framework, used for pose estimation and tracking. ; A specific backbone network used in the FastPose framework, with 18 layers.\n']split_entities: text_tokens=3179, instructions_tokens=500, budget_for_entities=6321, number_of_entities=40, avg_entity_tokens=45, max_entities=140, num_groups=1, entities_per_group=[40]
+[2025-09-23 13:35:59,276][heimdall.core][INFO] - Cleaned output : entities:
+  - entity: FASTPOSE
+    type: DOMAIN
+  - entity: MULTI-TASK NETWORK (MTN)
+    type: DOMAIN
+  - entity: SCALE-NORMALIZED IMAGE AND FEATURE PYRAMID (SIFP)
+    type: DOMAIN
+  - entity: FEATURE PYRAMID NETWORKS (FPN)
+    type: METHOD
+  - entity: RESNET-18
+    type: METHOD
+  - entity: RESNET-50
+    type: METHOD
+  - entity: ARTICULATED MULTI-PERSON POSE TRACKING
+    type: METHOD
+  - entity: POSETRACK
+    type: METHOD
+  - entity: JOINTFLOW
+    type: METHOD
+  - entity: POSEFLOW
+    type: METHOD
+  - entity: DETECT-AND-TRACK
+    type: METHOD
+  - entity: FLOWTRACK
+    type: METHOD
+  - entity: CPN
+    type: METHOD
+  - entity: COCO
+    type: METHOD
+  - entity: MAP
+    type: METHOD
+  - entity: MOTA
+    type: METHOD
+  - entity: REGION PROPOSAL NETWORK (RPN)
+    type: METHOD
+  - entity: ROIALIGN
+    type: METHOD
+  - entity: BOUNDING BOX REGRESSION
+    type: METHOD
+  - entity: MOBILENET-V2
+    type: METHOD
+  - entity: RESNET
+    type: METHOD
+  - entity: MASK R-CNN
+    type: METHOD
+  - entity: SSM
+    type: METHOD
+  - entity: FPN
+    type: METHOD
+  - entity: POSE ESTIMATION AND TRACKING
+    type: METHOD
+  - entity: SNIP
+    type: METHOD
+  - entity: SNIPER
+    type: METHOD
+  - entity: COCO DATASET
+    type: METHOD
+  - entity: POSETRACK DATASET
+    type: METHOD
+  - entity: MPII
+    type: METHOD
+  - entity: PRW
+    type: METHOD
+  - entity: RESNET-101
+    type: METHOD
+  - entity: HUMAN DETECTION
+    type: METHOD
+  - entity: POSE ESTIMATION
+    type: METHOD
+  - entity: PERSON RE-ID (RE-IDENTIFICATION)
+    type: METHOD
+  - entity: SCALE VARIATION PROBLEM
+    type: METHOD
+  - entity: OCCLUSION-AWARE STRATEGY
+    type: DOMAIN
+  - entity: BACKBONE NETWORKS
+    type: METHOD
+  - entity: PERSON RE-ID
+    type: METHOD
+  - entity: KEYPOINT DETECTION
+    type: METHOD
+
+[2025-09-23 13:35:59,285][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Group 0 of 1
+[2025-09-23 13:35:59,288][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Loading entities from /home/pst/Documents/Prophet-private/multirun/2025-09-23/12-59-28/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/199668729/eval_results/classification_results.yml
+[2025-09-23 13:35:59,291][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 13:35:59,291][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Running fuzzy adjudication pipeline...
+[2025-09-23 13:35:59,291][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Performing exact match between gold and bodhi entities.
+[2025-09-23 13:35:59,294][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 1: Found 20 exact matches, 20 unmatched bodhi entities.
+[2025-09-23 13:35:59,294][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Performing fuzzy matching for unmatched bodhi entities.
+[2025-09-23 13:35:59,429][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 2: Found 9 fuzzy matches, 11 unmatched bodhi entities remain.
+[2025-09-23 13:35:59,435][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: Performing LLM adjudication for remaining unmatched bodhi entities.
+[2025-09-23 13:36:00,137][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 13:36:00,860][root][INFO] - Batch token estimation (hf) complete for 116 strings.
+[2025-09-23 13:36:00,899][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'multi - task network': 4, 'human detection': 2, 'pose estimation': 2, 'person re - identification': 4, 'Re - ID': 3, 'tracking': 1, 'ResNet - 1 8': 7, 'ResNet - 5 0': 7, 'pose tracking': 2, 'PoseTrack': 2, 'JointFlow': 2, 'PoseFlow': 2, 'Detect - and - Track': 5, 'FlowTrack': 2, 'deep convolutional neural networks': 5, 'DC - NNs': 4, 'video surveillance': 2, 'human - computer interaction': 4, 'action recognition': 2, 'multi - person pose estimation': 5, 'detection': 2, 'keypoint detection': 3, 'cropping and scaling images': 5, 'face detection': 2, 'object detection': 2, 'multiple object tracking': 3, 'instance identification': 2, 'multi - person pose tracking': 5, 'pose estimation methods': 3, 'Mask R - CNN': 4, 'pose tracking framework': 3, 'tracking towards real - time speed': 6, 'person Re - ID': 4, 'feature pyramid networks': 3, 'FPN': 2, 'Pose estimation': 2, 'computer vision': 2, 'CPN': 2, 'COCO 2 0 1 7': 11, 'FPN - DCN': 5, 'human detector': 2, 'deconvolutional layers': 5, 'single - person pose estimation network': 6, 'multi - person pose estimation approaches': 6, 'multiperson pose tracking': 4, 'Temporal Flow Fields': 3, 'TTF': 2, 'non maximum suppression': 3, 'NMS': 2, 'Multi - task learning': 4, 'natural language processing': 3, 'speech recognition': 2, 'multi - task learning': 4, 'Fast R - CNN': 4, 'Faster R - CNN': 5, 'detect objects': 2, 'CNNs': 2, 'small object detection': 3, 'object detector': 2, 'dilated/atrous convolutions': 6, 'SDP': 2, 'SSH': 1, 'MS - CNN': 3, 'Mask - RCNN': 4, 'SNIP': 2, 'SNIPER': 3, 'predict the bounding boxes': 4, 'keypoint coordinates': 3, 'fully convolutional network': 4, 'Region Proposal Network': 3, 'RPN': 2, 'classification': 1, 'bounding - box regression': 4, 'head networks': 2, 'bounding - box classification and regression': 6, 'MobileNet - v 2': 6, 'ResNet': 2, 'pose estimation head network': 4, 'RoIAlign': 3, 'padding operation': 2, 'head network': 2, 'person search': 2, 'detection box': 3, 'keypoints': 2, 'ResNet - 1 0 1': 9, 'convolutional layers': 4, 'pose estimation head': 3, 'Re - ID head': 4, 'MPII': 2, 'Person search': 2, 'SSM': 2, 'PRW': 2, 'non - maximum suppression': 4, 'detection boxes': 3, 'COCO': 3, 'ResNet 1 8': 6, 'real - time pose tracking': 5, 'FlowTrack - 1 5 2 with Flow': 11, 'optical flow estimation': 4, 'FlowTrack - 1 5 2': 9, 'Flow': 1, 'FlowTrack - 5 0': 7, 'MTN': 2, 'scale - normalized image and feature pyramids': 8, 'SIFP': 3, 'pose tracking module': 3, 'FastPose': 2, 'scale - normalized image and feature pyramid': 7, 'occlusion - aware strategy': 5, 'scale - normalized image pyramid and feature pyramid': 8, 'scalenormalized paradigm exploiting both image pyramid and feature pyramid': 12, 'FastPose - MobileNet - v 2': 9, 'FastPose - 1 8': 7, 'FastPose - 5 0': 7, 'FastPose - 1 0 1': 9, 'Scale - normalized Image and Feature Pyramid': 7}
+[2025-09-23 13:36:01,673][root][INFO] - Batch token estimation (hf) complete for 11 strings.
+[2025-09-23 13:36:01,730][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for adjudication chunk: stage3_280daf5f4dc44074be89029c193cf2b04350c8a8a8df6a65e1fef8c12c22f199.pkl
+[2025-09-23 13:36:03,438][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Stage 3: LLM adjudication completed for 11 entities.
+[2025-09-23 13:36:04,236][root][INFO] - Batch token estimation (hf) complete for 1 strings.
+[2025-09-23 13:36:05,050][root][INFO] - Batch token estimation (hf) complete for 4 strings.
+[2025-09-23 13:36:05,088][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Tokenized items: {'MAP': 1, 'MOTA': 2, 'SCALE VARIATION PROBLEM': 6, 'BACKBONE NETWORKS': 5}
+[2025-09-23 13:36:05,089][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Invoking LLM for novel entity assessment chunk: novel_assess_23ae46fd2a4aa087d009802453ccec490ee490ee0cd5ec5d93d34fbb95cb40dd.pkl
+[2025-09-23 13:36:07,778][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Novel entity assessment completed for 4 entities.
+[2025-09-23 13:36:07,778][Bodhi.experiments.prompt_engineering.experiment_A.validation.fuzzy_adjudication][INFO] - Fuzzy adjudication pipeline completed.
+[2025-09-23 13:36:07,779][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Final evaluation results: 
+{'domain_coverage': 0.21428571428571427, 'method_coverage': 0.2549019607843137, 'precision': 0.47540983606557374, 'recall': 0.2116788321167883, 'f1': 0.29292929292929293, 'domain_precision': 0.42857142857142855, 'domain_recall': 0.17647058823529413, 'domain_f1': 0.25, 'method_precision': 0.48148148148148145, 'method_recall': 0.21666666666666667, 'method_f1': 0.29885057471264365, 'adjusted_domain_precision': 0.42857142857142855, 'adjusted_domain_recall': 0.21428571428571427, 'adjusted_domain_f1': 0.2857142857142857, 'adjusted_method_precision': 0.5185185185185185, 'adjusted_method_recall': 0.2692307692307692, 'adjusted_method_f1': 0.35443037974683544, 'adjusted_precision': 0.5081967213114754, 'adjusted_recall': 0.2627118644067797, 'adjusted_f1': 0.3463687150837989}
+[2025-09-23 13:36:07,786][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation results written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/12-59-28/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/199668729/eval_results/eval_output.yml
+[2025-09-23 13:36:07,788][Bodhi.experiments.prompt_engineering.experiment_A.validation.validation][INFO] - Evaluation metrics written to /home/pst/Documents/Prophet-private/multirun/2025-09-23/12-59-28/general_config.generic_type_allowance=True,general_config.priming=True,general_config.token_limit=1000/seed=1/199668729/eval_results/eval_metrics.yml

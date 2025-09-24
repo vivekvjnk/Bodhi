@@ -1,0 +1,169 @@
+chunk_indices:
+- 0
+entities:
+- description: A feature extraction method used in the MTN.
+  name: RoIAlign
+  source_chunk_index: 0
+  type: GENERIC
+- description: The process of identifying human presence within an image.
+  name: human detection
+  source_chunk_index: 0
+  type: GENERIC
+- description: The process of estimating the pose of a person.
+  name: pose estimation
+  source_chunk_index: 0
+  type: GENERIC
+- description: The process of identifying and re-identifying individuals across different
+    camera views or time instances.
+  name: person Re-identification (Re-ID)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A strategy used for pose tracking.
+  name: occlusion-aware strategy
+  source_chunk_index: 0
+  type: GENERIC
+- description: A paradigm that exploits both image pyramid and feature pyramid to
+    achieve enhanced scale invariance capability of MTN.
+  name: Scale-normalized Image and Feature Pyramid (SIFP)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component used in SIFP to address the dilemma of maximizing inference
+    speed without reducing performance.
+  name: Feature Pyramid Networks (FPN)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component of SIFP used to enhance scale invariance.
+  name: image pyramid
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component of SIFP used to enhance scale invariance.
+  name: feature pyramid
+  source_chunk_index: 0
+  type: GENERIC
+- description: A component that generates RoIs.
+  name: RPN
+  source_chunk_index: 0
+  type: GENERIC
+- description: A unified network that performs human detection, pose estimation, and
+    person Re-ID simultaneously.
+  name: Multi-Task Network (MTN)
+  source_chunk_index: 0
+  type: method
+- description: Datasets composed of images containing multiple people with corresponding
+    ID annotations, used for training the Multi-Task Network (MTN).
+  name: Person search datasets
+  source_chunk_index: 0
+  type: dataset
+- description: The underlying convolutional neural networks (e.g., ResNet, MobileNet-v2)
+    used as the foundation for the Multi-Task Network (MTN). These networks extract
+    features from the input images.
+  name: Backbone networks
+  source_chunk_index: 0
+  type: GENERIC
+- description: The task of identifying and locating human figures within an image.
+  name: Human Detection
+  source_chunk_index: 0
+  type: Task
+- description: The task of determining the keypoint locations (e.g., joints) of a
+    human figure in an image.
+  name: Pose Estimation
+  source_chunk_index: 0
+  type: Task
+- description: The task of re-identifying a specific person across different camera
+    views or frames.
+  name: Person Re-ID
+  source_chunk_index: 0
+  type: Task
+relationships:
+- description: RoIAlign is used in the MTN.
+  source_chunk_index: 0
+  source_entity: RoIAlign
+  strength: 8.0
+  target_entity: Multi-Task Network (MTN)
+- description: MTN performs human detection.
+  source_chunk_index: 0
+  source_entity: human detection
+  strength: 10.0
+  target_entity: Multi-Task Network (MTN)
+- description: MTN performs pose estimation.
+  source_chunk_index: 0
+  source_entity: pose estimation
+  strength: 10.0
+  target_entity: Multi-Task Network (MTN)
+- description: MTN performs person Re-ID.
+  source_chunk_index: 0
+  source_entity: person Re-identification (Re-ID)
+  strength: 10.0
+  target_entity: Multi-Task Network (MTN)
+- description: MTN provides information to the occlusion-aware strategy.
+  source_chunk_index: 0
+  source_entity: occlusion-aware strategy
+  strength: 7.0
+  target_entity: Multi-Task Network (MTN)
+- description: MTN performs the task of Person Re-ID.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 10.0
+  target_entity: Person Re-ID
+- description: MTN performs the task of Human Detection.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 10.0
+  target_entity: Human Detection
+- description: MTN performs the task of Pose Estimation.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 10.0
+  target_entity: Pose Estimation
+- description: MTN uses SIFP to enhance scale invariance.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 8.0
+  target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+- description: SIFP exploits image pyramid.
+  source_chunk_index: 0
+  source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+  strength: 9.0
+  target_entity: image pyramid
+- description: SIFP exploits feature pyramid.
+  source_chunk_index: 0
+  source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+  strength: 9.0
+  target_entity: feature pyramid
+- description: SIFP exploits FPN.
+  source_chunk_index: 0
+  source_entity: Feature Pyramid Networks (FPN)
+  strength: 9.0
+  target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+- description: MTN builds head networks upon the RoIs generated by RPN.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 7.0
+  target_entity: RPN
+- description: Person search datasets are used for training the MTN.
+  source_chunk_index: 0
+  source_entity: Person search datasets
+  strength: 7.0
+  target_entity: Multi-Task Network (MTN)
+- description: The MTN is based upon the backbone network.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 10.0
+  target_entity: Multi-Task Network (MTN)
+- description: SIFP exploits FPN to tackle the dilemma of inference speed and performance.
+  source_chunk_index: 0
+  source_entity: Feature Pyramid Networks (FPN)
+  strength: 8.0
+  target_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+- description: The head network is based on the backbone, and RoIAlign is used in
+    the head network.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 8.0
+  target_entity: RoIAlign
+- description: The head network is based on the backbone, and RPN is used in the head
+    network.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 8.0
+  target_entity: RPN

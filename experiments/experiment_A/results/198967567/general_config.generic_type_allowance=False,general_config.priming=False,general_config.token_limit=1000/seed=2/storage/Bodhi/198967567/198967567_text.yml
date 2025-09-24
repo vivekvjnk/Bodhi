@@ -1,0 +1,176 @@
+'Over the past few years , we have witnessed the success of deep learning in image
+  recognition thanks to the availability of large - scale human - annotated datasets
+  such as PASCAL VOC , ImageNet , and COCO .To evaluate and validate the performance
+  of our approach , we have built a few - shot segmentation dataset , FSS - 1 0 0
+  0 , which consists of 1 0 0 0 object classes with pixelwise annotation of ground
+  - truth segmentation .We build our baseline model using standard backbone networks
+  such as VGG - 1 6 , ResNet - 1 0 1 , and Inception .To our surprise , we found that
+  training our model from scratch using FSS - 1 0 0 0 achieves comparable and even
+  better results than training with weights pre - trained by ImageNet which is more
+  than 1 0 0 times larger than FSS - 1 0 0 0 .Although unprecedented in the number
+  of object categories when first released , contemporary image datasets for training
+  deep neural networks such as PASCAL VOC [ 5 ] ( 1 9 , 7 4 0 images , 2 0 classes
+  ) , ILSVRC [ 2 8 ] ( 1, 2 8 1 , 1 6 7 images , 1, 0 0 0 classes ) , and COCO [ 2
+  1 ] ( 2 0 4 , 7 2 1 images , 8 0 classes ) are actually quite limited for visual
+  recognition tasks in the real world : a rough estimate of the number of different
+  objects on the Earth falls in the range of 5 0 0 , 0 0 0 to 7 0 0 , 0 0 0 , following
+  the total number of nouns in the En - * Equal contribution . glish language .Thus
+  , Few - Shot Learning has emerged as an attractive alternative for important computer
+  vision tasks , especially when the given new dataset is very small and dissimilar
+  so relying on the aforementioned pre - trained weights may not work well .Previous
+  research on few - shot segmentation relies on a manual split of the PASCAL VOC dataset
+  to train and evaluate a new model [ 3 0 , 2 4 ] , but only 2 0 and 8 0 classes in
+  the PASCAL VOC and COCO datasets respectively contain pixelwise segmentation information
+  .FSS - 1 0 0 0 is the first large - scale dataset for few - shot segmentation with
+  built - in object category hierarchy which emphasizes the number of object classes
+  rather than the number of images .All existing datasets are biased toward a number
+  of object categories except FSS - 1 0 0 0 ( red ) . pending a decoder module to
+  the relation network [ 3 3 ] , which is a simple and elegant deep model effective
+  and originally designed for few - shot image classification only .Reshaping the
+  relation network into a fully - convolutional U - Net architecture [ 2 6 ] , our
+  extensive experimental results show that this baseline model trained from scratch
+  on FSS - 1 0 0 0 , which is less than 1% of the size of contemporary large - scale
+  datasets , outperforms the model fine - tuned from weights pre - trained on ImageNet/COCO
+  dataset .With its excellent segmentation performance as well as extensibility ,
+  FSS - 1 0 0 0 is expected to make a lasting contribution to few - shot image segmentation
+  .We first review the relationship and difference between FSS - 1 0 0 0 and modern
+  datasets aiming to solve image segmentation and few - shot classification .Then
+  we review contemporary research on few - shot learning and semantic segmentation
+  and discuss how we relate the few - shot segmentation to previous research .The
+  PASCAL VOC [ 5 ] was the first to provide a challenging image dataset for object
+  class recognition and semantic segmentation .The latest version VOC 2 0 1 2 contains
+  2 0 object classes and 9, 9 9 3 images with segmentation annotations .Despite the
+  absence of segmentation labels , the Imagenet [ 4 ] is built upon the backbone of
+  WordNet and provides image - level labels for 5, 2 4 7 classes for training , out
+  of which a subset of 1, 0 0 0 categories are split out to form the ILSVRC [ 2 8
+  ] dataset .This challenge has made a significant impact on the rapid progress in
+  visual recognition task and computer vision in recent years .The latest Open Image
+  dataset [ 1 7 ] contains 7, 1 8 6 trainable distinct object classes for classification
+  and 6 0 0 classes for detection , making it the largest existing dataset with object
+  classes and location annotations .Following the PASCAL VOC and ImageNet , the COCO
+  segmentation dataset [ 2 1 ] includes more than 2 0 0 , 0 0 0 images with instance
+  - wise semantic segmentation labels .Our FSS - 1 0 0 0 consists of 1, 0 0 0 object
+  classes , wherein each class we label 1 0 images with binary segmentation annotation
+  .We are particularly interested in segmentation due to its obvious benefits : segmentation
+  captures the essential feature of an object without background ; instance level
+  segmentation can be ready from segmentation .But none of these few - shot learning
+  datasets incorporate dense pixelwise segmentation labels , which is essential in
+  training a deep network model for semantic segmentation .Few - Shot Learning Recent
+  research in few - shot classification can be classified into 1 ) learn a good initial
+  condition for the network to be fine - tuned on extremely small training set , as
+  proposed in [ 8 , 2 5 ] ; 2 ) rely on memory properties of RNN , introduced in [
+  2 2 , 2 9 ] ; 3 ) learn a metric between few - shot samples and queries , as in
+  [ 2 , 1 0 , 1 8 , 1 6 , 3 3 ] .In this paper , we simply modify the loss to calculate
+  pixelwise differences between the segmentation ground truth and heatmap .In OSLSM
+  [ 3 0 ] , the authors proposed a two - branch network to solve few - shot segmentation
+  .Semantic Image Segmentation Previous research exploiting CNN to make dense prediction
+  often relied on patchwise training [ 3 , 6 , 2 3 ] and pre - and post - processing
+  of superpixels [ 6 , 1 1 ] .In [ 3 1 ] the authors first proposed a simple and elegant
+  fully convolutional network ( FCN ) to solve semantic segmentation .Notably , this
+  is the first work which was trained end - to - end on a fully convolutional network
+  for dense pixel prediction , which showed that the last layer feature maps from
+  a good backbone network such as VGG - 1 6 contain sufficient foreground features
+  which can be decoded by the upsampling network to produce segmentation results .Recent
+  few - shot datasets [ 1 8 , 3 5 ] support few - shot classification but there is
+  no large - scale few - shot segmentation dataset .FSS - 1 0 0 0 targets at solving
+  general objects few - shot segmentation problem .Object Classes We first referred
+  to the classes in ILSVRC [ 2 8 ] in our choice of object categories for FSS - 1
+  0 0 0 .Consequently , FSS - 1 0 0 0 has 5 8 4 classes out of its 1, 0 0 0 classes
+  overlap with the classes in the ILSVRC dataset .Pixelwise Segmentation Annotation
+  We used Photoshop ''s " quick selection " tool which allows users to loosely select
+  an object automatically , and refined or corrected the selected area to produce
+  the desired segmentation .This section summarizes the three desirable properties
+  of FSS - 1 0 0 0 : Scalability To extend FSS - 1 0 0 0 to include a new class ,
+  all it takes are 1 0 images with pixelwise binary segmen - Figure 3 .This is significantly
+  easier than other datasets such as PASCAL VOC and COCO .Instance FSS - 1 0 0 0 dataset
+  supports instance - level segmentation with instance segmentation labels in 7 5
+  8 out of the 1, 0 0 0 classes in the dataset , which are significantly more classes
+  than PASCAL VOC and MS COCO .One major difference between our dataset and PASCAL
+  VOC / MS COCO instance level segmentation is that our dataset only annotates one
+  type of objects in one image , despite there may be other object categories appearing
+  in the background .We annotate at most 1 0 instances in a single image , which follows
+  the same instance annotation principle adopted by COCO .   In few - shot learning
+  , the train - test split is on object categories .In few - shot segmentation , we
+  adopt this notation but extend the query output to be per - pixel classification
+  of the query image , rather than a single class label .However , a general C - way
+  - K - shot segmentation could be solved by a union of C binary segmentation tasks
+  .One can design his/her own or choose any popular feature extraction backbone such
+  as VGG - 1 6 [ 3 2 ] , ResNet [ 1 3 ] and Inception [ 3 4 ] as the encoder module
+  inside the network .ReLU activation is applied throughout the deep network except
+  for the last layer ''s activation where Sigmoid is used in order to scale the output
+  to a suitable range to calculate cross - entropy loss .Method MeanIoU OSLSM - 1
+  shot [ 3 0 ] 7 0 . 2 9 % OSLSM - 5 shot 7 3 . 0 2 % Guided Network - 1 shot [ 2
+  4 ] 7 1 . 9 4 % Guided Network - 5 shot 7 4 . 2 7 % Ours - 1 shot 7 3 . 4 7 % Ours
+  - 5 shot 8 0 . 1 2 % Table 4 .GN is Guided Network and Ours * is our model trained
+  on FSS - 1 0 0 0 .We evaluate models with the same network architecture but trained
+  on different datasets to show that FSS - 1 0 0 0 is the best choice for few - shot
+  segmentation task .Finally we illustrate that models trained on FSS - 1 0 0 0 are
+  capable to generalize the few - shot segmentation knowledge to new unseen classes
+  .Table 2 tabulates the respective performance on VGG - 1 6 , ResNet - 1 0 1 and
+  InceptionNet as backbone , and BCE and MSE as loss function .Based on the result
+  , we choose VGG - 1 6 as feature extractor and use BCE loss in our model throughout
+  the experimental section .   We train OSLSM and Guided Network on FSS - 1 0 0 0
+  to provide benchmarks and justify our dataset .Each model ( row ) shows the training
+  stages , e.g. , model I uses the pretrained weights from ImageNet then fine - tuned
+  on fsPASCAL .Most importantly , we train our network merely on FSS - 1 0 0 0 without
+  fine - tuning on PASCAL - 5 i to avoid any potential overfitting , and this model
+  achieves much better results compared to models trained on PASCAL - 5 i , which
+  justify the effectiveness of FSS - 1 0 0 0 .We compare our network model trained
+  on different datasets to demonstrate the effectiveness of FSS - 1 0 0 0 in few -
+  shot segmentation .Since there are no publicly available few - shot image segmentation
+  datasets , we convert PASCAL VOC 2 0 1 2 and COCO datasets by setting the desired
+  foreground class label as positive and all others as negative , followed by the
+  identical clean - up stage described in section 3. 1 to the binarized labels .Image
+  results of our baseline model respectively trained on fsPASCAL , fsCOCO and FSS
+  - 1 0 0 0 .The classes in the first two rows are present in fs - PASCAL and fsCOCO
+  whereas the rest are unique in FSS - 1 0 0 0 . thus produced : fsPASCAL and fsCOCO
+  .There are respectively 4, 3 1 8 image and label pairs in 2 0 object classes in
+  fsPASCAL , and 4 8 , 0 1 5 image and label pairs in 8 0 object classes in fsCOCO
+  .All available data in fsPASCAL and fs - COCO are used in training .Using the pre
+  - trained weights from ImageNet , Model III trained on FSS - 1 0 0 0 outperforms
+  respectively the fsPAS - CAL model I and fsCOCO model II by over a large margin
+  of 2 0 % and 1 0 % .Interestingly , Model VI pre - trained on COCO and finetuned
+  on FSS - 1 0 0 0 achieves the best result , outperforming the model III pre - trained
+  on ILSRVC .We believe this is due to the difference in requirement of feature maps
+  ideal for classification and segmentation task .Intuitively , semantic segmentation
+  requires more accurate low - level features to produce fine details in segmentation
+  map , while classification focuses on high - level features for image understanding
+  .Overall , models respectively trained on fsPASCAL and fsCOCO produce quite good
+  results in object classes that are included in PASCAL and COCO , or similar to PAS
+  - CAL and COCO classes .For these classes , sometimes their segmentation results
+  are better in local details compared to the results produced by models trained on
+  FSS - 1 0 0 0 due to more variations in the support training set .However , they
+  respectively fail in classes significantly different from the 2 0 PASCAL classes
+  and 8 0 COCO classes .Figure 8 demonstrates the effect of support set , which shows
+  that scale and pose of the object to be segmented are the most important characteristics
+  to guide few - shot semantic segmentation on FSS - 1 0 0 0 .Since FSS - 1 0 0 0
+  does not explicitly consider scale variations ( future work ) , a tiny or oversized
+  object in the support set is not a good reference for segmentation .Besides , significantly
+  different poses in support and query sets can result in bad segmentation results
+  , due to the intrinsic fragility to rotation in CNN features .Table 6 tabulates
+  the tradeoff in time and accuracy for annotating 5 0 0 test images in FSS - 1 0
+  0 0 by humans ( using Photoshop and GrabCut [ 2 7 ] algorithm ) and our few - shot
+  segmentation .From top to bottom : android robot ; the river from UC Merced Land
+  Use Dataset [ 3 7 ] ; a large cell image cropped into patches ; herds of sheep ;
+  penguin from Oxford penguin counting dataset [ 1 ] ; flock of wild goose ; different
+  images of fields of sunflower depict various scales in the presence of occlusion
+  and perspective distortion . ple where saliency detection does not work in general
+  .The cell example shows the good potential of FSS - 1 0 0 0 in instance segmentation
+  which significantly contributes to cell counting in medical image analysis where
+  , for instance , a patient ''s health directly correlates to his or her red blood
+  cell count .With the advance of whole slide images ( WSI ) in which the width and
+  height often exceed 1 0 0 , 0 0 0 pixels ( and thus many cells to count ) , using
+  our few - shot segmentation trained on FSS - 1 0 0 0 , pathologists only need to
+  label 5 image relevant regions and then the rest of the WSI will be automatically
+  labeled .Similarly , the related animal examples of sheep , penguin and wild goose
+  show FSS - 1 0 0 0 ''s potential for large - scale instance segmentation .Few -
+  shot learning/segmentation is an emerging attractive alternative , where prediction
+  is made given only a few training examples .In this paper , we address the limitation
+  of existing large - scale datasets in their biases and lack of scalability , and
+  build the first few - shot segmentation dataset FSS - 1 0 0 0 emphasizing class
+  diversity rather than dataset size .This baseline few - shot segmentation model
+  , even trained exclusively on FSS - 1 0 0 0 without using pre - trained weights
+  , achieves higher accuracy than previous methods .We further demonstrated the efficacy
+  and potential of FSS - 1 0 0 0 in large - scale segmentation on totally unseen classes
+  without re - training or fine - tuning , and showed its promise on few - shot instance
+  segmentation and iterative few - shot recognition tasks .'

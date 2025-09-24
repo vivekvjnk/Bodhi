@@ -1,0 +1,258 @@
+chunk_indices:
+- 0
+entities:
+- description: The process of estimating the pose of a human in an image.
+  name: Pose estimation
+  source_chunk_index: 0
+  type: Task
+- description: The task of re-identifying a person across different camera views or
+    frames.
+  name: Person Re-ID (re-identification)
+  source_chunk_index: 0
+  type: Task
+- description: A dataset used for evaluating pose estimation performance.
+  name: COCO dataset
+  source_chunk_index: 0
+  type: Dataset
+- description: A dataset used for training and evaluating pose estimation and tracking.
+  name: PoseTrack dataset
+  source_chunk_index: 0
+  type: Dataset
+- description: The process of detecting keypoints on a human body.
+  name: Keypoint detection
+  source_chunk_index: 0
+  type: Task
+- description: Regions of interest used in the detection process.
+  name: RoI (Region of Interest)
+  source_chunk_index: 0
+  type: GENERIC
+- description: A network that simultaneously performs human detection, pose estimation,
+    and person Re-ID.
+  name: Multi-Task Network (MTN)
+  source_chunk_index: 0
+  type: method
+- description: A method designed to address the scale variation problem in pose estimation,
+    utilizing Feature Pyramid Networks (FPN).
+  name: Scale-normalized Image and Feature Pyramid (SIFP)
+  source_chunk_index: 0
+  type: method
+- description: A technique used within SIFP to address the scale variation problem.
+  name: Feature Pyramid Networks (FPN)
+  source_chunk_index: 0
+  type: method
+- description: A strategy used for pose tracking that infers occlusion states using
+    pose information to improve Re-ID.
+  name: Occlusion-aware strategy
+  source_chunk_index: 0
+  type: method
+- description: The foundational network architectures used in FastPose, including
+    ResNet and MobileNet-v2.
+  name: Backbone networks
+  source_chunk_index: 0
+  type: generic
+- description: A type of backbone network used in FastPose.
+  name: ResNet
+  source_chunk_index: 0
+  type: method
+- description: A type of backbone network used in FastPose.
+  name: MobileNet-v2
+  source_chunk_index: 0
+  type: method
+- description: A metric used to evaluate the performance of pose estimation and Re-ID
+    tasks.
+  name: mAP
+  source_chunk_index: 0
+  type: generic
+- description: A metric used to evaluate the performance of pose tracking.
+  name: MOTA
+  source_chunk_index: 0
+  type: generic
+- description: A dataset utilized for training the pose estimation task.
+  name: MPII
+  source_chunk_index: 0
+  type: dataset
+- description: A person search dataset used for training the person Re-ID task.
+  name: PRW
+  source_chunk_index: 0
+  type: dataset
+- description: A person search dataset used for training the person Re-ID task.
+  name: SSM
+  source_chunk_index: 0
+  type: dataset
+- description: A method used to select the highest scoring detection boxes by suppressing
+    lower-scoring boxes that overlap significantly with higher-scoring ones.
+  name: Non-maximum suppression
+  source_chunk_index: 0
+  type: method
+- description: The process of extracting features from human detections to enable
+    person re-identification, allowing the system to recognize the same person across
+    different frames or camera views.
+  name: Re-ID feature extraction
+  source_chunk_index: 0
+  type: method
+relationships:
+- description: Keypoint detection is part of the pose estimation process.
+  source_chunk_index: 0
+  source_entity: Pose estimation
+  strength: 8.0
+  target_entity: Keypoint detection
+- description: MTN performs pose estimation.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 9.0
+  target_entity: Pose estimation
+- description: MTN performs person Re-ID.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 9.0
+  target_entity: Person Re-ID (re-identification)
+- description: SIFP utilizes FPN.
+  source_chunk_index: 0
+  source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+  strength: 9.0
+  target_entity: Feature Pyramid Networks (FPN)
+- description: PoseTrack dataset is utilized for training the pose estimation task.
+  source_chunk_index: 0
+  source_entity: PoseTrack dataset
+  strength: 7.0
+  target_entity: Pose estimation
+- description: MOTA is a metric used to evaluate performance on the PoseTrack dataset.
+  source_chunk_index: 0
+  source_entity: PoseTrack dataset
+  strength: 7.0
+  target_entity: MOTA
+- description: mAP is a metric used to evaluate performance on the PoseTrack dataset.
+  source_chunk_index: 0
+  source_entity: PoseTrack dataset
+  strength: 7.0
+  target_entity: mAP
+- description: COCO dataset is used for evaluating pose estimation performance.
+  source_chunk_index: 0
+  source_entity: COCO dataset
+  strength: 7.0
+  target_entity: Pose estimation
+- description: MTN is used to extract Re-ID features.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 8.0
+  target_entity: Re-ID feature extraction
+- description: ResNet is a type of backbone network.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 8.0
+  target_entity: ResNet
+- description: MobileNet-v2 is a type of backbone network.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 8.0
+  target_entity: MobileNet-v2
+- description: ResNet is used in the pose estimation head.
+  source_chunk_index: 0
+  source_entity: ResNet
+  strength: 7.0
+  target_entity: Pose estimation
+- description: ResNet is used in the Re-ID head.
+  source_chunk_index: 0
+  source_entity: ResNet
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: MobileNet-v2 is used in the pose estimation head.
+  source_chunk_index: 0
+  source_entity: MobileNet-v2
+  strength: 7.0
+  target_entity: Pose estimation
+- description: MobileNet-v2 is used in the Re-ID head.
+  source_chunk_index: 0
+  source_entity: MobileNet-v2
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: MTN provides the detection box, keypoints and Re-ID feature which are
+    used by the occlusion-aware strategy.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 8.0
+  target_entity: Occlusion-aware strategy
+- description: SSM dataset is used for training person Re-ID task.
+  source_chunk_index: 0
+  source_entity: SSM
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: PRW dataset is used for training person Re-ID task.
+  source_chunk_index: 0
+  source_entity: PRW
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: Non-maximum suppression is used to select detection boxes for pose
+    estimation.
+  source_chunk_index: 0
+  source_entity: Non-maximum suppression
+  strength: 7.0
+  target_entity: Pose estimation
+- description: Non-maximum suppression is used to select detection boxes for person
+    Re-ID.
+  source_chunk_index: 0
+  source_entity: Non-maximum suppression
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: mAP is used to evaluate the performance of person Re-ID.
+  source_chunk_index: 0
+  source_entity: mAP
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: SIFP is used to improve pose estimation and tracking performance.
+  source_chunk_index: 0
+  source_entity: Scale-normalized Image and Feature Pyramid (SIFP)
+  strength: 8.0
+  target_entity: Pose estimation
+- description: MTN enhances scale invariance capability, which is related to pose
+    estimation.
+  source_chunk_index: 0
+  source_entity: Multi-Task Network (MTN)
+  strength: 7.0
+  target_entity: Pose estimation
+- description: The mAP metric is used to evaluate the pose estimation task on the
+    COCO dataset.
+  source_chunk_index: 0
+  source_entity: COCO dataset
+  strength: 8.0
+  target_entity: mAP
+- description: The mAP metric is used to evaluate the pose estimation task on the
+    PoseTrack dataset.
+  source_chunk_index: 0
+  source_entity: PoseTrack dataset
+  strength: 8.0
+  target_entity: mAP
+- description: The MOTA metric is used to evaluate the pose tracking task on the PoseTrack
+    dataset.
+  source_chunk_index: 0
+  source_entity: PoseTrack dataset
+  strength: 8.0
+  target_entity: MOTA
+- description: The mAP metric is used to evaluate the person Re-ID task on the SSM
+    dataset.
+  source_chunk_index: 0
+  source_entity: SSM
+  strength: 8.0
+  target_entity: mAP
+- description: Based on the detection box, keypoints are used for pose estimation.
+  source_chunk_index: 0
+  source_entity: RoI (Region of Interest)
+  strength: 7.0
+  target_entity: Pose estimation
+- description: Based on the detection box, Re-ID features are extracted.
+  source_chunk_index: 0
+  source_entity: RoI (Region of Interest)
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)
+- description: The paper describes using different backbone networks (ResNet, MobileNet-v2)
+    for pose estimation.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 8.0
+  target_entity: Pose estimation
+- description: The paper describes using different backbone networks (ResNet, MobileNet-v2)
+    for person Re-ID.
+  source_chunk_index: 0
+  source_entity: Backbone networks
+  strength: 7.0
+  target_entity: Person Re-ID (re-identification)

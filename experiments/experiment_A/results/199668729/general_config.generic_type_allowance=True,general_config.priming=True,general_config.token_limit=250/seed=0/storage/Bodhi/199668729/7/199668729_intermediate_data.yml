@@ -1,0 +1,237 @@
+chunk_indices:
+- 0
+entities:
+- description: The process of identifying and locating humans within an image.
+  name: Human detection
+  source_chunk_index: 0
+  type: TASK
+- description: The process of estimating the pose of a human, typically by identifying
+    keypoints.
+  name: Pose estimation
+  source_chunk_index: 0
+  type: TASK
+- description: The process of re-identifying a person across different camera views
+    or time instances.
+  name: Person Re-identification (Re-ID)
+  source_chunk_index: 0
+  type: TASK
+- description: The process of identifying and locating specific points (keypoints)
+    on a human body.
+  name: Keypoint detection
+  source_chunk_index: 0
+  type: TASK
+- description: A network that simultaneously performs human detection, pose estimation,
+    and person Re-identification (Re-ID).
+  name: Multi-Task Network (MTN)
+  source_chunk_index: 0
+  type: method
+- description: The network used for feature extraction over an entire image.
+  name: Backbone network
+  source_chunk_index: 0
+  type: generic
+- description: A lightweight method used for feature extraction.
+  name: MobileNet-v2
+  source_chunk_index: 0
+  type: method
+- description: A deeper method used for feature extraction.
+  name: ResNet
+  source_chunk_index: 0
+  type: method
+- description: A component used to enhance feature extraction, often used with backbone
+    networks.
+  name: Feature Pyramid Networks (FPN)
+  source_chunk_index: 0
+  type: generic
+- description: A method used to extract features from regions of interest (RoIs).
+  name: RoIAlign
+  source_chunk_index: 0
+  type: generic
+- description: A key paradigm in FastPose designed to address the scale variation
+    problem in pose estimation. It combines Feature Pyramid Networks (FPN) with scale
+    distribution to enhance scale invariance.
+  name: Scale-normalized Image and Feature Pyramid (SIFP)
+  source_chunk_index: 0
+  type: method
+- description: The task of identifying and locating humans within an image, often
+    involving bounding box classification and regression.
+  name: Human Detection
+  source_chunk_index: 0
+  type: Task
+- description: The part of the network specifically designed for pose estimation,
+    responsible for keypoint localization.
+  name: Pose Estimation Head Network
+  source_chunk_index: 0
+  type: method
+- description: The task of identifying and locating humans within an image, often
+    involving bounding-box classification and regression to define their position
+    and size.
+  name: Human Detection
+  source_chunk_index: 0
+  type: task
+- description: A method mentioned in the text, which is used as a reference for the
+    architecture of the proposed network. It is a model for object detection and instance
+    segmentation.
+  name: Mask R-CNN
+  source_chunk_index: 0
+  type: method
+relationships:
+- description: The head networks are used for human detection, pose estimation and
+    person Re-ID.
+  source_chunk_index: 0
+  source_entity: Human Detection
+  strength: 7.0
+  target_entity: Pose estimation
+- description: The head networks are used for human detection, pose estimation and
+    person Re-ID.
+  source_chunk_index: 0
+  source_entity: Pose estimation
+  strength: 7.0
+  target_entity: Person Re-identification (Re-ID)
+- description: The head networks for human detection are applied to each RoI.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 6.0
+  target_entity: Human Detection
+- description: The head networks for pose estimation are applied to each RoI.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 6.0
+  target_entity: Pose estimation
+- description: The head networks for person Re-ID are applied to each RoI.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 6.0
+  target_entity: Person Re-identification (Re-ID)
+- description: MobileNet-v2 is used as a backbone network.
+  source_chunk_index: 0
+  source_entity: MobileNet-v2
+  strength: 8.0
+  target_entity: Backbone network
+- description: ResNet is used as a backbone network.
+  source_chunk_index: 0
+  source_entity: ResNet
+  strength: 8.0
+  target_entity: Backbone network
+- description: FPN is used with the backbone network.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 7.0
+  target_entity: Feature Pyramid Networks (FPN)
+- description: RoIAlign is used in the pose estimation head network.
+  source_chunk_index: 0
+  source_entity: RoIAlign
+  strength: 7.0
+  target_entity: Pose Estimation Head Network
+- description: The proposed network architecture is similar to Mask R-CNN, which is
+    used for human detection.
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 6.0
+  target_entity: Human Detection
+- description: The proposed network architecture is similar to Mask R-CNN, which is
+    used for pose estimation.
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 6.0
+  target_entity: Pose estimation
+- description: The proposed network architecture is similar to Mask R-CNN, which is
+    used for person Re-ID.
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 6.0
+  target_entity: Person Re-identification (Re-ID)
+- description: The backbone network is used for feature extraction, and the head network
+    for human detection is applied *after* feature extraction.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Human detection
+- description: The backbone network is used for feature extraction, and the head network
+    for pose estimation is applied *after* feature extraction.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Pose estimation
+- description: The backbone network is used for feature extraction, and the head network
+    for person Re-ID is applied *after* feature extraction.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Person Re-identification (Re-ID)
+- description: RoIAlign is used in the pose estimation head network.
+  source_chunk_index: 0
+  source_entity: RoIAlign
+  strength: 8.0
+  target_entity: Pose estimation
+- description: MobileNet-v2 is used as a backbone network.
+  source_chunk_index: 0
+  source_entity: MobileNet-v2
+  strength: 7.0
+  target_entity: Backbone network
+- description: ResNet is used as a backbone network.
+  source_chunk_index: 0
+  source_entity: ResNet
+  strength: 7.0
+  target_entity: Backbone network
+- description: The backbone network is used for feature extraction, and the extracted
+    features are then used by the head network for human detection.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Human detection
+- description: The backbone network is used for feature extraction, and the extracted
+    features are then used by the head network for pose estimation.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Pose estimation
+- description: The backbone network is used for feature extraction, and the extracted
+    features are then used by the head network for person Re-identification (Re-ID).
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Person Re-identification (Re-ID)
+- description: MobileNet-v2 is used with FPN for feature extraction.
+  source_chunk_index: 0
+  source_entity: MobileNet-v2
+  strength: 8.0
+  target_entity: Feature Pyramid Networks (FPN)
+- description: ResNet is used with FPN for feature extraction.
+  source_chunk_index: 0
+  source_entity: ResNet
+  strength: 8.0
+  target_entity: Feature Pyramid Networks (FPN)
+- description: The backbone network is used for feature extraction, which is then
+    used by the head networks for human detection.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Human detection
+- description: The backbone network is used for feature extraction, which is then
+    used by the head networks for pose estimation.
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Pose estimation
+- description: The backbone network is used for feature extraction, which is then
+    used by the head networks for person Re-identification (Re-ID).
+  source_chunk_index: 0
+  source_entity: Backbone network
+  strength: 9.0
+  target_entity: Person Re-identification (Re-ID)
+- description: The architecture is similar to Mask R-CNN, which includes human detection.
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 7.0
+  target_entity: Human detection
+- description: The architecture is similar to Mask R-CNN, which includes pose estimation.
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 7.0
+  target_entity: Pose estimation
+- description: The architecture is similar to Mask R-CNN, which includes person Re-identification
+    (Re-ID).
+  source_chunk_index: 0
+  source_entity: Mask R-CNN
+  strength: 7.0
+  target_entity: Person Re-identification (Re-ID)

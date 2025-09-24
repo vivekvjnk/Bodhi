@@ -1,0 +1,169 @@
+chunk_indices:
+- 0
+entities:
+- description: The proportion of zero-valued elements in a tensor, used to reduce
+    computation in CNNs.
+  name: Sparsity
+  source_chunk_index: 0
+  type: GENERIC
+- description: General Matrix Multiplication, a fundamental operation used in fully
+    connected layers.
+  name: GEMM
+  source_chunk_index: 0
+  type: GENERIC
+- description: Sparse Matrix and Dense Matrix Multiplication, a technique that can
+    be leveraged for fully connected layers.
+  name: SpMDM
+  source_chunk_index: 0
+  type: GENERIC
+- description: The improvement in performance, often measured in terms of throughput
+    (e.g., images per second), achieved by using sparse convolution compared to dense
+    convolution.
+  name: Speedup
+  source_chunk_index: 0
+  type: GENERIC
+- description: Floating point operations per second, a measure of computational performance.
+  name: FLOP/s
+  source_chunk_index: 0
+  type: GENERIC
+- description: A convolution operation that exploits sparsity in the weight tensor
+    to reduce computation, potentially offering speedups over dense convolution.
+  name: Sparse convolution
+  source_chunk_index: 0
+  type: method
+- description: Standard convolution operation without sparsity optimization, used
+    as a baseline for comparison with sparse convolution.
+  name: Dense convolution
+  source_chunk_index: 0
+  type: method
+- description: A type of processor where sparse convolution is shown to outperform
+    dense convolution in a wider range of sparsity.
+  name: Atom processors
+  source_chunk_index: 0
+  type: generic
+- description: Layers in a neural network that can become a bottleneck after sparse
+    convolution optimizations, and where sparsity can also be exploited.
+  name: Fully connected layers
+  source_chunk_index: 0
+  type: method
+- description: Layers in a CNN that perform convolution operations, and where sparsity
+    is applied to reduce computation.
+  name: Convolution layers
+  source_chunk_index: 0
+  type: method
+- description: The degree to which a neural network layer, particularly in convolutional
+    or fully connected layers, contains zero-valued weights. Different sparsity levels
+    can be achieved by pruning weights based on their magnitude or other criteria.
+    The text discusses how these levels impact the performance of sparse convolution.
+  name: Sparsity Levels
+  source_chunk_index: 0
+  type: GENERIC
+- description: Floating point operations per second, a measure of a computer's performance,
+    relevant to the speed of CNNs.
+  name: FLOPS
+  source_chunk_index: 0
+  type: GENERIC
+- description: The ratio of non-zero elements in the weight tensor (W) of convolutional
+    filters. A lower value of 'x' indicates higher sparsity. This proportion directly
+    affects the speedup achieved by sparse convolution.
+  name: Proportion of non-zeros in filters (x)
+  source_chunk_index: 0
+  type: GENERIC
+- description: The improvement in processing speed, often measured as a ratio, when
+    using sparse convolution compared to dense convolution. The text indicates that
+    the proportion of non-zeros in filters directly affects the final speedup.
+  name: Speedup
+  source_chunk_index: 0
+  type: GENERIC
+- description: Layers in a neural network where each neuron is connected to all neurons
+    in the previous layer. The text highlights that these layers can become a bottleneck
+    after sparse convolution optimizations in the convolutional layers.
+  name: Fully connected layers
+  source_chunk_index: 0
+  type: GENERIC
+relationships:
+- description: Sparse convolution is compared to dense convolution, with the goal
+    of achieving speedup.
+  source_chunk_index: 0
+  source_entity: Sparse convolution
+  strength: 10.0
+  target_entity: Dense convolution
+- description: The proportion of non-zeros in filters (x) directly affects the speedup
+    achieved by sparse convolution.
+  source_chunk_index: 0
+  source_entity: Proportion of non-zeros in filters (x)
+  strength: 9.0
+  target_entity: Speedup
+- description: Sparse convolution's actual FLOP/s is lower than that of dense convolution.
+  source_chunk_index: 0
+  source_entity: Sparse convolution
+  strength: 8.0
+  target_entity: FLOP/s
+- description: In Atom processors, sparse convolution outperforms dense convolution
+    in a wider range of sparsity.
+  source_chunk_index: 0
+  source_entity: Atom processors
+  strength: 8.0
+  target_entity: Sparse convolution
+- description: Fully connected layers can become a bottleneck after sparse convolution
+    optimizations.
+  source_chunk_index: 0
+  source_entity: Fully connected layers
+  strength: 7.0
+  target_entity: Sparse convolution
+- description: Fully connected layers are implemented as GEMM.
+  source_chunk_index: 0
+  source_entity: Fully connected layers
+  strength: 6.0
+  target_entity: GEMM
+- description: SpMDM can be leveraged for fully connected layers.
+  source_chunk_index: 0
+  source_entity: Fully connected layers
+  strength: 5.0
+  target_entity: SpMDM
+- description: The proportion of non-zeros in filters (x) directly affects the final
+    speedup of sparse convolution. Lower x (higher sparsity) generally leads to higher
+    speedup.
+  source_chunk_index: 0
+  source_entity: Proportion of non-zeros in filters (x)
+  strength: 9.0
+  target_entity: Speedup
+- description: Sparsity levels impact speedup. The text indicates that there is a
+    lower bound of useful sparsity, below which sparse convolution provides no speedup
+    over dense convolution.
+  source_chunk_index: 0
+  source_entity: Sparsity Levels
+  strength: 8.0
+  target_entity: Speedup
+- description: Sparse convolution's actual FLOP/s is lower than that of dense convolution.
+  source_chunk_index: 0
+  source_entity: Sparse convolution
+  strength: 7.0
+  target_entity: FLOP/s
+- description: There is a lower bound of useful sparsity for sparse convolution.
+  source_chunk_index: 0
+  source_entity: Sparsity Levels
+  strength: 8.0
+  target_entity: Sparse convolution
+- description: Sparse convolution's actual FLOP/s is lower than that of dense convolution.
+  source_chunk_index: 0
+  source_entity: Dense convolution
+  strength: 9.0
+  target_entity: FLOP/s
+- description: The proportion of non-zeros in filters (related to sparsity) directly
+    affects the speedup of sparse convolution.
+  source_chunk_index: 0
+  source_entity: Sparsity
+  strength: 9.0
+  target_entity: Sparse convolution
+- description: Sparse convolution is applied to convolution layers.
+  source_chunk_index: 0
+  source_entity: Convolution layers
+  strength: 8.0
+  target_entity: Sparse convolution
+- description: The proportion of non-zeros in filters (x) directly affects the speedup
+    of sparse convolution.
+  source_chunk_index: 0
+  source_entity: Proportion of non-zeros in filters (x)
+  strength: 9.0
+  target_entity: Speedup
