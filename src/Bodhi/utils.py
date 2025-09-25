@@ -8,7 +8,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_vertexai import ChatVertexAI
 from transformers import AutoTokenizer
 
-_GLOBAL_SEED = None
+_GLOBAL_SEED = 0
 
 def set_global_seed(seed):
     # Placeholder for setting global seed
@@ -24,11 +24,7 @@ def set_global_seed(seed):
 def get_global_seed():
     """
     Returns the currently set global seed.
-    Raises an error if the seed hasn't been set.
     """
-    if _GLOBAL_SEED is None:
-        # It's good practice to ensure the seed is explicitly set
-        raise RuntimeError("Global seed has not been explicitly set. Call set_global_seed() first.")
     return _GLOBAL_SEED
 
 

@@ -5,7 +5,7 @@ from ..utils import create_unique_trace_id
 
 from .rule_based_resolution import ResolutionRule, MERGE, NO_MATCH, DEFER
 
-OBSERVABILITY = 1
+OBSERVABILITY = 0
 
 logger = logging.getLogger(__name__)
 

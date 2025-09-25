@@ -1,0 +1,235 @@
+chunk_indices:
+- 0
+entities:
+- description: An unobserved variable in the generative process of ProfileVAE, denoted
+    by 'C', which captures essential features of the gene expression profiles.
+  name: Latent Variable
+  source_chunk_index: 0
+  type: GENERIC
+- description: The probability of observing the gene expression profile given the
+    latent variable, denoted as p_phi(X|C) for ProfileVAE.
+  name: Likelihood Function
+  source_chunk_index: 0
+  type: GENERIC
+- description: The probability distribution of the latent variable given the gene
+    expression profile, denoted as q_theta(C|X) for ProfileVAE.
+  name: Posterior Distribution
+  source_chunk_index: 0
+  type: GENERIC
+- description: A database containing gene expression profiles from cellular experiments,
+    used to collect chemically induced and target perturbation profiles.
+  name: LINCS L1000 Database
+  source_chunk_index: 0
+  type: DATASET
+- description: A component of GxVAEs that acts as a feature extractor, learning latent
+    representations from gene expression profiles.
+  name: ProfileVAE
+  source_chunk_index: 0
+  type: method
+- description: A component of GxVAEs that generates hit-like molecules, conditioned
+    on features extracted by ProfileVAE.
+  name: MolVAE
+  source_chunk_index: 0
+  type: method
+- description: A novel deep generative model for de novo molecular generation, incorporating
+    disease-related cellular environments (gene expression profiles) into the generation
+    process.
+  name: GxVAEs
+  source_chunk_index: 0
+  type: method
+- description: Biological data representing the activity of genes, used to condition
+    molecular generation in GxVAEs. Includes chemically induced, target perturbation,
+    and disease-specific profiles.
+  name: Gene Expression Profiles
+  source_chunk_index: 0
+  type: dataset
+- description: A measure of how one probability distribution diverges from a second,
+    expected probability distribution. Used in the loss function of ProfileVAE and
+    MolVAE.
+  name: KL Divergence
+  source_chunk_index: 0
+  type: generic
+- description: Gene expression profiles collected from experiments where cells are
+    treated with various molecules, sourced from the LINCS L1000 database.
+  name: Chemically Induced Profiles
+  source_chunk_index: 0
+  type: dataset
+- description: Gene expression profiles obtained by altering the activity of specific
+    biological targets, sourced from the LINCS database.
+  name: Target Perturbation Profiles
+  source_chunk_index: 0
+  type: dataset
+- description: A human breast cancer cell line used in experiments to generate chemically
+    induced gene expression profiles.
+  name: MCF7 Cell Line
+  source_chunk_index: 0
+  type: generic
+relationships:
+- description: ProfileVAE uses a latent variable C to capture essential features of
+    gene expression profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Latent Variable
+- description: ProfileVAE defines a likelihood function p_phi(X|C) for gene expression
+    profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Likelihood Function
+- description: ProfileVAE defines a posterior distribution q_theta(C|X) of the latent
+    variable given the gene expression profile.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Posterior Distribution
+- description: The loss function of ProfileVAE includes KL Divergence between the
+    posterior distribution and a prior distribution.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 8.0
+  target_entity: KL Divergence
+- description: MolVAE uses feature vectors C of extracted gene expression profiles
+    as conditions.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 9.0
+  target_entity: Gene Expression Profiles
+- description: The loss function of MolVAE includes KL Divergence between a posterior
+    distribution and a prior distribution.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 8.0
+  target_entity: KL Divergence
+- description: GxVAEs incorporates gene expression profiles into the molecular generation
+    process.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 10.0
+  target_entity: Gene Expression Profiles
+- description: GxVAEs comprises ProfileVAE as a component for feature extraction from
+    gene expression profiles.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 9.0
+  target_entity: ProfileVAE
+- description: GxVAEs comprises MolVAE for generating molecules, conditioned on features
+    from ProfileVAE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 9.0
+  target_entity: MolVAE
+- description: Chemically induced profiles were collected from the LINCS L1000 database.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 9.0
+  target_entity: LINCS L1000 Database
+- description: Gene expression profiles of MCF7 cell line treated with molecules were
+    used as chemically induced profiles.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 8.0
+  target_entity: MCF7 Cell Line
+- description: Target perturbation profiles were obtained from the LINCS database.
+  source_chunk_index: 0
+  source_entity: Target Perturbation Profiles
+  strength: 9.0
+  target_entity: LINCS L1000 Database
+- description: ProfileVAE learns latent representations from gene expression profiles.
+  source_chunk_index: 0
+  source_entity: Gene Expression Profiles
+  strength: 9.0
+  target_entity: ProfileVAE
+- description: ProfileVAE learns the marginal likelihood of gene expression profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Gene Expression Profiles
+- description: Feature vectors C of the extracted gene expression profiles are used
+    as latent variables.
+  source_chunk_index: 0
+  source_entity: Gene Expression Profiles
+  strength: 8.0
+  target_entity: Latent Variable
+- description: The feature vectors C (latent variables) of the extracted gene expression
+    profiles are used as conditions for MolVAE.
+  source_chunk_index: 0
+  source_entity: Latent Variable
+  strength: 9.0
+  target_entity: MolVAE
+- description: MolVAE aims to maximize the lower bound of the true log-marginal likelihood.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 8.0
+  target_entity: Likelihood Function
+- description: Chemically induced profiles were collected from the LINCS L1000 database.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 7.0
+  target_entity: LINCS L1000 Database
+- description: Gene expression profiles of MCF7 cell line treated with molecules were
+    used as chemically induced profiles.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 7.0
+  target_entity: MCF7 Cell Line
+- description: Target perturbation profiles were obtained from the LINCS database.
+  source_chunk_index: 0
+  source_entity: Target Perturbation Profiles
+  strength: 7.0
+  target_entity: LINCS L1000 Database
+- description: The feature vectors (latent variables) of extracted gene expression
+    profiles are used as conditions for MolVAE.
+  source_chunk_index: 0
+  source_entity: Latent Variable
+  strength: 9.0
+  target_entity: MolVAE
+- description: GxVAEs incorporates gene expression profiles into the generation process.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: Gene Expression Profiles
+- description: Target perturbation profiles were obtained from the LINCS database
+    (which is implied to be LINCS L1000 Database in context).
+  source_chunk_index: 0
+  source_entity: Target Perturbation Profiles
+  strength: 7.0
+  target_entity: LINCS L1000 Database
+- description: Gene expression profiles of MCF7 cell line treated with molecules were
+    used as chemically induced profiles.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 6.0
+  target_entity: MCF7 Cell Line
+- description: ProfileVAE generates the latent variables (C) from gene expression
+    profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Latent Variable
+- description: The latent variables (C) generated by ProfileVAE are used as conditions
+    for MolVAE.
+  source_chunk_index: 0
+  source_entity: Latent Variable
+  strength: 9.0
+  target_entity: MolVAE
+- description: GxVAEs were validated using chemically induced profiles.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 7.0
+  target_entity: Chemically Induced Profiles
+- description: GxVAEs were validated using target perturbation profiles.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 7.0
+  target_entity: Target Perturbation Profiles
+- description: Chemically induced profiles were collected from the LINCS L1000 database.
+  source_chunk_index: 0
+  source_entity: Chemically Induced Profiles
+  strength: 8.0
+  target_entity: LINCS L1000 Database
+- description: Target perturbation profiles were obtained from the LINCS database.
+  source_chunk_index: 0
+  source_entity: Target Perturbation Profiles
+  strength: 8.0
+  target_entity: LINCS L1000 Database

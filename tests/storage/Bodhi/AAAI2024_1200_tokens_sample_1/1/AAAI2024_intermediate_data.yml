@@ -1,0 +1,187 @@
+chunk_indices:
+- 0
+entities:
+- description: A novel deep generative model for de novo molecular generation that
+    incorporates disease-related cellular environments (gene expression profiles)
+    into the molecular generation process.
+  name: GxVAEs
+  source_chunk_index: 0
+  type: method
+- description: One of the two joint Variational Autoencoders (VAEs) in GxVAEs, acting
+    as a feature extractor for gene expression profiles.
+  name: ProfileVAE
+  source_chunk_index: 0
+  type: method
+- description: The second joint Variational Autoencoder (VAE) in GxVAEs, which generates
+    hit-like molecules conditioned on latent features from ProfileVAE, utilizing bidirectional
+    GRUs and non-canonical SMILES strings.
+  name: MolVAE
+  source_chunk_index: 0
+  type: method
+- description: High-dimensional biological data representing the activity of genes,
+    used by GxVAEs to inform molecular generation based on cellular environments.
+  name: Gene Expression Profiles
+  source_chunk_index: 0
+  type: dataset
+- description: Simplified Molecular Input Line Entry System, a linear notation for
+    describing the structure of chemical molecules. GxVAEs uses non-canonical SMILES
+    strings.
+  name: SMILES
+  source_chunk_index: 0
+  type: generic
+- description: A database used to collect chemically induced gene expression profiles,
+    specifically profiles of MCF7 cell line treated with various molecules.
+  name: LINCS L1000 database
+  source_chunk_index: 0
+  type: dataset
+- description: Crowd extracted expression of differential signatures database, used
+    to collect disease-specific gene expression profiles.
+  name: CREEDS database
+  source_chunk_index: 0
+  type: dataset
+- description: A state-of-the-art baseline model for molecular generation, used for
+    comparison with GxVAEs.
+  name: TRIOMPHE
+  source_chunk_index: 0
+  type: method
+- description: A state-of-the-art baseline model for molecular generation, used for
+    comparison with GxVAEs, particularly for disease reversal profiles.
+  name: DRAGONET
+  source_chunk_index: 0
+  type: method
+- description: A metric for molecular generation, referring to the ratio of chemically
+    valid molecules that can be verified in practice using tools like RDKit.
+  name: Validity
+  source_chunk_index: 0
+  type: task
+- description: A metric for molecular generation, measuring the proportion of generated
+    molecules that are distinct from each other.
+  name: Uniqueness
+  source_chunk_index: 0
+  type: task
+- description: A metric for molecular generation, assessing the extent to which generated
+    molecules are new and not present in existing datasets.
+  name: Novelty
+  source_chunk_index: 0
+  type: task
+- description: A measure of similarity between two molecular structures, used to evaluate
+    the quality and similarity of generated molecules to known ligands or approved
+    drugs.
+  name: Tanimoto Coefficient
+  source_chunk_index: 0
+  type: task
+- description: The field of using computational methods to assist in the discovery
+    and design of new drugs, which GxVAEs contributes to.
+  name: Computer-Aided Drug Discovery
+  source_chunk_index: 0
+  type: task
+relationships:
+- description: GxVAEs uses Gene Expression Profiles to generate biologically meaningful
+    molecules in the context of specific diseases.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 9.0
+  target_entity: Gene Expression Profiles
+- description: GxVAEs consists of two joint VAEs, including ProfileVAE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: ProfileVAE
+- description: GxVAEs consists of two joint VAEs, including MolVAE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: MolVAE
+- description: ProfileVAE acts as a feature extractor to extract low-dimensional feature
+    vectors from high-dimensional Gene Expression Profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 9.0
+  target_entity: Gene Expression Profiles
+- description: MolVAE is conditioned on the features of Gene Expression Profiles.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 8.0
+  target_entity: Gene Expression Profiles
+- description: MolVAE generates hit-like molecules using non-canonical SMILES strings.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 7.0
+  target_entity: SMILES
+- description: GxVAEs is compared to TRIOMPHE, a state-of-the-art baseline model,
+    and shows superior validity.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 7.0
+  target_entity: TRIOMPHE
+- description: GxVAEs is compared to DRAGONET for generating therapeutic molecules
+    using disease reversal profiles.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 7.0
+  target_entity: DRAGONET
+- description: GxVAEs demonstrates higher Validity compared to TRIOMPHE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 7.0
+  target_entity: Validity
+- description: GxVAEs generally shows higher Uniqueness compared to TRIOMPHE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 6.0
+  target_entity: Uniqueness
+- description: GxVAEs shows comparable Novelty to TRIOMPHE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 6.0
+  target_entity: Novelty
+- description: GxVAEs achieves higher Tanimoto Coefficients compared to TRIOMPHE and
+    DRAGONET.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: Tanimoto Coefficient
+- description: GxVAEs is a novel deep generative model proposed for de novo molecular
+    generation in Computer-Aided Drug Discovery.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 9.0
+  target_entity: Computer-Aided Drug Discovery
+- description: Chemically induced profiles were collected from the LINCS L1000 database.
+  source_chunk_index: 0
+  source_entity: LINCS L1000 database
+  strength: 7.0
+  target_entity: Gene Expression Profiles
+- description: Disease-specific profiles were collected from the CREEDS database.
+  source_chunk_index: 0
+  source_entity: CREEDS database
+  strength: 7.0
+  target_entity: Gene Expression Profiles
+- description: The average length and molecular weight of generated SMILES strings
+    by GxVAEs are consistent with the original validation set.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 6.0
+  target_entity: SMILES
+- description: MolVAE uses bidirectional GRUs to generate non-canonical SMILES strings.
+  source_chunk_index: 0
+  source_entity: MolVAE
+  strength: 9.0
+  target_entity: SMILES
+- description: ProfileVAE is trained using a loss function involving KL divergence
+    to learn the marginal likelihood of gene expression profiles.
+  source_chunk_index: 0
+  source_entity: ProfileVAE
+  strength: 8.0
+  target_entity: Gene Expression Profiles
+- description: GxVAEs demonstrates a Validity that is three times higher than TRIOMPHE.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: TRIOMPHE
+- description: GxVAEs achieves Tanimoto coefficients for AKT1 that are 2.7 and 2.0
+    times higher than DRAGONET.
+  source_chunk_index: 0
+  source_entity: GxVAEs
+  strength: 8.0
+  target_entity: DRAGONET

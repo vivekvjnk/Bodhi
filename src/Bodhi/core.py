@@ -53,7 +53,7 @@ class Bodhi:
         self.interm_data_path = None
         self.text_unit_path = None
         self.graph_path = None
-        self.prompt_path = config["prompt_path"]
+        self.prompt_path = config.get("prompt_path","Bodhi.prompt_engineering.bodhi")
         
         self.paths = {}
 
