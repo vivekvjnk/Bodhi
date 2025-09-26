@@ -6,7 +6,7 @@ Bodhi is an LLM based highly configurable knowledge graph extraction system with
 Bodhi is a Large Language Model (LLM)-powered, **highly configurable**, scientific knowledge graph extraction system. It features **multiple validation and feedback loops** to ensure reliability and precision.
 
 # How to use?
-Bodhi uses yaml file for configuration. Configuration files are compatible with OmegaConf. Hydra is used to orchestrate experiments of configuration ablations. 
+Bodhi uses YAML files for configuration. Configuration files are compatible with OmegaConf. Hydra is used to orchestrate experiments of configuration ablations. 
 
 ## Minimum configuration
 A config file in yaml format with following parameters
@@ -18,7 +18,7 @@ A config file in yaml format with following parameters
 fast_model: "gemini-2.5-flash-lite" 
 general_model: "gemini-2.5-flash-lite" # Used most widely across the system
 thinking_model: "gemini-2.5-pro" # Used for resolving impasses resulted from repeating loops in the system
-inference_engine: "vertexai" # Current implementation support ollama and vertexai
+inference_engine: "vertexai" # Supports Ollama and Vertexai
 
 # Storage configurations
 #----------------------------
@@ -33,12 +33,12 @@ token_limit: 300 # Text unit token length. Each source document is split into te
 # Ablation parameters
 #--------------------
 priming: True # If enabled, Bodhi will construct a priming summary from the source document and use it as a biasing context for the KG extraction
-generic_type_allowance: True # If enabled, entity type "generic" will be allowed for entities which do not belong to any of the other allowed entity types. Present implementation of Bodhi expects a dicitonary of entity types with a brief explanation for each entity type. 
+generic_type_allowance: True # If enabled, entity type "generic" will be allowed for entities which do not belong to any of the other allowed entity types. Bodhi expects a dicitonary of entity types with a brief explanation for each entity type. 
 
 # seed variable for multi sampling 
 seed: 0 # This parameter is used to set the seed variable in underlying langchain vertexai and ollama wrappers. This is also used during hydra based experiment orchestration
 ```
-- Bodhi module expects configuration in a dictionary format. It's users responsibility to prepare and load the configuraitons into the input dictionary. 
+- Bodhi module expects configuration in a dictionary format. It's the users responsibility to prepare and load the configuraitons into the input dictionary. 
     - Through this design choice, we avoided dependence on any one particular config file type. 
 
 ## Expected files and storage locations 
@@ -87,7 +87,7 @@ entity_types = {"task":"Represents a scientific or application-oriented objectiv
 ontology = {"entity_types":entity_types}
 ```
 **You must provide an ontology dictionary with allowed entity types.**
-4. Choose the source document from which knowledge graph to be extracted. Make sure the document is available under <storage_dir>/data directory
+4. Choose the source document from which knowledge graph to be extracted. Ensure the document is placed in <storage_dir>/data. For example, `tests/storage/data/AAAI2024.md`.
 ```python
 doc_path = "AAAI2024.md"
 ```
@@ -104,9 +104,9 @@ init_state = {
 # Run Bodhi extraction
 bodhi.invoke(init_state)
 ```
-
-- Results will be stored under <storage_dir>/Bodhi/doc_name_graph.yml
-- All the extraction artifacts will be stored in <storage_dir>/Bodhi
+- Primary output: <storage_dir>/Bodhi/<doc_name>_graph.yml (final knowledge graph).
+- Intermediate artifacts: Combined KG, text units, and reference-separated text.
+    - All the extraction artifacts will be stored in <storage_dir>/Bodhi
 
 # Design
 This section discusses about the design and architecture of Bodhi KG extraction system.

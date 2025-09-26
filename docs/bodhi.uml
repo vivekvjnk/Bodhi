@@ -1,0 +1,84 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+hide empty members
+
+title Bodhi Class Diagram
+
+class Bodhi {
+  - parent_trace_id: str
+  - config: DictConfig
+  - storage: Sanchayam
+  - llm: LLM
+  - similarity_model: SemanticSimilarity
+  - logger: Logger
+  - checkpointer: MemorySaver
+  - workflow: StateGraph
+  - app: Any
+  - artifacts_dir: str
+  - storage_dir: str
+  - graph_info_storage: str
+  - dedup_interm_data_path: str
+  - interm_data_path: str
+  - text_unit_path: str
+  - graph_path: str
+  - prompt_path: str
+  - paths: dict
+  - token_limit: int
+  --
+  + __init__(config: DictConfig)
+  + invoke(state: dict): Graph
+  + resolve_graph(paths: dict, intermediate_graph: dict): Graph
+  + generate_graph(source_path: str, ontology: dict): tuple
+  # save_nodes_n_relns_to_intermediate_file(entities: list, relationships: list, type: bool, chunk_index: int): void
+  # load_nodes_n_relns_from_intermediate_data(entities: list, relationships: list): tuple
+  - _generate_graph_from_dict(entities: dict, relationships: dict): Graph
+  - _update_entities(global_entities: list, new_entities: list): list
+  - _update_relationships(global_relationships: list, new_relationships: list): list
+  - _update_deduplicate_relationships(relationships: dict, deduplication_map: dict): tuple
+  - _update_deduplicate_relationships_optimized(relationships: dict, similarity_threshold: float): tuple
+}
+
+' Placeholder classes for context
+class Sanchayam {}
+class SemanticSimilarity {}
+class MemorySaver {}
+class StateGraph {}
+class LLM {}
+class Logger {}
+class DictConfig {}
+class Graph {}
+class HybridResolver {}
+class RuleBasedResolver {}
+
+' Relationships
+Bodhi *-- "1" Sanchayam : uses >
+Bodhi *-- "1" SemanticSimilarity : uses >
+Bodhi *-- "1" MemorySaver : uses >
+Bodhi *-- "1" StateGraph : uses >
+Bodhi *-- "1" LLM : uses >
+Bodhi *-- "1" Logger : uses >
+
+' Dependencies
+Bodhi ..> DictConfig : depends on
+Bodhi ..> Graph : produces
+Bodhi ..> HybridResolver : uses in method
+Bodhi ..> RuleBasedResolver : uses in method
+
+' Notes to add context
+note right of Bodhi::resolve_graph
+  This method uses instances of
+  - RuleBasedResolver
+  - HybridResolver
+  - SemanticSimilarity
+  to perform entity deduplication.
+end note
+
+note right of Bodhi::generate_graph
+  This method orchestrates the knowledge
+  graph extraction process, deciding whether
+  to generate a new graph, resolve an
+  intermediate one, or load a final one.
+end note
+
+@enduml

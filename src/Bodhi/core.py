@@ -23,6 +23,8 @@ from Sanchayam import Sanchayam
 
 from .parallel_kg_extractor import extract_knowledge_graph_parallel
 
+logger = logging.getLogger(__name__)
+
 class Bodhi:
     def __init__(self,config:DictConfig=None): # Pass base configuration
         # Langfuse
@@ -31,38 +33,15 @@ class Bodhi:
             raise ValueError(f"No config found: {config}")
         
         self.config = config
-        
         #storage 
         self.storage = Sanchayam(storage_backend=self.config["storage_backend"],storage_dir=self.config["storage_dir"])
 
-        
-        self.llm = get_llm_from_config(self.config)
-
-        model_path = "sentence-transformers/all-MiniLM-L6-v2"
-        self.similarity_model = SemanticSimilarity(model_path=model_path)
-
-        self.logger = logging.getLogger(__name__)
-
-        # For persistence
-        self.checkpointer = MemorySaver()
-
-        self.artifacts_dir = "Bodhi"
-        self.storage_dir = "data"
-        self.graph_info_storage = None
+        self.artifacts_dir = "Bodhi"        
         self.dedup_interm_data_path = None
-        self.interm_data_path = None
-        self.text_unit_path = None
-        self.graph_path = None
-        self.prompt_path = config.get("prompt_path","Bodhi.prompt_engineering.bodhi")
-        
+        self.interm_data_path = None # Need to review code related to this var
+    
+        self.prompt_path = config.get("prompt_path","Bodhi.prompt_engineering.bodhi")    
         self.paths = {}
-
-        self.token_limit = config["token_limit"]
-
-        # graph related 
-        self.workflow = StateGraph(BodhiState,input=BodhiInputState,output=BodhiState)
-        self.app = None
-        # self._setup_graph()
 
     def invoke(self,state:dict):
 
@@ -76,14 +55,14 @@ class Bodhi:
             return resolved_graph
         elif goto == "END":
             # Load the graph from the file
-            self.logger.info(f"Loading resolved graph from {self.paths.get('graph_path')}")
+            logger.info(f"Loading resolved graph from {self.paths.get('graph_path')}")
             f = self.storage.read_file(path=self.paths.get("graph_path"))
             # Deserialize the graph
             serial_netx_graph = yaml.safe_load(f)
-            self.logger.debug(f"Deserialized graph: {serial_netx_graph}")
+            logger.debug(f"Deserialized graph: {serial_netx_graph}")
             # Convert to NetworkX graph
             resolved_graph = nx.node_link_graph(serial_netx_graph)
-            self.logger.info(f"Resolved graph loaded successfully from {self.paths.get('graph_path')}")
+            logger.info(f"Resolved graph loaded successfully from {self.paths.get('graph_path')}")
 
             if not resolved_graph:
                 raise ValueError(f"Resolved graph file {self.paths.get('graph_path')} is empty. Cannot proceed.")
@@ -100,30 +79,30 @@ class Bodhi:
         2. Generate networkX graph from the optimized entity-relation information
         '''
         node_name = "resolve_graph"
-        self.logger.info(f"\n---NODE: {node_name}---")
+        logger.info(f"\n---NODE: {node_name}---")
         dedup_interm_data_path = paths.get("dedup_interm_data_path")
         # Check if deduplicated graph is already available 
         if(self.storage.file_exists(path=dedup_interm_data_path)):
             dd_file = self.storage.read_file(path=dedup_interm_data_path)
-            self.logger.info(f"Found deduplication file.Loading..")
+            logger.info(f"Found deduplication file.Loading..")
             dd_content = yaml.load(dd_file,Loader=yaml.FullLoader)
             deduplicated_entities = dd_content['entities']
             updated_relationships = dd_content['relationships']
         else:
             # TODO : Replace following state preservation logic with langgraph persistence 
-            self.logger.info(f"Deduplication pipeline started")
+            logger.info(f"Deduplication pipeline started")
             if intermediate_graph is None:
                 entities,relations = self.load_nodes_n_relns_from_intermediate_data()
             else:
                 # Convert the intermediate graph to entities and relationships
-                self.logger.info(f"Converting intermediate graph to entities and relationships")
+                logger.info(f"Converting intermediate graph to entities and relationships")
                 entities, relations = self.load_nodes_n_relns_from_intermediate_data(
                     entities=intermediate_graph.get("entities", []),
                     relationships=intermediate_graph.get("relationships", []),
                 ) 
             # log first few entities and relationships
-            # self.logger.debug(f"Entities:\n {intermediate_graph.get("entities", [])}\n{entities}")
-            # self.logger.debug(f"Relationships:\n{intermediate_graph.get("relationships", [])}\n {relations}")
+            # logger.debug(f"Entities:\n {intermediate_graph.get("entities", [])}\n{entities}")
+            # logger.debug(f"Relationships:\n{intermediate_graph.get("relationships", [])}\n {relations}")
             #---------------Deduplication logic-Begin-------------#
             # TODO: replace with hybridresolver
             resolution_rules = [
@@ -139,20 +118,19 @@ class Bodhi:
             resolver = HybridResolver(
                 system1_resolver=system1_engine, similarity_model=similarity_model
             )
-            # Initialize deduplicator
-            # deduplicator = EntityDeduplicator(self.similarity_model)
+            
             deduplicated_entities, deduplication_map = resolver.resolve(entities)
-            self.logger.info(f"Deduplicated entities:\n {deduplicated_entities}")
+            logger.info(f"Deduplicated entities:\n {deduplicated_entities}")
             updated_relationships, relationship_updates = self._update_deduplicate_relationships(relationships=relations,deduplication_map=deduplication_map)
             #---------------Deduplication logic-End-------------#
             
-            # self.logger.debug(f"Deduplicated relationships:\n {updated_relationships}")
+            # logger.debug(f"Deduplicated relationships:\n {updated_relationships}")
             #---------------<source>_dd_intermediate_data.yml-Begin-------------#
             self.save_nodes_n_relns_to_intermediate_file(deduplicated_entities,
                                                 updated_relationships,type=False)
             
 
-            self.logger.info(f"Deduplication pipeline end. Saved to intermediate file.")
+            logger.info(f"Deduplication pipeline end. Saved to intermediate file.")
         #---------------<source>_dd_intermediate_data.yml-End---------------#
         
         nx_graph = self._generate_graph_from_dict(deduplicated_entities,updated_relationships)
@@ -188,7 +166,7 @@ class Bodhi:
 
         # Check if resolved_intermediate_graph exists in storage
         if self.storage.file_exists(path= self.paths.get("graph_path")):
-            self.logger.info(f"Found final graph:{self.paths.get("graph_path")}\n...")
+            logger.info(f"Found final graph:{self.paths.get("graph_path")}\n...")
             f = self.storage.read_file(path=self.paths.get("graph_path"))
             resolved_graph = yaml.safe_load(f)
             if not resolved_graph:
@@ -197,7 +175,7 @@ class Bodhi:
             goto = "END"
 
         elif self.storage.file_exists(path= self.paths.get("interm_data_path")):
-            self.logger.info(f"Found combined intermediate file:{self.paths.get("interm_data_path")}\n. Proceeding with graph resolution..")
+            logger.info(f"Found combined intermediate file:{self.paths.get("interm_data_path")}\n. Proceeding with graph resolution..")
             # Load the intermediate graph
             f = self.storage.read_file(path=self.paths.get("interm_data_path"))
             intermediate_graph = yaml.safe_load(f)
@@ -206,7 +184,7 @@ class Bodhi:
             goto = "resolve_graph"
         
         else:
-            self.logger.info(f"Generating graph for source: {source_name}")
+            logger.info(f"Generating graph for source: {source_name}")
             intermediate_graph = extract_knowledge_graph_parallel(
                 storage=self.storage,
                 config=self.config,
@@ -247,7 +225,7 @@ class Bodhi:
                 existing_data = yaml.safe_load(f) or {}
 
             except FileNotFoundError:
-                self.logger.error(f"File doesn't exist: {file_path}. Creating file..")
+                logger.error(f"File doesn't exist: {file_path}. Creating file..")
                 existing_data = {}
 
             if chunk_index is not None: # Execute this before deduplication 
@@ -283,10 +261,10 @@ class Bodhi:
             self.storage.save_file(path=file_path,
                                     data=intermediate_data)
             
-            self.logger.info(f"Nodes & relations saved to {file_path}")
+            logger.info(f"Nodes & relations saved to {file_path}")
         
         except Exception as e:
-            self.logger.error(f"An error occurred while saving data: {e}")
+            logger.error(f"An error occurred while saving data: {e}")
     
     def load_nodes_n_relns_from_intermediate_data(self,entities=None, relationships=None):
         """
@@ -304,7 +282,7 @@ class Bodhi:
         try:
             data = {}
             if entities and relationships:
-                self.logger.info(f"Using provided entities and relationships.")
+                logger.info(f"Using provided entities and relationships.")
                 data = {
                     "entities": entities,
                     "relationships": relationships
@@ -428,7 +406,7 @@ class Bodhi:
             # Add new entity if not a duplicate
             if not is_duplicate:
                 global_entities['entities'].append(new_entity)
-        self.logger.info(f"\n--final entities after update entities--\n{global_entities}\n")
+        logger.info(f"\n--final entities after update entities--\n{global_entities}\n")
         return global_entities
 
     def _update_relationships(self,global_relationships, new_relationships):
@@ -454,7 +432,7 @@ class Bodhi:
             # Add new relationship if not a duplicate
             if not is_duplicate:
                 global_relationships.append(new_relationship)
-        self.logger.info(f"\n--final relationships after update--\n{global_relationships}\n")
+        logger.info(f"\n--final relationships after update--\n{global_relationships}\n")
         return global_relationships
 
     def _update_deduplicate_relationships(self,relationships, deduplication_map):
