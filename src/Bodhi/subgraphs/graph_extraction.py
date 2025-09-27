@@ -7,12 +7,13 @@ import yaml
 from heimdall import heimdall_graph
 
 from ..prompt_engineering.prompt_parser import parse_prompts
-
 from ..states.bodhi import BodhiState,EntityExtractionOutput, EntityValidationFeedback, RelationshipExtractionOutput
+from ..utils import save_nodes_n_relns_to_intermediate_file
+
 prompt_dictionary = {}
 
 # --- 3. Extraction Subgraph for Workers ---
-def _create_extraction_subgraph(prompt_path) -> StateGraph:
+def create_extraction_subgraph(prompt_path) -> StateGraph:
     """
     Creates a new LangGraph instance for the core extraction pipeline.
     This subgraph processes ONE text unit at a time.
@@ -129,9 +130,9 @@ def extract_graph(state) -> Command[Literal[END,"extract_entities"]]:
         
         save_nodes_n_relns_to_intermediate_file(file_path=interm_data_path,
                                                 entities=loc_state['entities']['entities'],
-                                                relationships=loc_state['relationships'],storage=storage,logger=logger,
-                                                type=True,
-                                                chunk_index=loc_state['chunk_index']
+                                                relationships=loc_state['relationships'],
+                                                chunk_index=loc_state['chunk_index'],
+                                                storage=storage
                                                 )
         logger.info(f"---NODE: {node_name}---INFO: All the text units are processed and saved. Going to END---")
         goto = END 
@@ -145,9 +146,8 @@ def extract_graph(state) -> Command[Literal[END,"extract_entities"]]:
         save_nodes_n_relns_to_intermediate_file(file_path=interm_data_path,
                                                 entities=loc_state['entities']['entities'],
                                                 relationships=loc_state['relationships'],
-                                                storage=storage,logger=logger,
-                                                type=True,
-                                                chunk_index=loc_state['chunk_index']
+                                                chunk_index=loc_state['chunk_index'],
+                                                storage=storage
                                                 )
         # Reset the relationships and entitites state variables
         loc_state['entities'] = []
@@ -534,66 +534,3 @@ def _update_relationships(global_relationships, new_relationships,logger):
             global_relationships.append(new_relationship)
     logger.info(f"\n--final relationships after update--\n{global_relationships}\n")
     return global_relationships
-
-def save_nodes_n_relns_to_intermediate_file(file_path,entities, relationships,storage,logger,type=False,chunk_index=None):
-    """
-    Saves extracted entities/nodes and relationships to a YAML file.
-    
-    Args:
-        entities (list of dict): A list of entity dictionaries in the specified format.
-        relationships (list of dict): A list of relationship dictionaries in the specified format.
-        file_path (str): Path to the YAML file where data will be stored.
-        type (bool): Flag to decide the information type, deduplicated or just intermediate.
-    Notes:
-        file_path = artifacts/graph_extraction/<file_name>_intermediate_data.yml
-    """
-    
-    try:
-        # Check if file exists and load existing data if it does
-        try:
-            f = storage.read_file(path= file_path)
-            existing_data = yaml.safe_load(f) or {}
-
-        except FileNotFoundError:
-            logger.error(f"File doesn't exist: {file_path}. Creating file..")
-            existing_data = {}
-
-        if chunk_index is not None: # Execute this before deduplication 
-            # add new field in each entity dictionary to store source chunk index
-            for entity in entities:
-                if "source_chunk_index" not in entity:
-                    entity["source_chunk_index"] = chunk_index 
-            # add new field in each relationship dictionary to store source chunk index
-            for relationship in relationships:  
-                if "source_chunk_index" not in relationship:
-                    relationship["source_chunk_index"] = chunk_index
-        
-        # Merge new data with existing data
-        if "entities" in existing_data:
-            existing_data["entities"].extend(entities)
-        else:
-            existing_data["entities"] = entities
-
-        if "relationships" in existing_data:
-            existing_data["relationships"].extend(relationships)
-        else:
-            existing_data["relationships"] = relationships
-
-        # Save chunk indices to the intermediate_data.yml file
-        if(type)&(chunk_index is not None):
-            if "chunk_indices" in existing_data:
-                existing_data["chunk_indices"].append(chunk_index)
-            else:
-                existing_data["chunk_indices"] = [chunk_index]
-
-        # Write updated data back to the file
-        intermediate_data = b"".join(s.encode('utf-8') for s in yaml.dump(existing_data)) # convert to bytes
-        storage.save_file(path=file_path,
-                                data=intermediate_data)
-        
-        logger.info(f"Nodes & relations saved to {file_path}")
-    
-    except Exception as e:
-        logger.error("An error occurred while saving data", exc_info=True)
-        raise e
-

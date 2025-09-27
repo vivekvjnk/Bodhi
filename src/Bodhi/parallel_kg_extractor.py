@@ -7,7 +7,7 @@ from omegaconf import DictConfig
 
 from .states.bodhi import BodhiGraphMetadata,BodhiState
 from .structured_text_detection.structured_text_detection import evaluate_text_units
-from .subgraphs.graph_extraction import _create_extraction_subgraph
+from .subgraphs.graph_extraction import create_extraction_subgraph
 
 from .utils import get_llm_from_config, estimate_tokens
 from Sanchayam import Sanchayam
@@ -135,9 +135,9 @@ def extract_knowledge_graph_parallel(
             raise FileNotFoundError(f"Source document does not exist at the expected path: {source_document_path}")
 
     # --- 3. Map Phase: Parallel Processing with Threads ---
-    graph = _create_extraction_subgraph(prompt_path=paths.get("prompt_path"))
+    kg_extraction_graph = create_extraction_subgraph(prompt_path=paths.get("prompt_path"))
 
-    def invoke_graph_in_thread(graph, thread_id, text_unit, parent_trace_id, llm,thinking_llm, storage,priming_summary=None):
+    def invoke_graph_in_thread(kg_extraction_graph, thread_id, text_unit, parent_trace_id, llm,thinking_llm, storage,priming_summary=None):
         """Function executed by each thread to process its chunk of text."""
        
         thread_logger = logging.getLogger(f"Thread {thread_id}")
@@ -167,7 +167,7 @@ def extract_knowledge_graph_parallel(
             metadata=metadata
         )
         thread_start_time = time.time()
-        graph.invoke(input=state, config={"recursion_limit": 10000})
+        kg_extraction_graph.invoke(input=state, config={"recursion_limit": config.get("graph_recursion_limit",1000)})
         thread_end_time = time.time()
         elapsed_time = thread_end_time - thread_start_time
 
@@ -214,7 +214,7 @@ def extract_knowledge_graph_parallel(
 
         thread = threading.Thread(
             target=invoke_graph_in_thread,
-            args=(graph, i, thread_text_chunk, parent_trace_id, llm,thinking_llm, storage,text_units_n_summary["summary"])
+            args=(kg_extraction_graph, i, thread_text_chunk, parent_trace_id, llm,thinking_llm, storage,text_units_n_summary["summary"])
         )
         threads.append(thread)
         thread.start()

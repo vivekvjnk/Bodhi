@@ -15,7 +15,7 @@ from langgraph.graph import StateGraph
 from .states.bodhi import BodhiState,BodhiInputState
 from .resolution.entity_resolution import HybridResolver,RuleBasedResolver
 from .resolution.resolution_rules import NameAndDescriptionRule
-from .utils import get_llm_from_config, harmonic_mean, create_unique_trace_id,SemanticSimilarity
+from .utils import harmonic_mean, create_unique_trace_id,SemanticSimilarity,save_nodes_n_relns_to_intermediate_file
 from .structured_text_detection.reference_detector import isolate_references_section
 
 # Storage
@@ -126,9 +126,12 @@ class Bodhi:
             
             # logger.debug(f"Deduplicated relationships:\n {updated_relationships}")
             #---------------<source>_dd_intermediate_data.yml-Begin-------------#
-            self.save_nodes_n_relns_to_intermediate_file(deduplicated_entities,
-                                                updated_relationships,type=False)
-            
+            # self.save_nodes_n_relns_to_intermediate_file(deduplicated_entities,
+            #                                     updated_relationships,type=False)
+            save_nodes_n_relns_to_intermediate_file(file_path=paths.get("dedup_interm_data_path"),
+                                                entities=deduplicated_entities,
+                                                relationships=updated_relationships,
+                                                storage=self.storage)
 
             logger.info(f"Deduplication pipeline end. Saved to intermediate file.")
         #---------------<source>_dd_intermediate_data.yml-End---------------#
@@ -199,73 +202,7 @@ class Bodhi:
         return intermediate_graph, goto
 
     #---------------Support functions-Begin-------------#
-    #---------------Intermediate file handling-Begin-------------#
-    def save_nodes_n_relns_to_intermediate_file(self,entities, relationships,type=False,chunk_index=None):
-        """
-        Saves extracted entities/nodes and relationships to a YAML file.
-        
-        Args:
-            entities (list of dict): A list of entity dictionaries in the specified format.
-            relationships (list of dict): A list of relationship dictionaries in the specified format.
-            file_path (str): Path to the YAML file where data will be stored.
-            type (bool): Flag to decide the information type, deduplicated or just intermediate.
-        Notes:
-            file_path = artifacts/graph_extraction/<file_name>_intermediate_data.yml
-        """
-        
-        try:
-            # TODO : Need to revise the type logic later. 
-            if(type): # type = 1 => just intermediate data 
-                file_path = self.interm_data_path
-            else:    
-                file_path = self.dedup_interm_data_path
-            # Check if file exists and load existing data if it does
-            try:
-                f = self.storage.read_file(path= file_path)
-                existing_data = yaml.safe_load(f) or {}
-
-            except FileNotFoundError:
-                logger.error(f"File doesn't exist: {file_path}. Creating file..")
-                existing_data = {}
-
-            if chunk_index is not None: # Execute this before deduplication 
-                # add new field in each entity dictionary to store source chunk index
-                for entity in entities:
-                    if "source_chunk_index" not in entity:
-                        entity["source_chunk_index"] = chunk_index 
-                # add new field in each relationship dictionary to store source chunk index
-                for relationship in relationships:  
-                    if "source_chunk_index" not in relationship:
-                        relationship["source_chunk_index"] = chunk_index
-            
-            # Merge new data with existing data
-            if "entities" in existing_data:
-                existing_data["entities"].extend(entities)
-            else:
-                existing_data["entities"] = entities
-
-            if "relationships" in existing_data:
-                existing_data["relationships"].extend(relationships)
-            else:
-                existing_data["relationships"] = relationships
-
-            # Save chunk indices to the intermediate_data.yml file
-            if(type)&(chunk_index is not None):
-                if "chunk_indices" in existing_data:
-                    existing_data["chunk_indices"].append(chunk_index)
-                else:
-                    existing_data["chunk_indices"] = [chunk_index]
-
-            # Write updated data back to the file
-            intermediate_data = b"".join(s.encode('utf-8') for s in yaml.dump(existing_data)) # convert to bytes
-            self.storage.save_file(path=file_path,
-                                    data=intermediate_data)
-            
-            logger.info(f"Nodes & relations saved to {file_path}")
-        
-        except Exception as e:
-            logger.error(f"An error occurred while saving data: {e}")
-    
+    #---------------Intermediate file handling-Begin-------------#    
     def load_nodes_n_relns_from_intermediate_data(self,entities=None, relationships=None):
         """
         Loads entities and relationships from a YAML file into separate dictionaries.

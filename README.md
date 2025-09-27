@@ -110,3 +110,17 @@ bodhi.invoke(init_state)
 
 # Design
 This section discusses about the design and architecture of Bodhi KG extraction system.
+
+## Major design features
+- Multi-threaded 
+- Modular 
+- Persistent 
+- Rigorous through validation loops
+    - Heimdall for structured output validation
+- Deduplication
+    - Long distance relationship capture
+    - Coherent entity description
+
+- Bodhi uses Langgraph framework for orchestrating KG extraction process.
+- Input and output of `kg_extraction_graph` follows `BodhiState` schema.
+    - In LangGraph, **state** serves as the message schema in a message-passing paradigm. Both the input and output of a LangGraph graph are instances of this state, ensuring that all nodes communicate through a shared, typed message structure.

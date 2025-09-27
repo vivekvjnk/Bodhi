@@ -9,6 +9,7 @@ from langchain_google_vertexai import ChatVertexAI
 from transformers import AutoTokenizer
 
 _GLOBAL_SEED = 0
+logger = logging.getLogger(__name__)
 
 def set_global_seed(seed):
     # Placeholder for setting global seed
@@ -180,7 +181,7 @@ def estimate_tokens(text: str, method: str = "hf", **kwargs) -> int:
         - The token count may differ across methods due to variations in tokenization algorithms.
         - If the input text is empty or poorly formatted, the token count may be zero, triggering a warning.
     """
-    logging.info(f"{inspect.stack()[1].filename}:{inspect.stack()[1].lineno}:Estimating tokens using {method} method.")
+    logger.info(f"{inspect.stack()[1].filename}:{inspect.stack()[1].lineno}:Estimating tokens using {method} method.")
     if method == "hf":
         token_count = estimate_tokens_hf(text, **kwargs)
     elif method == "spm":
@@ -190,8 +191,8 @@ def estimate_tokens(text: str, method: str = "hf", **kwargs) -> int:
     else:
         raise ValueError(f"Unsupported tokenization method: {method}")
     if(token_count==0):
-        logging.warning(f"Zero token count for following chunk:\n{text}\n")
-    logging.info(f"Token count: {token_count}")
+        logger.warning(f"Zero token count for following chunk:\n{text}\n")
+    logger.info(f"Token count: {token_count}")
     return token_count
 
 def estimate_tokens_hf_batch(text_list: list, model_name: str = "Qwen/Qwen2.5-Coder-14B") -> dict:
@@ -215,7 +216,7 @@ def estimate_tokens_hf_batch(text_list: list, model_name: str = "Qwen/Qwen2.5-Co
         token_counts = {}
         for text, ids in zip(text_list, input_ids):
             token_counts[text] = len(ids)
-        logging.info(f"Batch token estimation (hf) complete for {len(text_list)} strings.")
+        logger.info(f"Batch token estimation (hf) complete for {len(text_list)} strings.")
         return token_counts
     except Exception as e:
         raise e
@@ -387,3 +388,74 @@ def format_dict_to_markdown(data, level=1, ign_keys=None):
 def create_unique_trace_id():
     """Generate a unique trace ID."""
     return str(uuid.uuid4())
+
+
+def save_nodes_n_relns_to_intermediate_file(file_path,entities, relationships,storage,chunk_index=None):
+    """
+    Saves extracted entities/nodes and relationships to a YAML file.
+    
+    Args:
+        entities (list of dict): A list of entity dictionaries in the specified format.
+        relationships (list of dict): A list of relationship dictionaries in the specified format.
+        file_path (str): Path to the YAML file where data will be stored.
+        type (bool): Flag to decide the information type, deduplicated or just intermediate.
+    Notes:
+        file_path = artifacts/graph_extraction/<file_name>_intermediate_data.yml
+    """
+    
+    try:
+        logger.info(f"Attempting to save entities and relationships to {file_path}")
+        # Check if file exists and load existing data if it does
+        try:
+            f = storage.read_file(path=file_path)
+            existing_data = yaml.safe_load(f) or {}
+            logger.debug(f"Loaded existing data from {file_path}")
+        except FileNotFoundError:
+            logger.warning(f"File doesn't exist: {file_path}. Creating file..")
+            existing_data = {}
+
+        if chunk_index is not None:  # Execute this before deduplication 
+            logger.debug(f"Adding source_chunk_index={chunk_index} to entities and relationships")
+            # add new field in each entity dictionary to store source chunk index
+            for entity in entities:
+                if "source_chunk_index" not in entity:
+                    entity["source_chunk_index"] = chunk_index 
+            # add new field in each relationship dictionary to store source chunk index
+            for relationship in relationships:  
+                if "source_chunk_index" not in relationship:
+                    relationship["source_chunk_index"] = chunk_index
+
+        # Merge new data with existing data
+        if "entities" in existing_data:
+            logger.debug(f"Extending existing entities with {len(entities)} new entities")
+            existing_data["entities"].extend(entities)
+        else:
+            logger.debug(f"Creating new entities list with {len(entities)} entities")
+            existing_data["entities"] = entities
+
+        if "relationships" in existing_data:
+            logger.debug(f"Extending existing relationships with {len(relationships)} new relationships")
+            existing_data["relationships"].extend(relationships)
+        else:
+            logger.debug(f"Creating new relationships list with {len(relationships)} relationships")
+            existing_data["relationships"] = relationships
+
+        # Save chunk indices to the intermediate_data.yml file
+        if (chunk_index is not None):
+            if "chunk_indices" in existing_data:
+                logger.debug(f"Appending chunk_index {chunk_index} to existing chunk_indices")
+                existing_data["chunk_indices"].append(chunk_index)
+            else:
+                logger.debug(f"Creating new chunk_indices list with {chunk_index}")
+                existing_data["chunk_indices"] = [chunk_index]
+
+        # Write updated data back to the file
+        logger.info(f"Writing updated data to {file_path}")
+        intermediate_data = b"".join(s.encode('utf-8') for s in yaml.dump(existing_data))  # convert to bytes
+        storage.save_file(path=file_path, data=intermediate_data)
+
+        logger.debug(f"Nodes & relations saved to {file_path}")
+
+    except Exception as e:
+        logger.error("An error occurred while saving data", exc_info=True)
+        raise e
