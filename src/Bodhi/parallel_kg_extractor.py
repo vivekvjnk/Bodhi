@@ -12,6 +12,8 @@ from .subgraphs.graph_extraction import create_extraction_subgraph
 from .utils import get_llm_from_config, estimate_tokens
 from Sanchayam import Sanchayam
 
+logger = logging.getLogger(__name__)
+
 def extract_knowledge_graph_parallel(
     paths: dict,
     storage: Sanchayam,
@@ -62,7 +64,6 @@ def extract_knowledge_graph_parallel(
     llm = get_llm_from_config(config)
     thinking_llm = get_llm_from_config(config,model_type="thinking")
 
-    logger = logging.getLogger(__name__)
     
     logger.info(f"Starting parallel graph extraction for source: {paths.get("source")}")
 
@@ -83,6 +84,7 @@ def extract_knowledge_graph_parallel(
                     text_units[i] = unit["text_unit"]
             
     else:
+        """--- 1. Preprocessing ---"""
         logger.info("No pre-existing text units found. Extracting from source document.")
         source_document_path = f"{data_dir}/{paths.get("source_path")}"
 
@@ -91,22 +93,38 @@ def extract_knowledge_graph_parallel(
             
             ref_sep_raw_text_path = paths.get("ref_separated_raw_text_path")
             raw_text_path = paths.get("raw_text_path")
-            # Call the provided function to perform the extraction
+            """
+            1.1 Text extraction and chunking
+            |-- Convert source to text
+            |  |-- If source document is in pdf format, the callback function uses pymupdf4llm package to extract text from the pdf file.
+            |  |-- If source document is already in some text format(.md,.txt,.yml etc) load the file. 
+            |-- Then convert the text document into chunks based on token limit
+            |  |-- We use spacy to identify sentence boundaries. Text chunks are extracted according to the sentence boundaries. This helps to reduce meaningless fragmentation of sentences across chunks.
+            |-- Text extraction and chunking is designed as an injectable dependency(callback) function.
+            |  |-- Easy to integrate better/different text extraction/chunking interface. Only constraint is to maintain inputs and outputs of the callback.
+            """
+            # Call the provided function to perform text extraction and chunking
             extraction_results = text_extraction_func(file_path=absolute_file_path,token_limit=config["token_limit"])
             
             text_units = extraction_results.get('text_units', [])
             raw_text = extraction_results.get('raw_text', "")
             ref_separated_raw_text = extraction_results.get("ref_separated_raw_text")
 
+            """
+            1.2 Priming
+            |-- Knowledge Graph Priming Process, is designed to generate a concise, domain-specific Priming Summary from a source document excerpt. This summary acts as a foundational, high-fidelity contextual guide for the downstream Entity and Relationship extractors, focusing on core terminology, technical definitions, and inherent structural connections to ensure consistent entity typing and accurate relationship linking across the entire document.
+            """
             # now generate a concise summary about the source 
             priming_llm = get_llm_from_config(config=config,model_type="generic")
-
-            summary = _generate_priming_summary(logger=logger,llm=priming_llm,text_units=text_units,token_limit=10000)
+            summary = _generate_priming_summary(llm=priming_llm,text_units=text_units,token_limit=2000)
             
-            
+            """
+            1.3 Outlier text unit summarization
+            |-- Identify text units with high cognitive complexity/highly structured data. Summarize them using LLM. Store this summary instead of raw text units in the text_units dictionary.
+            """
             # find outlier text units 
             outlier_text_units = evaluate_text_units(text_units=text_units)
-            text_unit_with_summaries = _generate_final_text_units(text_units,outlier_text_units,logger=logger,llm=llm)
+            text_unit_with_summaries = _generate_final_text_units(text_units,outlier_text_units,llm=llm)
             for i,unit in text_unit_with_summaries.items():
                 if unit["summary"] is not None:
                     text_units[i] = unit["summary"]
@@ -133,8 +151,20 @@ def extract_knowledge_graph_parallel(
             logger.info(f"Extracted and saved {len(text_units)} text units to {text_unit_path}")
         else:
             raise FileNotFoundError(f"Source document does not exist at the expected path: {source_document_path}")
-
-    # --- 3. Map Phase: Parallel Processing with Threads ---
+    """
+    2. Parallel KG extraction
+    |-- 2.1 Map
+    |-- 2.2 kg_extraction_graph threads
+    |-- 2.3 Reduce
+    """
+    
+    """
+    2.2.1 kg_extraction_graph thread function
+    |-- invoke_graph_in_thread functions is shared between all the threads
+    |-- Prepares langgraph state and metadata. Then invokes the kg_extraction_graph callback to extract knowledge graph. 
+    |   |-- kg_extraction_graph is implemented as a callback for modularity. 
+        |-- Given the inputs and outputs remain consistent, kg_extraction_graph function implementation can be altered without affecting the overall system. This is implemented in graph_extraction.py
+    """
     kg_extraction_graph = create_extraction_subgraph(prompt_path=paths.get("prompt_path"))
 
     def invoke_graph_in_thread(kg_extraction_graph, thread_id, text_unit, parent_trace_id, llm,thinking_llm, storage,priming_summary=None):
@@ -173,6 +203,14 @@ def extract_knowledge_graph_parallel(
 
         thread_logger.info(f"===Thread-{thread_id}===\nTotal number of chunks processed : {len(text_unit)}\nTotal time taken for extraction : {elapsed_time}\n")
 
+    """
+    2.1 Map 
+    |-- Allocate minimum number of text chunks uniformly across the threads. 
+    |-- If total number of text chunks is is not a multiplier of number of threads, remainder is uniformly distributed across first n threads.
+    |-- The system is observed to operate faster with minimum number of text units per thread
+    |-- To maximize throughput, increase the number of threads up to the limit imposed by the LLM rate limiter and host system capabilities. This action will naturally reduce the number of chunks processed per thread.
+    |-- NOTE: We use 18 threads. This limit is derived from the rate limits imposed by Vertex AI, and empirical testing showed marginal throughput gain beyond this number is insignificant.
+    """
     threads = []
     # check if number of chunks is less than maximum number of threads. 
     # if yes, then set number of threads to number of chunks. Otherwise, set it to maximum number of threads
@@ -195,6 +233,11 @@ def extract_knowledge_graph_parallel(
         f" Chunks per thread: {number_of_chunks_per_thread}"
     )
 
+    """
+    2.2.2 KG extraction - Execution
+    |-- For now we use custom thread orchestration instead of high level modules like Joblib
+    |   |-- KG extraction process of each text unit is expected to take more or less similar time (Each text unit is of similar token length.)
+    """
     current_index = 0  # Track the current index in the text_units list
     for i in range(num_threads):
         # 1. Determine the size for this specific thread.
@@ -214,7 +257,13 @@ def extract_knowledge_graph_parallel(
 
         thread = threading.Thread(
             target=invoke_graph_in_thread,
-            args=(kg_extraction_graph, i, thread_text_chunk, parent_trace_id, llm,thinking_llm, storage,text_units_n_summary["summary"])
+            args=(kg_extraction_graph, 
+                  i, 
+                  thread_text_chunk, 
+                  parent_trace_id, 
+                  llm,thinking_llm, 
+                  storage,
+                  text_units_n_summary["summary"])
         )
         threads.append(thread)
         thread.start()
@@ -223,8 +272,17 @@ def extract_knowledge_graph_parallel(
         thread.join()
 
     logger.info("All mapping threads have finished processing. Now combining intermediate files...")
+    """
+    2.3 Reduce 
+    |-- KG extraction step saves independent intermediate files in YAML format. 
+    |-- _reduce_intermediate_files function read each of these files and combine them into one YAML file.
+    |-- Output of this step is a YAML file stored at a predefined location
+    """
     # --- 4. Reduce Phase: Combine Intermediate Files ---
-    intermediate_graph= reduce_intermediate_files(paths=paths,storage=storage, num_threads=num_threads, number_of_chunks_per_thread=number_of_chunks_per_thread, logger=logger)
+    intermediate_graph= _reduce_intermediate_files(paths=paths,
+                                                  storage=storage, 
+                                                  num_threads=num_threads,
+                                                  number_of_chunks_per_thread=number_of_chunks_per_thread)
 
     # log intermediate graph as debug information
     
@@ -252,7 +310,6 @@ def _generate_priming_summary(
     text_units: List[str],
     token_limit: int,
     llm,
-    logger,
     summary_token_limit=500
     ) -> str:
     """
@@ -283,10 +340,8 @@ The following text is an excerpt from the document.
 
 Your task:
 - Create a concise summary (≤ {summary_token_limit} tokens) capturing key domain concepts.
-- The summary should be suitable as a priming context for an AI system (Bodhi)
-that will later extract entities and relationships from the rest of the document.
-- Focus on terminology, technical definitions, and structural connections that
-will guide consistent entity type identification and relationship linking.
+- The summary should be suitable as a priming context for an AI system (Bodhi) that will later extract entities and relationships from the rest of the document.
+- Focus on terminology, technical definitions, and structural connections that will guide consistent entity type identification and relationship linking.
 
 Text excerpt:
 \"\"\"{combined_text.strip()}\"\"\"
@@ -294,19 +349,17 @@ Text excerpt:
 
     # Step 3: Get response from LLM
     response = llm.invoke(prompt)
-    logger.info(f"Concise summary: \n{response.content}\n")
+    logger.info(f"Priming summary: \n{response.content}\n")
     return response.content
 
 def _generate_final_text_units(text_units,
                                outlier_text_units,
-                               logger,
                                llm,
                                token_limit=500):
     outlier_indices = [item["index"] for item in outlier_text_units if item["is_structured"]==True]
     logger.info(f"outlier indices : {outlier_indices}")
     outlier_text_unit_dict = {i:unit for i,unit in enumerate(text_units) if i in outlier_indices}
     summarized_outlier_units = _generate_text_unit_summary(text_units=outlier_text_unit_dict,
-                                                           logger=logger,
                                                            llm=llm,
                                                            token_limit=token_limit)
     summarized_outlier_units_dict = {}
@@ -318,7 +371,6 @@ def _generate_final_text_units(text_units,
 def _generate_text_unit_summary(
     text_units, # dictionary
     llm,
-    logger,
     token_limit,
     ) -> str:
     """
@@ -356,10 +408,9 @@ Text excerpt:
         summary_dict[i] = response.content
     return summary_dict
 
-def reduce_intermediate_files(paths, storage, num_threads, number_of_chunks_per_thread,logger):
+def _reduce_intermediate_files(paths, storage, num_threads, number_of_chunks_per_thread):
     """
-    Combines intermediate YAML files from multiple threads into a single file,
-    adjusting chunk indices based on thread ID.
+    Combines intermediate YAML files from multiple threads into a single file, adjusting chunk indices based on thread ID.
     """
     all_chunk_indices = []
     all_entities = []

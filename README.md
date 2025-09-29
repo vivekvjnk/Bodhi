@@ -1,8 +1,4 @@
 # BODHI: Configurable scientific Knowledge Graph extraction system 
-Bodhi is an LLM based highly configurable knowledge graph extraction system with multiple validation loops.
-
-# How to use?
-# BODHI: Configurable scientific Knowledge Graph extraction system 
 Bodhi is a Large Language Model (LLM)-powered, **highly configurable**, scientific knowledge graph extraction system. It features **multiple validation and feedback loops** to ensure reliability and precision.
 
 # How to use?
@@ -112,15 +108,141 @@ bodhi.invoke(init_state)
 This section discusses about the design and architecture of Bodhi KG extraction system.
 
 ## Major design features
+- Configurable KG extraction. Following are the major configurable parameters/inputs
+    - Priming : Why priming?
+        - Each text unit is processed independently in the pipeline. This lead to narrow focused entity/relationship extraction. 
+        - System failes to comprehend overall theme of the source with the text unit.
+        - Priming summary of the source document is generated at the very beginning. 
+        - Observed better domain adherence with priming summary in experiments.
+    - Ontology adherence and enforcement
+        - Ontology enforcement loop is present in entity extraction. If LLM extracts entities of type not present in ontology dictionary, system will prompt LLM to re-type those entities into one of the available types.
+    - Generic type allowance : What difference it make?
+        - Increased coverage. Under ontology enforcement, many high priority entities may get missed out from extraction. 
+        - LLM classify these high priority entities under type `Generic`
+        - It's observed from experiments, that `Generic` type allowance improvises coverage
+    - Token count configuration per text unit
+        - Lower token count per text unit : Lead to fine grained KG extraction. Prone to high noise
+        - Higher token count per text unit: Lead to corase KG extraction. May miss out key concepts 
+        - Highly dependent on the LLM model size and LLM input token limit.
+            - For Gemini 2.5 flash model the sweet spot is around 500 tokens per text unit
+            - Make sure the token count of the overall extraction prompt is within usable context limit of LLM model
+    - Storage selection
+        - Bodhi uses storage abstraction. This allows usage of different types of storage backends
+        - At present, File system based storage layer is implemented as LocalStorage
+        - Object storage support is planned for future releases
+    - LLM Inference engine and LLM model selection
+        - Validated with 
+            - small local models(gemma 3:13b, qwen3:12b, Phi4 etc) running through Ollama
+            - Gemini-2.0-flash, Gemini-2.5-flash
+    - Configurable number of threads for parallel KG extraction
+        - Limited by the LLM inference engine rate limiter and Host system resources
+        - Default configuration is 18
+            - This number is a sweet spot derived for single user VertexAI inference engine with Gemini-2.5-flash
+
 - Multi-threaded 
-- Modular 
-- Persistent 
+    - Significantly increase KG extraction speed
+    - KG extraction for each text unit is an independent process. Hence chunk level parallelism is possible
+- Modular
+- Persistent
 - Rigorous through validation loops
+    - Entity and relationship validation loops to ensure coverage
     - Heimdall for structured output validation
-- Deduplication
+- Deduplication/Resolution
     - Long distance relationship capture
     - Coherent entity description
+
+[Config + Ontology] 
+      ↓
+[Bodhi Core]
+    ├─ [Preprocessing]
+    ├─ [Parallel Knowledge Graph Extraction Pipeline]
+    |  └─ [Validation & Feedback Loops]
+    ├─ [Entity resolution]
+    └─ [Storage Backend]
+      ↓
+[Artifacts + Final KG]
+
 
 - Bodhi uses Langgraph framework for orchestrating KG extraction process.
 - Input and output of `kg_extraction_graph` follows `BodhiState` schema.
     - In LangGraph, **state** serves as the message schema in a message-passing paradigm. Both the input and output of a LangGraph graph are instances of this state, ensuring that all nodes communicate through a shared, typed message structure.
+
+## Few design considerations 
+1. Why so many file operations and intermediate files?
+We started developing Bodhi using locally hosted LLMs(Ollama) with RTX A2000 12GB graphics chip. There were few quantized small LLMs capable of doing `structured output` during that time. One of the few major bottlenecks was the uncertainity in LLM outputs. Most of the time LLM failed to follow the structured output instructions. This lead us to the design of an LLM wrapper langgraph runnable, which would force LLM to follow formatting instructions through error correction loops. This is `Heimdall`. 
+Even after introducing `Heimdall` the pipeline used to break in between KG extraction due to various reasons. Sometimes, it is power loss, LLM stalling due to bug in ollama, etc. Hence we decided to incorporate persistence across major time consuming processes in the pipeline. This way we were able to utilize available time and resources more efficiently. 
+One of the fundamental design principle of `Bodhi` is that **it may fail**. Acknowledging this, we introduced persistence across the pipeline so that, even if `Bodhi` fail to extract KG at one go, it will continue from the failure point in the next iteration.
+
+
+# The Design Philosophy
+
+Bodhi is designed under the assumption that **LLMs deliver great potential but can struggle with precision and consistency unless guided by feedback loops and persistence mechanisms**.
+
+# Bodhi at a glance: three pipelines
+![bodhi-Top Level Architecture](docs/diagrams/bodhi-Top%20Level%20Architecture.jpg)
+
+## 1) Preprocessing — make text model-ready
+
+**What it does:**
+
+* Converts the input document to a uniform text format (markdown).
+* Splits the document into **text units** using a configurable `token_limit`.
+
+**Why this exists:**
+LLMs work best on clean, bounded chunks. Standardizing the format removes parser variance, and chunking keeps every unit within the model’s usable context window so you don’t lose content or truncate prompts.
+
+**Design decisions (top-level):**
+
+* **Canonical format first:** normalize early to reduce downstream ambiguity.
+* **Configurable chunking:** `token_limit` is a dial—lower values → finer detail (but noisier), higher values → broader context (but coarser).
+* **Deterministic segmentation:** consistent units enable parallel work and reproducible results.
+
+*Architect’s hook:* the chunking policy is intentionally simple here; downstream behavior (quality, speed, cost) is highly sensitive to this one knob.
+
+---
+
+## 2) Parallel KG extraction — turn units into structured signals
+
+**What it does:**
+
+* **Orchestrates and executes** knowledge-graph extraction **in parallel** across those text units.
+* **Saves artifacts** to the storage layer during the run.
+
+**Why this exists:**
+Each text unit can be processed independently, so parallelism gives near-linear throughput gains while keeping latency practical for long documents. Persisting artifacts makes runs inspectable and recoverable.
+
+**Design decisions (top-level):**
+
+* **Unit-level parallelism:** the natural boundary is the text unit, so concurrency is safe and simple.
+* **Orchestration over ad-hoc calls:** a single controller coordinates workers, making rate limits and failures manageable.
+* **Artifact-first persistence:** write intermediate outputs as you go to enable debugging, audits, and resume-from-checkpoint.
+
+*Architect’s hook:* the degree of parallelism is a policy choice (bounded by model rate limits and host resources). Persistence is a deliberate trade-off: more I/O for strong observability and fault tolerance.
+
+---
+
+## 3) Entity & relations resolution — unify, then finalize the graph
+
+**What it does:**
+
+1. **Deduplicates** entities and relations produced by parallel extraction.
+2. **Saves** the deduplicated/optimized entity-relation data.
+3. Builds the final **NetworkX graph** from that optimized representation.
+
+**Why this exists:**
+Parallel extraction inevitably creates duplicates and fragmented relationship evidence. A dedicated resolution pass merges equivalents, reconciles conflicts, and ensures the final KG is coherent and analyzable.
+
+**Design decisions (top-level):**
+
+* **Separation of concerns:** keep extraction fast and independent; defer global consistency to a resolver that has the whole picture.
+* **Entity-first, then relations:** stabilize the node set before locking in edges for better consistency.
+* **Graph as a first-class product:** materialize to NetworkX to enable downstream analytics and visualization immediately.
+
+*Architect’s hook:* the resolver is where global policies live (matching thresholds, tie-breakers, provenance). Small changes here swing precision/recall and graph topology.
+
+---
+
+## How the three fit together
+
+* **Flow:** *Preprocessing* (normalize & segment) → *Parallel KG extraction* (independent, persisted unit processing) → *Resolution* (global dedup + final graph).
+* **Guiding theme:** each stage optimizes for a different concern—**clean input**, **throughput with observability**, and **global consistency**—so the system stays understandable, tunable, and reliable.
