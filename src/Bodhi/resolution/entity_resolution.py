@@ -2,7 +2,6 @@ from ..utils import (
     SemanticSimilarity,
     harmonic_mean,
     tuple_constructor,
-    format_dict_to_markdown,
 )
 from .rule_based_resolution import MERGE, NO_MATCH
 import re, yaml, tqdm, logging
@@ -105,118 +104,6 @@ def load_nodes_n_relns_from_intermediate_file(file_path):
 # --- Utility functions ---
 
 
-# ---------------Class for entity deduplication mechanism-Begin-------------#
-class EntityDeduplicator:
-    def __init__(
-        self,
-        similarity_model: SemanticSimilarity,
-        similarity_threshold=0.9,
-        description_threshold=0.6,
-    ):
-        self.similarity_model = similarity_model
-        self.similarity_threshold = similarity_threshold
-        self.description_threshold = description_threshold
-        self.name_embeddings = {}  # Cache for name embeddings
-
-    def __call__(self, intermediate_entities):
-        return self.deduplicate_entities_batch(
-            intermediate_entities=intermediate_entities
-        )
-
-    def deduplicate_entities_batch(self, intermediate_entities):
-        """
-        Deduplicates or merges entities from the intermediate file format.
-
-        Args:
-            intermediate_entities (dict): Dictionary containing entities with names, types, and descriptions.
-
-        Returns:
-            tuple: Deduplicated entities (dictionary) and deduplication map (dictionary).
-        """
-        deduplicated_entities = {}
-        deduplication_map = {}
-
-        # Helper function to remove duplicates from a list
-        def remove_duplicates_from_list(data):
-            return list(set(data))
-
-        logger.info(f"Starting batch entity resolution...\n")
-        # Process all entities
-        for entity_name, entity_data in tqdm.tqdm(intermediate_entities.items()):
-            entity_type = entity_data["type"]
-            descriptions = entity_data["description"]
-            entity_source_chunk_index = entity_data.get("source_chunk_index", [])
-
-            # Track the best match
-            best_match_name = None
-            best_description_similarity = 0
-
-            for existing_name, existing_data in deduplicated_entities.items():
-                existing_descriptions = existing_data["description"]
-
-                name_similarity = self.similarity_model.compute_similarity(
-                    entity_name, existing_name
-                )
-                # Deduplication happen only if name similarity is above the threshold
-                # TODO: there should be an elif with description similarity check.
-                # If descriptions are very similar, nodes should be merged
-                max_description_similarity = max(
-                    [
-                        self.similarity_model.compute_similarity(
-                            current_desc, existing_desc
-                        )
-                        for current_desc in descriptions
-                        for existing_desc in existing_descriptions
-                    ]
-                )
-
-                if name_similarity >= self.similarity_threshold:
-                    # Name is semantically similar, check description similarity
-
-                    # Deduplicate if both name and descriptions are highly similar
-                    if max_description_similarity >= self.similarity_threshold:
-                        deduplication_map[entity_name] = existing_name
-                        break
-
-                    # Otherwise, track for merging based on description similarity
-                    if max_description_similarity >= self.description_threshold:
-                        if max_description_similarity > best_description_similarity:
-                            best_match_name = existing_name
-                            best_name_similarity = name_similarity
-                            best_description_similarity = max_description_similarity
-
-            # If a match is found, merge descriptions into the best match
-            if best_match_name:
-                deduplicated_entity = deduplicated_entities[best_match_name]
-                for description in descriptions:
-                    if description not in deduplicated_entity["description"]:
-                        deduplicated_entity["description"].append(description)
-                deduplicated_entity["type"].extend(entity_type)
-                deduplicated_entity["source_chunk_index"].extend(
-                    entity_source_chunk_index
-                )
-                deduplicated_entity["type"] = remove_duplicates_from_list(
-                    deduplicated_entity["type"]
-                )
-                deduplicated_entity["description"] = remove_duplicates_from_list(
-                    deduplicated_entity["description"]
-                )
-
-                deduplication_map[entity_name] = best_match_name
-            else:
-                # For the very first iteration, control will reach here
-                # This code fill the deduplicated_entities with the first entity
-                # Hence we don't need to initialize deduplicated_entites beforehand
-
-                # Add the new entity to deduplicated entities
-                deduplicated_entities[entity_name] = {
-                    "type": remove_duplicates_from_list(entity_type),
-                    "description": remove_duplicates_from_list(descriptions),
-                    "source_chunk_index": entity_source_chunk_index,
-                }
-
-        return deduplicated_entities, deduplication_map
-# ---------------Class for entity deduplication mechanism-End---------------#
 
 # ---------------Method for updating deduplicated relationships-Begin-------------#
 def link_resolution(relationships, node_resolution_map, similarity_threshold=0.8):
@@ -434,16 +321,15 @@ class HybridResolver:
         self.similarity_model = similarity_model
 
     def resolve(self, entities):
-        
+        """
+        System 2 resolution is disabled for now. Further R&D is required to integrate a robust system 2 entity resolution pipeline.
+        """
         logger.info("\nStarting hybrid entity resolution with pluggable rules...\n")
-
-        # Use System 1 to check
         resolution_results= self.system1.inference(entities)
         # logger.info(f"Resolution results from System 1: {resolution_results}")
         resolved_nodes = resolution_results.get("NameAndDescriptionRule").get("resolved_nodes")
         resolution_map = resolution_results.get("NameAndDescriptionRule").get("similar_names")
        
-        
         return resolved_nodes, resolution_map
 
 
@@ -500,51 +386,6 @@ def test_main_2():
     # logger.info(final_entities)
     # logger.info("\n--- Deduplication Map ---")
     # logger.info(final_map)
-
-
-# === Main function === #
-def test_main_1():
-    graph_name = "AI_Foundations_of_Computational_Agents"
-    storage_path = "infra/storage/Bodhi"
-    interm_graph_path = (
-        f"{storage_path}/{graph_name}/{graph_name}_intermediate_data.yml"
-    )
-
-    nodes_dict, links_dict = load_nodes_n_relns_from_intermediate_file(
-        file_path=interm_graph_path
-    )
-
-    t_nodes = format_dict_to_markdown(data=nodes_dict, level=1)
-    with open("Bodhi/resolution/entities.md", "w+") as f:
-        f.write(t_nodes)
-
-    t_links = format_dict_to_markdown(data=links_dict, level=1)
-    with open("Bodhi/resolution/links.md", "w+") as f:
-        f.write(t_links)
-
-    sim_model = SemanticSimilarity(model_path="all-mpnet-base-v2")
-    deduplicator = EntityDeduplicator(similarity_model=sim_model)
-    deduplicated_nodes, deduplication_map = deduplicator(nodes_dict)
-    updated_relationships, relationship_updates = link_resolution(
-        relationships=links_dict, node_resolution_map=deduplication_map
-    )
-
-    t_dd_nodes = format_dict_to_markdown(data=deduplicated_nodes)
-    t_dd_node_map = format_dict_to_markdown(data=deduplication_map)
-    t_dd_links = format_dict_to_markdown(data=updated_relationships)
-    t_dd_link_updates = format_dict_to_markdown(data=relationship_updates)
-
-    with open("Bodhi/resolution/t_dd_nodes.md", "w+") as f:
-        f.write(t_dd_nodes)
-
-    with open("Bodhi/resolution/t_dd_node_map.md", "w+") as f:
-        f.write(t_dd_node_map)
-
-    with open("Bodhi/resolution/t_dd_links.md", "w+") as f:
-        f.write(t_dd_links)
-
-    with open("Bodhi/resolution/t_dd_link_updates.md", "w+") as f:
-        f.write(t_dd_link_updates)
 
 
 if __name__ == "__main__":

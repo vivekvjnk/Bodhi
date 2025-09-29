@@ -483,31 +483,6 @@ def validate_relationships(state)->Command[Literal["extract_graph","extract_rela
     return Command(update=loc_state,goto=goto)
 
 # ---- Utility Functions ----
-def _update_entities(global_entities, new_entities,logger):
-    """
-    Updates the global entity list with new entities, ensuring no duplicates are added.
-
-    Args:
-        global_entities (list): The current list of global entities.
-        new_entities (list): The list of new entities to be added.
-
-    Returns:
-        list: The updated global entity list.
-    """
-    for new_entity in new_entities['entities']:
-        if new_entity.get("type") is None:
-            new_entity["type"] = "generic"
-        # Check if the new entity is already in the global list
-        is_duplicate = any(
-            existing_entity["name"].strip().lower() == new_entity["name"].strip().lower() and
-            existing_entity["type"].strip().lower() == new_entity["type"].strip().lower()
-            for existing_entity in global_entities['entities']
-        )
-        # Add new entity if not a duplicate
-        if not is_duplicate:
-            global_entities['entities'].append(new_entity)
-    logger.info(f"\n--final entities after update entities--\n{global_entities}\n")
-    return global_entities
 
 def _update_relationships(global_relationships, new_relationships,logger):
     """
