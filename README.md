@@ -246,3 +246,220 @@ Parallel extraction inevitably creates duplicates and fragmented relationship ev
 
 * **Flow:** *Preprocessing* (normalize & segment) → *Parallel KG extraction* (independent, persisted unit processing) → *Resolution* (global dedup + final graph).
 * **Guiding theme:** each stage optimizes for a different concern—**clean input**, **throughput with observability**, and **global consistency**—so the system stays understandable, tunable, and reliable.
+
+
+# Detailed Design 
+
+
+# 1. Preprocessing
+
+The **Preprocessing stage** prepares raw documents for knowledge graph extraction by ensuring clean, context-preserving text units. It follows a three-step flow: **text extraction & chunking → priming → outlier summarization**.
+
+![Preprocessing](docs/diagrams/preprocessing.jpg)
+---
+
+## 1.1 Text Extraction and Chunking
+
+* **Purpose:** Convert heterogeneous source files into standardized text chunks that fit within the LLM’s processing window.
+* **Process:**
+
+  * If the source is a **PDF**, text is extracted using the `pymupdf4llm` package.
+  * If the source is already text-based (`.md`, `.txt`, `.yml`, etc.), the content is loaded directly.
+  * Chunks are generated according to the configured `token_limit`.
+  * To preserve linguistic coherence, **SpaCy** is used for sentence boundary detection, ensuring chunks do not split mid-sentence.
+* **Design Choice:**
+
+  * Implemented as an **injectable callback dependency**. This makes it easy to swap out the extraction/chunking strategy without affecting downstream logic, as long as the input-output contract remains consistent.
+
+---
+
+## 1.2 Priming
+
+* **Purpose:** Provide a **knowledge graph priming summary** — a high-fidelity contextual guide distilled from the start of the document.
+* **Mechanism:**
+
+  * If the `priming` flag is enabled in `config.yml`, the system takes the **first 2000 tokens** of the document and generates a summary capped at **500 tokens**.
+  * This priming summary captures **core terminology, domain definitions, and inherent structural connections**.
+* **Benefit:** Ensures consistent entity typing and accurate relationship linking across all text units, by anchoring extractors with shared vocabulary and domain context.
+
+---
+
+## 1.3 Outlier Text Unit Summarization
+
+* **Purpose:** Handle text units that are either **highly structured** (e.g., tables, code blocks, numbered lists) or **cognitively dense** (heavy jargon, layered concepts).
+* **Process:**
+
+  * These “outlier” text units are detected heuristically.
+  * Instead of storing them raw, an LLM-generated summary replaces them in the `text_units` dictionary.
+* **Rationale:** Reduces noise, normalizes complex formats, and ensures downstream extractors process meaningful content rather than low-signal or structurally irregular text.
+
+---
+
+## Implementation Notes
+
+* Implemented inside `parallel_kg_extractor.py`.
+* Uses **pymupdf4llm** (PDF handling), **SpaCy** (sentence segmentation), and **LLMs** (summarization tasks).
+* Configurable knobs: `token_limit` (chunk size), `priming` flag (enable/disable summary generation).
+
+---
+
+**Summary:**
+The Preprocessing stage ensures every subsequent pipeline works on clean, bounded, and semantically consistent text units. Its modular design (injectable callbacks, optional priming, selective summarization) balances **robustness** for arbitrary document types with **flexibility** for domain-specific tuning.
+
+# 2. Parallel KG Extraction
+
+The **Parallel KG Extraction stage** is the core engine of Bodhi, responsible for turning preprocessed text units into structured knowledge graphs. To maximize throughput while preserving modularity, it is designed around a **Map–Thread–Reduce paradigm**, with the centerpiece being the **`kg_extraction_graph` runnable**.
+
+---
+
+## 2.1 Map
+
+* **Purpose:** Distribute text units evenly across multiple worker threads for parallel extraction.
+* **Process:**
+
+  * Chunks are uniformly allocated so each thread receives a minimum baseline.
+  * If the number of chunks is not divisible by thread count, extra units are distributed across the first *n* threads.
+  * Empirical testing showed the system performs best with a **higher number of threads and fewer chunks per thread**.
+* **Design Choice:**
+
+  * Currently configured for **18 threads**, balancing Vertex AI rate limits with diminishing returns observed beyond this number.
+  * Designed for scalability — thread count can be tuned depending on host capabilities and external rate limits.
+
+---
+
+## 2.2 KG Extraction Execution
+
+![Parallel KG Extraction](docs/diagrams/Parallel_KG_Extraction.jpg)<br>
+* **Thread Function:**
+
+  * Each worker invokes the shared `invoke_graph_in_thread` function.
+  * Prepares the **LangGraph state and metadata**, then calls the `kg_extraction_graph` runnable.
+
+* **`kg_extraction_graph`: The Core Runnable**<br>
+![kg_extraction_gaph](docs/diagrams/kg_extraction_graph.jpg)<br>
+  * Implements the **entity and relationship extraction loops** as a LangGraph pipeline.
+  * Validates extracted entities/relations in situ, improving precision before results are written out.
+  * Designed as a **callback abstraction**:
+
+    * Core extraction logic is isolated from orchestration concerns.
+    * Collaborators can iterate, extend, or replace KG extraction strategies (e.g., different LLM prompts, new validation heuristics) **without disturbing the parallelization framework**.
+  * Implementation resides in `graph_extraction.py`.
+
+* **Implementation Notes:**
+
+  * Custom thread orchestration is used instead of higher-level libraries (e.g., Joblib).
+  * Justification: each text unit is of comparable token size, leading to **predictable runtimes** across threads, which simplifies load balancing.
+
+---
+
+## 2.3 Reduce
+
+* **Purpose:** Merge intermediate results from all threads into a unified representation.
+* **Process:**
+
+  * Each thread saves extracted knowledge graph artifacts as **YAML files**.
+  * The `_reduce_intermediate_files` function aggregates these into a single consolidated YAML file.
+  * This output file serves as the foundation for the subsequent **Entity & Relations Resolution** stage.
+* **Design Choice:**
+
+  * Intermediate persistence (YAML) ensures partial progress is never lost if execution is interrupted.
+  * Output is both human-readable and machine-processable, supporting debugging and downstream automation.
+
+---
+
+## Architectural Rationale
+
+### * **Map–Reduce Paradigm:** 
+The system operates on a map–reduce paradigm, where each module processes input artifacts and passes results downstream. Instead of transient message passing, we chose to persist outputs as files in predefined directories. Each stage saves its intermediate artifacts to disk, which are then read by subsequent modules. This design reflects two deliberate choices. First, persistence acts as a safeguard against failure. Given that multiple steps in the extraction process are potential failure points, persisting artifacts ensures that the system can resume from the last successful stage without recomputation. Second, it promotes transparency and reproducibility, as the artifacts serve as checkpoints for debugging, analysis, and verification. Thus, the combination of a modular extraction graph and a persistence-first communication strategy makes the system resilient, extensible, and well-suited for iterative improvement.
+
+### * **Runnable Isolation (`kg_extraction_graph`):** 
+By decoupling orchestration from extraction logic, Bodhi ensures that innovation in KG extraction can happen **independently and safely**. This makes the system attractive for collaboration — contributors can focus on improving extraction logic without worrying about breaking parallelism or orchestration.
+### * **Resilience via Intermediate Files:** 
+The reduce stage doubles as a checkpointing mechanism, improving reliability in production-scale workloads.
+
+---
+
+## Implementation Notes
+
+* Implemented across `parallel_kg_extractor.py` (orchestration) and `graph_extraction.py` (`kg_extraction_graph` runnable).
+* Current defaults: **18 threads**, YAML-based artifact storage.
+* Configurable knobs: number of threads, thread allocation policy, and the callback implementation of `kg_extraction_graph`.
+
+---
+
+**Summary:**
+Parallel KG Extraction transforms text units into structured graph fragments at scale. Its **Map–Thread–Reduce design** balances speed, modularity, and resilience. At its center, the **`kg_extraction_graph` runnable** embodies Bodhi’s philosophy: make the core logic pluggable, so improvements to entity/relationship extraction can evolve independently of system scaffolding. For newcomers, this is “splitting up the work and stitching it back together.” For architects, it’s a showcase of modularity and isolation. For developers, it provides explicit hooks, files, and abstractions to extend or replace without fear.
+
+
+# 3 Entity & Relations Resolution
+
+![Hybrid entity resolution](docs/diagrams/hybrid_entity_resolution.jpg)
+
+The **Entity & Relations Resolution** stage ensures that the knowledge graph produced in the extraction phase is **clean, coherent, and non-redundant**. It refines raw entities and relationships into an optimized form suitable for analysis or downstream applications.
+
+---
+
+## 3.1 Core Functions
+
+1. **Deduplication of Entities & Relations**
+
+   * Identifies and merges entities that are semantically equivalent.
+   * Removes duplicate or redundant relationships across chunks.
+
+2. **Persistence**
+
+   * Saves deduplicated entities and relationships into intermediate files for traceability.
+   * Supports recovery and reproducibility if the pipeline is interrupted.
+
+3. **Graph Construction**
+
+   * Generates a final **networkX graph** from the optimized entity–relation information.
+   * This graph is the artifact exposed to downstream applications.
+
+---
+
+## 3.2 The Pluggable Hybrid Resolver
+
+The centerpiece of this stage is the **Hybrid Resolver**, designed as a **pluggable, extensible framework** for entity resolution. The original design included **two complementary subsystems**:
+
+* **System 1: Learned Rules**
+
+  * A set of composable, sequentially applied rules for deterministic entity resolution.
+  * Present implementation includes two rules:
+
+    * **Rule 1:** Entities with high semantic similarity in their names are merged.
+
+      * If their descriptions are also semantically similar, a single unified description is maintained.
+      * If their descriptions differ significantly, all variations are preserved in a description list.
+      * The same logic applies to entity types.
+    * **Rule 2:** If entities differ *only by numbers* (e.g., “Model A1” vs. “Model A2”), they are treated as **distinct entities**.
+
+      * This corner case arose frequently in research/scientific text, where numbered entities represent different objects.
+
+* **System 2: LLM-based Ambiguity Resolution** *(Planned)*
+
+  * In cases where System 1 rules cannot confidently resolve ambiguity, the entity is deferred to an LLM for clarification.
+  * Intended to address borderline semantic cases where learned rules fall short.
+  * Not yet implemented due to time constraints, but forms part of the long-term roadmap.
+
+---
+
+## 3.3 Design Rationale
+
+* **Rule-Based Foundation:** Ensures determinism and reproducibility — critical for knowledge graph reliability.
+* **Pluggability:** New resolution strategies (lexical, semantic, ontology-based, ML-driven) can be added without altering the pipeline.
+* **LLM Escalation (Future):** Keeps the system pragmatic by combining **fast, rule-based resolution** with **flexible, high-recall LLM reasoning** for edge cases.
+* **Extensibility:** Future versions plan to introduce **composition rules** to orchestrate multiple resolution strategies together, making the resolver adaptive to different domains.
+
+---
+
+## Implementation Notes
+
+* Implemented in **core.py**.
+* Current version includes only **System 1** with two rules.
+* Resolution framework already supports plugin-style integration, laying groundwork for future expansion.
+
+---
+
+**Summary:**
+Entity & Relations Resolution is where Bodhi consolidates its extracted knowledge into a **usable graph**. Today, it leverages deterministic, rule-based logic to merge and disambiguate entities, with practical heuristics to handle edge cases. Tomorrow, it will expand into a hybrid framework that escalates hard cases to LLMs. For newcomers, this stage is “cleaning up duplicates.” For architects, it’s a flexible **two-tiered resolution strategy**. For implementers, it’s a well-defined plugin interface already in place for extending resolution logic.
