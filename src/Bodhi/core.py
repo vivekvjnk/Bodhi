@@ -92,7 +92,7 @@ class Bodhi:
             # TODO : Replace following state preservation logic with langgraph persistence 
             logger.info(f"Deduplication pipeline started")
             if intermediate_graph is None:
-                entities,relations = self.load_nodes_n_relns_from_intermediate_data()
+                entities,relations = self.load_nodes_n_relns_from_intermediate_data(paths=paths)
             else:
                 # Convert the intermediate graph to entities and relationships
                 logger.info(f"Converting intermediate graph to entities and relationships")
@@ -106,22 +106,28 @@ class Bodhi:
             #---------------Deduplication logic-Begin-------------#
             # TODO: replace with hybridresolver
             resolution_rules = [
-                NameAndDescriptionRule(name_threshold=0.88, desc_threshold=0.85,source_name=self.paths.get("source_name")),
+                NameAndDescriptionRule(name_threshold=0.88, 
+                                       desc_threshold=0.85,
+                                       source_name=self.paths.get("source_name")
+                                       ),
                 # You can easily add more rules here later!
                 # e.g., AcronymMatchRule(), SameAddressRule(), etc.
             ]
             model_path = "all-mpnet-base-v2"
             similarity_model = SemanticSimilarity(model_path,device="cuda")
             system1_engine = RuleBasedResolver(
-                rules=resolution_rules, similarity_model=similarity_model
+                rules=resolution_rules, 
+                similarity_model=similarity_model
             )
             resolver = HybridResolver(
-                system1_resolver=system1_engine, similarity_model=similarity_model
+                system1_resolver=system1_engine, 
+                similarity_model=similarity_model
             )
             
             deduplicated_entities, deduplication_map = resolver.resolve(entities)
             logger.info(f"Deduplicated entities:\n {deduplicated_entities}")
-            updated_relationships, relationship_updates = self._update_deduplicate_relationships(relationships=relations,deduplication_map=deduplication_map)
+            updated_relationships, relationship_updates = self._update_deduplicate_relationships(relationships=relations,
+                                                                                                 deduplication_map=deduplication_map)
             #---------------Deduplication logic-End-------------#
             
             # logger.debug(f"Deduplicated relationships:\n {updated_relationships}")
@@ -203,7 +209,7 @@ class Bodhi:
 
     #---------------Support functions-Begin-------------#
     #---------------Intermediate file handling-Begin-------------#    
-    def load_nodes_n_relns_from_intermediate_data(self,entities=None, relationships=None):
+    def load_nodes_n_relns_from_intermediate_data(self,paths=None,entities=None, relationships=None):
         """
         Loads entities and relationships from a YAML file into separate dictionaries.
         Why do we convert entity and relationship dictionaries into different format?
@@ -215,24 +221,27 @@ class Bodhi:
             without losing any information during deduplication.
         """
         
-        file_path = self.interm_data_path
+        file_path = paths.get("interm_data_path",None)
         try:
             data = {}
             if entities and relationships:
-                logger.info(f"Using provided entities and relationships.")
+                logger.info("Using provided entities and relationships.")
                 data = {
                     "entities": entities,
                     "relationships": relationships
-                }   
+                }
+            elif(file_path == None): 
+                raise ValueError("Either `paths` or `entities` and `relationships` should be provided")
             else:
+                logger.info(f"Loading intermediate graph from {file_path}")
                 file = self.storage.read_file(path=file_path)
                 data = yaml.safe_load(file)
             if data is None:
-                print(f"Warning: File {file_path} is empty. Returning empty dictionaries.")
+                logger.error(f"Warning: File {file_path} is empty. Returning empty dictionaries.")
                 return {}, {}
 
             if not isinstance(data, dict) or "entities" not in data or "relationships" not in data:
-                print(f"Warning: File {file_path} does not contain expected 'entities' and 'relationships' structure. Returning empty dictionaries.")
+                logger.error(f"Warning: File {file_path} does not contain expected 'entities' and 'relationships' structure. Returning empty dictionaries.")
                 return {}, {}
             
             entities_dict = {}
@@ -257,13 +266,13 @@ class Bodhi:
             return entities_dict, relationships_dict
 
         except FileNotFoundError:
-            print(f"File not found: {file_path}. Returning empty dictionaries.")
+            logger.error(f"File not found: {file_path}. Returning empty dictionaries.")
             return {}, {}
         except yaml.YAMLError as e:
-            print(f"YAML parsing error: {e}. Returning None, None.")
+            logger.error(f"YAML parsing error: {e}. Returning None, None.")
             return None, None
         except Exception as e:
-            print(f"An unexpected error occurred: {e}. Returning None, None.")
+            logger.error(f"An unexpected error occurred: {e}. Returning None, None.")
             return None, None
     #---------------Intermediate file handling-End-------------# 
     
