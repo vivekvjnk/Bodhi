@@ -105,6 +105,44 @@ def bootstrap_ci(data, func=np.mean, n_boot=1000, alpha=0.05, rng=None):
     return est, lo, hi
 
 def aggregate_by_config(df, metrics_cols, group_cols=["token_limit","priming","generic"]):
+    """
+    Aggregates experimental results in a DataFrame by specific configuration columns,
+    calculating the mean and a bootstrap confidence interval (CI) for specified metrics.
+
+    The function applies the 'split-apply-combine' pattern:
+    1. Splits the DataFrame into groups based on unique combinations of 'group_cols'.
+    2. Applies aggregation and bootstrap CI calculation to 'metrics_cols' within each group.
+    3. Combines the results into a new DataFrame where each row represents a unique configuration.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The input DataFrame containing experimental run data.
+        It must contain the columns specified in `group_cols` and `metrics_cols`.
+    metrics_cols : list of str
+        A list of column names (metrics) for which to calculate the mean and CI.
+    group_cols : list of str, optional
+        A list of column names to use for grouping the data (the configuration columns).
+        Defaults to ["token_limit", "priming", "generic"].
+
+    Returns
+    -------
+    pandas.DataFrame
+        A new DataFrame where each row corresponds to a unique combination of 
+        `group_cols`. This DataFrame includes:
+        - The original `group_cols` (defining the configuration).
+        - 'n_runs': The count of records (runs) for that configuration.
+        - For each metric `m` in `metrics_cols`, three new columns:
+            - `{m}_mean`: The estimated mean value.
+            - `{m}_ci_lo`: The lower bound of the bootstrap confidence interval.
+            - `{m}_ci_hi`: The upper bound of the bootstrap confidence interval.
+
+    Notes
+    -----
+    This function relies on an external function, `bootstrap_ci(vals)`, 
+    which must be defined and available in the scope to calculate the 
+    estimated mean, lower CI, and upper CI from an array of values (`vals`).
+    """
     grouped = df.groupby(group_cols)
     records = []
     for name, group in grouped:
