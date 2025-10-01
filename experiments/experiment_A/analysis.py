@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Analyze Bodhi run metrics when data is already pre-parsed into a dictionary.
 

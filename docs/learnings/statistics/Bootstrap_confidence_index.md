@@ -135,9 +135,8 @@ Two common methods:
 
 2. **Standard Error Method:**  
    Estimate the standard error of the statistic from the bootstrap distribution, then build a symmetric interval around the original estimate:  
-   $
-   CI = \hat{T} \pm z_{\alpha/2} \cdot \text{SE}_{\text{bootstrap}}
-   $  
+   
+   $CI = \hat{T} \pm z_{\alpha/2} \cdot \text{SE}_{\text{bootstrap}}$  
 
 ---
 
