@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
-from helpers import get_experiment_metrics_pathlib
+from helpers import find_and_read_files
 
 # ---------------- Parsing helpers ----------------
 
@@ -212,5 +212,5 @@ def analyze_from_dict(metrics_dict, out_dir="./analysis_output"):
 
 
 if __name__ == "__main__":
-    metrics = get_experiment_metrics_pathlib(parent_dir="results")
+    metrics = find_and_read_files(file_name= "eval_metrics.yml",parent_dir="results")
     analyze_from_dict(metrics_dict=metrics)

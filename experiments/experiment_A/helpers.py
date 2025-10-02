@@ -5,21 +5,34 @@ from pathlib import Path
 import yaml
 from typing import Dict, Any
 
-def get_experiment_metrics_pathlib(parent_dir: str = "results") -> Dict[str, Any]:
+def find_and_read_files(
+    file_name: str = "eval_metrics.yml",
+    parent_dir: str = "results"
+) -> Dict[str, Any]:
     """
-    Finds all 'eval_metrics.yml' files under a parent directory using pathlib, 
+    Finds all files matching the given name under a parent directory using pathlib, 
     reads their content, and returns a dictionary where keys are the relative 
     paths (from the parent directory) and values are the file contents.
 
+    For YAML files (.yml, .yaml), the content is parsed using yaml.safe_load.
+    For other file types (text, markdown, etc.), the raw text content is returned.
+
     Args:
+        file_name (str): The name of the file to search for (e.g., 'eval_metrics.yml',
+                        'results.txt', 'README.md'). Defaults to 'eval_metrics.yml'.
         parent_dir (str): The path to the parent directory (e.g., 'results').
                           Defaults to 'results'.
 
     Returns:
-        Dict[str, Any]: A dictionary of experiment metrics.
+        Dict[str, Any]: A dictionary of experiment metrics/content.
     
-    Example Usage (assuming 'results' directory exists with the structure):
-    results_data = get_experiment_metrics_pathlib(parent_dir="results")
+    Example Usage:
+        # For YAML files
+        results_data = get_experiment_metrics_pathlib(file_name="eval_metrics.yml", parent_dir="results")
+        
+        # For text/markdown files
+        readme_data = get_experiment_metrics_pathlib(file_name="README.md", parent_dir="docs")
+        notes_data = get_experiment_metrics_pathlib(file_name="notes.txt", parent_dir="experiments")
     """
     metrics_dict = {}
     
@@ -31,39 +44,37 @@ def get_experiment_metrics_pathlib(parent_dir: str = "results") -> Dict[str, Any
         print(f"Error: Parent directory '{parent_dir}' not found.")
         return metrics_dict
     
-    # 3. Use the powerful Path.glob() to find all files recursively
-    # '**/eval_metrics.yml' means "look in this directory and all subdirectories
-    # for a file named 'eval_metrics.yml'"
-    for full_path in parent_path.glob('**/eval_metrics.yml'):
-        # The full_path is a Path object for the 'eval_metrics.yml' file
-        
-        # 4. Get the relative path directly using the Path object's .relative_to() method.
-        # This handles the unique key requirement.
+    # 3. Determine file type based on extension
+    file_extension = Path(file_name).suffix.lower()
+    is_yaml = file_extension in ['.yml', '.yaml']
+    
+    # 4. Use Path.glob() to find all matching files recursively
+    for full_path in parent_path.glob(f"**/{file_name}"):
+        # Get the relative path
         relative_path = str(full_path.relative_to(parent_path))
 
         try:
-            # 5. Read the content. Path objects have a .open() method that works 
-            # with 'with open', and using .read_text() is an option for simplicity.
-            # Using .open() here for consistency with yaml.safe_load's expectation.
-            with full_path.open('r') as f:
-                # Load YAML content
-                content = yaml.safe_load(f)
+            if is_yaml:
+                # 5a. For YAML files: parse the content
+                with full_path.open('r', encoding='utf-8') as f:
+                    content = yaml.safe_load(f)
+            else:
+                # 5b. For other files: read raw text content
+                content = full_path.read_text(encoding='utf-8')
             
             # 6. Store the content
             metrics_dict[relative_path] = content
 
         except FileNotFoundError:
-            # This case is unlikely due to glob, but remains for robustness
             print(f"Error: File not found at {full_path}")
         except yaml.YAMLError as e:
-            # Handle potential YAML parsing errors
             print(f"Error parsing YAML file {full_path}: {e}")
+        except UnicodeDecodeError as e:
+            print(f"Error reading file {full_path} (encoding issue): {e}")
         except Exception as e:
-            # Handle other potential I/O errors
             print(f"An unexpected error occurred while reading {full_path}: {e}")
 
     return metrics_dict
-
 
 
 def save_doc_names(dataset_path, dest_path, limit=None):
